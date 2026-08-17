@@ -3,99 +3,86 @@ const mongoose = require("mongoose");
 const { User } = require("../users/user.model");
 const { Material } = require("../materials/material.model");
 const { createNotification } = require("../notifications/notification.service");
+const { newMatchingMaterial } = require("../../utils/notificationCopy");
 const { isListedForNetworkBrowse } = require("../materials/material-status.helper");
+const {
+  NOTIFY_SCORE_THRESHOLD,
+  RECOMMEND_MIN_SCORE,
+  scoreMaterialForBuyer,
+  scoreBuyerForProvider,
+  getMatchLabel,
+} = require("./mvp-match.service");
+const {
+  getBuyerCategories,
+  getProviderCategories,
+  categoriesOverlap,
+} = require("../../utils/materialCategories");
+const { resolveUserLocation, isSameState, isDifferentState, buildMatchLocationContext } = require("../../utils/locationMatch");
+const {
+  isIndiaCountry,
+  isInternationallyVisible,
+  normalizeCountryCode,
+} = require("../../utils/marketScope");
 
-function norm(s) {
-  return (s ?? "").toString().trim().toLowerCase();
-}
-
-function tokenOverlap(a, b) {
-  const ta = norm(a)
-    .split(/[\s,;/|]+/)
-    .filter(Boolean);
-  const tb = new Set(
-    norm(b)
-      .split(/[\s,;/|]+/)
-      .filter(Boolean)
-  );
-  if (!ta.length || !tb.size) return 0;
-  let hits = 0;
-  for (const t of ta) {
-    if (tb.has(t)) hits += 1;
-    else {
-      for (const u of tb) {
-        if (u.includes(t) || t.includes(u)) {
-          hits += 1;
-          break;
-        }
-      }
-    }
-  }
-  return hits;
-}
+const LISTABLE = ["available", "active", "in_discussion"];
+const MAX_MATCH_NOTIFICATIONS = 24;
 
 /**
- * Lightweight relevance score (0–100) for buyer ↔ material. Not ML.
+ * @returns {number} Total match score 0–100 (backward-compatible signature).
  */
-function scoreMaterialForBuyer(material, buyer) {
-  let score = 0;
-  const mt = norm(material.materialType);
-  const buyerTypes = (buyer.materialTypes ?? []).map(norm).filter(Boolean);
-  if (mt && buyerTypes.some((t) => mt.includes(t) || t.includes(mt))) {
-    score += 45;
-  } else if (mt && buyerTypes.length) {
-    const partial = buyerTypes.some(
-      (t) => tokenOverlap(mt, t) > 0 || tokenOverlap(material.industryType, t) > 0
-    );
-    if (partial) score += 25;
-  }
-
-  const locM = norm(material.location);
-  const locB = norm(buyer.location);
-  if (locM && locB) {
-    if (locM === locB) score += 35;
-    else if (locM.includes(locB) || locB.includes(locM)) score += 28;
-    else if (tokenOverlap(locM, locB) > 0) score += 18;
-  }
-
-  const indM = norm(material.industryType);
-  const indB = norm(buyer.industryType);
-  if (indM && indB && (indM.includes(indB) || indB.includes(indM))) {
-    score += 20;
-  }
-
-  return Math.min(100, score);
+function scoreMaterialForBuyerTotal(material, buyer, provider) {
+  const providerDoc =
+    provider ??
+    (material?.provider && typeof material.provider === "object"
+      ? material.provider
+      : null);
+  return scoreMaterialForBuyer(material, buyer, providerDoc).total;
 }
-
-const NOTIFY_SCORE_THRESHOLD = 38;
-const MAX_MATCH_NOTIFICATIONS = 24;
 
 async function notifyBuyersOfNewMaterial(materialDoc) {
   if (!materialDoc || !isListedForNetworkBrowse(materialDoc.status)) return;
   if (materialDoc.visibility !== "network") return;
 
+  const providerId = materialDoc.provider?.toString?.() ?? materialDoc.provider?.toString();
+  const provider =
+    materialDoc.provider && typeof materialDoc.provider === "object"
+      ? materialDoc.provider
+      : providerId
+        ? await User.findById(providerId)
+            .select("preferredMaterialCategories materialTypes state location country")
+            .lean()
+        : null;
+
   const buyers = await User.find({ role: "verified_buyer" })
     .select(
-      "companyName name email materialTypes location industryType role"
+      "companyName name email requiredMaterialCategories materialTypes state location country role"
     )
     .lean()
     .limit(400);
 
+  const listingIsInternational = isInternationallyVisible(materialDoc);
   let sent = 0;
-  const providerId = materialDoc.provider?.toString?.();
 
   for (const buyer of buyers) {
     if (sent >= MAX_MATCH_NOTIFICATIONS) break;
     if (buyer._id.toString() === providerId) continue;
 
-    const score = scoreMaterialForBuyer(materialDoc, buyer);
-    if (score < NOTIFY_SCORE_THRESHOLD) continue;
+    const buyerIsAbroad = !isIndiaCountry(buyer.country);
+    if (buyerIsAbroad && !listingIsInternational) continue;
 
+    const match = scoreMaterialForBuyer(materialDoc, buyer, provider);
+    if (match.total < NOTIFY_SCORE_THRESHOLD) continue;
+
+    const matchCopy = newMatchingMaterial({
+      materialTitle: materialDoc.title,
+      materialType: materialDoc.materialType,
+      location: materialDoc.location,
+    });
     await createNotification({
       recipient: buyer._id,
       type: "new_matching_material",
-      title: "New opportunity aligned to your mandate",
-      message: `A material "${materialDoc.title}" may fit your sourcing profile (${materialDoc.materialType} · ${materialDoc.location}).`,
+      title: matchCopy.title,
+      message: matchCopy.message,
       relatedMaterial: materialDoc._id,
       relatedInterest: null,
     });
@@ -111,40 +98,69 @@ async function getBuyerMaterialSuggestions(userId) {
   }
 
   const materials = await Material.find({
-    status: { $in: ["available", "active", "in_discussion"] },
+    status: { $in: LISTABLE },
     visibility: "network",
     provider: { $ne: uid },
   })
-    .populate("provider", "companyName")
+    .populate(
+      "provider",
+      "preferredMaterialCategories materialTypes state location country companyName"
+    )
     .sort({ updatedAt: -1 })
     .limit(80)
     .lean();
 
-  const ranked = materials
-    .map((m) => ({
-      material: m,
-      score: scoreMaterialForBuyer(m, buyer),
-    }))
-    .filter((x) => x.score >= 20)
-    .sort((a, b) => b.score - a.score)
+  const buyerCountry = normalizeCountryCode(buyer.country);
+  const visible = isIndiaCountry(buyerCountry)
+    ? materials
+    : materials.filter((m) => isInternationallyVisible(m));
+
+  const ranked = visible
+    .map((m) => {
+      const provider =
+        m.provider && typeof m.provider === "object" ? m.provider : null;
+      const match = scoreMaterialForBuyer(m, buyer, provider);
+      return { material: m, match };
+    })
+    .filter((x) => x.match.total >= RECOMMEND_MIN_SCORE)
+    .sort((a, b) => b.match.total - a.match.total)
     .slice(0, 8);
 
   return {
-    items: ranked.map(({ material: m, score }) => ({
-      materialId: m._id.toString(),
-      title: m.title,
-      materialType: m.materialType,
-      location: m.location,
-      providerCompany:
-        m.provider && typeof m.provider === "object"
-          ? m.provider.companyName ?? ""
-          : "",
-      score,
-      headline:
-        score >= NOTIFY_SCORE_THRESHOLD
-          ? "Strong alignment with your mandate"
-          : "Relevant to your stated preferences",
-    })),
+    items: ranked.map(({ material: m, match }) => {
+      const buyerLoc = resolveUserLocation(buyer);
+      const locationContext = buildMatchLocationContext(
+        buyerLoc,
+        match.sellerLocation ?? {}
+      );
+      const headline =
+        (locationContext.locationScope === "other_state" ||
+          locationContext.locationScope === "same_country") &&
+        locationContext.locationNote
+          ? `${match.matchLabel ?? "Relevant Match"} — ${locationContext.locationNote}`
+          : match.matchLabel ?? "Relevant Match";
+
+      return {
+        materialId: m._id.toString(),
+        title: m.title,
+        materialType: m.materialType,
+        location: m.location,
+        country: normalizeCountryCode(m.country ?? match.sellerLocation?.country),
+        marketScope: m.marketScope === "global" ? "global" : "india",
+        providerCompany:
+          m.provider && typeof m.provider === "object"
+            ? m.provider.companyName ?? ""
+            : "",
+        score: match.total,
+        matchLabel: match.matchLabel,
+        sellerState: match.sellerLocation?.state ?? "",
+        sellerCity: match.sellerLocation?.city ?? "",
+        sellerCountry: match.sellerLocation?.country ?? "IN",
+        locationScope: locationContext.locationScope,
+        locationNote: locationContext.locationNote,
+        headline,
+      };
+    }),
   };
 }
 
@@ -155,69 +171,77 @@ async function getProviderMatchSignals(userId) {
     return { headlines: [], buyers: [] };
   }
 
-  const materials = await Material.find({
-    provider: uid,
-    status: { $in: ["available", "active", "in_discussion"] },
-  })
-    .select("materialType industryType location title")
-    .lean();
-
-  if (!materials.length) {
+  const providerCats = getProviderCategories(provider);
+  if (!providerCats.length) {
     return {
-      headlines: ["Publish availability to unlock match signals."],
+      headlines: ["Add material categories to unlock buyer matches."],
       buyers: [],
     };
   }
 
-  const typeSet = new Set(
-    materials.map((m) => norm(m.materialType)).filter(Boolean)
-  );
-  const locHint = materials.map((m) => m.location).find(Boolean) ?? "";
-
+  const providerLoc = resolveUserLocation(provider);
   const buyers = await User.find({ role: "verified_buyer" })
-    .select("companyName materialTypes location industryType")
+    .select(
+      "companyName requiredMaterialCategories materialTypes location state verificationStatus createdAt updatedAt averageResponseTime responseRate"
+    )
     .lean()
     .limit(200);
 
   const ranked = buyers
     .map((b) => {
-      let score = 0;
-      for (const t of typeSet) {
-        const bts = (b.materialTypes ?? []).map(norm);
-        if (bts.some((bt) => bt && (t.includes(bt) || bt.includes(t)))) {
-          score += 40;
-          break;
-        }
-      }
-      if (locHint && norm(b.location) && norm(locHint).includes(norm(b.location))) {
-        score += 25;
-      }
-      return { buyer: b, score };
+      const match = scoreBuyerForProvider(b, provider);
+      const reasons = [];
+      if (match.materialScore > 0) reasons.push("Material category match");
+      if (match.locationScore === 30) reasons.push("Same city");
+      else if (match.locationScore === 15) reasons.push("Same state");
+      return { buyer: b, match, reasons };
     })
-    .filter((x) => x.score >= 30)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 6);
+    .filter((x) => x.match.total >= RECOMMEND_MIN_SCORE)
+    .sort((a, b) => b.match.total - a.match.total)
+    .slice(0, 12);
 
   const headlines = [];
-  if (locHint) {
-    headlines.push(`Relevant near ${locHint.split(",")[0].trim()}`);
+  if (providerLoc.city) {
+    headlines.push(`Buyers near ${providerLoc.city}`);
+  } else if (providerLoc.state) {
+    headlines.push(`Buyers in ${providerLoc.state}`);
   }
-  headlines.push("Matches your published material categories");
+  if (providerCats.length) {
+    headlines.push("Aligned to your material categories");
+  }
 
   return {
     headlines,
-    buyers: ranked.map(({ buyer: b, score }) => ({
+    buyers: ranked.map(({ buyer: b, match, reasons }) => ({
+      buyerId: b._id.toString(),
       companyName: b.companyName,
       location: b.location ?? "",
+      state: b.state ?? "",
+      city: b.location ?? "",
       industryType: b.industryType ?? "",
-      score,
+      matchPercent: match.total,
+      score: match.total,
+      matchLabel: match.matchLabel,
+      reasons,
+      verificationStatus: b.verificationStatus ?? "unverified",
+      memberSince: b.createdAt,
+      lastActiveAt: b.updatedAt,
+      averageResponseTime: b.averageResponseTime ?? "",
+      responseRate: b.responseRate ?? 0,
+      materialInterests: getBuyerCategories(b).slice(0, 5),
     })),
   };
 }
 
 module.exports = {
-  scoreMaterialForBuyer,
+  scoreMaterialForBuyer: scoreMaterialForBuyerTotal,
   notifyBuyersOfNewMaterial,
   getBuyerMaterialSuggestions,
   getProviderMatchSignals,
+  NOTIFY_SCORE_THRESHOLD,
+  RECOMMEND_MIN_SCORE,
+  getMatchLabel,
+  categoriesOverlap,
+  isSameState,
+  isDifferentState,
 };

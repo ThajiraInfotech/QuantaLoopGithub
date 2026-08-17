@@ -5,6 +5,7 @@ const {
   unreadCount,
   listNotifications,
   markNotificationRead,
+  markAllNotificationsRead,
 } = require("./notification.controller");
 
 function createNotificationsRouter(env) {
@@ -13,6 +14,7 @@ function createNotificationsRouter(env) {
 
   router.get("/unread-count", requireAuth, unreadCount);
   router.get("/", requireAuth, listNotifications);
+  router.patch("/read-all", requireAuth, markAllNotificationsRead);
   router.patch("/:id/read", requireAuth, markNotificationRead);
 
   return router;

@@ -10,6 +10,7 @@ const NOTIFICATION_TYPES = [
   "saved_opportunity_active",
   "relevant_category_activity",
   "coordination_follow_up",
+  "introduction_request",
 ];
 
 const notificationSchema = new mongoose.Schema(

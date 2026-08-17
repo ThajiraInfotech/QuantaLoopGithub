@@ -12,22 +12,23 @@ const PLANS = {
     {
       id: "network_access",
       name: "Network access",
-      positioning: "Verified industrial demand and recovery opportunity context.",
-      highlight: "Operational trust layer",
+      positioning:
+        "India and global material discovery, matching, and recovery opportunity access.",
+      highlight: "India + global network",
     },
     {
       id: "enterprise_access",
       name: "Enterprise access",
-      positioning: "Reserved for policy, verification depth, and integration scope.",
+      positioning: "Reserved for policy depth and integration scope.",
       highlight: "Future-ready",
     },
   ],
   anchor: {
     headline: "Recover value from what your operations already produce",
     subtext:
-      "Access to verified industrial demand and relevant recovery opportunities.",
-    annualInr: 4999,
-    dailyInrApprox: 13.7,
+      "Access industrial demand and relevant recovery opportunities across India and global markets.",
+    annualInr: 6999,
+    dailyInrApprox: 19.2,
     rationale:
       "One successful recovery opportunity can cover years of access.",
   },

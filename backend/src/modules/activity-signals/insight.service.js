@@ -79,7 +79,7 @@ async function getOperationalInsights(user) {
           id: `regional_${norm(city)}`,
           category: "regional",
           title: `Activity near ${city}`,
-          body: `Verified participants near ${city} are actively publishing and coordinating recovery opportunities.`,
+          body: `Registered participants near ${city} are actively publishing and coordinating recovery opportunities.`,
           tone: "positive",
           meta: { activeProviders, activeBuyers },
         });

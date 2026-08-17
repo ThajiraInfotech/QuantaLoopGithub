@@ -15,6 +15,7 @@ const messageSchema = new mongoose.Schema(
       index: true,
     },
     content: { type: String, required: true, trim: true, maxlength: 8000 },
+    isSystem: { type: Boolean, default: false },
     attachments: {
       type: [
         {
@@ -49,6 +50,7 @@ function toPublicMessage(doc) {
         ? sender.companyName ?? ""
         : "",
     content: o.content,
+    isSystem: Boolean(o.isSystem),
     attachments: o.attachments ?? [],
     createdAt: o.createdAt,
     updatedAt: o.updatedAt,

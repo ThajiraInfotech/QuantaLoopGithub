@@ -6,9 +6,19 @@ const { asyncHandler } = require("../../utils/asyncHandler");
 const { notifyBuyersOfNewMaterial } = require("../matches/match.service");
 const { User } = require("../users/user.model");
 const { Material, toPublicMaterial } = require("./material.model");
+const { normalizeCategory } = require("../../utils/materialCategories");
 const { isListedForNetworkBrowse } = require("./material-status.helper");
 const { listForMaterial } = require("../timeline/timeline.service");
 const { safeParseCreate, safeParseUpdate } = require("./material.validation");
+const {
+  sanitizeImageUrls,
+  uploadMaterialImage,
+} = require("../../services/storage/material-image.service");
+const {
+  normalizeCountryCode,
+  isIndiaCountry,
+  isInternationallyVisible,
+} = require("../../utils/marketScope");
 
 function validationError(next, flatten) {
   next(
@@ -26,27 +36,96 @@ function resolveProviderIdForCreate(req, data) {
   return req.user.id;
 }
 
+/** Align listing location/type/market with onboarding profile for MVP matching. */
+async function applyProviderListingDefaults(providerId, data) {
+  const provider = await User.findById(providerId)
+    .select("state city location country preferredMaterialCategories materialTypes")
+    .lean();
+  if (!provider) return { ...data };
+
+  const payload = { ...data };
+  payload.materialType =
+    normalizeCategory(payload.materialType) || payload.materialType;
+
+  const providerCountry = normalizeCountryCode(provider.country);
+  payload.country = normalizeCountryCode(payload.country || providerCountry);
+
+  if (!isIndiaCountry(providerCountry)) {
+    // Abroad sellers: country-only listing, always internationally visible.
+    payload.marketScope = "global";
+    const countryLabel = payload.country;
+    if (!(payload.location ?? "").toString().trim()) {
+      payload.location = countryLabel;
+    }
+    return payload;
+  }
+
+  // Indian sellers keep city/state proximity; marketScope india|global from form.
+  payload.marketScope =
+    payload.marketScope === "global" ? "global" : "india";
+
+  const city = (provider.city ?? provider.location ?? "").trim();
+  const state = (provider.state ?? "").trim();
+  const loc = (payload.location ?? "").trim();
+
+  if (loc && state && !loc.includes(",")) {
+    payload.location = `${loc}, ${state}`;
+  } else if (!loc && city && state) {
+    payload.location = `${city}, ${state}`;
+  }
+
+  return payload;
+}
+
+function applySanitizedImageUrls(data, env) {
+  if (!Object.prototype.hasOwnProperty.call(data, "imageUrls")) {
+    return data;
+  }
+  return {
+    ...data,
+    imageUrls: sanitizeImageUrls(data.imageUrls ?? [], env),
+  };
+}
+
 const listMaterials = asyncHandler(async (req, res, next) => {
   const { role, id: userId } = req.user;
   let query = Material.find();
+  let buyerCountry = "IN";
 
   if (role === "material_provider") {
     query = query.where({ provider: userId });
   } else if (role === "verified_buyer") {
+    const buyer = await User.findById(userId).select("country").lean();
+    buyerCountry = normalizeCountryCode(buyer?.country);
+
     query = query.where({
       status: { $in: ["available", "active", "in_discussion"] },
       visibility: "network",
       provider: { $ne: new mongoose.Types.ObjectId(userId) },
     });
+
+    // Abroad buyers only see internationally visible listings (preserve India-only exclusivity).
+    if (!isIndiaCountry(buyerCountry)) {
+      query = query.where({
+        $or: [
+          { marketScope: "global" },
+          { country: { $exists: true, $nin: ["IN", "in", ""] } },
+        ],
+      });
+    }
   }
 
   const docs = await query
     .sort({ updatedAt: -1 })
-    .populate("provider", "companyName name email")
+    .populate("provider", "companyName name email country")
     .limit(200)
     .exec();
 
-  const items = docs.map((d) => toPublicMaterial(d));
+  let items = docs.map((d) => toPublicMaterial(d));
+  if (role === "verified_buyer" && !isIndiaCountry(buyerCountry)) {
+    items = items.filter((m) => isInternationallyVisible(m));
+  }
+
   sendSuccess(res, { items }, "Materials retrieved");
 });
 
@@ -156,7 +235,7 @@ const createMaterial = asyncHandler(async (req, res, next) => {
     return;
   }
 
-  const data = parsed.data;
+  const data = applySanitizedImageUrls(parsed.data, req.app.locals.env);
   const providerId = resolveProviderIdForCreate(req, data);
 
   if (req.user.role === "admin" && data.providerUserId) {
@@ -180,14 +259,16 @@ const createMaterial = asyncHandler(async (req, res, next) => {
   const payload = { ...data };
   delete payload.providerUserId;
 
+  const enriched = await applyProviderListingDefaults(providerId, payload);
+
   const material = await Material.create({
-    ...payload,
+    ...enriched,
     provider: providerId,
   });
 
   const populated = await Material.findById(material._id).populate(
     "provider",
-    "companyName name email"
+    "companyName name email preferredMaterialCategories materialTypes state location country"
   );
 
   try {
@@ -217,6 +298,8 @@ const updateMaterial = asyncHandler(async (req, res, next) => {
     return;
   }
 
+  const data = applySanitizedImageUrls(parsed.data, req.app.locals.env);
+
   const doc = await Material.findById(id);
   if (!doc) {
     next(new AppError("Material not found", 404, "NOT_FOUND"));
@@ -229,7 +312,7 @@ const updateMaterial = asyncHandler(async (req, res, next) => {
     return;
   }
 
-  Object.assign(doc, parsed.data);
+  Object.assign(doc, data);
   await doc.save();
 
   const populated = await Material.findById(doc._id).populate(
@@ -240,10 +323,31 @@ const updateMaterial = asyncHandler(async (req, res, next) => {
   sendSuccess(res, { material: toPublicMaterial(populated) }, "Material updated");
 });
 
+const uploadMaterialImageHandler = asyncHandler(async (req, res, next) => {
+  if (!req.file) {
+    next(new AppError("Image file is required", 400, "IMAGE_REQUIRED"));
+    return;
+  }
+
+  try {
+    const url = await uploadMaterialImage(req.file, req.app.locals.env);
+    sendSuccess(res, { url }, "Image uploaded");
+  } catch (err) {
+    next(
+      new AppError(
+        err.message || "Unable to upload image",
+        500,
+        "UPLOAD_FAILED"
+      )
+    );
+  }
+});
+
 module.exports = {
   listMaterials,
   getMaterialById,
   getMaterialTimeline,
   createMaterial,
   updateMaterial,
+  uploadMaterialImageHandler,
 };

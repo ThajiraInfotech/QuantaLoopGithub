@@ -3,23 +3,35 @@ const mongoose = require("mongoose");
 const { sendSuccess } = require("../../utils/apiResponse");
 const { AppError } = require("../../utils/AppError");
 const { asyncHandler } = require("../../utils/asyncHandler");
+const {
+  enrichNotificationsWithContext,
+  countActionableUnread,
+} = require("./notification-enrichment");
+const { markAllReadForUser } = require("./notification.service");
 const { Notification, toPublicNotification } = require("./notification.model");
 
 const unreadCount = asyncHandler(async (req, res) => {
-  const count = await Notification.countDocuments({
+  const docs = await Notification.find({
     recipient: req.user.id,
     isRead: false,
-  });
+  })
+    .sort({ updatedAt: -1 })
+    .limit(200)
+    .exec();
+  let items = docs.map((d) => toPublicNotification(d));
+  items = await enrichNotificationsWithContext(items);
+  const count = countActionableUnread(items);
   sendSuccess(res, { unreadCount: count }, "");
 });
 
 const listNotifications = asyncHandler(async (req, res) => {
   const docs = await Notification.find({ recipient: req.user.id })
-    .sort({ createdAt: -1 })
+    .sort({ updatedAt: -1 })
     .limit(150)
     .exec();
-  const items = docs.map((d) => toPublicNotification(d));
-  const unreadCount = items.filter((n) => !n.isRead).length;
+  let items = docs.map((d) => toPublicNotification(d));
+  items = await enrichNotificationsWithContext(items);
+  const unreadCount = countActionableUnread(items);
 
   sendSuccess(res, { items, unreadCount }, "Notifications retrieved");
 });
@@ -48,4 +60,14 @@ const markNotificationRead = asyncHandler(async (req, res, next) => {
   sendSuccess(res, { notification: toPublicNotification(doc) }, "Marked read");
 });
 
-module.exports = { unreadCount, listNotifications, markNotificationRead };
+const markAllNotificationsRead = asyncHandler(async (req, res) => {
+  const modifiedCount = await markAllReadForUser(req.user.id);
+  sendSuccess(res, { modifiedCount, unreadCount: 0 }, "All notifications marked read");
+});
+
+module.exports = {
+  unreadCount,
+  listNotifications,
+  markNotificationRead,
+  markAllNotificationsRead,
+};

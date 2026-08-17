@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const USER_ROLES = ["material_provider", "verified_buyer", "admin"];
 const VERIFICATION_STATUS = ["unverified", "pending", "verified"];
+const ACCOUNT_STATUS = ["active", "suspended"];
 
 const userSchema = new mongoose.Schema(
   {
@@ -15,6 +16,19 @@ const userSchema = new mongoose.Schema(
       trim: true,
     },
     password: { type: String, required: true, select: false },
+    authProvider: {
+      type: String,
+      enum: ["local", "google"],
+      default: "local",
+    },
+    googleId: { type: String, trim: true, sparse: true, unique: true },
+    hasLocalPassword: { type: Boolean, default: true },
+    emailVerified: { type: Boolean, default: true },
+    googleEmailVerified: { type: Boolean, default: false },
+    emailVerificationToken: { type: String, select: false, default: null },
+    emailVerificationExpiresAt: { type: Date, select: false, default: null },
+    passwordResetToken: { type: String, select: false, default: null },
+    passwordResetExpiresAt: { type: Date, select: false, default: null },
     role: {
       type: String,
       enum: USER_ROLES,
@@ -22,9 +36,19 @@ const userSchema = new mongoose.Schema(
       default: "material_provider",
     },
     industryType: { type: String, trim: true, default: "" },
+    secondaryIndustries: [{ type: String, trim: true }],
+    customIndustry: { type: String, trim: true, default: "", maxlength: 120 },
     materialTypes: [{ type: String, trim: true }],
+    preferredMaterialCategories: [{ type: String, trim: true }],
+    requiredMaterialCategories: [{ type: String, trim: true }],
     industriesHandled: [{ type: String, trim: true }],
     location: { type: String, trim: true, default: "" },
+    /** ISO country code. Existing users default to India (additive intl). */
+    country: { type: String, trim: true, default: "IN", maxlength: 8, uppercase: true },
+    stateCode: { type: String, trim: true, default: "", maxlength: 8 },
+    state: { type: String, trim: true, default: "", maxlength: 80 },
+    region: { type: String, trim: true, default: "", maxlength: 120 },
+    customRegion: { type: String, trim: true, default: "", maxlength: 120 },
     companyDescription: { type: String, default: "", trim: true, maxlength: 8000 },
     website: { type: String, default: "", trim: true, maxlength: 500 },
     operationalLocation: { type: String, default: "", trim: true, maxlength: 300 },
@@ -40,6 +64,16 @@ const userSchema = new mongoose.Schema(
       index: true,
     },
     isVerified: { type: Boolean, default: false },
+    accountStatus: {
+      type: String,
+      enum: ACCOUNT_STATUS,
+      default: "active",
+      index: true,
+    },
+    phone: { type: String, default: "", trim: true, maxlength: 40 },
+    jobTitle: { type: String, default: "", trim: true, maxlength: 120 },
+    loginCount: { type: Number, default: 0, min: 0 },
+    lastLoginAt: { type: Date, default: null },
   },
   { timestamps: true }
 );
@@ -49,6 +83,7 @@ userSchema.pre("save", function syncVerifiedFlag() {
 });
 
 const { computeProfileCompletion } = require("../../utils/profileCompletion");
+const { normalizeVerificationStatus } = require("../../utils/verificationDisplay");
 
 function toPublicJSON(doc, options = {}) {
   const includeEmail = options.includeEmail !== false;
@@ -61,9 +96,20 @@ function toPublicJSON(doc, options = {}) {
     companyName: m.companyName,
     role: m.role,
     industryType: m.industryType ?? "",
+    primaryIndustry: m.industryType ?? "",
+    secondaryIndustries: m.secondaryIndustries ?? [],
+    customIndustry: m.customIndustry ?? "",
     materialTypes: m.materialTypes ?? [],
+    preferredMaterialCategories: m.preferredMaterialCategories ?? [],
+    requiredMaterialCategories: m.requiredMaterialCategories ?? [],
     industriesHandled: m.industriesHandled ?? [],
     location: m.location ?? "",
+    country: (m.country ?? "IN").toString().trim().toUpperCase() || "IN",
+    stateCode: m.stateCode ?? "",
+    state: m.state ?? "",
+    region: m.region ?? "",
+    customRegion: m.customRegion ?? "",
+    city: m.location ?? "",
     companyDescription: m.companyDescription ?? "",
     website: m.website ?? "",
     operationalLocation: m.operationalLocation ?? "",
@@ -72,8 +118,13 @@ function toPublicJSON(doc, options = {}) {
     responseRate: typeof m.responseRate === "number" ? m.responseRate : 0,
     averageResponseTime: m.averageResponseTime ?? "",
     profileCompletion: completion,
-    verificationStatus: m.verificationStatus ?? "unverified",
-    isVerified: Boolean(m.isVerified),
+    verificationStatus: normalizeVerificationStatus(m.verificationStatus),
+    isVerified: normalizeVerificationStatus(m.verificationStatus) === "verified",
+    accountStatus: m.accountStatus ?? "active",
+    emailVerified: m.emailVerified !== false,
+    googleEmailVerified: Boolean(m.googleEmailVerified),
+    hasLocalPassword: m.hasLocalPassword ?? true,
+    authProvider: m.authProvider ?? "local",
     createdAt: m.createdAt,
     updatedAt: m.updatedAt,
   };
@@ -86,4 +137,10 @@ function toPublicJSON(doc, options = {}) {
 
 const User = mongoose.model("User", userSchema);
 
-module.exports = { User, USER_ROLES, VERIFICATION_STATUS, toPublicJSON };
+module.exports = {
+  User,
+  USER_ROLES,
+  VERIFICATION_STATUS,
+  ACCOUNT_STATUS,
+  toPublicJSON,
+};

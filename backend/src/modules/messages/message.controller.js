@@ -4,6 +4,8 @@ const { sendSuccess } = require("../../utils/apiResponse");
 const { AppError } = require("../../utils/AppError");
 const { asyncHandler } = require("../../utils/asyncHandler");
 const { Conversation } = require("../conversations/conversation.model");
+const { Interest } = require("../interests/interest.model");
+const { upsertMessageNotification } = require("../notifications/notification.service");
 const { appendTimelineEvent } = require("../timeline/timeline.service");
 const { Message, toPublicMessage } = require("./message.model");
 const { safeParseCreate } = require("./message.validation");
@@ -70,6 +72,25 @@ const createMessage = asyncHandler(async (req, res, next) => {
     "sender",
     "name companyName"
   );
+
+  const recipientId = uid === providerId ? buyerId : providerId;
+  const senderCompany =
+    populated.sender?.companyName ?? populated.sender?.name ?? "A company";
+
+  let relatedInterest = conv.interest ?? null;
+  if (!relatedInterest) {
+    const linked = await Interest.findOne({ conversation: conv._id })
+      .select("_id")
+      .lean();
+    relatedInterest = linked?._id ?? null;
+  }
+
+  await upsertMessageNotification({
+    recipient: recipientId,
+    senderCompany,
+    relatedMaterial: conv.material,
+    relatedInterest,
+  });
 
   sendSuccess(
     res,

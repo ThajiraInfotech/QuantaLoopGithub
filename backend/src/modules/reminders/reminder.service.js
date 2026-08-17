@@ -7,6 +7,10 @@ const { Material } = require("../materials/material.model");
 const { SavedMaterial } = require("../saved-materials/saved-material.model");
 const { Notification } = require("../notifications/notification.model");
 const { createNotification } = require("../notifications/notification.service");
+const {
+  responseReminder,
+  savedOpportunityActive,
+} = require("../../utils/notificationCopy");
 const { Reminder, toPublicReminder } = require("./reminder.model");
 
 const MS_HOUR = 60 * 60 * 1000;
@@ -65,12 +69,15 @@ async function syncRemindersForUser(userId, role) {
         relatedInterest: row._id,
       });
 
+      const reminderCopy = responseReminder({
+        materialTitle: row.material?.title,
+      });
       await maybeNotifyOnce({
         recipient: userId,
         dedupeKey: `notif:${key}`,
         type: "response_reminder",
-        title: "Interest awaiting your response",
-        message: `An interest on “${row.material?.title ?? "a listing"}” has been pending for over 48 hours.`,
+        title: reminderCopy.title,
+        message: reminderCopy.message,
         relatedMaterial: row.material?._id ?? row.material,
         relatedInterest: row._id,
       });
@@ -156,12 +163,13 @@ async function syncRemindersForUser(userId, role) {
         relatedMaterial: m._id,
       });
 
+      const savedCopy = savedOpportunityActive({ materialTitle: m.title });
       await maybeNotifyOnce({
         recipient: userId,
         dedupeKey: `notif:saved_update:${m._id}`,
         type: "saved_opportunity_active",
-        title: "Saved opportunity updated",
-        message: `A material on your watch list — “${m.title}” — was recently updated.`,
+        title: savedCopy.title,
+        message: savedCopy.message,
         relatedMaterial: m._id,
         relatedInterest: null,
       });

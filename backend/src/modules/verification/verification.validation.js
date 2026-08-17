@@ -1,10 +1,6 @@
 const { z } = require("zod");
 
-const verificationStatusSchema = z.enum([
-  "unverified",
-  "pending",
-  "verified",
-]);
+const verificationStatusSchema = z.enum(["unverified", "verified"]);
 
 const patchVerificationSchema = z.object({
   verificationStatus: verificationStatusSchema,

@@ -7,7 +7,14 @@ const { Conversation } = require("../conversations/conversation.model");
 const { buyerCanAccessMaterial } = require("../materials/material-access");
 const { Material } = require("../materials/material.model");
 const { createNotification } = require("../notifications/notification.service");
+const {
+  interestReceived,
+  discussionStarted,
+  interestDeclined,
+  workflowNotification,
+} = require("../../utils/notificationCopy");
 const { appendTimelineEvent } = require("../timeline/timeline.service");
+const { seedDiscussionStarterMessage } = require("./discussion-starter");
 const { Interest, toPublicInterest } = require("./interest.model");
 const {
   safeParseCreate,
@@ -17,7 +24,7 @@ const {
 
 const WORKFLOW_FROM = {
   accepted: ["discussion", "closed"],
-  discussion: ["pickup_scheduled", "closed"],
+  discussion: ["completed", "closed"],
   pickup_scheduled: ["completed", "closed"],
   completed: ["closed"],
 };
@@ -125,11 +132,15 @@ const createInterest = asyncHandler(async (req, res, next) => {
     .populate("buyer", "companyName name email")
     .populate("material", "title materialType location status");
 
+  const receivedCopy = interestReceived({
+    buyerCompany: populated.buyer?.companyName,
+    materialTitle: material.title,
+  });
   await createNotification({
     recipient: providerId,
     type: "interest_received",
-    title: "New interest on your material",
-    message: `${populated.buyer?.companyName ?? "A buyer"} signaled interest on "${material.title}".`,
+    title: receivedCopy.title,
+    message: receivedCopy.message,
     relatedMaterial: material._id,
     relatedInterest: interest._id,
   });
@@ -165,6 +176,7 @@ const listMyInterests = asyncHandler(async (req, res) => {
     .sort({ updatedAt: -1 })
     .limit(200)
     .populate("buyer", "companyName name email")
+    .populate("provider", "companyName name email")
     .populate("material", "title materialType location status")
     .exec();
 
@@ -239,8 +251,6 @@ const updateInterestStatus = asyncHandler(async (req, res, next) => {
     return;
   }
 
-  interest.status = parsed.data.status;
-
   if (parsed.data.status === "accepted") {
     const conv = await Conversation.create({
       material: interest.material._id ?? interest.material,
@@ -250,16 +260,21 @@ const updateInterestStatus = asyncHandler(async (req, res, next) => {
       status: "active",
       lastMessageAt: null,
     });
+    await seedDiscussionStarterMessage(conv, interest);
     interest.conversation = conv._id;
+    interest.status = "discussion";
+  } else {
+    interest.status = parsed.data.status;
   }
 
   await interest.save();
 
   const materialDoc = await Material.findById(interest.material?._id ?? interest.material);
   if (parsed.data.status === "accepted" && materialDoc) {
+    await syncMaterialWithInterestStatus(materialDoc, "discussion");
     await appendTimelineEvent({
       type: "interest_accepted",
-      summary: `Interest accepted — coordination thread opened for “${interest.material?.title ?? "material"}”.`,
+      summary: `Interest accepted — discussion started for “${interest.material?.title ?? "material"}”.`,
       actor: req.user.id,
       material: interest.material?._id ?? interest.material,
       interest: interest._id,
@@ -274,6 +289,16 @@ const updateInterestStatus = asyncHandler(async (req, res, next) => {
       interest: interest._id,
       conversation: interest.conversation,
       audienceUserIds: audiencePair(interest.provider, interest.buyer),
+    });
+    await appendTimelineEvent({
+      type: "workflow_discussion",
+      summary: "Opportunity moved into active operational discussion.",
+      actor: req.user.id,
+      material: interest.material?._id ?? interest.material,
+      interest: interest._id,
+      conversation: interest.conversation,
+      audienceUserIds: audiencePair(interest.provider, interest.buyer),
+      meta: { status: "discussion" },
     });
   }
 
@@ -290,23 +315,27 @@ const updateInterestStatus = asyncHandler(async (req, res, next) => {
 
   const populated = await Interest.findById(interest._id)
     .populate("buyer", "companyName name email")
+    .populate("provider", "companyName name email")
     .populate("material", "title materialType location status")
     .populate("conversation");
 
-  const notifType =
+  const materialTitle = interest.material?.title;
+  const providerCompany =
+    populated.provider?.companyName ?? populated.provider?.name;
+
+  const buyerCopy =
     parsed.data.status === "accepted"
-      ? "interest_accepted"
-      : "interest_rejected";
-  const title =
-    parsed.data.status === "accepted"
-      ? "Interest accepted"
-      : "Interest declined";
+      ? discussionStarted({ providerCompany, materialTitle })
+      : interestDeclined({ providerCompany, materialTitle });
 
   await createNotification({
     recipient: interest.buyer,
-    type: notifType,
-    title,
-    message: `Your interest in "${interest.material?.title ?? "a material"}" was ${parsed.data.status}.`,
+    type:
+      parsed.data.status === "accepted"
+        ? "interest_accepted"
+        : "interest_rejected",
+    title: buyerCopy.title,
+    message: buyerCopy.message,
     relatedMaterial: interest.material?._id ?? interest.material,
     relatedInterest: interest._id,
   });
@@ -333,16 +362,17 @@ const patchInterestWorkflow = asyncHandler(async (req, res, next) => {
   }
 
   const nextStatus = parsed.data.status;
-  const interest = await Interest.findById(id).populate(
-    "material",
-    "title provider status"
-  );
+  const interest = await Interest.findById(id)
+    .populate("material", "title provider status")
+    .populate("provider", "companyName name");
   if (!interest) {
     next(new AppError("Interest not found", 404, "NOT_FOUND"));
     return;
   }
 
-  const providerOnInterest = interest.provider.toString();
+  const providerOnInterest = interest.provider._id
+    ? interest.provider._id.toString()
+    : interest.provider.toString();
   if (
     req.user.role === "material_provider" &&
     providerOnInterest !== req.user.id
@@ -384,6 +414,14 @@ const patchInterestWorkflow = asyncHandler(async (req, res, next) => {
     closed: "Opportunity thread closed.",
   };
 
+  const materialTitle = interest.material?.title;
+  const providerCompany =
+    interest.provider?.companyName ?? interest.provider?.name;
+  const workflowCopy = workflowNotification(nextStatus, {
+    materialTitle,
+    providerCompany,
+  });
+
   await appendTimelineEvent({
     type: typeMap[nextStatus],
     summary: summaryMap[nextStatus],
@@ -398,8 +436,8 @@ const patchInterestWorkflow = asyncHandler(async (req, res, next) => {
   await createNotification({
     recipient: interest.buyer,
     type: "interest_workflow_update",
-    title: "Opportunity status update",
-    message: `${summaryMap[nextStatus]} (“${interest.material?.title ?? "material"}”).`,
+    title: workflowCopy.title,
+    message: workflowCopy.message,
     relatedMaterial: interest.material?._id ?? interest.material,
     relatedInterest: interest._id,
   });

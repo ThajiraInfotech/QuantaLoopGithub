@@ -7,7 +7,15 @@
     "dev": "nodemon src/server.js",
     "seed": "node src/scripts/seed.js",
     "clear": "node src/scripts/clear.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clear:participants": "node src/scripts/clear-participants.js",
+    "test": "node src/scripts/verify-recommendation-e2e.js",
+    "test:recommendations": "node src/scripts/verify-recommendation-e2e.js",
+    "test:auth": "node src/scripts/verify-auth-onboarding-e2e.js",
+    "test:razorpay": "node src/scripts/verify-razorpay-signatures.js",
+    "billing:bootstrap-plan": "node src/scripts/bootstrap-razorpay-plan.js",
+    "test:subscription-access": "node src/scripts/verify-subscription-access.js",
+    "test:subscriptions": "node src/scripts/verify-razorpay-subscriptions.js && node src/scripts/verify-subscription-access.js",
+    "test:payment-gate": "node src/scripts/verify-payment-gate-e2e.js"
   },
   "keywords": [],
   "author": "",
@@ -21,11 +29,13 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "express-rate-limit": "^8.5.1",
+    "google-auth-library": "^10.9.0",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.6.2",
     "morgan": "^1.10.1",
     "multer": "^2.1.1",
+    "nodemailer": "^9.0.1",
     "zod": "^4.4.3"
   },
   "devDependencies": {

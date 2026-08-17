@@ -44,8 +44,7 @@ async function createProviders(count = 18) {
 
   for (let i = 0; i < profiles.length; i += 1) {
     const p = profiles[i];
-    const verificationStatus =
-      i < 14 ? "verified" : i < 16 ? "pending" : "unverified";
+    const verificationStatus = i < 14 ? "verified" : "unverified";
     const doc = await User.create({
       name: `Operations Lead ${i + 1}`,
       companyName: p.companyName,
@@ -78,7 +77,7 @@ async function createBuyers(count = 18) {
 
   for (let i = 0; i < profiles.length; i += 1) {
     const b = profiles[i];
-    const verificationStatus = i < 15 ? "verified" : "pending";
+    const verificationStatus = i < 15 ? "verified" : "unverified";
     const doc = await User.create({
       name: `Procurement Manager ${i + 1}`,
       companyName: b.companyName,

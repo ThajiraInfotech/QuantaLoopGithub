@@ -88,6 +88,9 @@ function toPublicInterest(doc) {
     ),
     providerId:
       provider?._id?.toString?.() ?? provider?.toString?.() ?? String(provider),
+    provider: serializeUserBrief(
+      provider && typeof provider === "object" && "_id" in provider ? provider : null
+    ),
     message: o.message,
     pickupTimeline: o.pickupTimeline,
     status: o.status,

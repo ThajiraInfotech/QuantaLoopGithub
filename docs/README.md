@@ -42,6 +42,36 @@ This repository contains the **Quanta Loop** Phase 1 foundation: a premium B2B i
 - `PATCH /api/v1/notifications/:id/read` — mark one notification read
 - `GET /api/v1/matches/suggestions` — lightweight, non-ML suggestions by role (buyer: scored materials; provider: buyer signals)
 
+## Razorpay subscriptions
+
+Annual network access (`₹6,999 / year`) is billed through Razorpay Subscriptions. Existing materials, interests, and matching APIs stay ungated.
+
+**Backend env** (`backend/.env`, never commit secrets):
+
+- `RAZORPAY_KEY_ID` / `RAZORPAY_KEY_SECRET` — dashboard API keys (test keys start with `rzp_test_`)
+- `RAZORPAY_WEBHOOK_SECRET` — the secret you set when creating the webhook
+- `RAZORPAY_PLAN_ID_ANNUAL_ACCESS` — optional; if omitted, the API reuses or creates the yearly plan
+
+Webhook URL (raw body, HMAC verified):
+
+`POST {API origin}/api/v1/subscriptions/webhook`
+
+Subscribe at least to: `subscription.authenticated`, `subscription.activated`, `subscription.charged`, `subscription.pending`, `subscription.halted`, `subscription.paused`, `subscription.resumed`, `subscription.cancelled`, `subscription.completed`, `subscription.expired`, `subscription.updated`, `payment.failed`.
+
+Local webhook delivery needs a public HTTPS tunnel (Razorpay cannot reach `localhost`). Checkout itself works on `http://localhost:3000` with test keys.
+
+Optional: `npm run billing:bootstrap-plan` from `backend/` pins the Razorpay plan id.
+
+Authenticated API:
+
+- `GET /api/v1/subscriptions/plans` — public key + catalog
+- `GET /api/v1/subscriptions/me` — current membership
+- `POST /api/v1/subscriptions/checkout` — `{ planCode: "annual_access" }`
+- `POST /api/v1/subscriptions/verify` — checkout signature
+- `POST /api/v1/subscriptions/cancel` — `{ cancelAtCycleEnd: true }`
+
+In the app, open **Access** after sign-in and use **Subscribe with Razorpay**.
+
 ## Phase 2+
 
 Matching engines, material catalogs, verification workflows, and admin tooling will extend the existing module boundaries without rewriting the foundation.

@@ -2,75 +2,86 @@ const mongoose = require("mongoose");
 
 const { User } = require("../users/user.model");
 const { Material } = require("../materials/material.model");
-const { Interest } = require("../interests/interest.model");
-const { SavedMaterial } = require("../saved-materials/saved-material.model");
 const {
-  scoreMaterialForBuyer,
   getBuyerMaterialSuggestions,
   getProviderMatchSignals,
 } = require("../matches/match.service");
 const {
-  freshnessBoost,
-  getProviderResponseQuality,
-  computeUserEngagementScore,
-  computeMaterialActivityScore,
-  rankScoredMaterials,
-} = require("../engagement/engagement.service");
+  RECOMMEND_MIN_SCORE,
+  scoreMaterialForBuyer,
+  scoreBuyerForProvider,
+  getMatchLabel,
+} = require("../matches/mvp-match.service");
+const {
+  resolveUserLocation,
+  isSameState,
+  isDifferentState,
+  isSameCountry,
+  buildMatchLocationContext,
+} = require("../../utils/locationMatch");
+const {
+  isIndiaCountry,
+  isOutsideIndiaListing,
+  isInternationallyVisible,
+  normalizeCountryCode,
+} = require("../../utils/marketScope");
 
 const LISTABLE = ["available", "active", "in_discussion"];
 
-function norm(s) {
-  return (s ?? "").toString().trim().toLowerCase();
-}
-
-function locationCity(loc) {
-  const s = (loc ?? "").toString().trim();
-  if (!s) return "";
-  return s.split(",")[0].trim();
-}
-
-async function enrichMaterialRow(m, buyer, extras = {}) {
-  const relevanceScore = buyer ? scoreMaterialForBuyer(m, buyer) : 0;
-  const activityScore = await computeMaterialActivityScore(m._id);
-  const freshnessScore = freshnessBoost(m.updatedAt);
-  let providerQuality = 50;
-  if (m.provider) {
-    const pid =
-      typeof m.provider === "object" && m.provider._id
-        ? m.provider._id.toString()
-        : m.provider.toString();
-    const q = await getProviderResponseQuality(pid);
-    providerQuality = q.score;
-  }
-
-  const composite =
-    relevanceScore * 0.45 +
-    activityScore * 0.2 +
-    freshnessScore +
-    providerQuality * 0.15;
+function materialRow(m, buyer, match, extras = {}) {
+  const provider =
+    m.provider && typeof m.provider === "object" ? m.provider : null;
+  const buyerLoc = buyer ? resolveUserLocation(buyer) : { country: "IN", state: "", city: "" };
+  const locationContext = buildMatchLocationContext(
+    buyerLoc,
+    match.sellerLocation ?? {}
+  );
+  const baseHeadline = extras.headline ?? match.matchLabel ?? "Relevant Match";
+  const headline =
+    (extras.sectionType === "materials_other_states" ||
+      extras.sectionType === "materials_global" ||
+      extras.sectionType === "materials_in_your_country") &&
+    locationContext.locationNote
+      ? `${baseHeadline} — ${locationContext.locationNote}`
+      : baseHeadline;
 
   return {
     materialId: m._id.toString(),
     title: m.title,
     materialType: m.materialType,
     location: m.location,
-    providerCompany:
-      m.provider && typeof m.provider === "object"
-        ? m.provider.companyName ?? ""
-        : "",
-    relevanceScore,
-    activityScore,
-    freshnessScore,
-    compositeScore: Math.round(composite),
-    priority:
-      composite >= 70
-        ? "high"
-        : composite >= 45
-          ? "medium"
-          : "standard",
-    headline: extras.headline ?? "Aligned recovery opportunity",
+    country: normalizeCountryCode(m.country ?? match.sellerLocation?.country),
+    marketScope: m.marketScope === "global" ? "global" : "india",
+    providerCompany: provider?.companyName ?? "",
+    relevanceScore: match.materialScore,
+    activityScore: match.locationScore,
+    freshnessScore: 0,
+    compositeScore: match.total,
+    matchLabel: match.matchLabel,
+    priority: match.priority,
+    sellerState: match.sellerLocation?.state ?? "",
+    sellerCity: match.sellerLocation?.city ?? "",
+    sellerCountry: match.sellerLocation?.country ?? "IN",
     ...extras,
+    locationScope: locationContext.locationScope,
+    locationNote: locationContext.locationNote,
+    headline,
   };
+}
+
+async function enrichMaterialRow(m, buyer, extras = {}) {
+  const provider =
+    m.provider && typeof m.provider === "object" ? m.provider : null;
+  const match = buyer
+    ? scoreMaterialForBuyer(m, buyer, provider)
+    : {
+        total: 0,
+        materialScore: 0,
+        locationScore: 0,
+        matchLabel: null,
+        priority: "standard",
+      };
+  return materialRow(m, buyer, match, extras);
 }
 
 /**
@@ -85,114 +96,127 @@ async function getMaterialRecommendations(user) {
     const buyer = await User.findById(userId).lean();
     if (!buyer) return { sections: [] };
 
-    const [savedIds, pastTypes, materials] = await Promise.all([
-      SavedMaterial.find({ buyer: userId }).select("material").lean(),
-      Interest.find({ buyer: userId })
-        .populate("material", "materialType")
-        .sort({ updatedAt: -1 })
-        .limit(20)
-        .lean(),
-      Material.find({
-        status: { $in: LISTABLE },
-        visibility: "network",
-        provider: { $ne: new mongoose.Types.ObjectId(userId) },
-      })
-        .populate("provider", "companyName responseRate verificationStatus")
-        .sort({ updatedAt: -1 })
-        .limit(100)
-        .lean(),
-    ]);
+    const buyerLoc = resolveUserLocation(buyer);
+    const materials = await Material.find({
+      status: { $in: LISTABLE },
+      visibility: "network",
+      provider: { $ne: new mongoose.Types.ObjectId(userId) },
+    })
+      .populate(
+        "provider",
+        "companyName preferredMaterialCategories materialTypes state location country"
+      )
+      .sort({ updatedAt: -1 })
+      .limit(100)
+      .lean();
 
-    const savedSet = new Set(savedIds.map((s) => s.material.toString()));
-    const typeFreq = {};
-    for (const row of pastTypes) {
-      const t = row.material?.materialType;
-      if (t) typeFreq[norm(t)] = (typeFreq[norm(t)] ?? 0) + 1;
-    }
-
-    const enriched = [];
+    const scored = [];
     for (const m of materials) {
-      const row = await enrichMaterialRow(m, buyer);
-      if (savedSet.has(row.materialId)) row.headline = "On your watch list";
-      enriched.push(row);
+      const provider =
+        m.provider && typeof m.provider === "object" ? m.provider : null;
+      const match = scoreMaterialForBuyer(m, buyer, provider);
+      if (match.total < RECOMMEND_MIN_SCORE) continue;
+      scored.push({ m, match });
     }
 
-    const ranked = rankScoredMaterials(enriched);
+    scored.sort((a, b) => b.match.total - a.match.total);
 
-    const forOperations = ranked
-      .filter((r) => r.relevanceScore >= 25)
-      .slice(0, 8)
-      .map((r) => ({
-        ...r,
-        sectionType: "recommended_operations",
-      }));
+    if (!isIndiaCountry(buyerLoc.country)) {
+      const inCountry = scored
+        .filter(
+          ({ m, match }) =>
+            isInternationallyVisible(m) &&
+            isSameCountry(buyerLoc, match.sellerLocation)
+        )
+        .slice(0, 8)
+        .map(({ m, match }) =>
+          materialRow(m, buyer, match, {
+            sectionType: "materials_in_your_country",
+            headline: match.matchLabel ?? "Relevant Match",
+          })
+        );
 
-    const city = locationCity(buyer.location);
-    const nearYou = ranked
-      .filter((r) => city && norm(r.location).includes(norm(city)))
-      .slice(0, 6)
-      .map((r) => ({
-        ...r,
-        headline: city ? `Active near ${city}` : r.headline,
-        sectionType: "near_you",
-      }));
+      if (inCountry.length) {
+        sections.push({
+          id: "materials_in_your_country",
+          title: "Materials in your country",
+          subtitle: `Same material category in ${buyerLoc.country}.`,
+          items: inCountry,
+        });
+      }
+    } else {
+      const indiaScored = scored.filter(
+        ({ m }) => !isOutsideIndiaListing(m)
+      );
 
-    const topType = Object.entries(typeFreq).sort((a, b) => b[1] - a[1])[0]?.[0];
-    const similar = topType
-      ? ranked
-          .filter((r) => norm(r.materialType).includes(topType))
-          .slice(0, 6)
-          .map((r) => ({
-            ...r,
-            headline: "Similar to your recent interests",
-            sectionType: "similar_recovery",
-          }))
-      : [];
+      const nearYou = indiaScored
+        .filter(({ match }) => isSameState(buyerLoc, match.sellerLocation))
+        .slice(0, 8)
+        .map(({ m, match }) =>
+          materialRow(m, buyer, match, {
+            sectionType: "materials_near_you",
+            headline: match.matchLabel ?? "Relevant Match",
+          })
+        );
 
-    const weekFresh = ranked
-      .filter((r) => r.freshnessScore >= 12)
-      .slice(0, 6)
-      .map((r) => ({
-        ...r,
-        headline: "Relevant this week",
-        sectionType: "relevant_week",
-      }));
+      const otherStates = indiaScored
+        .filter(
+          ({ match }) =>
+            match.materialScore > 0 &&
+            isDifferentState(buyerLoc, match.sellerLocation)
+        )
+        .slice(0, 8)
+        .map(({ m, match }) =>
+          materialRow(m, buyer, match, {
+            sectionType: "materials_other_states",
+            headline: match.matchLabel ?? "Relevant Match",
+          })
+        );
 
-    if (forOperations.length) {
-      sections.push({
-        id: "recommended_operations",
-        title: "Recommended for your operations",
-        subtitle: "Rule-based alignment on type, location, and network activity.",
-        items: forOperations,
-      });
-    }
-    if (nearYou.length) {
-      sections.push({
-        id: "frequently_active_near",
-        title: city ? `Relevant near ${city}` : "Frequently active near you",
-        subtitle: "Listings with regional operational context.",
-        items: nearYou,
-      });
-    }
-    if (similar.length) {
-      sections.push({
-        id: "similar_recovery",
-        title: "Similar recovery opportunities",
-        subtitle: "Based on materials you have engaged with before.",
-        items: similar,
-      });
-    }
-    if (weekFresh.length) {
-      sections.push({
-        id: "relevant_week",
-        title: "Relevant this week",
-        subtitle: "Fresh listings with recent network movement.",
-        items: weekFresh,
-      });
+      const globalItems = scored
+        .filter(({ m }) => isOutsideIndiaListing(m))
+        .slice(0, 8)
+        .map(({ m, match }) =>
+          materialRow(m, buyer, match, {
+            sectionType: "materials_global",
+            headline: match.matchLabel ?? "Relevant Match",
+          })
+        );
+
+      if (nearYou.length) {
+        sections.push({
+          id: "materials_near_you",
+          title: "Materials Near You",
+          subtitle:
+            buyerLoc.state
+              ? `Same material category in ${buyerLoc.state}.`
+              : "Same material category in your state.",
+          items: nearYou,
+        });
+      }
+      if (otherStates.length) {
+        sections.push({
+          id: "materials_other_states",
+          title: "Materials in Other States",
+          subtitle: "Same material category — interstate discovery.",
+          items: otherStates,
+        });
+      }
+      if (globalItems.length) {
+        sections.push({
+          id: "materials_global",
+          title: "Global materials",
+          subtitle: "Materials listed outside India.",
+          items: globalItems,
+        });
+      }
     }
   }
 
   if (role === "material_provider") {
+    const provider = await User.findById(userId).lean();
+    if (!provider) return { sections: [] };
+
     const materials = await Material.find({
       provider: userId,
       status: { $in: LISTABLE },
@@ -201,30 +225,30 @@ async function getMaterialRecommendations(user) {
       .limit(12)
       .lean();
 
-    const items = [];
-    for (const m of materials) {
-      const activityScore = await computeMaterialActivityScore(m._id);
-      items.push({
+    const items = materials.map((m) => {
+      const match = scoreMaterialForBuyer(m, provider, provider);
+      return {
         materialId: m._id.toString(),
         title: m.title,
         materialType: m.materialType,
         location: m.location,
-        activityScore,
-        freshnessScore: freshnessBoost(m.updatedAt),
-        priority: activityScore >= 25 ? "high" : "standard",
-        headline:
-          activityScore >= 25
-            ? "Fast-moving opportunity"
-            : "Your published availability",
+        activityScore: 0,
+        freshnessScore: 0,
+        compositeScore: match.total,
+        matchLabel: match.matchLabel,
+        priority: match.priority,
+        headline: "Your published availability",
+      };
+    });
+
+    if (items.length) {
+      sections.push({
+        id: "provider_active_listings",
+        title: "Your active opportunities",
+        subtitle: "Your published listings on the network.",
+        items,
       });
     }
-
-    sections.push({
-      id: "provider_active_listings",
-      title: "Your active opportunities",
-      subtitle: "Ranked by recent coordination and interest signals.",
-      items: items.sort((a, b) => b.activityScore - a.activityScore),
-    });
   }
 
   return { sections };
@@ -239,133 +263,130 @@ async function getParticipantRecommendations(user) {
     const buyer = await User.findById(userId).lean();
     if (!buyer) return { sections: [] };
 
+    const buyerLoc = resolveUserLocation(buyer);
     const providers = await User.find({ role: "material_provider" })
-      .select("companyName location industryType responseRate verificationStatus")
-      .limit(80)
+      .select(
+        "companyName location state preferredMaterialCategories materialTypes industryType"
+      )
+      .limit(120)
       .lean();
 
-    const ranked = [];
+    const scored = [];
     for (const p of providers) {
-      const quality = await getProviderResponseQuality(p._id);
-      const engagement = await computeUserEngagementScore(p._id);
-      let alignment = 0;
-      const mats = await Material.find({
-        provider: p._id,
-        status: { $in: LISTABLE },
-        visibility: "network",
-      })
-        .limit(5)
-        .lean();
-      for (const m of mats) {
-        alignment = Math.max(alignment, scoreMaterialForBuyer(m, buyer));
-      }
-
-      const composite = Math.round(
-        quality.score * 0.4 + engagement * 0.25 + alignment * 0.35
-      );
-      if (composite < 30) continue;
-
-      ranked.push({
+      if (p._id.toString() === userId) continue;
+      const match = scoreBuyerForProvider(buyer, p);
+      if (match.total < RECOMMEND_MIN_SCORE) continue;
+      scored.push({
         participantId: p._id.toString(),
         companyName: p.companyName,
         location: p.location ?? "",
         industryType: p.industryType ?? "",
-        responseQualityScore: quality.score,
-        responseQualityLabel: quality.label,
-        engagementScore: engagement,
-        alignmentScore: alignment,
-        compositeScore: composite,
-        priority: composite >= 70 ? "high" : "standard",
-        headline:
-          quality.score >= 75
-            ? "High response quality"
-            : "Engaged network participant",
+        alignmentScore: match.materialScore,
+        engagementScore: match.locationScore,
+        compositeScore: match.total,
+        matchLabel: match.matchLabel,
+        priority: match.priority,
+        headline: match.matchLabel ?? "Relevant Match",
+        _match: match,
       });
     }
 
-    ranked.sort((a, b) => b.compositeScore - a.compositeScore);
+    scored.sort((a, b) => b.compositeScore - a.compositeScore);
 
-    if (ranked.length) {
-      sections.push({
-        id: "high_response_participants",
-        title: "Participants with high response quality",
-        subtitle: "Operators with reliable coordination patterns — not endorsements.",
-        items: ranked.slice(0, 8),
-      });
-    }
+    const nearYou = scored
+      .filter((r) => isSameState(buyerLoc, r._match.providerLocation))
+      .slice(0, 8)
+      .map(({ _match, ...rest }) => rest);
 
-    const city = locationCity(buyer.location);
-    const near = ranked
+    const otherStates = scored
       .filter(
         (r) =>
-          city &&
-          norm(r.location).includes(norm(city)) &&
-          r.compositeScore >= 40
+          r.alignmentScore > 0 &&
+          isDifferentState(buyerLoc, r._match.providerLocation)
       )
-      .slice(0, 6);
-    if (near.length) {
+      .slice(0, 8)
+      .map(({ _match, ...rest }) => rest);
+
+    if (nearYou.length) {
       sections.push({
-        id: "active_near_you",
-        title: city
-          ? `Frequently engaged near ${city}`
-          : "Frequently engaged participants",
-        subtitle: "Regional operational density on the network.",
-        items: near,
+        id: "providers_near_you",
+        title: "Providers Near You",
+        subtitle: "Material category alignment in your state.",
+        items: nearYou,
+      });
+    }
+    if (otherStates.length) {
+      sections.push({
+        id: "providers_other_states",
+        title: "Providers in Other States",
+        subtitle: "Category-aligned suppliers in other states.",
+        items: otherStates,
       });
     }
   }
 
   if (role === "material_provider") {
-    const myMaterialIds = await Material.find({ provider: userId })
-      .select("_id")
-      .lean();
-    const matIds = myMaterialIds.map((m) => m._id);
+    const provider = await User.findById(userId).lean();
+    if (!provider) return { sections: [] };
 
-    const recentInterests = await Interest.find({
-      material: { $in: matIds },
-      createdAt: { $gte: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000) },
-    })
-      .populate("buyer", "companyName location industryType")
-      .limit(40)
+    const providerLoc = resolveUserLocation(provider);
+    const buyers = await User.find({ role: "verified_buyer" })
+      .select(
+        "companyName location state requiredMaterialCategories materialTypes industryType"
+      )
+      .limit(120)
       .lean();
 
-    const byBuyer = new Map();
-    for (const row of recentInterests) {
-      const b = row.buyer;
-      if (!b || typeof b !== "object") continue;
-      const bid = b._id.toString();
-      if (!byBuyer.has(bid)) {
-        byBuyer.set(bid, { buyer: b, hits: 0 });
-      }
-      byBuyer.get(bid).hits += 1;
-    }
-
-    const items = [];
-    for (const { buyer: b, hits } of byBuyer.values()) {
-      const engagement = await computeUserEngagementScore(b._id);
-      const alignmentScore = Math.min(100, hits * 25 + 20);
-      const compositeScore = Math.round(alignmentScore * 0.55 + engagement * 0.45);
-      items.push({
+    const scored = [];
+    for (const b of buyers) {
+      const match = scoreBuyerForProvider(b, provider);
+      if (match.total < RECOMMEND_MIN_SCORE) continue;
+      scored.push({
         participantId: b._id.toString(),
         companyName: b.companyName,
         location: b.location ?? "",
         industryType: b.industryType ?? "",
-        alignmentScore,
-        engagementScore: engagement,
-        compositeScore,
-        priority: compositeScore >= 55 ? "high" : "standard",
-        headline: "Potential buyer alignment",
+        alignmentScore: match.materialScore,
+        engagementScore: match.locationScore,
+        compositeScore: match.total,
+        matchLabel: match.matchLabel,
+        priority: match.priority,
+        headline: match.matchLabel ?? "Relevant Match",
+        _match: match,
       });
     }
 
+    scored.sort((a, b) => b.compositeScore - a.compositeScore);
     const signals = await getProviderMatchSignals(userId);
 
-    if (items.length) {
+    const nearYou = scored
+      .filter((r) => isSameState(providerLoc, r._match.buyerLocation))
+      .slice(0, 8)
+      .map(({ _match, ...rest }) => rest);
+
+    const otherStates = scored
+      .filter(
+        (r) =>
+          r.alignmentScore > 0 &&
+          isDifferentState(providerLoc, r._match.buyerLocation)
+      )
+      .slice(0, 8)
+      .map(({ _match, ...rest }) => rest);
+
+    if (nearYou.length) {
       sections.push({
-        id: "aligned_buyers",
-        title: "Buyers aligned with your catalog",
-        subtitle: signals.headlines.join(" · ") || "Mandate overlap signals.",
-        items: items.sort((a, b) => b.compositeScore - a.compositeScore),
+        id: "buyers_near_you",
+        title: "Buyers Near You",
+        subtitle: signals.headlines.join(" · ") || "Category alignment in your state.",
+        items: nearYou,
+      });
+    }
+    if (otherStates.length) {
+      sections.push({
+        id: "buyers_other_states",
+        title: "Buyers in Other States",
+        subtitle: "Category-aligned buyers in other states.",
+        items: otherStates,
       });
     }
   }
@@ -381,22 +402,72 @@ async function getRankedBuyerFeedItems(userId) {
   const buyer = await User.findById(userId).lean();
   if (!buyer) return suggestions.items;
 
+  const buyerLoc = resolveUserLocation(buyer);
   const enriched = [];
+
   for (const item of suggestions.items) {
     const m = await Material.findById(item.materialId)
-      .populate("provider", "companyName")
+      .populate(
+        "provider",
+        "companyName preferredMaterialCategories materialTypes state location country"
+      )
       .lean();
     if (!m) {
-      enriched.push({ ...item, compositeScore: item.score ?? 0 });
+      enriched.push({
+        ...item,
+        compositeScore: item.score ?? 0,
+        relevanceScore: 0,
+        activityScore: 0,
+        freshnessScore: 0,
+        matchLabel: item.matchLabel ?? getMatchLabel(item.score ?? 0),
+      });
       continue;
     }
     const row = await enrichMaterialRow(m, buyer, {
       headline: item.headline,
     });
-    enriched.push(row);
+    enriched.push({
+      ...row,
+      sellerState: row.sellerState,
+      sellerCity: row.sellerCity,
+      sellerCountry: row.sellerCountry,
+      country: row.country,
+    });
   }
 
-  return rankScoredMaterials(enriched).slice(0, 8);
+  enriched.sort((a, b) => (b.compositeScore ?? 0) - (a.compositeScore ?? 0));
+
+  if (!isIndiaCountry(buyerLoc.country)) {
+    const inCountry = enriched.filter((r) =>
+      isSameCountry(buyerLoc, {
+        country: r.sellerCountry ?? r.country ?? "",
+        state: r.sellerState ?? "",
+        city: r.sellerCity ?? "",
+      })
+    );
+    const other = enriched.filter(
+      (r) => !inCountry.some((n) => n.materialId === r.materialId)
+    );
+    return [...inCountry, ...other].slice(0, 8);
+  }
+
+  const nearYou = enriched.filter((r) =>
+    isSameState(buyerLoc, {
+      state: r.sellerState ?? "",
+      city: r.sellerCity ?? "",
+      country: "IN",
+    })
+  );
+  const other = enriched.filter(
+    (r) =>
+      !isSameState(buyerLoc, {
+        state: r.sellerState ?? "",
+        city: r.sellerCity ?? "",
+        country: "IN",
+      })
+  );
+
+  return [...nearYou, ...other].slice(0, 8);
 }
 
 module.exports = {

@@ -1,3 +1,5 @@
+const path = require("path");
+
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -6,6 +8,13 @@ const morgan = require("morgan");
 
 const errorHandler = require("./middleware/errorHandler");
 const notFound = require("./middleware/notFound");
+const { authenticate } = require("./middleware/auth");
+const {
+  requireActiveSubscription,
+} = require("./middleware/requireActiveSubscription");
+const {
+  requireCompletedOnboarding,
+} = require("./middleware/requireCompletedOnboarding");
 const { createAccessRouter } = require("./modules/access/access.routes");
 const { createActivityRouter } = require("./modules/activity/activity.routes");
 const { createAuthRouter } = require("./modules/auth/auth.routes");
@@ -24,12 +33,33 @@ const { createInsightsRouter } = require("./modules/activity-signals/insights.ro
 const { createProfileRouter } = require("./modules/profiles/profile.routes");
 const { createReportsRouter } = require("./modules/reports/report.routes");
 const { createSavedMaterialsRouter } = require("./modules/saved-materials/saved-material.routes");
+const { createAdminRouter } = require("./modules/admin/admin.routes");
 const { createVerificationRouter } = require("./modules/verification/verification.routes");
+const { createLocationsRouter } = require("./modules/locations/location.routes");
+const {
+  createSubscriptionsRouter,
+  createSubscriptionWebhookRouter,
+} = require("./modules/subscriptions/subscription.routes");
+const { LOCAL_UPLOAD_DIR } = require("./services/storage/material-image.service");
 
 function createApp(env) {
   const app = express();
+  const requirePaidAccess = [
+    authenticate({ jwtSecret: env.JWT_SECRET }),
+    requireCompletedOnboarding,
+    requireActiveSubscription,
+  ];
+  app.locals.env = env;
   app.disable("x-powered-by");
-  app.use(helmet());
+  // Behind Nginx on VPS so rate-limit / logs see real client IPs
+  if (env.NODE_ENV === "production") {
+    app.set("trust proxy", 1);
+  }
+  app.use(
+    helmet({
+      crossOriginResourcePolicy: { policy: "cross-origin" },
+    })
+  );
   if (env.NODE_ENV !== "test") {
     app.use(morgan("combined"));
   }
@@ -39,8 +69,23 @@ function createApp(env) {
       credentials: true,
     })
   );
+  app.use(
+    "/api/v1/subscriptions/webhook",
+    express.raw({ type: "application/json", limit: "256kb" }),
+    createSubscriptionWebhookRouter(env)
+  );
   app.use(express.json({ limit: "1mb" }));
   app.use(cookieParser());
+  app.use(
+    "/uploads/materials",
+    express.static(path.join(LOCAL_UPLOAD_DIR), {
+      maxAge: env.NODE_ENV === "production" ? "7d" : 0,
+      setHeaders(res) {
+        res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+        res.setHeader("Access-Control-Allow-Origin", env.CLIENT_ORIGIN);
+      },
+    })
+  );
 
   app.get("/", (req, res) => {
     res.type("text/plain").send("Quanta Loop Backend Running");
@@ -48,23 +93,50 @@ function createApp(env) {
 
   app.use("/api/v1/auth", createAuthRouter(env));
   app.use("/api/v1/profile", createProfileRouter(env));
+  app.use("/api/v1/admin", createAdminRouter(env));
   app.use("/api/v1/verification", createVerificationRouter(env));
   app.use("/api/v1/access", createAccessRouter(env));
-  app.use("/api/v1/network", createNetworkRouter(env));
-  app.use("/api/v1/materials", createMaterialsRouter(env));
-  app.use("/api/v1/interests", createInterestsRouter(env));
-  app.use("/api/v1/conversations", createConversationsRouter(env));
-  app.use("/api/v1/messages", createMessagesRouter(env));
-  app.use("/api/v1/saved-materials", createSavedMaterialsRouter(env));
-  app.use("/api/v1/reports", createReportsRouter(env));
-  app.use("/api/v1/opportunities", createOpportunitiesRouter(env));
-  app.use("/api/v1/recommendations", createRecommendationsRouter(env));
-  app.use("/api/v1/reminders", createRemindersRouter(env));
-  app.use("/api/v1/insights", createInsightsRouter(env));
-  app.use("/api/v1/activity-signals", createActivitySignalsRouter(env));
-  app.use("/api/v1/activity", createActivityRouter(env));
-  app.use("/api/v1/notifications", createNotificationsRouter(env));
-  app.use("/api/v1/matches", createMatchesRouter(env));
+  app.use("/api/v1/subscriptions", createSubscriptionsRouter(env));
+  app.use("/api/v1/network", ...requirePaidAccess, createNetworkRouter(env));
+  app.use("/api/v1/materials", ...requirePaidAccess, createMaterialsRouter(env));
+  app.use("/api/v1/interests", ...requirePaidAccess, createInterestsRouter(env));
+  app.use(
+    "/api/v1/conversations",
+    ...requirePaidAccess,
+    createConversationsRouter(env)
+  );
+  app.use("/api/v1/messages", ...requirePaidAccess, createMessagesRouter(env));
+  app.use(
+    "/api/v1/saved-materials",
+    ...requirePaidAccess,
+    createSavedMaterialsRouter(env)
+  );
+  app.use("/api/v1/reports", ...requirePaidAccess, createReportsRouter(env));
+  app.use(
+    "/api/v1/opportunities",
+    ...requirePaidAccess,
+    createOpportunitiesRouter(env)
+  );
+  app.use(
+    "/api/v1/recommendations",
+    ...requirePaidAccess,
+    createRecommendationsRouter(env)
+  );
+  app.use("/api/v1/reminders", ...requirePaidAccess, createRemindersRouter(env));
+  app.use("/api/v1/insights", ...requirePaidAccess, createInsightsRouter(env));
+  app.use(
+    "/api/v1/activity-signals",
+    ...requirePaidAccess,
+    createActivitySignalsRouter(env)
+  );
+  app.use("/api/v1/activity", ...requirePaidAccess, createActivityRouter(env));
+  app.use(
+    "/api/v1/notifications",
+    ...requirePaidAccess,
+    createNotificationsRouter(env)
+  );
+  app.use("/api/v1/matches", ...requirePaidAccess, createMatchesRouter(env));
+  app.use("/api/v1/locations", createLocationsRouter(env));
 
   app.use(notFound);
   app.use(errorHandler);

@@ -1,4 +1,5 @@
 const { Notification } = require("./notification.model");
+const { newDiscussionMessage } = require("../../utils/notificationCopy");
 
 /**
  * @param {object} payload
@@ -21,4 +22,54 @@ async function createNotification(payload) {
   return doc;
 }
 
-module.exports = { createNotification };
+/**
+ * One unread message notification per interest thread (avoids inbox spam).
+ */
+async function upsertMessageNotification({
+  recipient,
+  senderCompany,
+  relatedMaterial,
+  relatedInterest,
+}) {
+  const { title, message } = newDiscussionMessage({
+    senderCompany,
+  });
+
+  const existing = await Notification.findOne({
+    recipient,
+    type: "coordination_follow_up",
+    relatedInterest,
+    isRead: false,
+  });
+
+  if (existing) {
+    existing.title = title;
+    existing.message = message;
+    existing.createdAt = new Date();
+    await existing.save();
+    return existing;
+  }
+
+  return createNotification({
+    recipient,
+    type: "coordination_follow_up",
+    title,
+    message,
+    relatedMaterial: relatedMaterial ?? null,
+    relatedInterest: relatedInterest ?? null,
+  });
+}
+
+async function markAllReadForUser(userId) {
+  const result = await Notification.updateMany(
+    { recipient: userId, isRead: false },
+    { $set: { isRead: true } }
+  );
+  return result.modifiedCount ?? 0;
+}
+
+module.exports = {
+  createNotification,
+  upsertMessageNotification,
+  markAllReadForUser,
+};
