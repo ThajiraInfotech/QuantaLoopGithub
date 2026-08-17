@@ -30,7 +30,7 @@ export async function LandingValueComparison() {
 
         <div className="flex justify-center lg:justify-end">
           <Image
-            src="/images/image.png"
+            src="/images/image.webp"
             alt={t("imageAlt")}
             width={640}
             height={360}
