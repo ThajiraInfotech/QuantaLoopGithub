@@ -1,0 +1,2054 @@
+{
+  "common": {
+    "operatedBy": "Operated by {operator}",
+    "lastUpdated": "Last Updated: {date}",
+    "backToHome": "Back to home"
+  },
+  "consent": {
+    "prefix": "I agree to the",
+    "terms": "Terms & Conditions",
+    "and": "and",
+    "privacy": "Privacy Policy",
+    "suffix": "."
+  },
+  "terms": {
+    "title": "QUANTA LOOP – TERMS & CONDITIONS",
+    "metadata": {
+      "operatedBy": "Operated by ASM Holdings",
+      "registeredBusinessAddress": "Registered Business Address: New No. 100, Old No. 86, Raghavan Street, Perambur, Chennai – 600011, Tamil Nadu, India",
+      "effectiveDate": "Effective Date: [Insert Date]",
+      "lastUpdated": "Last Updated: [Insert Date]"
+    },
+    "intro": [
+      {
+        "kind": "paragraph",
+        "text": "These Terms & Conditions (“Terms”) govern access to and use of the Quanta Loop website, platform, applications, software, marketplace, communication tools and related services (collectively, the “Platform”)."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Quanta Loop is operated by ASM Holdings, a sole proprietorship business (“Quanta Loop”, “we”, “our” or “us”)."
+      },
+      {
+        "kind": "paragraph",
+        "text": "By registering for, accessing or using the Platform, you agree to these Terms. If you do not agree with these Terms, you should not use the Platform."
+      }
+    ],
+    "sections": [
+      {
+        "title": "1. About Quanta Loop",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop is a technology-enabled B2B marketplace and intermediary platform designed to connect buyers and sellers of industrial waste, recyclable materials, scrap, recoverable materials, industrial by-products and other permitted materials (“Materials”)."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Depending on the Platform's features, Quanta Loop may enable users to:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "create business profiles;",
+              "publish Material listings;",
+              "search and discover listings;",
+              "receive automated or technology-assisted matches;",
+              "express interest in listings;",
+              "communicate with other users through in-platform chat;",
+              "receive notifications;",
+              "access subscription or paid features; and",
+              "use other digital marketplace tools introduced from time to time."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop's role is to provide technology that facilitates discovery, communication and potential commercial connections between users."
+          }
+        ]
+      },
+      {
+        "title": "2. Quanta Loop Is Not a Party to User Transactions",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop is not a buyer, seller, owner, dealer, recycler, transporter, waste handler, broker, inspection agency, logistics provider, environmental consultant or regulatory authority."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop does not:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "purchase or sell Materials;",
+              "take ownership or title to Materials;",
+              "take physical possession or custody of Materials;",
+              "store Materials;",
+              "transport Materials;",
+              "arrange transportation as a principal;",
+              "inspect or certify Materials;",
+              "certify quality, quantity, composition or origin;",
+              "guarantee the legality of Materials;",
+              "guarantee regulatory compliance;",
+              "guarantee payment;",
+              "guarantee delivery;",
+              "guarantee completion of transactions; or",
+              "act as an agent or representative of any buyer or seller."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Any commercial transaction is entered into directly between the relevant users."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Users are solely responsible for deciding whether to transact with another user and for negotiating and documenting their own commercial arrangements."
+          }
+        ]
+      },
+      {
+        "title": "3. No Agency, Partnership or Employment Relationship",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Use of the Platform does not create:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "an agency relationship;",
+              "partnership;",
+              "joint venture;",
+              "employment relationship;",
+              "franchise;",
+              "fiduciary relationship; or",
+              "other representative relationship"
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "between Quanta Loop and any user or between Quanta Loop and any buyer or seller."
+          },
+          {
+            "kind": "paragraph",
+            "text": "No user has authority to make commitments, representations or warranties on behalf of Quanta Loop."
+          }
+        ]
+      },
+      {
+        "title": "4. Eligibility",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "The Platform is intended primarily for business and professional users."
+          },
+          {
+            "kind": "paragraph",
+            "text": "You must:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "be at least 18 years old;",
+              "have legal capacity to enter into binding agreements;",
+              "have authority to act for the business or organisation you represent, where applicable;",
+              "provide accurate information; and",
+              "comply with applicable Indian laws and regulations."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "If you are registering on behalf of a company, partnership, proprietorship or other organisation, you represent that you have authority to bind that organisation to these Terms."
+          }
+        ]
+      },
+      {
+        "title": "5. Registration and Account Security",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Users may be required to register using information such as:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "name;",
+              "mobile number;",
+              "email address;",
+              "business information;",
+              "address;",
+              "GST details, where voluntarily provided;",
+              "and other information required for Platform functionality."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Users are responsible for ensuring that registration information remains accurate and up to date."
+          },
+          {
+            "kind": "paragraph",
+            "text": "You are responsible for:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "protecting your login credentials;",
+              "maintaining account security;",
+              "preventing unauthorised access; and",
+              "all activity carried out through your account, subject to applicable law."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "You must notify Quanta Loop promptly if you suspect unauthorised access, fraud or misuse of your account."
+          }
+        ]
+      },
+      {
+        "title": "6. Platform Services and Matching",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop may use automated systems, algorithms, search functions, filters or other technology to identify potentially relevant listings or counterparties."
+          },
+          {
+            "kind": "paragraph",
+            "text": "A match, recommendation, search result, enquiry, expression of interest or communication:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "does not constitute an endorsement by Quanta Loop;",
+              "does not constitute verification;",
+              "does not constitute certification;",
+              "does not constitute a guarantee of a transaction; and",
+              "does not require either party to transact."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop may modify, improve, restrict, suspend or discontinue Platform features from time to time."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Future features may include, without limitation:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "AI-assisted recommendations;",
+              "analytics;",
+              "document management;",
+              "logistics-related tools;",
+              "tracking features;",
+              "business intelligence;",
+              "additional communication tools; and",
+              "other marketplace services."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "7. Listings and User Content",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Users may upload or submit:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "Material listings;",
+              "photographs;",
+              "descriptions;",
+              "quantities;",
+              "pricing;",
+              "specifications;",
+              "documents;",
+              "business information;",
+              "certifications;",
+              "messages;",
+              "and other information (“User Content”)."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Users remain solely responsible for their User Content."
+          },
+          {
+            "kind": "paragraph",
+            "text": "You represent and warrant that:"
+          },
+          {
+            "kind": "orderedList",
+            "items": [
+              "you have the right and authority to submit the User Content;",
+              "the information is accurate and not materially misleading;",
+              "you have the right to offer or deal with the listed Material;",
+              "the listing does not violate applicable law;",
+              "the listing does not infringe third-party rights; and",
+              "any documents or certifications submitted by you are genuine and valid to the extent represented by you."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop may remove, restrict, suspend or limit the visibility of User Content where it reasonably considers this necessary for Platform safety, legal compliance, fraud prevention, investigation, user protection or Platform integrity."
+          }
+        ]
+      },
+      {
+        "title": "8. User Compliance and Environmental Responsibility",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Each user is solely responsible for ensuring that its activities relating to any Material listed, purchased, sold, stored, transported, handled, processed, recycled, recovered or disposed of through or in connection with the Platform comply with all applicable laws."
+          },
+          {
+            "kind": "paragraph",
+            "text": "This includes, where applicable:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "environmental laws;",
+              "waste-management rules;",
+              "pollution-control requirements;",
+              "permits and authorisations;",
+              "registration requirements;",
+              "transportation requirements;",
+              "storage requirements;",
+              "hazardous-material requirements;",
+              "occupational and workplace safety requirements;",
+              "tax and GST requirements;",
+              "local authority requirements; and",
+              "other applicable regulatory requirements."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Users must independently determine the legal classification and regulatory requirements applicable to their Materials and activities."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Depending on the Material and activity, applicable requirements may arise under the Environment (Protection) Act, 1986, applicable waste-management rules and regulations, and requirements of the Central Pollution Control Board, State Pollution Control Boards and other competent authorities. The applicable regulatory framework may differ depending on the type and characteristics of the Material."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop does not provide environmental, legal, regulatory or compliance advice."
+          }
+        ]
+      },
+      {
+        "title": "9. User Compliance Warranty",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "By listing, purchasing, selling or otherwise using the Platform in connection with Materials, each user represents that:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "the Materials are lawfully possessed or offered;",
+              "the user has the required authority to deal with the Materials;",
+              "all required licences, permissions, registrations and authorisations are maintained where applicable;",
+              "Material descriptions are accurate;",
+              "relevant hazards and characteristics have been disclosed accurately;",
+              "required transportation and handling arrangements will comply with applicable law;",
+              "the transaction will not be structured to circumvent environmental or other legal requirements; and",
+              "the user will comply with all applicable laws throughout the transaction."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop may request supporting information or documents where reasonably necessary for Platform safety, compliance or investigation."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Submission of a document does not mean that Quanta Loop has verified, certified or approved it."
+          }
+        ]
+      },
+      {
+        "title": "10. Restricted and Prohibited Materials",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Users must not use the Platform for Materials that are unlawful, prohibited, restricted or unsuitable for the Platform."
+          },
+          {
+            "kind": "paragraph",
+            "text": "This includes Materials that:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "are unlawfully possessed;",
+              "are prohibited from being traded or transferred;",
+              "require authorisations that the user does not possess;",
+              "are falsely described;",
+              "are concealed or misrepresented;",
+              "present undisclosed hazardous risks;",
+              "are intended to facilitate unlawful disposal;",
+              "are connected with illegal activity; or",
+              "otherwise violate applicable law."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop may prohibit, restrict or require additional documentation for particular categories of Materials from time to time."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop may immediately remove or restrict a listing where it reasonably suspects that a Material may be unlawful, unsafe, prohibited or materially misrepresented."
+          }
+        ]
+      },
+      {
+        "title": "11. Hazardous or Regulated Materials",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Where a Material is hazardous, regulated or subject to special handling requirements, the relevant user is solely responsible for:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "classification;",
+              "packaging;",
+              "labelling;",
+              "storage;",
+              "handling;",
+              "transportation;",
+              "documentation;",
+              "manifests or records where applicable;",
+              "regulatory permissions; and",
+              "lawful treatment, recycling, recovery or disposal."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop does not take custody or control of hazardous or regulated Materials and does not provide hazardous-material handling services."
+          }
+        ]
+      },
+      {
+        "title": "12. Accuracy of Listings",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop does not guarantee the:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "accuracy;",
+              "completeness;",
+              "quality;",
+              "quantity;",
+              "composition;",
+              "origin;",
+              "ownership;",
+              "availability;",
+              "price;",
+              "legality; or",
+              "regulatory status"
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "of any listing or User Content."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Users must independently verify information before entering into a transaction."
+          },
+          {
+            "kind": "paragraph",
+            "text": "A listing appearing on the Platform does not constitute an endorsement, certification or verification by Quanta Loop."
+          }
+        ]
+      },
+      {
+        "title": "13. User-to-User Transactions",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Users may independently negotiate:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "price;",
+              "quantity;",
+              "quality;",
+              "inspection;",
+              "transportation;",
+              "delivery;",
+              "payment;",
+              "timelines;",
+              "documentation;",
+              "warranties;",
+              "and other commercial terms."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop is not a party to those agreements."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop is not responsible for:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "failed transactions;",
+              "non-payment;",
+              "delayed payment;",
+              "inaccurate Materials;",
+              "quantity or quality disputes;",
+              "delivery failures;",
+              "transportation incidents;",
+              "inspection disputes;",
+              "fraud;",
+              "contractual breaches;",
+              "regulatory violations; or",
+              "disputes between users."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Users should conduct appropriate commercial, legal, regulatory and counterparty due diligence before transacting."
+          }
+        ]
+      },
+      {
+        "title": "14. Communications and Chat",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop may provide in-platform messaging or chat functionality."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Users are responsible for communications made through the Platform."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Users must not use Platform communications to:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "harass or threaten others;",
+              "send unlawful or abusive content;",
+              "conduct fraud;",
+              "distribute malware;",
+              "send spam;",
+              "unlawfully collect personal information;",
+              "circumvent Platform access controls; or",
+              "facilitate illegal activity."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop may review, restrict, remove or preserve communications where reasonably necessary for security, fraud prevention, legal compliance, investigation or enforcement of these Terms, subject to applicable law."
+          }
+        ]
+      },
+      {
+        "title": "15. Prohibited Conduct",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Users must not:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "create fraudulent accounts;",
+              "impersonate another person or business;",
+              "provide materially false information;",
+              "publish fake listings;",
+              "manipulate listings or matching systems;",
+              "misuse another user's information;",
+              "scrape or harvest Platform data;",
+              "use bots or automated systems without permission;",
+              "reverse engineer the Platform;",
+              "bypass subscription or access controls;",
+              "upload malware;",
+              "interfere with Platform security;",
+              "infringe intellectual-property rights;",
+              "conduct unlawful transactions;",
+              "use the Platform to evade environmental requirements;",
+              "harass, threaten or abuse other users;",
+              "engage in fraud or deceptive practices; or",
+              "otherwise violate applicable law."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "16. Reporting and Platform Safety",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Users may report suspected:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "fake listings;",
+              "fraudulent activity;",
+              "unlawful Materials;",
+              "unsafe conduct;",
+              "misleading information;",
+              "impersonation;",
+              "harassment;",
+              "misuse of User Content;",
+              "environmental or regulatory concerns; or",
+              "other violations"
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "by contacting:"
+          },
+          {
+            "kind": "paragraph",
+            "text": "Grievance Officer: Mr. Avinash"
+          },
+          {
+            "kind": "paragraph",
+            "text": "Email: grievance@quantaloop.in"
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop may investigate reports and may, where appropriate:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "request additional information;",
+              "restrict visibility;",
+              "remove listings;",
+              "suspend accounts;",
+              "terminate accounts;",
+              "restrict Platform functionality;",
+              "preserve information;",
+              "cooperate with lawful authorities; or",
+              "take other measures reasonably necessary to protect users and the Platform."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop is not required to resolve private commercial disputes between users."
+          }
+        ]
+      },
+      {
+        "title": "17. Intermediary Status",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop operates as a technology intermediary and marketplace platform."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop generally provides the technical infrastructure through which users may create listings, discover other users, communicate and potentially enter into transactions."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop does not ordinarily create, originate or independently adopt User Content as its own."
+          },
+          {
+            "kind": "paragraph",
+            "text": "To the extent applicable, Quanta Loop intends to avail itself of protections available to intermediaries under Indian law, including the Information Technology Act, 2000 and applicable rules, subject to satisfying the conditions and due-diligence requirements prescribed by law."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Nothing in these Terms is intended to exclude or restrict any responsibility that cannot legally be excluded."
+          }
+        ]
+      },
+      {
+        "title": "18. Content Moderation and Legal Requests",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop may take action against User Content or accounts where it reasonably believes action is necessary because of:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "a violation of these Terms;",
+              "suspected unlawful activity;",
+              "fraud;",
+              "safety concerns;",
+              "regulatory requirements;",
+              "a valid government or law-enforcement request;",
+              "intellectual-property concerns;",
+              "Platform security risks; or",
+              "other legitimate Platform-integrity concerns."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Action may include removal, restriction, suspension or termination."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Where legally required, Quanta Loop may preserve or disclose information to competent authorities."
+          }
+        ]
+      },
+      {
+        "title": "19. Subscriptions, Fees and Payments",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Certain Platform features may require payment of subscription, access or other fees."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Pricing, plans and features may change from time to time."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Unless expressly stated otherwise:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "applicable fees are payable according to the selected plan;",
+              "fees are for Platform access or technology services;",
+              "Quanta Loop does not charge fees for guaranteeing transactions or outcomes; and",
+              "subscription or access fees are non-refundable once the applicable service period or access has commenced, except where otherwise required by law or expressly stated by Quanta Loop."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop may introduce:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "subscriptions;",
+              "premium listings;",
+              "promoted listings;",
+              "analytics services;",
+              "enterprise features;",
+              "transaction-related tools;",
+              "or other paid services."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "20. User Transactions Are Separate from Platform Payments",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Any payment made by a user to Quanta Loop for subscriptions or Platform services is separate from commercial payments between buyers and sellers."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Unless expressly stated otherwise, Quanta Loop does not:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "hold transaction consideration between users;",
+              "guarantee payment;",
+              "provide escrow;",
+              "guarantee delivery;",
+              "or guarantee performance of user contracts."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "21. Intellectual Property",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "All rights in and to the Platform, including:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "software;",
+              "source code;",
+              "interface;",
+              "design;",
+              "branding;",
+              "trademarks;",
+              "workflows;",
+              "matching technology;",
+              "algorithms;",
+              "databases;",
+              "analytics systems;",
+              "and other technology"
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "are owned by ASM Holdings or its licensors, except for User Content and third-party materials."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Users receive a limited, revocable, non-exclusive, non-transferable right to use the Platform for its intended business purpose."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Users must not:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "copy;",
+              "reproduce;",
+              "modify;",
+              "reverse engineer;",
+              "scrape;",
+              "distribute;",
+              "commercially exploit; or",
+              "create derivative works from"
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "the Platform without prior written permission, except to the extent permitted by law."
+          }
+        ]
+      },
+      {
+        "title": "22. Licence to User Content",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Users retain ownership of their User Content."
+          },
+          {
+            "kind": "paragraph",
+            "text": "By submitting User Content, you grant Quanta Loop a non-exclusive, worldwide, royalty-free licence to host, store, process, reproduce where technically necessary, display, transmit, format, analyse and otherwise use that User Content to the extent reasonably necessary to:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "operate the Platform;",
+              "display listings;",
+              "provide matching;",
+              "facilitate communications;",
+              "maintain security;",
+              "prevent fraud;",
+              "moderate content;",
+              "improve Platform functionality; and",
+              "comply with applicable law."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop does not acquire ownership of User Content merely because it is uploaded to the Platform."
+          }
+        ]
+      },
+      {
+        "title": "23. Third-Party Services",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "The Platform may use or integrate with third-party services, including:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "cloud infrastructure;",
+              "payment providers;",
+              "authentication services;",
+              "analytics services;",
+              "communication providers;",
+              "security services; and",
+              "other technology providers."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Third-party services may have their own terms and privacy policies."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop is not responsible for the independent acts or omissions of third-party providers, except to the extent liability cannot legally be excluded."
+          }
+        ]
+      },
+      {
+        "title": "24. Platform Availability",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "The Platform is provided on an “as is” and “as available” basis."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop does not guarantee that:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "the Platform will always be available;",
+              "the Platform will be uninterrupted;",
+              "all features will remain available;",
+              "the Platform will be error-free;",
+              "matches will be accurate;",
+              "listings will be available;",
+              "transactions will occur; or",
+              "Platform results will meet a particular business objective."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "We may perform maintenance, updates or changes that temporarily affect availability."
+          }
+        ]
+      },
+      {
+        "title": "25. No Professional or Regulatory Advice",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Information provided through Quanta Loop does not constitute:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "legal advice;",
+              "environmental advice;",
+              "regulatory advice;",
+              "tax advice;",
+              "financial advice;",
+              "engineering advice;",
+              "safety advice; or",
+              "professional certification."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Users should obtain appropriate professional advice before undertaking regulated or high-risk activities."
+          }
+        ]
+      },
+      {
+        "title": "26. Indemnity",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "To the maximum extent permitted by law, you agree to indemnify and hold harmless ASM Holdings, Quanta Loop, its proprietor, employees, contractors, representatives and service providers from claims, losses, liabilities, penalties, damages, costs and reasonable expenses arising from or relating to:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "your User Content;",
+              "your listings;",
+              "unlawful Materials;",
+              "environmental violations;",
+              "regulatory non-compliance;",
+              "missing or invalid licences or permissions;",
+              "hazardous Materials;",
+              "transportation or handling;",
+              "injury or property damage caused by your activities;",
+              "tax or GST violations;",
+              "fraud or misconduct;",
+              "breach of these Terms;",
+              "infringement of third-party rights;",
+              "misuse of the Platform; or",
+              "disputes arising from your transactions with other users."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "27. Limitation of Liability",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "To the maximum extent permitted by law, Quanta Loop, ASM Holdings, its proprietor, employees, contractors and representatives shall not be liable for indirect, incidental, special, consequential or punitive losses, including:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "loss of profits;",
+              "loss of business;",
+              "loss of opportunity;",
+              "loss of anticipated savings;",
+              "business interruption;",
+              "reputational loss;",
+              "transaction losses;",
+              "environmental consequences arising from user activities;",
+              "transportation incidents;",
+              "hazardous-material incidents;",
+              "regulatory penalties imposed on users;",
+              "fraud by users;",
+              "or disputes between users."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Subject to applicable law, the aggregate liability of Quanta Loop arising out of or relating to the Platform shall not exceed the amount of Platform fees actually paid by the affected user to Quanta Loop during the three (3) months immediately preceding the event giving rise to the claim."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Nothing in these Terms excludes or limits liability that cannot legally be excluded or limited."
+          }
+        ]
+      },
+      {
+        "title": "28. Suspension and Termination",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop may suspend, restrict or terminate an account where:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "these Terms are violated;",
+              "fraud or misuse is suspected;",
+              "unlawful activity is suspected;",
+              "a listing presents a material safety or regulatory concern;",
+              "Platform security is threatened;",
+              "required by law or authority; or",
+              "continued access presents a material risk to Quanta Loop or other users."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Where appropriate, Quanta Loop may act without prior notice."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Termination does not affect rights or obligations that accrued before termination."
+          }
+        ]
+      },
+      {
+        "title": "29. Force Majeure",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop shall not be responsible for delay or failure caused by events beyond reasonable control, including:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "internet or telecommunications failures;",
+              "power outages;",
+              "cyber incidents;",
+              "infrastructure failures;",
+              "natural disasters;",
+              "government actions;",
+              "strikes;",
+              "civil disturbances;",
+              "epidemics or pandemics; or",
+              "other events beyond reasonable control."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "30. Changes to the Platform and Terms",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop may:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "add or remove features;",
+              "modify workflows;",
+              "change pricing;",
+              "introduce new services;",
+              "discontinue services; or",
+              "amend these Terms."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Updated Terms will be published on the Platform with a revised “Last Updated” date."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Where legally required, appropriate notice will be provided."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Continued use of the Platform after an update takes effect constitutes acceptance of the revised Terms, to the extent permitted by law."
+          }
+        ]
+      },
+      {
+        "title": "31. Privacy",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "The collection, use, storage and disclosure of personal information is governed by the Quanta Loop Privacy Policy, as updated from time to time."
+          },
+          {
+            "kind": "paragraph",
+            "text": "The Privacy Policy forms part of the overall contractual framework governing use of the Platform."
+          }
+        ]
+      },
+      {
+        "title": "32. Grievance Redressal",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop has designated the following Grievance Officer:"
+          },
+          {
+            "kind": "paragraph",
+            "text": "Mr. Avinash"
+          },
+          {
+            "kind": "paragraph",
+            "text": "Grievance Officer – Quanta Loop"
+          },
+          {
+            "kind": "paragraph",
+            "text": "Email: grievance@quantaloop.in"
+          },
+          {
+            "kind": "paragraph",
+            "text": "Users may submit complaints relating to:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "unlawful or prohibited content;",
+              "misuse of the Platform;",
+              "user conduct;",
+              "privacy concerns;",
+              "impersonation;",
+              "fraudulent listings;",
+              "environmental or regulatory concerns relating to listings;",
+              "violation of these Terms; or",
+              "other Platform-related grievances."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Complaints should include sufficient information to allow Quanta Loop to identify the relevant account, listing, content or conduct."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop will acknowledge grievances within the timeframe required by applicable law and will endeavour to address them within the applicable statutory timeframe. The current MeitY guidance identifies 24 hours for acknowledgement and 15 days for response to grievances under the applicable intermediary framework."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Nothing in this section requires Quanta Loop to adjudicate private commercial disputes between users."
+          }
+        ]
+      },
+      {
+        "title": "33. Governing Law and Dispute Resolution",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "These Terms are governed by the laws of India."
+          },
+          {
+            "kind": "paragraph",
+            "text": "The parties shall first attempt to resolve disputes amicably."
+          },
+          {
+            "kind": "paragraph",
+            "text": "If a dispute cannot be resolved amicably, it shall be referred to arbitration in accordance with the Arbitration and Conciliation Act, 1996, as amended."
+          },
+          {
+            "kind": "paragraph",
+            "text": "The arbitration shall:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "have its seat in Chennai, Tamil Nadu;",
+              "be conducted by a sole arbitrator mutually agreed upon by the parties;",
+              "if the parties cannot agree on the arbitrator, be appointed in accordance with the Arbitration and Conciliation Act, 1996;",
+              "be conducted in English."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Courts having jurisdiction in Chennai, Tamil Nadu may be approached for interim, injunctive or other relief to the extent permitted by law."
+          }
+        ]
+      },
+      {
+        "title": "34. Severability",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "If any provision of these Terms is held invalid or unenforceable, the remaining provisions will continue to apply to the maximum extent permitted by law."
+          }
+        ]
+      },
+      {
+        "title": "35. Entire Agreement",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "These Terms, together with the Quanta Loop Privacy Policy and any other terms expressly incorporated by reference, constitute the understanding governing use of the Platform."
+          }
+        ]
+      },
+      {
+        "title": "36. Contact",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "ASM Holdings"
+          },
+          {
+            "kind": "paragraph",
+            "text": "New No. 100, Old No. 86, Raghavan Street,"
+          },
+          {
+            "kind": "paragraph",
+            "text": "Perambur, Chennai – 600011,"
+          },
+          {
+            "kind": "paragraph",
+            "text": "Tamil Nadu, India"
+          },
+          {
+            "kind": "paragraph",
+            "text": "General Support Email: [Insert Support Email]"
+          },
+          {
+            "kind": "paragraph",
+            "text": "Website: [Insert Website URL]"
+          },
+          {
+            "kind": "paragraph",
+            "text": "Grievance Officer: Mr. Avinash"
+          },
+          {
+            "kind": "paragraph",
+            "text": "Grievance Email: grievance@quantaloop.in"
+          }
+        ]
+      }
+    ]
+  },
+  "privacy": {
+    "title": "QUANTA LOOP – PRIVACY POLICY",
+    "metadata": {
+      "operatedBy": "Operated by ASM Holdings",
+      "registeredBusinessAddress": "Registered Business Address: New No. 100, Old No. 86, Raghavan Street, Perambur, Chennai – 600011, Tamil Nadu, India",
+      "effectiveDate": "Effective Date: [Insert Date]",
+      "lastUpdated": "Last Updated: [Insert Date]"
+    },
+    "intro": [
+      {
+        "kind": "paragraph",
+        "text": "ASM Holdings (“Quanta Loop”, “we”, “our” or “us”) respects your privacy and is committed to handling personal information responsibly."
+      },
+      {
+        "kind": "paragraph",
+        "text": "This Privacy Policy explains how information is collected, used, stored, disclosed and protected when you access or use the Quanta Loop website, marketplace, applications, software, communication tools and related services (collectively, the “Platform”)."
+      },
+      {
+        "kind": "paragraph",
+        "text": "This Privacy Policy should be read together with the Quanta Loop Terms & Conditions."
+      }
+    ],
+    "sections": [
+      {
+        "title": "1. About Quanta Loop",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop is a technology-enabled B2B marketplace that facilitates connections between buyers, sellers, industrial waste generators, recyclers, aggregators and other business users."
+          },
+          {
+            "kind": "paragraph",
+            "text": "The Platform allows users to create business profiles, publish listings, discover potential counterparties, communicate with other users and potentially enter into transactions."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Much of the information displayed on the Platform is supplied by users."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop does not independently verify every listing, business representation, certification, document, quantity, price, Material description or other user-submitted information."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Users remain responsible for independently evaluating and verifying counterparties and transactions."
+          }
+        ]
+      },
+      {
+        "title": "2. Information We Collect",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Depending on how you use the Platform, we may collect the following categories of information."
+          },
+          {
+            "kind": "heading",
+            "text": "2.1 Information You Provide"
+          },
+          {
+            "kind": "paragraph",
+            "text": "This may include:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "name;",
+              "mobile number;",
+              "email address;",
+              "business or company name;",
+              "business address;",
+              "contact-person details;",
+              "GST information where provided;",
+              "account credentials;",
+              "profile information;",
+              "photographs;",
+              "uploaded documents;",
+              "certifications or other business information;",
+              "listing information;",
+              "Material descriptions;",
+              "quantity and pricing information;",
+              "preferences;",
+              "messages and communications; and",
+              "information provided when contacting support."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "You should avoid uploading personal or confidential information that is not necessary for the intended Platform function."
+          }
+        ]
+      },
+      {
+        "title": "3. Listing and Marketplace Information",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "When you create or interact with a listing, we may process information relating to:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "Material type;",
+              "description;",
+              "quantity;",
+              "location;",
+              "price;",
+              "images;",
+              "availability;",
+              "specifications;",
+              "business information;",
+              "expressions of interest;",
+              "enquiries;",
+              "communications;",
+              "and other information submitted as part of the marketplace activity."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Some business and listing information may be visible to other Platform users because displaying such information is necessary for the marketplace to function."
+          }
+        ]
+      },
+      {
+        "title": "4. Account, Activity and Transaction Information",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "We may collect information concerning:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "registration;",
+              "login activity;",
+              "searches;",
+              "listings created;",
+              "listing views;",
+              "enquiries;",
+              "expressions of interest;",
+              "communications;",
+              "subscriptions;",
+              "payments made to Quanta Loop;",
+              "support requests;",
+              "reports and complaints; and",
+              "other interactions with the Platform."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop does not ordinarily act as a party to transactions between buyers and sellers. Accordingly, information concerning an external transaction may only be available to us where users voluntarily provide it or where it is generated through Platform functionality."
+          }
+        ]
+      },
+      {
+        "title": "5. Device and Technical Information",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "We may automatically collect information such as:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "IP address;",
+              "browser type;",
+              "device type;",
+              "operating system;",
+              "approximate location derived from technical information where enabled;",
+              "login information;",
+              "session information;",
+              "device identifiers where applicable;",
+              "error logs;",
+              "security logs;",
+              "cookies;",
+              "analytics information; and",
+              "usage patterns."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "We use this information primarily for Platform operation, security, troubleshooting, analytics and improvement."
+          }
+        ]
+      },
+      {
+        "title": "6. How We Use Information",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "We may use information for purposes including:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "creating and managing accounts;",
+              "authentication and account security;",
+              "enabling marketplace functionality;",
+              "displaying listings;",
+              "facilitating matching and discovery;",
+              "enabling communication between users;",
+              "processing subscriptions and Platform payments;",
+              "customer support;",
+              "fraud prevention;",
+              "security monitoring;",
+              "investigating misuse;",
+              "improving Platform performance;",
+              "analytics and business insights;",
+              "developing new features;",
+              "personalising Platform functionality;",
+              "legal and regulatory compliance;",
+              "enforcing our Terms and policies; and",
+              "protecting the rights, safety and property of Quanta Loop, users and others."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Where required by applicable law, we will obtain consent or rely on another lawful basis for processing."
+          }
+        ]
+      },
+      {
+        "title": "7. Communications",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "We may send essential communications relating to your use of the Platform, including:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "OTPs;",
+              "login alerts;",
+              "account notifications;",
+              "security notifications;",
+              "subscription information;",
+              "service announcements;",
+              "support communications;",
+              "important policy updates; and",
+              "other transactional messages."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Where applicable and subject to law, we may also send promotional communications about:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "new features;",
+              "services;",
+              "subscription plans;",
+              "offers;",
+              "marketplace developments; and",
+              "other Quanta Loop activities."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "You may opt out of promotional communications through available unsubscribe mechanisms or by contacting us."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Essential service and security communications may continue where necessary."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Communication channels may include email, SMS, WhatsApp, in-platform notifications, telephone or other channels introduced in future."
+          }
+        ]
+      },
+      {
+        "title": "8. Information Shared With Other Users",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Because Quanta Loop operates as a marketplace, certain information may be displayed or made available to other registered users."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Depending on the Platform functionality, this may include:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "business name;",
+              "listing information;",
+              "Material information;",
+              "quantity;",
+              "location associated with a listing;",
+              "images;",
+              "business profile information;",
+              "information intentionally made public by the user; and",
+              "communications or information shared through marketplace functionality."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Users should therefore consider carefully what information they include in public or user-visible listings."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop does not promise that information voluntarily disclosed to another user will remain confidential."
+          }
+        ]
+      },
+      {
+        "title": "9. Contact and Communication Between Users",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Where Quanta Loop provides in-platform chat or messaging, communications may be processed to:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "deliver messages;",
+              "maintain the service;",
+              "prevent spam and abuse;",
+              "investigate fraud;",
+              "maintain security;",
+              "respond to complaints;",
+              "comply with legal obligations; and",
+              "enforce Platform rules."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Users are responsible for information they voluntarily disclose to other users."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop cannot control what another user does with information voluntarily shared with that user."
+          }
+        ]
+      },
+      {
+        "title": "10. Cookies and Similar Technologies",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop may use:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "essential cookies;",
+              "functional cookies;",
+              "analytics cookies;",
+              "performance technologies;",
+              "pixels;",
+              "SDKs;",
+              "session technologies; and",
+              "similar technologies."
+            ]
+          },
+          {
+            "kind": "heading",
+            "text": "Essential Technologies"
+          },
+          {
+            "kind": "paragraph",
+            "text": "These help the Platform operate, maintain sessions, authenticate users and protect security."
+          },
+          {
+            "kind": "heading",
+            "text": "Functional Technologies"
+          },
+          {
+            "kind": "paragraph",
+            "text": "These may remember preferences and improve functionality."
+          },
+          {
+            "kind": "heading",
+            "text": "Analytics Technologies"
+          },
+          {
+            "kind": "paragraph",
+            "text": "These help us understand:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "how users interact with the Platform;",
+              "which features are used;",
+              "performance issues;",
+              "traffic patterns; and",
+              "areas requiring improvement."
+            ]
+          },
+          {
+            "kind": "heading",
+            "text": "Marketing Technologies"
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop may introduce advertising, remarketing or marketing technologies in the future, subject to applicable law and any required choices or permissions."
+          },
+          {
+            "kind": "paragraph",
+            "text": "You may be able to disable cookies through browser or device settings. Some Platform functions may not operate properly if essential technologies are disabled."
+          }
+        ]
+      },
+      {
+        "title": "11. Third-Party Service Providers",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop may engage third-party service providers for purposes such as:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "cloud hosting;",
+              "data storage;",
+              "authentication and OTP delivery;",
+              "email;",
+              "SMS;",
+              "WhatsApp or other communication services;",
+              "payment processing;",
+              "analytics;",
+              "security;",
+              "fraud detection;",
+              "customer support;",
+              "infrastructure management; and",
+              "other technology services."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "These providers may process information on behalf of Quanta Loop or otherwise as permitted by applicable law."
+          },
+          {
+            "kind": "paragraph",
+            "text": "We seek to use appropriate contractual, technical or organisational safeguards where required."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Third-party services may also have their own privacy policies and terms."
+          }
+        ]
+      },
+      {
+        "title": "12. Legal and Regulatory Disclosures",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "We may disclose information where reasonably necessary or legally required to:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "comply with applicable law;",
+              "comply with court orders;",
+              "respond to government or regulatory authorities;",
+              "respond to lawful law-enforcement requests;",
+              "investigate suspected fraud or unlawful activity;",
+              "protect users or the Platform;",
+              "enforce our Terms;",
+              "protect our legal rights; or",
+              "prevent serious harm or misuse."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "We may also disclose information where permitted by applicable law for legitimate operational or security purposes."
+          }
+        ]
+      },
+      {
+        "title": "13. Business Transfers",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "If Quanta Loop or its business is reorganised, transferred, sold, merged, financed or otherwise undergoes a business transaction, information may be transferred as part of that transaction, subject to applicable law."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Any recipient will be expected to handle information in accordance with applicable legal requirements."
+          }
+        ]
+      },
+      {
+        "title": "14. Data Retention",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "We retain information for as long as reasonably necessary for purposes such as:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "providing the Platform;",
+              "maintaining accounts;",
+              "operating the marketplace;",
+              "customer support;",
+              "security;",
+              "fraud prevention;",
+              "dispute management;",
+              "maintaining business and transaction records;",
+              "analytics;",
+              "enforcing agreements; and",
+              "complying with legal or regulatory obligations."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Retention periods may vary depending on the type and purpose of the information."
+          },
+          {
+            "kind": "paragraph",
+            "text": "When information is no longer required, we may delete, anonymise or securely dispose of it, subject to applicable law and legitimate operational requirements."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Anonymised or aggregated information that no longer identifies an individual may be retained for analytics, business intelligence and Platform improvement."
+          }
+        ]
+      },
+      {
+        "title": "15. Data Security",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop uses reasonable technical and organisational measures designed to protect information against unauthorised access, misuse, loss, alteration or disclosure."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Measures may include:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "access controls;",
+              "authentication;",
+              "password protections;",
+              "restricted internal access;",
+              "secure infrastructure;",
+              "monitoring;",
+              "backups;",
+              "security controls; and",
+              "other safeguards appropriate to the nature of the information."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "However, no electronic system, internet transmission or storage method can be guaranteed to be completely secure."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Accordingly, Quanta Loop does not guarantee absolute security."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Where a personal-data breach occurs, Quanta Loop will take steps required under applicable law, which may include assessment, containment, investigation, remediation and required notifications."
+          }
+        ]
+      },
+      {
+        "title": "16. User Rights and Choices",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Subject to applicable law, users may have rights relating to their personal information, including the ability to:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "request access to information;",
+              "request correction or updating;",
+              "request deletion or erasure where applicable;",
+              "withdraw consent where processing is based on consent;",
+              "raise privacy-related grievances; and",
+              "exercise other rights available under applicable law."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Requests may be made by contacting:"
+          },
+          {
+            "kind": "paragraph",
+            "text": "Mr. Avinash, Grievance Officer"
+          },
+          {
+            "kind": "paragraph",
+            "text": "grievance@quantaloop.in"
+          },
+          {
+            "kind": "paragraph",
+            "text": "We may need to verify the identity or authority of the person making a request before acting on it."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Certain information may be retained where required or permitted by law, including for:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "legal compliance;",
+              "fraud prevention;",
+              "security;",
+              "dispute resolution;",
+              "accounting or audit requirements;",
+              "enforcement of agreements; or",
+              "other legally permitted purposes."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "The precise rights and mechanisms applicable to a user may depend on the provisions of Indian data-protection law in force at the relevant time."
+          }
+        ]
+      },
+      {
+        "title": "17. Children",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop is intended for business and professional users and is not directed toward children."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Users must be at least 18 years old to register or use the Platform."
+          },
+          {
+            "kind": "paragraph",
+            "text": "We do not knowingly seek to collect personal information from children."
+          },
+          {
+            "kind": "paragraph",
+            "text": "If we become aware that information has been submitted by a person who is not eligible to use the Platform, we may take appropriate action in accordance with applicable law."
+          }
+        ]
+      },
+      {
+        "title": "18. Business Information and Confidentiality",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop is a marketplace and not a confidential document-storage service."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Users should not upload highly confidential information unless the relevant Platform feature specifically requires it and appropriate safeguards have been considered."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Information voluntarily disclosed through listings, profiles or communications may become available to other users as described in this Privacy Policy and the Terms."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Users are responsible for deciding what information they disclose to counterparties."
+          }
+        ]
+      },
+      {
+        "title": "19. Analytics and Aggregated Information",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop may create or use aggregated, statistical, anonymised or de-identified information for purposes including:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "analytics;",
+              "business insights;",
+              "marketplace optimisation;",
+              "product development;",
+              "performance measurement;",
+              "service improvement; and",
+              "reporting."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Where information has been irreversibly anonymised so that it no longer identifies an individual, it may be used for these purposes without being treated as personal information to the extent permitted by law."
+          }
+        ]
+      },
+      {
+        "title": "20. No Sale of Personal Data",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop does not currently sell personal data to third parties for monetary consideration."
+          },
+          {
+            "kind": "paragraph",
+            "text": "This does not prevent Quanta Loop from:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "using service providers;",
+              "sharing information as necessary to operate the Platform;",
+              "displaying listing or business information to other users;",
+              "making disclosures required or permitted by law;",
+              "or using anonymised or aggregated information."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "If the commercial model changes in a manner that materially affects personal-data processing, the Privacy Policy will be updated as required by applicable law."
+          }
+        ]
+      },
+      {
+        "title": "21. Third-Party Websites and Services",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "The Platform may contain links to third-party websites, applications or services."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop does not control the privacy practices of independent third parties."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Users should review the privacy policies and terms applicable to those services before providing information to them."
+          }
+        ]
+      },
+      {
+        "title": "22. Changes to This Privacy Policy",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop may update this Privacy Policy from time to time to reflect:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "changes to the Platform;",
+              "new features;",
+              "changes in law;",
+              "changes in technology;",
+              "changes in data-processing practices; or",
+              "business requirements."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "The updated Policy will be published with a revised “Last Updated” date."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Where required by law, appropriate notice or consent will be obtained."
+          }
+        ]
+      },
+      {
+        "title": "23. Governing Law",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "This Privacy Policy is governed by the laws of India, subject to applicable data-protection and other mandatory legal requirements."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Any dispute relating to this Privacy Policy will be handled in accordance with the dispute-resolution provisions applicable to the Platform Terms, to the extent legally permissible."
+          }
+        ]
+      },
+      {
+        "title": "24. Privacy and Grievance Contact",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "For privacy questions, personal-data requests or grievances relating to the Platform, contact:"
+          },
+          {
+            "kind": "paragraph",
+            "text": "ASM Holdings"
+          },
+          {
+            "kind": "paragraph",
+            "text": "New No. 100, Old No. 86, Raghavan Street,"
+          },
+          {
+            "kind": "paragraph",
+            "text": "Perambur, Chennai – 600011,"
+          },
+          {
+            "kind": "paragraph",
+            "text": "Tamil Nadu, India"
+          },
+          {
+            "kind": "paragraph",
+            "text": "Grievance Officer: Mr. Avinash"
+          },
+          {
+            "kind": "paragraph",
+            "text": "Email: grievance@quantaloop.in"
+          },
+          {
+            "kind": "paragraph",
+            "text": "Please include sufficient information for us to understand and investigate your request or grievance."
+          },
+          {
+            "kind": "paragraph",
+            "text": "We will handle grievances and requests in accordance with applicable law."
+          }
+        ]
+      }
+    ]
+  }
+}

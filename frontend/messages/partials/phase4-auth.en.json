@@ -1,0 +1,55 @@
+{
+  "verifyEmail": {
+    "title": "Verify email",
+    "shellTitle": "Verify your email",
+    "shellDescription": "Enter the 6-digit code we emailed you to activate your Quanta Loop account.",
+    "verifyError": "Unable to verify your email.",
+    "resendError": "Unable to resend verification email.",
+    "verifying": "Verifying your email…",
+    "verifiedTitle": "Email verified",
+    "verifiedFallback": "Your email has been verified successfully.",
+    "idleTitle": "Enter your verification code",
+    "sentPrefix": "We sent a 6-digit code to",
+    "emailFallback": "your email",
+    "sentSuffix": ". Enter it below to continue into the network. The code expires in 10 minutes.",
+    "codeLabel": "Verification code",
+    "codePlaceholder": "000000",
+    "codeInvalid": "Enter the 6-digit code from your email.",
+    "verify": "Verify Email",
+    "resending": "Sending new code…",
+    "resend": "Resend Code",
+    "cancelSignup": "Cancel and use a different email",
+    "cancelling": "Leaving…",
+    "backToSignIn": "Back to Sign In",
+    "loading": "Loading…"
+  },
+  "passwordStrength": {
+    "label": "Password strength:",
+    "weak": "Weak",
+    "medium": "Medium",
+    "strong": "Strong"
+  },
+  "google": {
+    "continue": "Continue with Google",
+    "envHintPrefix": "Add",
+    "envHintSuffix": "to enable Google sign-in.",
+    "credentialError": "Unable to sign in with Google. Please try again.",
+    "signInError": "Unable to sign in with Google.",
+    "cancelled": "Google sign-in was cancelled or failed.",
+    "loading": "Continuing with Google…"
+  },
+  "googleAccountSetup": {
+    "accountLabel": "Google account",
+    "linkedHint": "This email is linked. Set a password below to sign in with Google or email and password.",
+    "contactName": "Contact person name",
+    "companyName": "Company name",
+    "passwordSection": "Login password",
+    "passwordHint": "Use at least 8 characters. You can change this later from your account settings.",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "setupError": "Unable to complete account setup",
+    "saving": "Saving account…",
+    "complete": "Complete Account Setup",
+    "useEmailInstead": "Use email sign-up instead"
+  }
+}

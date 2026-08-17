@@ -1,0 +1,3539 @@
+{
+  "common": {
+    "signIn": "Sign In",
+    "getStarted": "Get Started",
+    "signOut": "Sign out",
+    "or": "OR",
+    "language": "Language",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "workspace": "Workspace",
+    "workEmail": "Email",
+    "password": "Password",
+    "email": "Email",
+    "continue": "Continue",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "save": "Save",
+    "all": "All",
+    "buyer": "Buyer",
+    "provider": "Provider",
+    "sortBy": "Sort by",
+    "search": "Search",
+    "selected": "Selected",
+    "saving": "Saving…",
+    "roles": {
+      "material_provider": "Material Provider",
+      "verified_buyer": "Registered Buyer",
+      "admin": "Admin"
+    }
+  },
+  "landing": {
+    "nav": {
+      "smartMatching": "Smart Matching",
+      "howItWorks": "How It Works",
+      "whoItsFor": "Who It's For",
+      "whyQuantaLoop": "Why Quanta Loop",
+      "pricing": "Pricing"
+    },
+    "hero": {
+      "eyebrow": "Recoverable Material Network",
+      "titleLine1": "Buy and Sell",
+      "titleLine2": "Recyclable & Industrial Materials",
+      "description": "Sell recyclable materials or find materials for your business. Connect with registered buyers and suppliers in one trusted network.",
+      "materials": "Paper, Plastic, Metal, E-Waste and many more.",
+      "quantityNote": "Any quantity accepted — from a few kilograms to multiple tons.",
+      "trust1": "Smart match recommendations",
+      "trust2": "Registered businesses",
+      "trust3": "Any quantity accepted",
+      "trust4": "Direct buyer connections"
+    },
+    "footer": {
+      "description1": "Private industrial recovery network connecting material providers, buyers, processors, and recovery operators.",
+      "description2": "Built around trust, registered participation, and structured recovery workflows.",
+      "navigation": "Navigation",
+      "company": "Company",
+      "contact": "Contact",
+      "terms": "Terms & Conditions",
+      "privacy": "Privacy Policy",
+      "readyToJoin": "Ready to join the network?",
+      "startTrial": "Start 30-day trial →",
+      "copyright1": "Registered participation",
+      "copyright2": "Qualified opportunities",
+      "copyright3": "Structured coordination",
+      "fromToPrefix": "From",
+      "fromToConnector": "to",
+      "fromToSuffix": "",
+      "fromToAria": "From India to the World",
+      "indiaIconLabel": "India",
+      "worldIconLabel": "World"
+    },
+    "problem": {
+      "titleLine1": "The material you are discarding today",
+      "titleLine2": "could be valuable to another business.",
+      "description": "Many recyclable and surplus materials still have value. The right buyer may already be looking for them.",
+      "categoriesLabel": "Common material categories",
+      "categoriesNote": "Examples of materials already listed on the network.",
+      "examples": [
+        "HDPE Scrap",
+        "PET Flakes",
+        "Metal Shavings",
+        "Textile Byproducts",
+        "Packaging Waste",
+        "E-Waste"
+      ],
+      "transformations": [
+        {
+          "from": "Throwing Away",
+          "to": "Missed Revenue",
+          "description": "Someone may already be willing to buy it."
+        },
+        {
+          "from": "No Buyer Found",
+          "to": "Registered Buyer",
+          "description": "Connect with Registered businesses."
+        },
+        {
+          "from": "Unused Material",
+          "to": "Useful Resource",
+          "description": "Valuable for another business process."
+        }
+      ]
+    },
+    "recommendations": {
+      "eyebrow": "Smart matching",
+      "title": "Our recommendation engine brings your perfect match",
+      "description": "Stop scrolling through irrelevant listings. Quanta Loop learns what you buy or sell, where you operate, and who fits your business — then surfaces the connections most likely to close.",
+      "factors": [
+        {
+          "title": "Material fit",
+          "description": "We match your categories and material types to listings and buyers already active on the network."
+        },
+        {
+          "title": "Location proximity",
+          "description": "Prioritize partners in your state and city so pickup, delivery, and coordination stay practical."
+        },
+        {
+          "title": "Industry alignment",
+          "description": "Connect with businesses whose industry profile complements what you buy or sell."
+        },
+        {
+          "title": "Relevance scoring",
+          "description": "Every suggestion is ranked by fit — so the best matches rise to the top, not random listings."
+        }
+      ],
+      "previewBadge": "Recommendation engine",
+      "previewTitle": "Matches tailored to your profile",
+      "yourMaterials": "Your materials",
+      "rankedMatches": "Ranked matches",
+      "disclaimer": "Illustrative matches — real recommendations appear in your dashboard after you join.",
+      "samples": [
+        {
+          "tier": "excellent",
+          "tierLabel": "Excellent match",
+          "title": "HDPE Scrap · 2 tons",
+          "meta": "Recycled polymers · Chennai",
+          "scope": "same_city",
+          "locationNote": "Same city as you"
+        },
+        {
+          "tier": "strong",
+          "tierLabel": "Strong match",
+          "title": "PET Flakes · 500 kg",
+          "meta": "Plastics · Coimbatore",
+          "scope": "same_state",
+          "locationNote": "In your state · Coimbatore"
+        },
+        {
+          "tier": "relevant",
+          "tierLabel": "Relevant",
+          "title": "Metal shavings · 1 ton",
+          "meta": "Metals · Ahmedabad",
+          "scope": "other_state",
+          "locationNote": "Different state · material in Gujarat"
+        }
+      ]
+    },
+    "howItWorks": {
+      "eyebrow": "Process",
+      "title": "How it works",
+      "tablistAria": "How it works audience",
+      "seller": {
+        "label": "Selling materials",
+        "subtitle": "List your material, connect with buyers, and complete deals through a simple process.",
+        "steps": [
+          {
+            "step": "01",
+            "title": "List Your Material",
+            "description": "Add details about the recyclable or surplus material you want to sell.",
+            "label": "Material Listing"
+          },
+          {
+            "step": "02",
+            "title": "Registered Business Network",
+            "description": "Only Registered businesses can view and connect through the platform.",
+            "label": "Registered Members"
+          },
+          {
+            "step": "03",
+            "title": "Find Interested Buyers",
+            "description": "Businesses looking for similar materials can express interest.",
+            "label": "Buyer Connections"
+          },
+          {
+            "step": "04",
+            "title": "Complete the Deal",
+            "description": "Discuss requirements and coordinate pickup or delivery.",
+            "label": "Deal Coordination"
+          }
+        ]
+      },
+      "buyer": {
+        "label": "Buying materials",
+        "subtitle": "Post what you need, connect with sellers, and complete deals through a simple process.",
+        "steps": [
+          {
+            "step": "01",
+            "title": "List What You Need",
+            "description": "Describe the recyclable or surplus material you want to buy.",
+            "label": "Material Requirement"
+          },
+          {
+            "step": "02",
+            "title": "Registered Business Network",
+            "description": "Only Registered businesses can view and connect through the platform.",
+            "label": "Registered Members"
+          },
+          {
+            "step": "03",
+            "title": "Find Available Materials",
+            "description": "Businesses listing similar materials can connect with you.",
+            "label": "Seller Connections"
+          },
+          {
+            "step": "04",
+            "title": "Complete the Deal",
+            "description": "Discuss requirements and coordinate pickup or delivery.",
+            "label": "Deal Coordination"
+          }
+        ]
+      }
+    },
+    "audience": {
+      "eyebrow": "Participants",
+      "title": "Who it is for",
+      "description": "For businesses that buy, sell, recycle, or manage recyclable and industrial materials.",
+      "cards": [
+        {
+          "role": "Seller",
+          "title": "Material Sellers",
+          "value": "Sell recyclable, surplus, or industrial materials.",
+          "metrics": [
+            {
+              "direction": "down",
+              "label": "Disposal Costs"
+            },
+            {
+              "direction": "up",
+              "label": "Additional Revenue"
+            }
+          ],
+          "benefits": [
+            "List materials easily",
+            "Reach registered buyers",
+            "Generate additional revenue"
+          ]
+        },
+        {
+          "role": "Buyer",
+          "title": "Material Buyers",
+          "value": "Find recyclable and industrial materials from registered businesses.",
+          "metrics": [
+            {
+              "direction": "up",
+              "label": "Material Availability"
+            },
+            {
+              "direction": "down",
+              "label": "Sourcing Effort"
+            }
+          ],
+          "benefits": [
+            "Discover available materials",
+            "Connect with registered sellers",
+            "Manage sourcing efficiently"
+          ]
+        },
+        {
+          "role": "Programs",
+          "title": "Organizations & Recovery Programs",
+          "value": "Manage recovery activities across multiple businesses.",
+          "metrics": [
+            {
+              "direction": "up",
+              "label": "Recovery Tracking"
+            },
+            {
+              "direction": "up",
+              "label": "Program Scale"
+            }
+          ],
+          "benefits": [
+            "Track recovery activities",
+            "Coordinate multiple participants",
+            "Scale recovery programs"
+          ]
+        }
+      ]
+    },
+    "why": {
+      "eyebrow": "Benefits",
+      "title": "Why Businesses Choose Quanta Loop",
+      "description": "List your material, connect with registered buyers, and complete deals through a trusted business network.",
+      "cards": [
+        {
+          "label": "Trust",
+          "title": "Registered Businesses",
+          "description": "Only Registered businesses can join and connect through the network.",
+          "outcomes": [
+            {
+              "direction": "down",
+              "label": "Searching manually"
+            },
+            {
+              "direction": "up",
+              "label": "Registered buyers"
+            }
+          ]
+        },
+        {
+          "label": "Buyers",
+          "title": "Connect with Buyers",
+          "description": "Reach interested buyers and discuss requirements directly.",
+          "outcomes": [
+            {
+              "direction": "down",
+              "label": "Cold calling"
+            },
+            {
+              "direction": "up",
+              "label": "Direct connections"
+            }
+          ]
+        },
+        {
+          "label": "Discovery",
+          "title": "Find Active Buyers",
+          "description": "See businesses already looking for materials like yours.",
+          "outcomes": [
+            {
+              "direction": "down",
+              "label": "Random searching"
+            },
+            {
+              "direction": "up",
+              "label": "Active buyers found"
+            }
+          ]
+        },
+        {
+          "label": "Connections",
+          "title": "Direct Buyer Connections",
+          "description": "Connect directly with registered buyers and sellers.",
+          "outcomes": [
+            {
+              "direction": "down",
+              "label": "Middlemen"
+            },
+            {
+              "direction": "up",
+              "label": "Direct connections"
+            }
+          ]
+        },
+        {
+          "label": "Growth",
+          "title": "More Material Opportunities",
+          "description": "More businesses and materials create more matching opportunities.",
+          "outcomes": [
+            {
+              "direction": "down",
+              "label": "Wasted material"
+            },
+            {
+              "direction": "up",
+              "label": "Revenue opportunities"
+            }
+          ]
+        },
+        {
+          "label": "Focus",
+          "title": "Built for Material Trading",
+          "description": "Designed specifically for industrial, recycling, and surplus material transactions.",
+          "outcomes": [
+            {
+              "direction": "down",
+              "label": "Generic marketplaces"
+            },
+            {
+              "direction": "up",
+              "label": "Industry focused"
+            }
+          ]
+        }
+      ]
+    },
+    "pricing": {
+      "eyebrow": "Network access",
+      "title": "Join the Network and Connect with registered Buyers",
+      "description": "List your materials, connect with registered businesses, and discover buyers looking for what you have available.",
+      "membershipTitle": "Network Membership",
+      "membershipDescription": "Try free for 30 days. List materials and connect with registered buyers across the network.",
+      "price": "₹6,999",
+      "perYear": "/year",
+      "trialBadge": "30-Day Free Trial Included",
+      "dailyCost": "Less than ₹20 per day after your trial.",
+      "roiNote": "One successful deal can easily recover your annual membership fee.",
+      "features": [
+        "List unlimited materials",
+        "India and global material access",
+        "Connect with registered buyers",
+        "Discover buyer interest",
+        "Direct business communication",
+        "Secure business network",
+        "30-day trial included"
+      ],
+      "trustIndicators": [
+        "Registered Businesses",
+        "Unlimited Listings",
+        "Direct Communication",
+        "Global Access"
+      ],
+      "trustAria": "Network trust indicators",
+      "cta": "Start Free 30-Day Trial",
+      "trialNote": "No payment required to start. Cancel anytime during your trial.",
+      "enterprisePrefix": "Need access for multiple locations or teams?",
+      "enterpriseContact": "Contact us",
+      "enterpriseSuffix": "for enterprise plans."
+    },
+    "valueComparison": {
+      "title": "Less than one coffee a day — real buyers and real revenue",
+      "description": "List your surplus materials on Quanta Loop and get matched with registered businesses already looking for what you have. One deal can recover your annual membership.",
+      "cta": "Start Free 30-Day Trial",
+      "imageAlt": "One coffee a day equals a registered buyer and real revenue"
+    },
+    "accessProcess": {
+      "eyebrow": "Getting started",
+      "title": "Start Selling or Buying Materials in 4 Simple Steps",
+      "description": "Create your account, list materials, connect with businesses, and start discussions.",
+      "footer": "Create your account today and start connecting with businesses immediately.",
+      "steps": [
+        {
+          "step": "01",
+          "title": "Create Account",
+          "description": "Register your business in a few minutes."
+        },
+        {
+          "step": "02",
+          "title": "Complete Profile",
+          "description": "Add your business details and material interests."
+        },
+        {
+          "step": "03",
+          "title": "List Materials / Find Materials",
+          "description": "Post materials for sale or browse available listings."
+        },
+        {
+          "step": "04",
+          "title": "Connect & Close Deals",
+          "description": "Chat with businesses and arrange pickup or delivery."
+        }
+      ]
+    },
+    "finalCta": {
+      "eyebrow": "Get started",
+      "title": "Have Materials to Buy or Sell?",
+      "description": "Join the network, list your materials, and connect with registered buyers looking for them.",
+      "cta": "Start Free 30-Day Trial",
+      "industries": "Manufacturers • Recyclers • Traders • Material Buyers",
+      "disclaimer": "No payment required to start. No long-term commitment required."
+    }
+  },
+  "auth": {
+    "branding": {
+      "badge": "Business Login",
+      "titleLine1": "Find Registered Buyers",
+      "titleLine2": "for Your Materials",
+      "description": "Access India's industrial recovery network — list materials, discover matches, and connect with registered businesses.",
+      "trust1": "Registered Businesses",
+      "trust2": "Direct Buyer Connections",
+      "trust3": "Secure Communication"
+    },
+    "loginFlow": {
+      "eyebrow": "How the network works",
+      "seller": "Material Seller",
+      "matching": "Quanta Loop Matching",
+      "matchingNote": "Material + location → ranked match",
+      "buyer": "Registered Buyer",
+      "footer": "Registered businesses · Direct connections · Secure messaging"
+    },
+    "login": {
+      "title": "Welcome Back",
+      "description": "Sign in to manage your materials, discover buyers, and close deals faster.",
+      "rememberMe": "Remember Me",
+      "forgotPassword": "Forgot Password",
+      "signingIn": "Signing in…",
+      "secureAccess": "Secure access for registered businesses.",
+      "noAccount": "Don't have an account?",
+      "startTrial": "Start Free 30-Day Trial",
+      "signInFailed": "Unable to sign in. Please try again.",
+      "googleSignInFailed": "Unable to sign in with Google."
+    },
+    "forgotPassword": {
+      "title": "Reset your password",
+      "description": "Enter the email associated with your Quanta Loop account and we will send you a secure reset link.",
+      "sendResetLink": "Send Reset Link",
+      "sendingResetLink": "Sending reset link…",
+      "requestFailed": "Unable to process your request. Please try again."
+    },
+    "resetPassword": {
+      "title": "Choose a new password",
+      "description": "Your reset link expires in 30 minutes. Choose a strong password to secure your account.",
+      "loading": "Loading reset form…",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
+      "resetPassword": "Reset Password",
+      "resetting": "Resetting…",
+      "updatePassword": "Update Password",
+      "updatingPassword": "Updating password…",
+      "invalidLink": "This reset link is invalid. Request a new password reset.",
+      "resetFailed": "Unable to reset your password. Please try again.",
+      "backToSignIn": "Back to Sign In"
+    },
+    "register": {
+      "title": "Create account",
+      "description": "Join as a material provider or buyer. Admin access is issued separately.",
+      "contactName": "Contact person name",
+      "companyName": "Company name",
+      "emailHint": "We'll use this email for account access and network communications.",
+      "confirmPassword": "Confirm password",
+      "creatingAccount": "Creating account…",
+      "createAccount": "Create Account",
+      "alreadyHaveAccess": "Already have access?",
+      "registerFailed": "Unable to register",
+      "onboardingIncomplete": "Complete material categories and location before creating your account.",
+      "profileNotSaved": "Account created but recommendation profile was not saved. Complete material categories and location, then update your profile."
+    },
+    "verifyEmail": {
+      "title": "Verify email",
+      "shellTitle": "Verify your email",
+      "shellDescription": "Enter the 6-digit code we emailed you to activate your Quanta Loop account.",
+      "verifyError": "Unable to verify your email.",
+      "resendError": "Unable to resend verification email.",
+      "verifying": "Verifying your email…",
+      "verifiedTitle": "Email verified",
+      "verifiedFallback": "Your email has been verified successfully.",
+      "idleTitle": "Enter your verification code",
+      "sentPrefix": "We sent a 6-digit code to",
+      "emailFallback": "your email",
+      "sentSuffix": ". Enter it below to continue into the network. The code expires in 10 minutes.",
+      "codeLabel": "Verification code",
+      "codePlaceholder": "000000",
+      "codeInvalid": "Enter the 6-digit code from your email.",
+      "verify": "Verify Email",
+      "resending": "Sending new code…",
+      "resend": "Resend Code",
+      "cancelSignup": "Cancel and use a different email",
+      "cancelling": "Leaving…",
+      "backToSignIn": "Back to Sign In",
+      "loading": "Loading…"
+    },
+    "passwordStrength": {
+      "label": "Password strength:",
+      "weak": "Weak",
+      "medium": "Medium",
+      "strong": "Strong"
+    },
+    "google": {
+      "continue": "Continue with Google",
+      "envHintPrefix": "Add",
+      "envHintSuffix": "to enable Google sign-in.",
+      "credentialError": "Unable to sign in with Google. Please try again.",
+      "signInError": "Unable to sign in with Google.",
+      "cancelled": "Google sign-in was cancelled or failed.",
+      "loading": "Continuing with Google…"
+    },
+    "googleAccountSetup": {
+      "accountLabel": "Google account",
+      "linkedHint": "This email is linked. Set a password below to sign in with Google or email and password.",
+      "contactName": "Contact person name",
+      "companyName": "Company name",
+      "passwordSection": "Login password",
+      "passwordHint": "Use at least 8 characters. You can change this later from your account settings.",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "setupError": "Unable to complete account setup",
+      "saving": "Saving account…",
+      "complete": "Complete Account Setup",
+      "useEmailInstead": "Use email instead"
+    }
+  },
+  "dashboard": {
+    "nav": {
+      "overview": "Overview",
+      "dashboard": "Dashboard",
+      "profile": "Profile",
+      "network": "Network",
+      "access": "Access",
+      "materials": "Materials",
+      "interests": "Interests",
+      "saved": "Saved",
+      "activity": "Activity",
+      "recommendations": "Recommendations",
+      "insights": "Insights",
+      "notifications": "Notifications",
+      "administration": "Administration",
+      "participants": "Participants",
+      "reports": "Reports"
+    },
+    "home": {
+      "greeting": {
+        "morning": "Good morning",
+        "afternoon": "Good afternoon",
+        "evening": "Good evening",
+        "fallbackName": "there"
+      },
+      "provider": {
+        "subtitle": "Manage your listings and respond to buyer interest.",
+        "quickActions": "Quick actions",
+        "publishMaterial": "Publish material",
+        "viewInterests": "View interests",
+        "completeProfile": "Complete profile",
+        "emptyTitle": "No active materials yet",
+        "emptyDescription": "Publish your first listing to start receiving interest from registered buyers.",
+        "activeMaterials": "Active materials",
+        "pendingInterests": "Pending interests",
+        "interestsReceived": "Interests received",
+        "needsResponse": "Needs response",
+        "needsResponseDescription": "{count} interest(s) waiting",
+        "yourMaterials": "Your materials",
+        "yourMaterialsDescription": "Recent listings and interest activity.",
+        "viewAll": "View all",
+        "interestsReceivedCount": "{count} interest(s) received",
+        "lastUpdated": "Last updated {time}",
+        "respond": "Respond",
+        "buyerFallback": "Buyer",
+        "loadError": "Unable to load dashboard. Please try again."
+      },
+      "buyer": {
+        "title": "Overview",
+        "subtitle": "Track your interests, saved materials, and follow-ups.",
+        "activeInterests": "Active interests",
+        "savedMaterials": "Saved materials",
+        "followUpsPending": "Follow-ups pending",
+        "profileCompletion": "Profile completion",
+        "completeProfile": "Complete profile",
+        "recommended": "Recommended for you",
+        "recommendedEmpty": "No recommendations yet. Complete your profile to improve matches.",
+        "browseAll": "Browse all materials",
+        "myActiveInterests": "My active interests",
+        "notifications": "Notifications",
+        "notificationsEmpty": "No new notifications.",
+        "priority": "Priority",
+        "loadError": "Unable to load dashboard. Please try again."
+      }
+    },
+    "recommendations": {
+      "title": "Recommendations",
+      "titleMatches": "Matches",
+      "subtitleBuyer": "Rule-based intelligence on materials and participants — aligned to your operations, not marketplace rankings.",
+      "subtitleProvider": "Buyers and opportunities aligned to your published material — not endorsements.",
+      "loadError": "Unable to load recommendations",
+      "redirecting": "Redirecting to dashboard…",
+      "emptySection": "No items in this section yet.",
+      "matchScore": "{score}% match",
+      "viewProfile": "View profile →",
+      "emptyGlobal": "Complete your profile mandate fields to sharpen recommendations.",
+      "fitScore": "Fit {score}",
+      "priority": {
+        "high": "Priority",
+        "medium": "Active",
+        "standard": "Standard"
+      }
+    },
+    "saved": {
+      "title": "Saved opportunities",
+      "subtitle": "Materials you bookmarked for later — open to continue or remove when they are no longer relevant.",
+      "loadError": "Unable to load saved items",
+      "removed": "Removed from saved",
+      "removeError": "Could not remove",
+      "emptyTitle": "No saved opportunities yet.",
+      "emptyDescription": "Save opportunities from Materials to track them here.",
+      "browseMaterials": "Browse materials",
+      "savedPrefix": "Saved {time}",
+      "removing": "Removing…",
+      "remove": "Remove",
+      "openListing": "Open listing"
+    },
+    "network": {
+      "title": "Network overview",
+      "eyebrow": "Network quality",
+      "pageTitle": "Registered industrial participants",
+      "subtitle": "A calm read-out of registry-backed presence and recent opportunity motion — not a social feed.",
+      "loadError": "Unable to load network",
+      "unavailable": "Network data unavailable.",
+      "registeredParticipants": "Registered participants",
+      "registeredParticipantsDesc": "Organizations on the network.",
+      "activeListings": "Active recovery listings",
+      "activeListingsDesc": "Published materials in market.",
+      "opportunityMotion": "Opportunity motion (7d)",
+      "opportunityMotionDesc": "New interest signals.",
+      "spotlightTitle": "Registry spotlight",
+      "spotlightDesc": "Recently updated registered participants — informational only.",
+      "spotlightEmpty": "Registered participants will appear here as the registry grows."
+    },
+    "insights": {
+      "title": "Insights",
+      "pageTitle": "Operational insights",
+      "subtitle": "Calm, context-aware signals from network activity — not analytics dashboards or AI predictions.",
+      "loadError": "Unable to load insights",
+      "refreshed": "Refreshed {time}",
+      "responseHistory": "Response history",
+      "responseHistoryDesc": "Metrics appear after you respond to buyer interests.",
+      "responseQuality": "Response quality:",
+      "responseEmpty": "No response history yet. Start receiving and responding to interests to build your operational metrics.",
+      "networkPosture": "Your network posture",
+      "networkPostureDesc": "Lightweight engagement scoring — updates periodically.",
+      "engagementIndex": "Engagement index:",
+      "empty": "Insights will appear as your network activity accumulates."
+    },
+    "activity": {
+      "title": "Activity",
+      "subtitle": "Operational chronology across interests, coordination, and listing changes visible to your account.",
+      "loadError": "Unable to load activity",
+      "interestsLink": "Interests →",
+      "emptyWindow": "No events in your visibility window yet.",
+      "emptyDefault": "No operational events yet.",
+      "types": {
+        "interest_received": "Interest",
+        "interest_accepted": "Acceptance",
+        "interest_rejected": "Declined",
+        "discussion_opened": "Coordination",
+        "workflow_discussion": "Discussion",
+        "workflow_pickup_scheduled": "Pickup",
+        "workflow_completed": "Complete",
+        "workflow_closed": "Closed",
+        "message_posted": "Message",
+        "material_status_changed": "Material",
+        "opportunity_saved": "Saved"
+      }
+    },
+    "access": {
+      "title": "Network access",
+      "headlineFallback": "Recover value from what your operations already produce",
+      "subtextFallback": "Access to industrial demand and relevant recovery opportunities.",
+      "positioningTitle": "Access positioning",
+      "positioningDesc": "Commercial mechanics are intentionally omitted. This is the operational frame for how access is discussed on the network.",
+      "perYear": "per year",
+      "perDay": "≈ ₹{amount} / day",
+      "globalAccessTitle": "Global access included",
+      "globalAccessDesc": "Your ₹6,999 annual membership includes access to international material opportunities while keeping India city and state matching unchanged.",
+      "globalAccessBuyer": "Discover materials listed outside India",
+      "globalAccessSeller": "Choose India-only or global reach for listings",
+      "footerNote": "Annual network access is billed securely through Razorpay. Existing workspace tools stay available while membership is managed here."
+    },
+    "conversations": {
+      "title": "Coordination",
+      "indexTitle": "Operational coordination",
+      "indexSubtitle": "Private threads open only after an interest is accepted. Use this space to align on pickup, specifications, and constraints — not general chat.",
+      "loadError": "Unable to load threads",
+      "statusClosed": "Closed",
+      "statusActive": "Active",
+      "lastUpdate": "Last update {time}",
+      "awaitingFirst": "Awaiting first message",
+      "openThread": "Open thread →",
+      "indexEmpty": "When you accept buyer interest, a coordination thread appears here.",
+      "roomLoadError": "Unable to load thread",
+      "roomUnavailable": "Thread unavailable.",
+      "backToAll": "← All coordination threads",
+      "closedThread": "Closed thread",
+      "activeCoordination": "Active coordination",
+      "roomSubtitle": "Clarify operational details and pickup alignment here.",
+      "reportParticipant": "Report participant",
+      "reportSubject": "Conversation participant",
+      "reportContext": "Reported from conversation room ({title}).",
+      "messagesEmpty": "No messages yet. Open with context on timing, constraints, or documentation expectations.",
+      "system": "System",
+      "participant": "Participant",
+      "placeholder": "Coordinate pickup timelines, clarify operational details…",
+      "sending": "Sending…",
+      "send": "Send",
+      "adminReadOnly": "Read-only access for administrators.",
+      "threadClosed": "This thread is closed to new messages.",
+      "invalidReference": "Invalid conversation reference."
+    },
+    "participants": {
+      "title": "Participant profile",
+      "eyebrow": "Network participant",
+      "loadError": "Unable to load profile",
+      "notFound": "Profile not found.",
+      "backToDashboard": "Back to dashboard",
+      "registryContext": "Registry context",
+      "location": "Location:",
+      "industry": "Industry:",
+      "materialInterests": "Material interests",
+      "nextStep": "Next step",
+      "nextStepDesc": "Suggested match → view profile → request introduction → buyer coordinates on your material",
+      "nextStepBody": "Send a short introduction tied to one of your published materials. The buyer is notified and can express interest when ready.",
+      "requestIntroduction": "Request introduction",
+      "reportParticipant": "Report participant",
+      "reportContext": "Reported from participant profile ({name}).",
+      "navDashboard": "← Dashboard",
+      "navMaterials": "Your materials",
+      "roleBadge": {
+        "material_provider": "Seller",
+        "verified_buyer": "Buyer",
+        "admin": "Admin"
+      },
+      "trust": {
+        "registeredBuyer": "Registered buyer",
+        "memberSince": "Member since {date}",
+        "interestedIn": "Interested in:",
+        "responds24h": "Typically responds within 24 hrs",
+        "responds48h": "Typically responds within 48 hrs",
+        "responseWindow": "Typical response window: {window}",
+        "responseRate": "Response rate {rate}% on the network",
+        "lastActive": "Last active {time}"
+      },
+      "intro": {
+        "defaultMessage": "Hello {name}, we would like to explore recovery coordination on the network.",
+        "materialMessage": "Hello {name}, we publish {type} ({title}).{qty} Happy to coordinate if this fits your mandate.",
+        "qtySuffix": " We can supply {quantity} {unit}.",
+        "sent": "Introduction request sent",
+        "sendError": "Could not send request",
+        "dismiss": "Dismiss",
+        "title": "Send introduction request?",
+        "toPrefix": "To",
+        "toSuffix": ". They will be notified and can express interest on your material when ready.",
+        "materialLabel": "Material",
+        "noMaterials": "Publish a material first so buyers know what you are offering.",
+        "messageLabel": "Message",
+        "cancel": "Cancel",
+        "sending": "Sending…",
+        "send": "Send request"
+      }
+    }
+  },
+  "validation": {
+    "email": "Enter a valid email",
+    "passwordRequired": "Password is required",
+    "passwordMin": "Use at least 8 characters",
+    "passwordMax": "Password is too long",
+    "confirmPassword": "Confirm your password",
+    "passwordsMismatch": "Passwords do not match",
+    "contactNameRequired": "Contact name is required",
+    "companyRequired": "Company is required",
+    "material": {
+      "categoryRequired": "Select a material category",
+      "categoryFromList": "Select a material category from the list",
+      "materialRequired": "Select a material",
+      "quantityRequired": "Quantity is required",
+      "quantityNonNegative": "Quantity must be zero or greater",
+      "unitRequired": "Unit is required",
+      "locationRequired": "Location is required",
+      "subtypeMismatch": "Select a material that belongs to the chosen category",
+      "otherMaterialRequired": "Enter the material name",
+      "otherUnitRequired": "Enter the unit",
+      "otherFormRequired": "Enter the material form",
+      "otherCleanlinessRequired": "Enter the cleanliness"
+    }
+  },
+  "time": {
+    "justNow": "Just now",
+    "minutesAgo": "{count} min ago",
+    "hoursAgo": "{count} hr ago",
+    "daysAgo": "{count} day ago",
+    "yesterday": "Yesterday",
+    "weeksAgo": "{count} week ago",
+    "monthsAgo": "{count} month ago",
+    "yearsAgo": "{count} year ago"
+  },
+  "onboarding": {
+    "progress": {
+      "roleSelection": "Role selection",
+      "materialCategories": "Material categories",
+      "stateCity": "State & city",
+      "accountSetup": "Account setup",
+      "membership": "Membership",
+      "submitted": "Submitted",
+      "stepOf": "Step {current} of {total}"
+    },
+    "role": {
+      "title": "How will you use Quanta Loop?",
+      "description": "Choose your primary role. You can update preferences later in your profile.",
+      "sellerTitle": "Material provider",
+      "sellerSummary": "List recoverable materials and connect with registered buyers.",
+      "buyerTitle": "Registered buyer",
+      "buyerSummary": "Discover materials and express interest with registered suppliers.",
+      "selected": "Selected",
+      "continueArrow": "Continue →",
+      "alreadyOnboarded": "Already onboarded?",
+      "signIn": "Sign in"
+    },
+    "materials": {
+      "buyerTitle": "What materials do you source?",
+      "providerTitle": "What materials do you supply?",
+      "buyerDescription": "Select the categories you typically purchase. This helps us surface relevant listings.",
+      "providerDescription": "Select the categories you can supply. Buyers use this to find your listings.",
+      "fieldLabel": "Material categories",
+      "fieldHint": "Choose at least one category to continue.",
+      "minOneCategory": "Select at least one material category.",
+      "continueToLocation": "Continue to location",
+      "unableToContinue": "Unable to save selections. Please try again.",
+      "searchPlaceholder": "Search categories…",
+      "categoriesHeading": "Material categories",
+      "categoriesSelected": "{count, plural, one {# category selected} other {# categories selected}}",
+      "noMatchingCategories": "No matching categories."
+    },
+    "location": {
+      "title": "Where are you based?",
+      "description": "Your state and city help match you with nearby opportunities in the network.",
+      "continue": "Continue",
+      "stateLabel": "State",
+      "cityLabel": "City",
+      "required": "(required)",
+      "selectState": "Select state",
+      "selectStateFirst": "Select state first",
+      "selectStateToSearch": "Select a state to search cities.",
+      "noCitiesConfigured": "No cities configured for this state.",
+      "citySearchHint": "Type your city name, then select it from the suggestions.",
+      "citySearchHintWithCount": "Type your city name, then select it from the suggestions.",
+      "cityListTruncatedBrowse": "Keep typing to find your city.",
+      "cityListTruncatedSearch": "Keep typing to narrow results.",
+      "loadingCities": "Loading cities…",
+      "noMatchingCities": "No matching cities. Try another spelling, then select from the suggestions.",
+      "cityErrorInvalid": "Select a city from the list for your state."
+    },
+    "complete": {
+      "title": "Your membership is active",
+      "description": "Payment is confirmed and your onboarding is complete. You now have one year of Quanta Loop access.",
+      "networkNote": "Your annual membership unlocks the private network for registered participants.",
+      "profileNote": "Add company details and preferences in your profile to improve match quality.",
+      "returnToDashboard": "Go to dashboard",
+      "reviewProfile": "Review profile"
+    },
+    "actions": {
+      "continue": "Continue",
+      "skipForNow": "Skip for now",
+      "saving": "Saving…",
+      "finishLaterInProfile": "You can finish this later in your profile."
+    },
+    "trust": {
+      "item1": "Private network for registered businesses only",
+      "item2": "Registered organisations and structured workflows",
+      "item3": "No public marketplace — qualified connections only"
+    },
+    "trustNotes": {
+      "title": "What You Get",
+      "note1": "Registered business network",
+      "note2": "Direct buyer & seller connections",
+      "note3": "Secure business communication"
+    },
+    "account": {
+      "title": "Account Setup",
+      "googleDescription": "Confirm your details and set a password. Your Google email is already linked — you can sign in either way.",
+      "emailDescription": "Create your organization account with Google or email. Your material categories and location are saved for recommendations."
+    },
+    "membership": {
+      "title": "Pay to activate your membership",
+      "description": "One payment unlocks Quanta Loop for a full year. Pay securely with Razorpay to enter the network.",
+      "renewTitle": "Renew your membership",
+      "renewDescription": "Your annual membership has ended. Pay again to continue using the Quanta Loop network.",
+      "perYear": "per year",
+      "oneYear": "One full year of network access",
+      "networkAccess": "India and global access to matching, listings, and participant connections",
+      "secure": "Secure payment handled by Razorpay",
+      "checkError": "We could not confirm your current access. To prevent a duplicate payment, retry the check before paying.",
+      "retry": "Retry access check",
+      "signedInAs": "Signed in as {email}.",
+      "signOut": "Sign out",
+      "signingOut": "Signing out…",
+      "payLaterHint": "Your details are saved. Sign in any time to finish this payment.",
+      "cancel": {
+        "cta": "Cancel signup and delete my details",
+        "confirm": "This deletes the account you just created, including your role, materials, and location. You will start from the first screen next time.",
+        "confirmCta": "Delete and start over",
+        "keep": "Keep my details",
+        "working": "Deleting…",
+        "error": "We could not discard this signup. Please try again."
+      },
+      "checkout": {
+        "opening": "Opening secure checkout…",
+        "pay": "Pay {price} securely",
+        "processing": "Payment received. We are confirming your membership — this takes a few seconds.",
+        "recheck": "Check again",
+        "security": "Payment details are collected securely by Razorpay. Quanta Loop never receives your card or banking credentials."
+      }
+    },
+    "header": {
+      "contactTeam": "Contact team",
+      "getEarlyAccess": "Get early access"
+    },
+    "signupOptions": {
+      "orEmail": "Or sign up with email",
+      "googleHint": "Choose Google to confirm your email, then complete the rest of your account details below."
+    },
+    "completionSummary": {
+      "title": "Recommendation profile",
+      "description": "Material categories and location power your matches after signup.",
+      "roleSelected": "Role selected",
+      "roleWithLabel": "Role · {role}",
+      "materialsBuyer": "Materials you are looking for",
+      "materialsProvider": "Materials you provide",
+      "materialsRequired": "{label} · required",
+      "materialsWithList": "{label} · {list}",
+      "locationRequired": "Location · state and city required",
+      "locationWithLabel": "Location · {location}"
+    }
+  },
+  "materials": {
+    "list": {
+      "titleProvider": "Your materials",
+      "titleBuyer": "Browse materials",
+      "subtitleProvider": "Manage listings, availability, and buyer interest.",
+      "subtitleBuyer": "Discover recoverable materials from registered suppliers.",
+      "publish": "Publish material",
+      "searchPlaceholder": "Search by type, location, or keyword…",
+      "searchAria": "Search materials",
+      "sortBy": "Sort by",
+      "filterAll": "All",
+      "filterAvailable": "Available",
+      "filterInDiscussion": "In discussion",
+      "filterCompleted": "Completed",
+      "summaryAvailable": "Available",
+      "summaryInDiscussion": "In discussion",
+      "summaryCompleted": "Completed",
+      "summaryTotalInterests": "Total interests",
+      "sortNewest": "Newest first",
+      "sortBestMatch": "Best match",
+      "sortNearest": "Nearest",
+      "sortLargestQuantity": "Largest quantity",
+      "materialType": "Material type",
+      "location": "Location",
+      "availability": "Availability",
+      "recommendedNearYou": "Recommended near you",
+      "recommendedOtherStates": "Recommended in other states",
+      "recommendedGlobal": "Global materials",
+      "recommendedInCountry": "Recommended in your country",
+      "allListings": "All listings",
+      "showingRange": "Showing {start}–{end} of {total}",
+      "previous": "Previous",
+      "next": "Next",
+      "emptyProvider": "No materials published yet.",
+      "emptyBuyer": "No materials match your criteria.",
+      "emptyFiltered": "No materials match the selected filters.",
+      "retry": "Retry",
+      "loadError": "Unable to load materials. Please try again.",
+      "saveListError": "Unable to save your list. Please try again."
+    },
+    "status": {
+      "available": "Available",
+      "inDiscussion": "In discussion",
+      "completed": "Completed",
+      "fulfilled": "Fulfilled",
+      "archived": "Archived"
+    },
+    "availability": {
+      "oneTime": "One-time",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "monthly": "Monthly"
+    },
+    "form": {
+      "createTitle": "Publish material",
+      "duplicateTitle": "Duplicate material",
+      "editTitle": "Edit material",
+      "publishing": "Publishing…",
+      "saving": "Saving…",
+      "publish": "Publish",
+      "saveChanges": "Save changes",
+      "cancel": "Cancel",
+      "loadError": "Unable to load material.",
+      "loading": "Loading material…",
+      "updated": "Material updated",
+      "editDescription": "Update availability, quantity, and listing details.",
+      "createDescription": "Publish a material and start receiving buyer interest.",
+      "duplicateDescription": "Pre-filled from your previous listing. Adjust and publish as new availability.",
+      "quickNote": "Usually takes less than 2 minutes",
+      "duplicateLoading": "Loading listing to duplicate…",
+      "publishSuccess": "Material is now visible to the network.",
+      "saveError": "Unable to save",
+      "titleOptionalHint": "Leave blank and we'll generate one from the material you select.",
+      "fields": {
+        "materialCategory": "Material category *",
+        "material": "Material *",
+        "materialForm": "Material form",
+        "cleanliness": "Cleanliness",
+        "title": "Title",
+        "description": "Description",
+        "quantity": "Quantity *",
+        "unit": "Unit *",
+        "location": "Location",
+        "availabilityRhythm": "Availability rhythm",
+        "visibility": "Visibility",
+        "status": "Status",
+        "industryContext": "Industry context (optional)",
+        "valueRange": "Estimated value range (optional)",
+        "pickupOnSite": "Pickup available on site",
+        "selectCategory": "Select category",
+        "selectMaterial": "Select material",
+        "selectCategoryFirst": "Select a category first",
+        "otherMaterial": "Other",
+        "otherMaterialName": "Material name *",
+        "otherMaterialPlaceholder": "Enter the material name",
+        "otherMaterialHint": "Buyer matching still uses the category above — not this custom name.",
+        "selectForm": "Select form",
+        "otherForm": "Other",
+        "otherFormName": "Form name",
+        "otherFormPlaceholder": "e.g. Pellets, Mixed",
+        "selectCleanliness": "Select cleanliness",
+        "otherCleanliness": "Other",
+        "otherCleanlinessName": "Cleanliness",
+        "otherCleanlinessPlaceholder": "e.g. Washed, Sorted",
+        "selectUnit": "Select unit",
+        "otherUnit": "Other",
+        "otherUnitName": "Unit name *",
+        "otherUnitPlaceholder": "e.g. Pieces, Bags, CBM",
+        "categoryHint": "Used for buyer matching on the network.",
+        "titlePlaceholder": "e.g. PET flakes – Lot 1 (optional)",
+        "descriptionPlaceholder": "Condition, purity, packaging, or handling notes (optional)",
+        "quantityPlaceholder": "e.g. 15",
+        "oneTimeAvailability": "One-time availability",
+        "visibilityRestricted": "Restricted (invitation-only)",
+        "statusFulfilled": "Completed / fulfilled"
+      },
+      "sidebar": {
+        "title": "Your profile",
+        "description": "Visible context for buyers on the network.",
+        "company": "Company",
+        "profileCategories": "Profile categories",
+        "location": "Location",
+        "listingVisibility": "Listing visibility",
+        "networkVisibility": "Network — visible to matched buyers",
+        "responseTime": "Response time",
+        "profileCompletion": "Profile completion: {percent}%"
+      },
+      "locationField": {
+        "label": "Material location *",
+        "hint": "Used for buyer matching. Defaults to your company location from onboarding.",
+        "companyLocation": "Company location",
+        "listingLocation": "Listing location",
+        "companyMatchHint": "Buyers near this state and city will see stronger matches.",
+        "differentLocation": "Material at a different location",
+        "useCompanyInstead": "Use company location instead",
+        "completeProfileLocation": "Complete your profile location"
+      },
+      "photos": {
+        "label": "Photos (optional)",
+        "hint": "Add up to {count} photos to help buyers assess condition and quantity.",
+        "addPhotos": "Add photos",
+        "uploading": "Uploading…",
+        "remove": "Remove",
+        "previewAlt": "Material photo preview",
+        "count": "{current} of {max} photos",
+        "maxReached": "You can add up to {count} photos per listing.",
+        "invalidType": "Only JPEG, PNG, WebP, and GIF images are allowed.",
+        "tooLarge": "Each photo must be 5 MB or smaller.",
+        "uploadError": "Unable to upload photo."
+      }
+    },
+    "card": {
+      "posted": "Posted {time}",
+      "saveMaterial": "Save material",
+      "removeSaved": "Remove from saved",
+      "viewDetails": "View details",
+      "viewAria": "View {title}"
+    },
+    "providerCard": {
+      "viewDetails": "View details",
+      "duplicate": "Duplicate",
+      "edit": "Edit",
+      "archive": "Archive",
+      "archiving": "Archiving…",
+      "archived": "Material archived",
+      "archiveError": "Unable to archive material",
+      "archiveConfirm": "Archive \"{title}\"? It will no longer appear in buyer search.",
+      "viewInterests": "View interests",
+      "posted": "Posted {time}",
+      "interestCount": "{count} interest(s)",
+      "lastUpdated": "Updated {time}"
+    },
+    "detail": {
+      "loadError": "Unable to load material",
+      "notFound": "Material not found",
+      "goBack": "Go back",
+      "backToMaterials": "Back to materials",
+      "editMaterial": "Edit material",
+      "duplicate": "Duplicate",
+      "save": "Save",
+      "saved": "Saved",
+      "expressInterest": "Express interest",
+      "interestPending": "Interest sent — waiting for provider",
+      "openInbox": "Open interests inbox",
+      "buyersInterested": "{count} buyer(s) interested",
+      "reviewInbox": "Review and respond from your Interest Inbox",
+      "viewInbox": "View Interest Inbox",
+      "noBuyerInterest": "No buyer interest yet",
+      "published": "Published {time}",
+      "postedDate": "Posted {date}",
+      "updatedDate": "Updated {date}",
+      "materialInfo": "Material information",
+      "listedBy": "Listed by {company}",
+      "pickupYes": "Yes",
+      "availableQuantity": "Available quantity",
+      "location": "Location",
+      "materialLabel": "Material",
+      "materialForm": "Material form",
+      "cleanliness": "Cleanliness",
+      "pickup": "Pickup",
+      "pickupOnSite": "Available on site",
+      "pickupOffSite": "Coordinated off-site",
+      "industry": "Industry",
+      "valueRange": "Value range",
+      "visibility": "Visibility",
+      "visibilityNetwork": "Network (eligible matches)",
+      "visibilityRestricted": "Restricted",
+      "description": "Description",
+      "provider": "Provider",
+      "materialProvider": "Material provider",
+      "recentActivity": "Recent activity",
+      "viewFullTimeline": "View full timeline →",
+      "showLess": "Show less",
+      "saveListError": "Could not update saved list",
+      "timeline": {
+        "interest_received": "Buyer expressed interest",
+        "interest_accepted": "Interest accepted",
+        "interest_rejected": "Interest declined",
+        "discussion_opened": "Coordination started",
+        "workflow_discussion": "Discussion active",
+        "workflow_pickup_scheduled": "Pickup scheduled",
+        "workflow_completed": "Deal marked complete",
+        "workflow_closed": "Coordination thread closed",
+        "message_posted": "New message posted",
+        "material_status_changed": "Material status updated"
+      }
+    }
+  },
+  "interests": {
+    "inbox": {
+      "titleProvider": "Interest inbox",
+      "titleBuyer": "Your interests",
+      "loadError": "Unable to load interests. Please try again.",
+      "needsResponse": "Needs response",
+      "activeDiscussions": "Active discussions",
+      "pastDiscussions": "Past discussions",
+      "pending": "Pending",
+      "inProgress": "In progress",
+      "clearFilter": "Clear filter",
+      "retry": "Retry",
+      "filterStale48h": "No response 48h+",
+      "filterInactive7d": "Inactive 7d+",
+      "filterActive": "Active",
+      "filterCompleted": "Completed",
+      "emptyProvider": "No interests yet. Publish materials to receive buyer interest.",
+      "emptyBuyer": "No interests yet. Browse materials and express interest to get started.",
+      "toastDiscussionStarted": "Discussion started.",
+      "toastDeclined": "Interest declined.",
+      "toastUpdated": "Interest updated."
+    },
+    "status": {
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "rejected": "Rejected",
+      "discussion": "In discussion",
+      "completed": "Completed",
+      "closed": "Closed"
+    },
+    "card": {
+      "waitingDecision": "Waiting for your decision",
+      "startDiscussion": "Start discussion",
+      "reject": "Decline",
+      "completeDeal": "Mark deal complete",
+      "closeWithoutCompletion": "Close without completion",
+      "helperAccepted": "Buyer interest accepted — coordinate pickup and terms.",
+      "helperDiscussion": "Discussion in progress — use messages to coordinate.",
+      "helperPickup": "Confirm pickup and completion when the deal is done.",
+      "discussionStarted": "Discussion started {time}",
+      "inProgress": "In progress {time}",
+      "accepted": "Accepted {time}",
+      "materialLabel": "Material",
+      "providerLabel": "Provider",
+      "requestedLabel": "Requested",
+      "openMessages": "Open messages",
+      "viewMaterial": "View material",
+      "expand": "Expand",
+      "collapse": "Collapse",
+      "buyerFallback": "Buyer"
+    },
+    "express": {
+      "title": "Express interest",
+      "description": "Tell the provider about your pickup needs and any message to include with your request.",
+      "pickupLabel": "Preferred pickup window",
+      "messageLabel": "Message to provider",
+      "pickupPlaceholder": "e.g. Weekdays 9 AM–5 PM, or specific dates",
+      "messagePlaceholder": "Quantity needed, logistics notes, or questions…",
+      "notifyHint": "The provider will be notified and can accept, decline, or start a discussion.",
+      "sending": "Sending…",
+      "submit": "Submit interest",
+      "success": "Interest submitted successfully."
+    },
+    "workflow": {
+      "completeTitle": "Mark deal as complete?",
+      "completeBody": "Confirm that pickup and terms were fulfilled. This will close the interest as completed.",
+      "closeTitle": "Close without completion?",
+      "closeBody": "The deal did not complete. The interest will be closed and both parties can move on.",
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    }
+  },
+  "profile": {
+    "company": {
+      "title": "Company profile",
+      "subtitle": "Operational details used for matching and trust signals.",
+      "profileStrength": "Profile strength",
+      "saveProfile": "Save profile",
+      "saving": "Saving…",
+      "saved": "Profile saved",
+      "saveError": "Unable to save profile",
+      "networkSignals": {
+        "title": "Network signals",
+        "description": "Lightweight indicators from recent activity — not rankings or scores."
+      },
+      "overview": {
+        "title": "Company overview",
+        "description": "Identity and narrative context visible to qualified counterparties."
+      },
+      "operational": {
+        "title": "Operational focus",
+        "description": "Industries and materials you routinely handle or source."
+      },
+      "response": {
+        "title": "Response posture",
+        "description": "Optional self-reported responsiveness — used only for light trust signals."
+      },
+      "fields": {
+        "companyName": "Legal or operating name",
+        "companyDescription": "Company description",
+        "website": "Website",
+        "websitePlaceholder": "https://",
+        "contactName": "Primary contact name",
+        "employeeRange": "Scale (employees)",
+        "employeePlaceholder": "e.g. 250–500",
+        "establishedYear": "Established year",
+        "industryType": "Primary industry label",
+        "industriesText": "Industries (comma-separated)",
+        "materialsText": "Materials handled (comma-separated)",
+        "operationalLocation": "Operational region",
+        "locationOnFile": "Location on file",
+        "responseRate": "Response rate (%)",
+        "responseWindow": "Typical response window",
+        "responseWindowPlaceholder": "e.g. Within 2 business days"
+      }
+    }
+  },
+  "notifications": {
+    "bell": {
+      "title": "Notifications",
+      "subtitle": "Recent updates",
+      "loading": "Loading…",
+      "empty": "No notifications",
+      "viewAll": "View all",
+      "ariaDefault": "Notifications",
+      "ariaWithCount": "Notifications, {count} unread"
+    },
+    "center": {
+      "title": "Notification center",
+      "subtitle": "Your operational inbox — what needs attention now, plus a short feed of recent outcomes. Permanent history lives in Interests.",
+      "markAllRead": "Mark all read",
+      "markingAll": "Marking…",
+      "updating": "Updating…",
+      "loadError": "Unable to load notifications",
+      "tryAgain": "Try again",
+      "emptyTitle": "No notifications yet",
+      "emptyDescription": "When buyers express interest, discussions move forward, or pickups are arranged, updates will appear here.",
+      "unread": "Unread",
+      "actionRequired": "Action required",
+      "actionRequiredHint": "Items that need your attention right now.",
+      "noAttention": "No items need your attention.",
+      "needsResponse": "Needs response",
+      "pendingInterestsTitle": "{count} new buyer interests require review",
+      "showBuyers": "Show buyers and materials",
+      "hideList": "Hide list",
+      "markAllSuccess": "All notifications marked as read",
+      "updateError": "Could not update notification",
+      "markAllError": "Could not mark all as read"
+    },
+    "card": {
+      "unread": "Unread"
+    },
+    "recent": {
+      "title": "Recent updates",
+      "description": "Summarized outcomes from the last 14 days. Details live in Interests history.",
+      "last": "Last: {time}",
+      "viewHistory": "View in Interests history →"
+    },
+    "display": {
+      "fallbackMaterial": "Material",
+      "groupSubline": "{buyer} → {material}",
+      "categories": {
+        "needs_response": "Needs response",
+        "discussion": "Discussion",
+        "progress": "Progress",
+        "closed": "Closed",
+        "other": "Update"
+      },
+      "chips": {
+        "completed": "COMPLETED",
+        "closed": "CLOSED",
+        "interestDeclined": "INTEREST DECLINED",
+        "needsResponse": "NEEDS RESPONSE",
+        "pickupArranged": "PICKUP ARRANGED",
+        "inDiscussion": "IN DISCUSSION",
+        "discussion": "DISCUSSION",
+        "update": "UPDATE",
+        "opportunity": "OPPORTUNITY"
+      },
+      "headlines": {
+        "dealCompleted": "Deal completed",
+        "opportunityClosed": "Opportunity closed",
+        "interestDeclined": "Interest declined",
+        "newBuyerInterest": "New buyer interest",
+        "pickupArranged": "Pickup arranged",
+        "discussionUpdate": "Discussion update",
+        "newDiscussionMessage": "New discussion message",
+        "discussionStarted": "Discussion started",
+        "opportunityUpdate": "Opportunity update",
+        "newOpportunity": "New opportunity for you",
+        "savedOpportunityUpdated": "Saved opportunity updated",
+        "introductionRequested": "Introduction requested",
+        "update": "Update"
+      },
+      "terminal": {
+        "completed": "Completed",
+        "closed": "Closed",
+        "declined": "Declined"
+      },
+      "status": {
+        "pending": "Pending your response",
+        "accepted": "Interest accepted",
+        "rejected": "Interest declined",
+        "discussion": "In discussion",
+        "pickup_scheduled": "Pickup arranged",
+        "completed": "Completed",
+        "closed": "Closed"
+      },
+      "details": {
+        "buyer": "Buyer",
+        "provider": "Provider",
+        "material": "Material",
+        "status": "Status"
+      }
+    }
+  },
+  "reports": {
+    "actions": {
+      "material": "Report material",
+      "provider": "Report provider",
+      "counterparty": "Report counterparty"
+    },
+    "context": {
+      "fromMaterialsList": "Reported from materials list ({title}).",
+      "fromMaterialsListProvider": "Reported from materials list for {title}.",
+      "fromMaterialDetail": "Reported from material detail ({title}).",
+      "fromMaterialDetailProvider": "Reported from material detail for {title}."
+    },
+    "modal": {
+      "titleMaterial": "Report material listing",
+      "titleParticipant": "Report participant",
+      "description": "You are reporting {subject}. Reports are reviewed by platform administrators.",
+      "reason": "Reason",
+      "details": "Additional details (optional)",
+      "detailsPlaceholder": "Describe what happened or why you are reporting this…",
+      "misleading": "Misleading information",
+      "spam": "Spam",
+      "inactive": "Inactive participant",
+      "submit": "Submit report",
+      "submitting": "Submitting…",
+      "success": "Report submitted. Our team will review it.",
+      "error": "Unable to submit report",
+      "dismiss": "Dismiss"
+    }
+  },
+  "conversations": {
+    "messages": {
+      "heading": "Messages",
+      "empty": "No messages yet. Reply with pickup timing, site access, or next steps.",
+      "system": "System",
+      "participant": "Participant",
+      "placeholder": "Type your message…",
+      "sending": "Sending…",
+      "send": "Send",
+      "threadClosed": "This thread is closed to new messages.",
+      "reportParticipant": "Report participant"
+    }
+  },
+  "legal": {
+    "common": {
+      "operatedBy": "Operated by {operator}",
+      "lastUpdated": "Last Updated: {date}",
+      "backToHome": "Back to home"
+    },
+    "consent": {
+      "prefix": "I agree to the",
+      "terms": "Terms & Conditions",
+      "and": "and",
+      "privacy": "Privacy Policy",
+      "suffix": "."
+    },
+    "terms": {
+      "title": "QUANTA LOOP – TERMS & CONDITIONS",
+      "metadata": {
+        "operatedBy": "Operated by ASM Holdings",
+        "registeredBusinessAddress": "Registered Business Address: New No. 100, Old No. 86, Raghavan Street, Perambur, Chennai – 600011, Tamil Nadu, India",
+        "effectiveDate": "Effective Date: [Insert Date]",
+        "lastUpdated": "Last Updated: [Insert Date]"
+      },
+      "intro": [
+        {
+          "kind": "paragraph",
+          "text": "These Terms & Conditions (“Terms”) govern access to and use of the Quanta Loop website, platform, applications, software, marketplace, communication tools and related services (collectively, the “Platform”)."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Quanta Loop is operated by ASM Holdings, a sole proprietorship business (“Quanta Loop”, “we”, “our” or “us”)."
+        },
+        {
+          "kind": "paragraph",
+          "text": "By registering for, accessing or using the Platform, you agree to these Terms. If you do not agree with these Terms, you should not use the Platform."
+        }
+      ],
+      "sections": [
+        {
+          "title": "1. About Quanta Loop",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop is a technology-enabled B2B marketplace and intermediary platform designed to connect buyers and sellers of industrial waste, recyclable materials, scrap, recoverable materials, industrial by-products and other permitted materials (“Materials”)."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Depending on the Platform's features, Quanta Loop may enable users to:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "create business profiles;",
+                "publish Material listings;",
+                "search and discover listings;",
+                "receive automated or technology-assisted matches;",
+                "express interest in listings;",
+                "communicate with other users through in-platform chat;",
+                "receive notifications;",
+                "access subscription or paid features; and",
+                "use other digital marketplace tools introduced from time to time."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop's role is to provide technology that facilitates discovery, communication and potential commercial connections between users."
+            }
+          ]
+        },
+        {
+          "title": "2. Quanta Loop Is Not a Party to User Transactions",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop is not a buyer, seller, owner, dealer, recycler, transporter, waste handler, broker, inspection agency, logistics provider, environmental consultant or regulatory authority."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop does not:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "purchase or sell Materials;",
+                "take ownership or title to Materials;",
+                "take physical possession or custody of Materials;",
+                "store Materials;",
+                "transport Materials;",
+                "arrange transportation as a principal;",
+                "inspect or certify Materials;",
+                "certify quality, quantity, composition or origin;",
+                "guarantee the legality of Materials;",
+                "guarantee regulatory compliance;",
+                "guarantee payment;",
+                "guarantee delivery;",
+                "guarantee completion of transactions; or",
+                "act as an agent or representative of any buyer or seller."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Any commercial transaction is entered into directly between the relevant users."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Users are solely responsible for deciding whether to transact with another user and for negotiating and documenting their own commercial arrangements."
+            }
+          ]
+        },
+        {
+          "title": "3. No Agency, Partnership or Employment Relationship",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Use of the Platform does not create:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "an agency relationship;",
+                "partnership;",
+                "joint venture;",
+                "employment relationship;",
+                "franchise;",
+                "fiduciary relationship; or",
+                "other representative relationship"
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "between Quanta Loop and any user or between Quanta Loop and any buyer or seller."
+            },
+            {
+              "kind": "paragraph",
+              "text": "No user has authority to make commitments, representations or warranties on behalf of Quanta Loop."
+            }
+          ]
+        },
+        {
+          "title": "4. Eligibility",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "The Platform is intended primarily for business and professional users."
+            },
+            {
+              "kind": "paragraph",
+              "text": "You must:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "be at least 18 years old;",
+                "have legal capacity to enter into binding agreements;",
+                "have authority to act for the business or organisation you represent, where applicable;",
+                "provide accurate information; and",
+                "comply with applicable Indian laws and regulations."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "If you are registering on behalf of a company, partnership, proprietorship or other organisation, you represent that you have authority to bind that organisation to these Terms."
+            }
+          ]
+        },
+        {
+          "title": "5. Registration and Account Security",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Users may be required to register using information such as:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "name;",
+                "mobile number;",
+                "email address;",
+                "business information;",
+                "address;",
+                "GST details, where voluntarily provided;",
+                "and other information required for Platform functionality."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Users are responsible for ensuring that registration information remains accurate and up to date."
+            },
+            {
+              "kind": "paragraph",
+              "text": "You are responsible for:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "protecting your login credentials;",
+                "maintaining account security;",
+                "preventing unauthorised access; and",
+                "all activity carried out through your account, subject to applicable law."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "You must notify Quanta Loop promptly if you suspect unauthorised access, fraud or misuse of your account."
+            }
+          ]
+        },
+        {
+          "title": "6. Platform Services and Matching",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop may use automated systems, algorithms, search functions, filters or other technology to identify potentially relevant listings or counterparties."
+            },
+            {
+              "kind": "paragraph",
+              "text": "A match, recommendation, search result, enquiry, expression of interest or communication:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "does not constitute an endorsement by Quanta Loop;",
+                "does not constitute verification;",
+                "does not constitute certification;",
+                "does not constitute a guarantee of a transaction; and",
+                "does not require either party to transact."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop may modify, improve, restrict, suspend or discontinue Platform features from time to time."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Future features may include, without limitation:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "AI-assisted recommendations;",
+                "analytics;",
+                "document management;",
+                "logistics-related tools;",
+                "tracking features;",
+                "business intelligence;",
+                "additional communication tools; and",
+                "other marketplace services."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "7. Listings and User Content",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Users may upload or submit:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "Material listings;",
+                "photographs;",
+                "descriptions;",
+                "quantities;",
+                "pricing;",
+                "specifications;",
+                "documents;",
+                "business information;",
+                "certifications;",
+                "messages;",
+                "and other information (“User Content”)."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Users remain solely responsible for their User Content."
+            },
+            {
+              "kind": "paragraph",
+              "text": "You represent and warrant that:"
+            },
+            {
+              "kind": "orderedList",
+              "items": [
+                "you have the right and authority to submit the User Content;",
+                "the information is accurate and not materially misleading;",
+                "you have the right to offer or deal with the listed Material;",
+                "the listing does not violate applicable law;",
+                "the listing does not infringe third-party rights; and",
+                "any documents or certifications submitted by you are genuine and valid to the extent represented by you."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop may remove, restrict, suspend or limit the visibility of User Content where it reasonably considers this necessary for Platform safety, legal compliance, fraud prevention, investigation, user protection or Platform integrity."
+            }
+          ]
+        },
+        {
+          "title": "8. User Compliance and Environmental Responsibility",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Each user is solely responsible for ensuring that its activities relating to any Material listed, purchased, sold, stored, transported, handled, processed, recycled, recovered or disposed of through or in connection with the Platform comply with all applicable laws."
+            },
+            {
+              "kind": "paragraph",
+              "text": "This includes, where applicable:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "environmental laws;",
+                "waste-management rules;",
+                "pollution-control requirements;",
+                "permits and authorisations;",
+                "registration requirements;",
+                "transportation requirements;",
+                "storage requirements;",
+                "hazardous-material requirements;",
+                "occupational and workplace safety requirements;",
+                "tax and GST requirements;",
+                "local authority requirements; and",
+                "other applicable regulatory requirements."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Users must independently determine the legal classification and regulatory requirements applicable to their Materials and activities."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Depending on the Material and activity, applicable requirements may arise under the Environment (Protection) Act, 1986, applicable waste-management rules and regulations, and requirements of the Central Pollution Control Board, State Pollution Control Boards and other competent authorities. The applicable regulatory framework may differ depending on the type and characteristics of the Material."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop does not provide environmental, legal, regulatory or compliance advice."
+            }
+          ]
+        },
+        {
+          "title": "9. User Compliance Warranty",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "By listing, purchasing, selling or otherwise using the Platform in connection with Materials, each user represents that:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "the Materials are lawfully possessed or offered;",
+                "the user has the required authority to deal with the Materials;",
+                "all required licences, permissions, registrations and authorisations are maintained where applicable;",
+                "Material descriptions are accurate;",
+                "relevant hazards and characteristics have been disclosed accurately;",
+                "required transportation and handling arrangements will comply with applicable law;",
+                "the transaction will not be structured to circumvent environmental or other legal requirements; and",
+                "the user will comply with all applicable laws throughout the transaction."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop may request supporting information or documents where reasonably necessary for Platform safety, compliance or investigation."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Submission of a document does not mean that Quanta Loop has verified, certified or approved it."
+            }
+          ]
+        },
+        {
+          "title": "10. Restricted and Prohibited Materials",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Users must not use the Platform for Materials that are unlawful, prohibited, restricted or unsuitable for the Platform."
+            },
+            {
+              "kind": "paragraph",
+              "text": "This includes Materials that:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "are unlawfully possessed;",
+                "are prohibited from being traded or transferred;",
+                "require authorisations that the user does not possess;",
+                "are falsely described;",
+                "are concealed or misrepresented;",
+                "present undisclosed hazardous risks;",
+                "are intended to facilitate unlawful disposal;",
+                "are connected with illegal activity; or",
+                "otherwise violate applicable law."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop may prohibit, restrict or require additional documentation for particular categories of Materials from time to time."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop may immediately remove or restrict a listing where it reasonably suspects that a Material may be unlawful, unsafe, prohibited or materially misrepresented."
+            }
+          ]
+        },
+        {
+          "title": "11. Hazardous or Regulated Materials",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Where a Material is hazardous, regulated or subject to special handling requirements, the relevant user is solely responsible for:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "classification;",
+                "packaging;",
+                "labelling;",
+                "storage;",
+                "handling;",
+                "transportation;",
+                "documentation;",
+                "manifests or records where applicable;",
+                "regulatory permissions; and",
+                "lawful treatment, recycling, recovery or disposal."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop does not take custody or control of hazardous or regulated Materials and does not provide hazardous-material handling services."
+            }
+          ]
+        },
+        {
+          "title": "12. Accuracy of Listings",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop does not guarantee the:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "accuracy;",
+                "completeness;",
+                "quality;",
+                "quantity;",
+                "composition;",
+                "origin;",
+                "ownership;",
+                "availability;",
+                "price;",
+                "legality; or",
+                "regulatory status"
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "of any listing or User Content."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Users must independently verify information before entering into a transaction."
+            },
+            {
+              "kind": "paragraph",
+              "text": "A listing appearing on the Platform does not constitute an endorsement, certification or verification by Quanta Loop."
+            }
+          ]
+        },
+        {
+          "title": "13. User-to-User Transactions",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Users may independently negotiate:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "price;",
+                "quantity;",
+                "quality;",
+                "inspection;",
+                "transportation;",
+                "delivery;",
+                "payment;",
+                "timelines;",
+                "documentation;",
+                "warranties;",
+                "and other commercial terms."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop is not a party to those agreements."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop is not responsible for:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "failed transactions;",
+                "non-payment;",
+                "delayed payment;",
+                "inaccurate Materials;",
+                "quantity or quality disputes;",
+                "delivery failures;",
+                "transportation incidents;",
+                "inspection disputes;",
+                "fraud;",
+                "contractual breaches;",
+                "regulatory violations; or",
+                "disputes between users."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Users should conduct appropriate commercial, legal, regulatory and counterparty due diligence before transacting."
+            }
+          ]
+        },
+        {
+          "title": "14. Communications and Chat",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop may provide in-platform messaging or chat functionality."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Users are responsible for communications made through the Platform."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Users must not use Platform communications to:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "harass or threaten others;",
+                "send unlawful or abusive content;",
+                "conduct fraud;",
+                "distribute malware;",
+                "send spam;",
+                "unlawfully collect personal information;",
+                "circumvent Platform access controls; or",
+                "facilitate illegal activity."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop may review, restrict, remove or preserve communications where reasonably necessary for security, fraud prevention, legal compliance, investigation or enforcement of these Terms, subject to applicable law."
+            }
+          ]
+        },
+        {
+          "title": "15. Prohibited Conduct",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Users must not:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "create fraudulent accounts;",
+                "impersonate another person or business;",
+                "provide materially false information;",
+                "publish fake listings;",
+                "manipulate listings or matching systems;",
+                "misuse another user's information;",
+                "scrape or harvest Platform data;",
+                "use bots or automated systems without permission;",
+                "reverse engineer the Platform;",
+                "bypass subscription or access controls;",
+                "upload malware;",
+                "interfere with Platform security;",
+                "infringe intellectual-property rights;",
+                "conduct unlawful transactions;",
+                "use the Platform to evade environmental requirements;",
+                "harass, threaten or abuse other users;",
+                "engage in fraud or deceptive practices; or",
+                "otherwise violate applicable law."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "16. Reporting and Platform Safety",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Users may report suspected:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "fake listings;",
+                "fraudulent activity;",
+                "unlawful Materials;",
+                "unsafe conduct;",
+                "misleading information;",
+                "impersonation;",
+                "harassment;",
+                "misuse of User Content;",
+                "environmental or regulatory concerns; or",
+                "other violations"
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "by contacting:"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Grievance Officer: Mr. Avinash"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Email: grievance@quantaloop.in"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop may investigate reports and may, where appropriate:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "request additional information;",
+                "restrict visibility;",
+                "remove listings;",
+                "suspend accounts;",
+                "terminate accounts;",
+                "restrict Platform functionality;",
+                "preserve information;",
+                "cooperate with lawful authorities; or",
+                "take other measures reasonably necessary to protect users and the Platform."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop is not required to resolve private commercial disputes between users."
+            }
+          ]
+        },
+        {
+          "title": "17. Intermediary Status",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop operates as a technology intermediary and marketplace platform."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop generally provides the technical infrastructure through which users may create listings, discover other users, communicate and potentially enter into transactions."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop does not ordinarily create, originate or independently adopt User Content as its own."
+            },
+            {
+              "kind": "paragraph",
+              "text": "To the extent applicable, Quanta Loop intends to avail itself of protections available to intermediaries under Indian law, including the Information Technology Act, 2000 and applicable rules, subject to satisfying the conditions and due-diligence requirements prescribed by law."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Nothing in these Terms is intended to exclude or restrict any responsibility that cannot legally be excluded."
+            }
+          ]
+        },
+        {
+          "title": "18. Content Moderation and Legal Requests",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop may take action against User Content or accounts where it reasonably believes action is necessary because of:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "a violation of these Terms;",
+                "suspected unlawful activity;",
+                "fraud;",
+                "safety concerns;",
+                "regulatory requirements;",
+                "a valid government or law-enforcement request;",
+                "intellectual-property concerns;",
+                "Platform security risks; or",
+                "other legitimate Platform-integrity concerns."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Action may include removal, restriction, suspension or termination."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Where legally required, Quanta Loop may preserve or disclose information to competent authorities."
+            }
+          ]
+        },
+        {
+          "title": "19. Subscriptions, Fees and Payments",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Certain Platform features may require payment of subscription, access or other fees."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Pricing, plans and features may change from time to time."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Unless expressly stated otherwise:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "applicable fees are payable according to the selected plan;",
+                "fees are for Platform access or technology services;",
+                "Quanta Loop does not charge fees for guaranteeing transactions or outcomes; and",
+                "subscription or access fees are non-refundable once the applicable service period or access has commenced, except where otherwise required by law or expressly stated by Quanta Loop."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop may introduce:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "subscriptions;",
+                "premium listings;",
+                "promoted listings;",
+                "analytics services;",
+                "enterprise features;",
+                "transaction-related tools;",
+                "or other paid services."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "20. User Transactions Are Separate from Platform Payments",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Any payment made by a user to Quanta Loop for subscriptions or Platform services is separate from commercial payments between buyers and sellers."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Unless expressly stated otherwise, Quanta Loop does not:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "hold transaction consideration between users;",
+                "guarantee payment;",
+                "provide escrow;",
+                "guarantee delivery;",
+                "or guarantee performance of user contracts."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "21. Intellectual Property",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "All rights in and to the Platform, including:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "software;",
+                "source code;",
+                "interface;",
+                "design;",
+                "branding;",
+                "trademarks;",
+                "workflows;",
+                "matching technology;",
+                "algorithms;",
+                "databases;",
+                "analytics systems;",
+                "and other technology"
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "are owned by ASM Holdings or its licensors, except for User Content and third-party materials."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Users receive a limited, revocable, non-exclusive, non-transferable right to use the Platform for its intended business purpose."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Users must not:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "copy;",
+                "reproduce;",
+                "modify;",
+                "reverse engineer;",
+                "scrape;",
+                "distribute;",
+                "commercially exploit; or",
+                "create derivative works from"
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "the Platform without prior written permission, except to the extent permitted by law."
+            }
+          ]
+        },
+        {
+          "title": "22. Licence to User Content",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Users retain ownership of their User Content."
+            },
+            {
+              "kind": "paragraph",
+              "text": "By submitting User Content, you grant Quanta Loop a non-exclusive, worldwide, royalty-free licence to host, store, process, reproduce where technically necessary, display, transmit, format, analyse and otherwise use that User Content to the extent reasonably necessary to:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "operate the Platform;",
+                "display listings;",
+                "provide matching;",
+                "facilitate communications;",
+                "maintain security;",
+                "prevent fraud;",
+                "moderate content;",
+                "improve Platform functionality; and",
+                "comply with applicable law."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop does not acquire ownership of User Content merely because it is uploaded to the Platform."
+            }
+          ]
+        },
+        {
+          "title": "23. Third-Party Services",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "The Platform may use or integrate with third-party services, including:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "cloud infrastructure;",
+                "payment providers;",
+                "authentication services;",
+                "analytics services;",
+                "communication providers;",
+                "security services; and",
+                "other technology providers."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Third-party services may have their own terms and privacy policies."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop is not responsible for the independent acts or omissions of third-party providers, except to the extent liability cannot legally be excluded."
+            }
+          ]
+        },
+        {
+          "title": "24. Platform Availability",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "The Platform is provided on an “as is” and “as available” basis."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop does not guarantee that:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "the Platform will always be available;",
+                "the Platform will be uninterrupted;",
+                "all features will remain available;",
+                "the Platform will be error-free;",
+                "matches will be accurate;",
+                "listings will be available;",
+                "transactions will occur; or",
+                "Platform results will meet a particular business objective."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "We may perform maintenance, updates or changes that temporarily affect availability."
+            }
+          ]
+        },
+        {
+          "title": "25. No Professional or Regulatory Advice",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Information provided through Quanta Loop does not constitute:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "legal advice;",
+                "environmental advice;",
+                "regulatory advice;",
+                "tax advice;",
+                "financial advice;",
+                "engineering advice;",
+                "safety advice; or",
+                "professional certification."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Users should obtain appropriate professional advice before undertaking regulated or high-risk activities."
+            }
+          ]
+        },
+        {
+          "title": "26. Indemnity",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "To the maximum extent permitted by law, you agree to indemnify and hold harmless ASM Holdings, Quanta Loop, its proprietor, employees, contractors, representatives and service providers from claims, losses, liabilities, penalties, damages, costs and reasonable expenses arising from or relating to:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "your User Content;",
+                "your listings;",
+                "unlawful Materials;",
+                "environmental violations;",
+                "regulatory non-compliance;",
+                "missing or invalid licences or permissions;",
+                "hazardous Materials;",
+                "transportation or handling;",
+                "injury or property damage caused by your activities;",
+                "tax or GST violations;",
+                "fraud or misconduct;",
+                "breach of these Terms;",
+                "infringement of third-party rights;",
+                "misuse of the Platform; or",
+                "disputes arising from your transactions with other users."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "27. Limitation of Liability",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "To the maximum extent permitted by law, Quanta Loop, ASM Holdings, its proprietor, employees, contractors and representatives shall not be liable for indirect, incidental, special, consequential or punitive losses, including:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "loss of profits;",
+                "loss of business;",
+                "loss of opportunity;",
+                "loss of anticipated savings;",
+                "business interruption;",
+                "reputational loss;",
+                "transaction losses;",
+                "environmental consequences arising from user activities;",
+                "transportation incidents;",
+                "hazardous-material incidents;",
+                "regulatory penalties imposed on users;",
+                "fraud by users;",
+                "or disputes between users."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Subject to applicable law, the aggregate liability of Quanta Loop arising out of or relating to the Platform shall not exceed the amount of Platform fees actually paid by the affected user to Quanta Loop during the three (3) months immediately preceding the event giving rise to the claim."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Nothing in these Terms excludes or limits liability that cannot legally be excluded or limited."
+            }
+          ]
+        },
+        {
+          "title": "28. Suspension and Termination",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop may suspend, restrict or terminate an account where:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "these Terms are violated;",
+                "fraud or misuse is suspected;",
+                "unlawful activity is suspected;",
+                "a listing presents a material safety or regulatory concern;",
+                "Platform security is threatened;",
+                "required by law or authority; or",
+                "continued access presents a material risk to Quanta Loop or other users."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Where appropriate, Quanta Loop may act without prior notice."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Termination does not affect rights or obligations that accrued before termination."
+            }
+          ]
+        },
+        {
+          "title": "29. Force Majeure",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop shall not be responsible for delay or failure caused by events beyond reasonable control, including:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "internet or telecommunications failures;",
+                "power outages;",
+                "cyber incidents;",
+                "infrastructure failures;",
+                "natural disasters;",
+                "government actions;",
+                "strikes;",
+                "civil disturbances;",
+                "epidemics or pandemics; or",
+                "other events beyond reasonable control."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "30. Changes to the Platform and Terms",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop may:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "add or remove features;",
+                "modify workflows;",
+                "change pricing;",
+                "introduce new services;",
+                "discontinue services; or",
+                "amend these Terms."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Updated Terms will be published on the Platform with a revised “Last Updated” date."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Where legally required, appropriate notice will be provided."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Continued use of the Platform after an update takes effect constitutes acceptance of the revised Terms, to the extent permitted by law."
+            }
+          ]
+        },
+        {
+          "title": "31. Privacy",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "The collection, use, storage and disclosure of personal information is governed by the Quanta Loop Privacy Policy, as updated from time to time."
+            },
+            {
+              "kind": "paragraph",
+              "text": "The Privacy Policy forms part of the overall contractual framework governing use of the Platform."
+            }
+          ]
+        },
+        {
+          "title": "32. Grievance Redressal",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop has designated the following Grievance Officer:"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Mr. Avinash"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Grievance Officer – Quanta Loop"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Email: grievance@quantaloop.in"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Users may submit complaints relating to:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "unlawful or prohibited content;",
+                "misuse of the Platform;",
+                "user conduct;",
+                "privacy concerns;",
+                "impersonation;",
+                "fraudulent listings;",
+                "environmental or regulatory concerns relating to listings;",
+                "violation of these Terms; or",
+                "other Platform-related grievances."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Complaints should include sufficient information to allow Quanta Loop to identify the relevant account, listing, content or conduct."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop will acknowledge grievances within the timeframe required by applicable law and will endeavour to address them within the applicable statutory timeframe. The current MeitY guidance identifies 24 hours for acknowledgement and 15 days for response to grievances under the applicable intermediary framework."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Nothing in this section requires Quanta Loop to adjudicate private commercial disputes between users."
+            }
+          ]
+        },
+        {
+          "title": "33. Governing Law and Dispute Resolution",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "These Terms are governed by the laws of India."
+            },
+            {
+              "kind": "paragraph",
+              "text": "The parties shall first attempt to resolve disputes amicably."
+            },
+            {
+              "kind": "paragraph",
+              "text": "If a dispute cannot be resolved amicably, it shall be referred to arbitration in accordance with the Arbitration and Conciliation Act, 1996, as amended."
+            },
+            {
+              "kind": "paragraph",
+              "text": "The arbitration shall:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "have its seat in Chennai, Tamil Nadu;",
+                "be conducted by a sole arbitrator mutually agreed upon by the parties;",
+                "if the parties cannot agree on the arbitrator, be appointed in accordance with the Arbitration and Conciliation Act, 1996;",
+                "be conducted in English."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Courts having jurisdiction in Chennai, Tamil Nadu may be approached for interim, injunctive or other relief to the extent permitted by law."
+            }
+          ]
+        },
+        {
+          "title": "34. Severability",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "If any provision of these Terms is held invalid or unenforceable, the remaining provisions will continue to apply to the maximum extent permitted by law."
+            }
+          ]
+        },
+        {
+          "title": "35. Entire Agreement",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "These Terms, together with the Quanta Loop Privacy Policy and any other terms expressly incorporated by reference, constitute the understanding governing use of the Platform."
+            }
+          ]
+        },
+        {
+          "title": "36. Contact",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "ASM Holdings"
+            },
+            {
+              "kind": "paragraph",
+              "text": "New No. 100, Old No. 86, Raghavan Street,"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Perambur, Chennai – 600011,"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Tamil Nadu, India"
+            },
+            {
+              "kind": "paragraph",
+              "text": "General Support Email: [Insert Support Email]"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Website: [Insert Website URL]"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Grievance Officer: Mr. Avinash"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Grievance Email: grievance@quantaloop.in"
+            }
+          ]
+        }
+      ]
+    },
+    "privacy": {
+      "title": "QUANTA LOOP – PRIVACY POLICY",
+      "metadata": {
+        "operatedBy": "Operated by ASM Holdings",
+        "registeredBusinessAddress": "Registered Business Address: New No. 100, Old No. 86, Raghavan Street, Perambur, Chennai – 600011, Tamil Nadu, India",
+        "effectiveDate": "Effective Date: [Insert Date]",
+        "lastUpdated": "Last Updated: [Insert Date]"
+      },
+      "intro": [
+        {
+          "kind": "paragraph",
+          "text": "ASM Holdings (“Quanta Loop”, “we”, “our” or “us”) respects your privacy and is committed to handling personal information responsibly."
+        },
+        {
+          "kind": "paragraph",
+          "text": "This Privacy Policy explains how information is collected, used, stored, disclosed and protected when you access or use the Quanta Loop website, marketplace, applications, software, communication tools and related services (collectively, the “Platform”)."
+        },
+        {
+          "kind": "paragraph",
+          "text": "This Privacy Policy should be read together with the Quanta Loop Terms & Conditions."
+        }
+      ],
+      "sections": [
+        {
+          "title": "1. About Quanta Loop",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop is a technology-enabled B2B marketplace that facilitates connections between buyers, sellers, industrial waste generators, recyclers, aggregators and other business users."
+            },
+            {
+              "kind": "paragraph",
+              "text": "The Platform allows users to create business profiles, publish listings, discover potential counterparties, communicate with other users and potentially enter into transactions."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Much of the information displayed on the Platform is supplied by users."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop does not independently verify every listing, business representation, certification, document, quantity, price, Material description or other user-submitted information."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Users remain responsible for independently evaluating and verifying counterparties and transactions."
+            }
+          ]
+        },
+        {
+          "title": "2. Information We Collect",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Depending on how you use the Platform, we may collect the following categories of information."
+            },
+            {
+              "kind": "heading",
+              "text": "2.1 Information You Provide"
+            },
+            {
+              "kind": "paragraph",
+              "text": "This may include:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "name;",
+                "mobile number;",
+                "email address;",
+                "business or company name;",
+                "business address;",
+                "contact-person details;",
+                "GST information where provided;",
+                "account credentials;",
+                "profile information;",
+                "photographs;",
+                "uploaded documents;",
+                "certifications or other business information;",
+                "listing information;",
+                "Material descriptions;",
+                "quantity and pricing information;",
+                "preferences;",
+                "messages and communications; and",
+                "information provided when contacting support."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "You should avoid uploading personal or confidential information that is not necessary for the intended Platform function."
+            }
+          ]
+        },
+        {
+          "title": "3. Listing and Marketplace Information",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "When you create or interact with a listing, we may process information relating to:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "Material type;",
+                "description;",
+                "quantity;",
+                "location;",
+                "price;",
+                "images;",
+                "availability;",
+                "specifications;",
+                "business information;",
+                "expressions of interest;",
+                "enquiries;",
+                "communications;",
+                "and other information submitted as part of the marketplace activity."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Some business and listing information may be visible to other Platform users because displaying such information is necessary for the marketplace to function."
+            }
+          ]
+        },
+        {
+          "title": "4. Account, Activity and Transaction Information",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "We may collect information concerning:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "registration;",
+                "login activity;",
+                "searches;",
+                "listings created;",
+                "listing views;",
+                "enquiries;",
+                "expressions of interest;",
+                "communications;",
+                "subscriptions;",
+                "payments made to Quanta Loop;",
+                "support requests;",
+                "reports and complaints; and",
+                "other interactions with the Platform."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop does not ordinarily act as a party to transactions between buyers and sellers. Accordingly, information concerning an external transaction may only be available to us where users voluntarily provide it or where it is generated through Platform functionality."
+            }
+          ]
+        },
+        {
+          "title": "5. Device and Technical Information",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "We may automatically collect information such as:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "IP address;",
+                "browser type;",
+                "device type;",
+                "operating system;",
+                "approximate location derived from technical information where enabled;",
+                "login information;",
+                "session information;",
+                "device identifiers where applicable;",
+                "error logs;",
+                "security logs;",
+                "cookies;",
+                "analytics information; and",
+                "usage patterns."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "We use this information primarily for Platform operation, security, troubleshooting, analytics and improvement."
+            }
+          ]
+        },
+        {
+          "title": "6. How We Use Information",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "We may use information for purposes including:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "creating and managing accounts;",
+                "authentication and account security;",
+                "enabling marketplace functionality;",
+                "displaying listings;",
+                "facilitating matching and discovery;",
+                "enabling communication between users;",
+                "processing subscriptions and Platform payments;",
+                "customer support;",
+                "fraud prevention;",
+                "security monitoring;",
+                "investigating misuse;",
+                "improving Platform performance;",
+                "analytics and business insights;",
+                "developing new features;",
+                "personalising Platform functionality;",
+                "legal and regulatory compliance;",
+                "enforcing our Terms and policies; and",
+                "protecting the rights, safety and property of Quanta Loop, users and others."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Where required by applicable law, we will obtain consent or rely on another lawful basis for processing."
+            }
+          ]
+        },
+        {
+          "title": "7. Communications",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "We may send essential communications relating to your use of the Platform, including:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "OTPs;",
+                "login alerts;",
+                "account notifications;",
+                "security notifications;",
+                "subscription information;",
+                "service announcements;",
+                "support communications;",
+                "important policy updates; and",
+                "other transactional messages."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Where applicable and subject to law, we may also send promotional communications about:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "new features;",
+                "services;",
+                "subscription plans;",
+                "offers;",
+                "marketplace developments; and",
+                "other Quanta Loop activities."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "You may opt out of promotional communications through available unsubscribe mechanisms or by contacting us."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Essential service and security communications may continue where necessary."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Communication channels may include email, SMS, WhatsApp, in-platform notifications, telephone or other channels introduced in future."
+            }
+          ]
+        },
+        {
+          "title": "8. Information Shared With Other Users",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Because Quanta Loop operates as a marketplace, certain information may be displayed or made available to other registered users."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Depending on the Platform functionality, this may include:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "business name;",
+                "listing information;",
+                "Material information;",
+                "quantity;",
+                "location associated with a listing;",
+                "images;",
+                "business profile information;",
+                "information intentionally made public by the user; and",
+                "communications or information shared through marketplace functionality."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Users should therefore consider carefully what information they include in public or user-visible listings."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop does not promise that information voluntarily disclosed to another user will remain confidential."
+            }
+          ]
+        },
+        {
+          "title": "9. Contact and Communication Between Users",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Where Quanta Loop provides in-platform chat or messaging, communications may be processed to:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "deliver messages;",
+                "maintain the service;",
+                "prevent spam and abuse;",
+                "investigate fraud;",
+                "maintain security;",
+                "respond to complaints;",
+                "comply with legal obligations; and",
+                "enforce Platform rules."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Users are responsible for information they voluntarily disclose to other users."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop cannot control what another user does with information voluntarily shared with that user."
+            }
+          ]
+        },
+        {
+          "title": "10. Cookies and Similar Technologies",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop may use:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "essential cookies;",
+                "functional cookies;",
+                "analytics cookies;",
+                "performance technologies;",
+                "pixels;",
+                "SDKs;",
+                "session technologies; and",
+                "similar technologies."
+              ]
+            },
+            {
+              "kind": "heading",
+              "text": "Essential Technologies"
+            },
+            {
+              "kind": "paragraph",
+              "text": "These help the Platform operate, maintain sessions, authenticate users and protect security."
+            },
+            {
+              "kind": "heading",
+              "text": "Functional Technologies"
+            },
+            {
+              "kind": "paragraph",
+              "text": "These may remember preferences and improve functionality."
+            },
+            {
+              "kind": "heading",
+              "text": "Analytics Technologies"
+            },
+            {
+              "kind": "paragraph",
+              "text": "These help us understand:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "how users interact with the Platform;",
+                "which features are used;",
+                "performance issues;",
+                "traffic patterns; and",
+                "areas requiring improvement."
+              ]
+            },
+            {
+              "kind": "heading",
+              "text": "Marketing Technologies"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop may introduce advertising, remarketing or marketing technologies in the future, subject to applicable law and any required choices or permissions."
+            },
+            {
+              "kind": "paragraph",
+              "text": "You may be able to disable cookies through browser or device settings. Some Platform functions may not operate properly if essential technologies are disabled."
+            }
+          ]
+        },
+        {
+          "title": "11. Third-Party Service Providers",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop may engage third-party service providers for purposes such as:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "cloud hosting;",
+                "data storage;",
+                "authentication and OTP delivery;",
+                "email;",
+                "SMS;",
+                "WhatsApp or other communication services;",
+                "payment processing;",
+                "analytics;",
+                "security;",
+                "fraud detection;",
+                "customer support;",
+                "infrastructure management; and",
+                "other technology services."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "These providers may process information on behalf of Quanta Loop or otherwise as permitted by applicable law."
+            },
+            {
+              "kind": "paragraph",
+              "text": "We seek to use appropriate contractual, technical or organisational safeguards where required."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Third-party services may also have their own privacy policies and terms."
+            }
+          ]
+        },
+        {
+          "title": "12. Legal and Regulatory Disclosures",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "We may disclose information where reasonably necessary or legally required to:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "comply with applicable law;",
+                "comply with court orders;",
+                "respond to government or regulatory authorities;",
+                "respond to lawful law-enforcement requests;",
+                "investigate suspected fraud or unlawful activity;",
+                "protect users or the Platform;",
+                "enforce our Terms;",
+                "protect our legal rights; or",
+                "prevent serious harm or misuse."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "We may also disclose information where permitted by applicable law for legitimate operational or security purposes."
+            }
+          ]
+        },
+        {
+          "title": "13. Business Transfers",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "If Quanta Loop or its business is reorganised, transferred, sold, merged, financed or otherwise undergoes a business transaction, information may be transferred as part of that transaction, subject to applicable law."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Any recipient will be expected to handle information in accordance with applicable legal requirements."
+            }
+          ]
+        },
+        {
+          "title": "14. Data Retention",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "We retain information for as long as reasonably necessary for purposes such as:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "providing the Platform;",
+                "maintaining accounts;",
+                "operating the marketplace;",
+                "customer support;",
+                "security;",
+                "fraud prevention;",
+                "dispute management;",
+                "maintaining business and transaction records;",
+                "analytics;",
+                "enforcing agreements; and",
+                "complying with legal or regulatory obligations."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Retention periods may vary depending on the type and purpose of the information."
+            },
+            {
+              "kind": "paragraph",
+              "text": "When information is no longer required, we may delete, anonymise or securely dispose of it, subject to applicable law and legitimate operational requirements."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Anonymised or aggregated information that no longer identifies an individual may be retained for analytics, business intelligence and Platform improvement."
+            }
+          ]
+        },
+        {
+          "title": "15. Data Security",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop uses reasonable technical and organisational measures designed to protect information against unauthorised access, misuse, loss, alteration or disclosure."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Measures may include:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "access controls;",
+                "authentication;",
+                "password protections;",
+                "restricted internal access;",
+                "secure infrastructure;",
+                "monitoring;",
+                "backups;",
+                "security controls; and",
+                "other safeguards appropriate to the nature of the information."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "However, no electronic system, internet transmission or storage method can be guaranteed to be completely secure."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Accordingly, Quanta Loop does not guarantee absolute security."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Where a personal-data breach occurs, Quanta Loop will take steps required under applicable law, which may include assessment, containment, investigation, remediation and required notifications."
+            }
+          ]
+        },
+        {
+          "title": "16. User Rights and Choices",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Subject to applicable law, users may have rights relating to their personal information, including the ability to:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "request access to information;",
+                "request correction or updating;",
+                "request deletion or erasure where applicable;",
+                "withdraw consent where processing is based on consent;",
+                "raise privacy-related grievances; and",
+                "exercise other rights available under applicable law."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Requests may be made by contacting:"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Mr. Avinash, Grievance Officer"
+            },
+            {
+              "kind": "paragraph",
+              "text": "grievance@quantaloop.in"
+            },
+            {
+              "kind": "paragraph",
+              "text": "We may need to verify the identity or authority of the person making a request before acting on it."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Certain information may be retained where required or permitted by law, including for:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "legal compliance;",
+                "fraud prevention;",
+                "security;",
+                "dispute resolution;",
+                "accounting or audit requirements;",
+                "enforcement of agreements; or",
+                "other legally permitted purposes."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "The precise rights and mechanisms applicable to a user may depend on the provisions of Indian data-protection law in force at the relevant time."
+            }
+          ]
+        },
+        {
+          "title": "17. Children",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop is intended for business and professional users and is not directed toward children."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Users must be at least 18 years old to register or use the Platform."
+            },
+            {
+              "kind": "paragraph",
+              "text": "We do not knowingly seek to collect personal information from children."
+            },
+            {
+              "kind": "paragraph",
+              "text": "If we become aware that information has been submitted by a person who is not eligible to use the Platform, we may take appropriate action in accordance with applicable law."
+            }
+          ]
+        },
+        {
+          "title": "18. Business Information and Confidentiality",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop is a marketplace and not a confidential document-storage service."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Users should not upload highly confidential information unless the relevant Platform feature specifically requires it and appropriate safeguards have been considered."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Information voluntarily disclosed through listings, profiles or communications may become available to other users as described in this Privacy Policy and the Terms."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Users are responsible for deciding what information they disclose to counterparties."
+            }
+          ]
+        },
+        {
+          "title": "19. Analytics and Aggregated Information",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop may create or use aggregated, statistical, anonymised or de-identified information for purposes including:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "analytics;",
+                "business insights;",
+                "marketplace optimisation;",
+                "product development;",
+                "performance measurement;",
+                "service improvement; and",
+                "reporting."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Where information has been irreversibly anonymised so that it no longer identifies an individual, it may be used for these purposes without being treated as personal information to the extent permitted by law."
+            }
+          ]
+        },
+        {
+          "title": "20. No Sale of Personal Data",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop does not currently sell personal data to third parties for monetary consideration."
+            },
+            {
+              "kind": "paragraph",
+              "text": "This does not prevent Quanta Loop from:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "using service providers;",
+                "sharing information as necessary to operate the Platform;",
+                "displaying listing or business information to other users;",
+                "making disclosures required or permitted by law;",
+                "or using anonymised or aggregated information."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "If the commercial model changes in a manner that materially affects personal-data processing, the Privacy Policy will be updated as required by applicable law."
+            }
+          ]
+        },
+        {
+          "title": "21. Third-Party Websites and Services",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "The Platform may contain links to third-party websites, applications or services."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop does not control the privacy practices of independent third parties."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Users should review the privacy policies and terms applicable to those services before providing information to them."
+            }
+          ]
+        },
+        {
+          "title": "22. Changes to This Privacy Policy",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Quanta Loop may update this Privacy Policy from time to time to reflect:"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "changes to the Platform;",
+                "new features;",
+                "changes in law;",
+                "changes in technology;",
+                "changes in data-processing practices; or",
+                "business requirements."
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "The updated Policy will be published with a revised “Last Updated” date."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Where required by law, appropriate notice or consent will be obtained."
+            }
+          ]
+        },
+        {
+          "title": "23. Governing Law",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "This Privacy Policy is governed by the laws of India, subject to applicable data-protection and other mandatory legal requirements."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Any dispute relating to this Privacy Policy will be handled in accordance with the dispute-resolution provisions applicable to the Platform Terms, to the extent legally permissible."
+            }
+          ]
+        },
+        {
+          "title": "24. Privacy and Grievance Contact",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "For privacy questions, personal-data requests or grievances relating to the Platform, contact:"
+            },
+            {
+              "kind": "paragraph",
+              "text": "ASM Holdings"
+            },
+            {
+              "kind": "paragraph",
+              "text": "New No. 100, Old No. 86, Raghavan Street,"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Perambur, Chennai – 600011,"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Tamil Nadu, India"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Grievance Officer: Mr. Avinash"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Email: grievance@quantaloop.in"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Please include sufficient information for us to understand and investigate your request or grievance."
+            },
+            {
+              "kind": "paragraph",
+              "text": "We will handle grievances and requests in accordance with applicable law."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,1267 @@
+{
+  "common": {
+    "operatedBy": "{operator} மூலம் இயக்கப்படுகிறது",
+    "lastUpdated": "கடைசியாக புதுப்பிக்கப்பட்டது: {date}",
+    "backToHome": "முகப்புக்குத் திரும்ப"
+  },
+  "consent": {
+    "prefix": "நான் ",
+    "terms": "விதிமுறைகள் & நிபந்தனைகள்",
+    "and": " மற்றும் ",
+    "privacy": "தனியுரிமைக் கொள்கை",
+    "suffix": "ஒப்புக்கொள்கிறேன்."
+  },
+  "terms": {
+    "title": "விதிமுறைகள் & நிபந்தனைகள்",
+    "intro": [
+      {
+        "kind": "paragraph",
+        "text": "Quanta Loop-க்கு வரவேற்கிறோம்; இது ASM Fintech Private Limited (\"ASM Fintech\", \"Quanta Loop\", \"we\", \"our\", அல்லது \"us\") மூலம் இயக்கப்படும் ஒரு டிஜிட்டல் Platform."
+      },
+      {
+        "kind": "paragraph",
+        "text": "இந்த விதிமுறைகள் & நிபந்தனைகள் (\"Terms\") Quanta Loop Platform, website, software, applications மற்றும் தொடர்புடைய சேவைகளுக்கு (ஒன்றாக, \"Platform\") உங்கள் அணுகல் மற்றும் பயன்பாட்டை நிர்வகிக்கின்றன."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Platform-ஐ பதிவு செய்து, அணுகி அல்லது பயன்படுத்துவதன் மூலம், இந்த Terms-க்கு நீங்கள் ஒப்புக்கொள்கிறீர்கள். ஒப்புக்கொள்ளவில்லை என்றால், Platform-ஐ பயன்படுத்த வேண்டாம்."
+      }
+    ],
+    "sections": [
+      {
+        "title": "1. QUANTA LOOP பற்றி",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop என்பது தொழில்துறை கழிவு உற்பத்தியாளர்கள் கழிவு பட்டியல்களை வெளியிடவும், aggregators, recyclers மற்றும் தொடர்புடைய stakeholders அத்தகைய பட்டியல்களைக் கண்டறிந்து ஆர்வம் தெரிவிக்கவும் உதவும் technology-enabled intermediary Platform ஆகும்."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Platform வழங்கக்கூடும்:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "automated matching;",
+              "in-platform chat மற்றும் communications;",
+              "notifications;",
+              "subscription access;",
+              "analytics;",
+              "மற்றும் other digital tools."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "பயனர்கள் பின்வருவன தொடர்பாக த independently தகவல் பரிமாறி பேச்சுவார்த்தை நடத்தலாம்:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "pricing;",
+              "transportation;",
+              "inspection;",
+              "logistics;",
+              "delivery;",
+              "quality;",
+              "மற்றும் commercial terms."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "2. முக்கிய Platform மறுப்பு",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop என்பது technology intermediary Platform மட்டுமே."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop இவை அல்ல:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "a buyer;",
+              "seller;",
+              "recycler;",
+              "transporter;",
+              "broker;",
+              "waste handler;",
+              "inspection agency;",
+              "logistics provider;",
+              "environmental consultant;",
+              "அல்லது regulatory/compliance authority."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop இவற்றைச் செய்யாது:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "waste ownership;",
+              "waste store/transport;",
+              "materials inspect;",
+              "listings legality verify;",
+              "environmental compliance verify;",
+              "GST registrations verify;",
+              "licences/permissions verify;",
+              "recyclers/aggregators verify;",
+              "quality guarantee;",
+              "deliveries guarantee;",
+              "payments guarantee;",
+              "அல்லது transactions completion guarantee."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "அனைத்து பரிவர்த்தனைகளும் Dealings-உம் பயனர்களுக்கிடையே நேரடியாக அவர்களின் சொந்த விருப்பத்திற்கும் ஆபத்திற்கும் உட்பட்டு நடக்கின்றன."
+          },
+          {
+            "kind": "paragraph",
+            "text": "பின்வருவன தொடர்பான அனைத்து பொறுப்பும்:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "legality;",
+              "permits;",
+              "pollution control approvals;",
+              "environmental compliance;",
+              "hazardous material handling;",
+              "transportation;",
+              "taxes;",
+              "safety;",
+              "quality;",
+              "payment;",
+              "மற்றும் contractual obligations"
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "concerned usersக்கிடையே மட்டுமே இருக்கும்."
+          }
+        ]
+      },
+      {
+        "title": "3. தகுதி & பயனர் கணக்குகள்",
+        "subsections": [
+          {
+            "title": "3.1 தகுதி",
+            "blocks": [
+              {
+                "kind": "paragraph",
+                "text": "Platform வணிக மற்றும் professional பயனர்களுக்காக உள்ளது; அவர்கள் குறைந்தது 18 வயதுடையவர்களாகவும், binding contracts-ஐ செய்ய சட்டப்படி தகுதியுடையவர்களாகவும் இருக்க வேண்டும்."
+              }
+            ]
+          },
+          {
+            "title": "3.2 பதிவு",
+            "blocks": [
+              {
+                "kind": "paragraph",
+                "text": "பயனர்கள் பின்வருவன மூலம் பதிவு செய்யலாம்:"
+              },
+              {
+                "kind": "list",
+                "items": [
+                  "mobile OTP;",
+                  "email OTP;",
+                  "company information;",
+                  "மற்றும் optional GST details."
+                ]
+              }
+            ]
+          },
+          {
+            "title": "3.3 தகவலின் துல்லியம்",
+            "blocks": [
+              {
+                "kind": "paragraph",
+                "text": "பயனர்கள் முழுவதும் பொறுப்பு:"
+              },
+              {
+                "kind": "list",
+                "items": [
+                  "submitted information-ன் accuracy;",
+                  "listings-ன் legality;",
+                  "மற்றும் applicable laws-க்கு compliance."
+                ]
+              },
+              {
+                "kind": "paragraph",
+                "text": "Quanta Loop பயனர் தகவல், licences, permits, certifications, GST details அல்லது environmental approvals-ஐ independently verify செய்யாது."
+              }
+            ]
+          },
+          {
+            "title": "3.4 கணக்கு பாதுகாப்பு",
+            "blocks": [
+              {
+                "kind": "paragraph",
+                "text": "கணக்கு credentials-ஐ ரகசியமாக வைத்திருப்பதற்கும், அவர்களின் கணக்குகள் வழியாக நடக்கும் செயல்களுக்கும் பயனர்கள் பொறுப்பு."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "4. Platform சேவைகள் & அம்சங்கள்",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "தற்போதைய அம்சங்கள் பின்வருவனவற்றை உள்ளடக்கலாம்:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "listing creation;",
+              "automated matching;",
+              "in-platform messaging/chat;",
+              "notifications;",
+              "மற்றும் subscription access."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "எதிர்கால அம்சங்கள் பின்வருவனவற்றை உள்ளடக்கலாம்:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "AI recommendations;",
+              "analytics;",
+              "logistics tracking;",
+              "document storage;",
+              "live tracking;",
+              "மற்றும் additional technology tools."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop முன் அறிவிப்பின்றி எந்த நேரத்திலும் அம்சங்களை மாற்ற, இடைநிறுத்த, நிறுத்த அல்லது அறிமுகப்படுத்த உரிமை கொண்டுள்ளது."
+          }
+        ]
+      },
+      {
+        "title": "5. சந்தா & கட்டணங்கள்",
+        "subsections": [
+          {
+            "title": "5.1 சந்தா கட்டணம்",
+            "blocks": [
+              {
+                "kind": "paragraph",
+                "text": "Platform-ன் சில அம்சங்களுக்கு subscription அல்லது access fees செலுத்த வேண்டியிருக்கலாம்."
+              },
+              {
+                "kind": "paragraph",
+                "text": "பொருந்தும் pricing மற்றும் plans அவ்வப்போது புதுப்பிக்கப்படலாம்."
+              }
+            ]
+          },
+          {
+            "title": "5.2 பயனர் பரிவர்த்தனைகள்",
+            "blocks": [
+              {
+                "kind": "paragraph",
+                "text": "பயனர்களுக்கிடையிலான commercial transactions Platform-க்கு வெளியே independently நடக்கின்றன."
+              },
+              {
+                "kind": "paragraph",
+                "text": "Quanta Loop பயனர்களுக்கிடையிலான transactions-இல் party அல்ல; பின்வருவனவற்றுக்கு பொறுப்பு இல்லை:"
+              },
+              {
+                "kind": "list",
+                "items": [
+                  "payment disputes;",
+                  "pricing disputes;",
+                  "failed transactions;",
+                  "fraud;",
+                  "delivery failures;",
+                  "logistics issues;",
+                  "inspection disputes;",
+                  "அல்லது commercial disagreements."
+                ]
+              }
+            ]
+          },
+          {
+            "title": "5.3 பணத்திரும்பப்பெறுதல்",
+            "blocks": [
+              {
+                "kind": "paragraph",
+                "text": "வெளிப்படையாக வேறு குறிப்பிடப்படாவிட்டால், subscription fees திரும்பப் பெற முடியாது."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "6. User Content & பட்டியல்கள்",
+        "subsections": [
+          {
+            "title": "6.1 User Content",
+            "blocks": [
+              {
+                "kind": "paragraph",
+                "text": "பயனர்கள் upload செய்யலாம்:"
+              },
+              {
+                "kind": "list",
+                "items": [
+                  "listings;",
+                  "images;",
+                  "descriptions;",
+                  "documents;",
+                  "messages;",
+                  "மற்றும் related content (\"User Content\")."
+                ]
+              },
+              {
+                "kind": "paragraph",
+                "text": "Platform வழியாக upload அல்லது share செய்யப்பட்ட அனைத்து User Content-க்கும் பயனர்கள் பொறுப்பு."
+              }
+            ]
+          },
+          {
+            "title": "6.2 Quanta Loop-க்கான உரிமம்",
+            "blocks": [
+              {
+                "kind": "paragraph",
+                "text": "பயனர்கள் Quanta Loop-க்கு worldwide, non-exclusive, royalty-free license வழங்குகின்றனர்:"
+              },
+              {
+                "kind": "list",
+                "items": [
+                  "host;",
+                  "display;",
+                  "reproduce;",
+                  "store;",
+                  "distribute;",
+                  "format;",
+                  "analyse;",
+                  "மற்றும் User Content use"
+                ]
+              },
+              {
+                "kind": "paragraph",
+                "text": "பின்வரும் நோக்கங்களுக்காக:"
+              },
+              {
+                "kind": "list",
+                "items": [
+                  "Platform operations;",
+                  "analytics;",
+                  "marketing;",
+                  "service improvement;",
+                  "moderation;",
+                  "மற்றும் technology functionality."
+                ]
+              }
+            ]
+          },
+          {
+            "title": "6.3 உள்ளடக்க moderation",
+            "blocks": [
+              {
+                "kind": "paragraph",
+                "text": "Quanta Loop செய்யலாம்:"
+              },
+              {
+                "kind": "list",
+                "items": [
+                  "content remove;",
+                  "visibility restrict;",
+                  "accounts suspend;",
+                  "complaints investigate;",
+                  "மற்றும் activity moderate"
+                ]
+              },
+              {
+                "kind": "paragraph",
+                "text": "platform integrity, safety அல்லது legal compliance-க்கு அத்தகைய action தேவை என்று reasonably நம்பும் போது."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "7. தடைசெய்யப்பட்ட செயல்கள்",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "பயனர்கள் செய்யக்கூடாது:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "illegal/prohibited/unlawful waste listings upload;",
+              "law violation-இல் hazardous materials list;",
+              "false/misleading information submit;",
+              "others impersonate;",
+              "fraud/deceptive practices-இல் engage;",
+              "other users-ஐ harass/abuse;",
+              "spam/unsolicited communications send;",
+              "platform data scrape/extract;",
+              "Platform reverse engineer;",
+              "subscriptions/access controls bypass;",
+              "malware/malicious code upload;",
+              "intellectual property rights infringe;",
+              "platform communications misuse;",
+              "platform security/operations interfere;",
+              "அல்லது unlawful activities-க்கு Platform use."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop மீறல்களை விசாரித்து action எடுக்க உரிமை கொண்டுள்ளது."
+          }
+        ]
+      },
+      {
+        "title": "8. தனியுரிமை, குக்கீகள் & தகவல்தொடர்பு",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Platform-ஐ பயன்படுத்துவதன் மூலம், பயனர்கள் ஒப்புதல் அளிக்கின்றனர்:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "Privacy Policy-இல் விவரிக்கப்பட்ட information collection/processing;",
+              "cookies/analytics technologies use;",
+              "service-related notifications;",
+              "transactional communications;",
+              "marketing communications;",
+              "மற்றும் platform alerts."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "பொருந்தும் இடங்களில் promotional communications-லிருந்து opt out செய்யலாம்."
+          },
+          {
+            "kind": "paragraph",
+            "text": "சில essential service communications இன்னும் அனுப்பப்படலாம் என்பதை பயனர்கள் ஒப்புக்கொள்கின்றனர்."
+          }
+        ]
+      },
+      {
+        "title": "9. அறிவுசார் சொத்து",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "பின்வருவன தொடர்பான அனைத்து உரிமைகளும்:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "Quanta Loop;",
+              "platform software;",
+              "branding;",
+              "technology;",
+              "matching systems;",
+              "workflows;",
+              "algorithms;",
+              "analytics systems;",
+              "interfaces;",
+              "databases;",
+              "மற்றும் related intellectual property"
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "ASM Fintech Private Limited அல்லது அதன் licensors-க்கு exclusively சொந்தமானவை."
+          },
+          {
+            "kind": "paragraph",
+            "text": "பயனர்கள் செய்யக்கூடாது:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "copy;",
+              "reproduce;",
+              "distribute;",
+              "reverse engineer;",
+              "modify;",
+              "scrape;",
+              "அல்லது commercially exploit"
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Platform-ன் எந்தப் பகுதியையும் prior written permission இல்லாமல்."
+          }
+        ]
+      },
+      {
+        "title": "10. மூன்றாம் தரப்பு சேவைகள்",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Platform third-party services, tools அல்லது software-உடன் integrate ஆகலாம்."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop பொறுப்பு இல்லை:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "third-party systems;",
+              "third-party websites;",
+              "external services;",
+              "அல்லது third-party actions."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Third-party services பயன்பாடு தனி terms மற்றும் policies-க்கு உட்பட்டதாக இருக்கலாம்."
+          }
+        ]
+      },
+      {
+        "title": "11. மறுப்புகள்",
+        "subsections": [
+          {
+            "title": "11.1 Platform \"உள்ளபடியே\" வழங்கப்படுகிறது",
+            "blocks": [
+              {
+                "kind": "paragraph",
+                "text": "Platform \"as is\" மற்றும் \"as available\" அடிப்படையில் வழங்கப்படுகிறது."
+              },
+              {
+                "kind": "paragraph",
+                "text": "Quanta Loop உத்தரவாதம் அளிக்காது:"
+              },
+              {
+                "kind": "list",
+                "items": [
+                  "uninterrupted availability;",
+                  "error-free functionality;",
+                  "listings-ன் accuracy;",
+                  "user authenticity;",
+                  "transaction success;",
+                  "payment completion;",
+                  "materials-ன் legality;",
+                  "அல்லது all times platform availability."
+                ]
+              }
+            ]
+          },
+          {
+            "title": "11.2 சரிபார்ப்பு இல்லை",
+            "blocks": [
+              {
+                "kind": "paragraph",
+                "text": "Quanta Loop independently verify செய்யாது:"
+              },
+              {
+                "kind": "list",
+                "items": [
+                  "users;",
+                  "licences;",
+                  "GST registrations;",
+                  "environmental permissions;",
+                  "waste legality;",
+                  "transportation compliance;",
+                  "அல்லது commercial representations."
+                ]
+              },
+              {
+                "kind": "paragraph",
+                "text": "பயனர்கள் entirely தங்கள் சொந்த ஆபத்தில் interact மற்றும் transact செய்கின்றனர்."
+              }
+            ]
+          },
+          {
+            "title": "11.3 சுற்றுச்சூழல் அல்லது முறைப்படுத்தல் பொறுப்பு இல்லை",
+            "blocks": [
+              {
+                "kind": "paragraph",
+                "text": "Quanta Loop பொறுப்பு இல்லை:"
+              },
+              {
+                "kind": "list",
+                "items": [
+                  "environmental violations;",
+                  "hazardous material handling;",
+                  "transportation compliance;",
+                  "pollution control compliance;",
+                  "waste disposal legality;",
+                  "அல்லது users regulatory breaches."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "12. பொறுப்பின் வரம்பு",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "சட்டம் அனுமதிக்கும் அதிகபட்ச அளவ까지, Quanta Loop, ASM Fintech Private Limited மற்றும் அவர்களின் directors, employees, affiliates மற்றும் representatives பொறுப்பு இல்லை:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "indirect/consequential damages;",
+              "profits loss;",
+              "business interruption;",
+              "data loss;",
+              "environmental violations;",
+              "user misconduct;",
+              "hazardous material incidents;",
+              "transportation issues;",
+              "third-party actions;",
+              "commercial disputes;",
+              "payment failures;",
+              "fraud;",
+              "அல்லது failed transactions."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Platform-இலிருந்து எழும் அல்லது தொடர்புடைய Quanta Loop-ன் மொத்த aggregate liability, concerned user கடந்த மூன்று (3) மாதங்களில் Quanta Loop-க்கு செலுத்திய subscription fees-ஐ விட அதிகமாக இருக்காது."
+          }
+        ]
+      },
+      {
+        "title": "13. indemnity",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "பயனர்கள் defend, indemnify மற்றும் hold harmless செய்ய ஒப்புக்கொள்கின்றனர்:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "Quanta Loop;",
+              "ASM Fintech Private Limited;",
+              "its directors;",
+              "employees;",
+              "affiliates;",
+              "advisors;",
+              "மற்றும் representatives"
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "பின்வருவனவற்றிலிருந்து எழும் claims, liabilities, damages, penalties, losses அல்லது expenses-க்கு எதிராக:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "user content;",
+              "waste listings;",
+              "hazardous materials;",
+              "legal violations;",
+              "environmental non-compliance;",
+              "transportation;",
+              "taxes;",
+              "user disputes;",
+              "intellectual property infringement;",
+              "அல்லது Platform misuse."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "14. கணக்கு இடைநிறுத்தம் & நிறுத்தம்",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop தனது விருப்பப்படி accounts-ஐ suspend, restrict அல்லது terminate செய்யலாம், இங்கு:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "complaints received;",
+              "misuse suspected;",
+              "unlawful activity suspected;",
+              "platform integrity risk-இல்;",
+              "அல்லது users these Terms violate."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "reasonably தேவைப்படும் போது Quanta Loop முன் அறிவிப்பின்றி content-ஐ நீக்கவும் platform access-ஐ restrict செய்யவும் கூடும்."
+          }
+        ]
+      },
+      {
+        "title": "15. தரவு & பகுப்பாய்வு",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop aggregated, anonymised அல்லது non-identifiable usage data-ஐ பின்வருவனவற்றுக்காக பயன்படுத்தலாம்:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "analytics;",
+              "platform improvement;",
+              "business insights;",
+              "service optimisation;",
+              "மற்றும் technology development."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "16. Force Majeure",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "reasonable control-க்கு அப்பாற்பட்ட நிகழ்வுகளால் ஏற்படும் delays அல்லது failures-க்கு Quanta Loop liable அல்ல, அவை:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "internet failures;",
+              "power outages;",
+              "cyber incidents;",
+              "governmental actions;",
+              "strikes;",
+              "natural disasters;",
+              "அல்லது infrastructure failures."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "17. Platform அல்லது Terms மாற்றங்கள்",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop செய்யலாம்:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "Platform modify;",
+              "features update;",
+              "pricing revise;",
+              "அல்லது these Terms amend"
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "எந்த நேரத்திலும்."
+          },
+          {
+            "kind": "paragraph",
+            "text": "புதுப்பிக்கப்பட்ட Terms revised \"Last Updated\" date உடன் Platform-இல் வெளியிடப்படும்."
+          },
+          {
+            "kind": "paragraph",
+            "text": "புதுப்பிப்புகளுக்குப் பிறகு Platform-ஐ தொடர்ந்து பயன்படுத்துவது revised Terms-ஐ ஏற்றுக்கொள்வதாகும்."
+          }
+        ]
+      },
+      {
+        "title": "18. governing law & dispute resolution",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "இந்த Terms India-ன் சட்டங்களால் governed ஆகும்."
+          },
+          {
+            "kind": "paragraph",
+            "text": "இந்த Terms-இலிருந்து எழும் அல்லது தொடர்புடைய எந்த dispute-யும் Chennai-இல் Arbitration and Conciliation Act, 1996-க்குட்பட்ட arbitration-க்கு referred செய்யப்படும்."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Arbitration Quanta Loop நியமிக்கும் sole arbitrator மூலம் conducted செய்யப்படும்."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Arbitration-ன் language English ஆக இருக்கும்."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Chennai Courts interim அல்லது injunctive relief-க்கு exclusive jurisdiction கொண்டிருக்கும்."
+          }
+        ]
+      },
+      {
+        "title": "19. தொடர்பு விவரங்கள்",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "ASM Fintech Private Limited, புதிய எண். 100, பழைய எண். 86, ராகவன் தெரு, பெரம்பூர், Chennai – 600011, Tamil Nadu, India."
+          },
+          {
+            "kind": "email",
+            "label": "மின்னஞ்சல்:"
+          }
+        ]
+      }
+    ]
+  },
+  "privacy": {
+    "title": "தனியுரிமைக் கொள்கை",
+    "intro": [
+      {
+        "kind": "paragraph",
+        "text": "ASM Fintech Private Limited (\"ASM Fintech\", \"Quanta Loop\", \"we\", \"our\", அல்லது \"us\") உங்கள் privacy-ஐ மதிக்கிறது; உங்கள் personal information-ஐ பாதுகாப்பதில் committed."
+      },
+      {
+        "kind": "paragraph",
+        "text": "இந்த தனியுரிமைக் கொள்கை Quanta Loop Platform, website, applications, products அல்லது related services (ஒன்றாக, \"Platform\")-ஐ access/use செய்யும்போது information-ஐ எவ்வாறு collect, use, store, share, protect செய்கிறது என்பதை விளக்குகிறது."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Platform-ஐ access/use செய்வதன் மூலம், இந்த Privacy Policy-க்கு நீங்கள் ஒப்புக்கொள்கிறீர்கள்."
+      }
+    ],
+    "sections": [
+      {
+        "title": "1. QUANTA LOOP பற்றி",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop என்பது industrial waste generators, aggregators, recyclers மற்றும் related stakeholders-க்கிடையே connections-ஐ எளிதாக்கும் technology-enabled intermediary Platform."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop technology platform/intermediary ஆக மட்டும் செயல்படுகிறது."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Platform-இல் display/share செய்யப்படும் information பொதுவாக users நேரடியாக வழங்குகின்றனர். Quanta Loop அனைத்து user-submitted information, listings, claims, certifications, quantities, pricing, business credentials அல்லது representations-ஐயும் independently verify செய்யாது."
+          },
+          {
+            "kind": "paragraph",
+            "text": "counterparties மற்றும் transactions-ஐ independently evaluate/verify செய்வதற்கு users பொறுப்பு."
+          }
+        ]
+      },
+      {
+        "title": "2. நாங்கள் சேகரிக்கும் தகவல்",
+        "subsections": [
+          {
+            "title": "2.1 நீங்கள் வழங்கும் தகவல்",
+            "blocks": [
+              {
+                "kind": "paragraph",
+                "text": "Platform-ஐ register/use செய்யும்போது, வழங்கலாம்:"
+              },
+              {
+                "kind": "list",
+                "items": [
+                  "name;",
+                  "mobile number;",
+                  "email address;",
+                  "company/business details;",
+                  "GST information (optional);",
+                  "addresses;",
+                  "profile details;",
+                  "uploaded documents;",
+                  "uploaded images;",
+                  "waste listing information;",
+                  "communication content;",
+                  "மற்றும் நீங்கள் voluntarily submit செய்த other information."
+                ]
+              }
+            ]
+          },
+          {
+            "title": "2.2 Platform & பரிவர்த்தனை தகவல்",
+            "blocks": [
+              {
+                "kind": "paragraph",
+                "text": "பின்வருவன தொடர்பான information-ஐ சேகரிக்கலாம்:"
+              },
+              {
+                "kind": "list",
+                "items": [
+                  "account activity;",
+                  "user interactions;",
+                  "listing activity;",
+                  "enquiries;",
+                  "subscriptions;",
+                  "communication history;",
+                  "transaction-related activity;",
+                  "மற்றும் support requests."
+                ]
+              }
+            ]
+          },
+          {
+            "title": "2.3 சாதன & தொழில்நுட்ப தகவல்",
+            "blocks": [
+              {
+                "kind": "paragraph",
+                "text": "automatically சேகரிக்கலாம்:"
+              },
+              {
+                "kind": "list",
+                "items": [
+                  "IP address;",
+                  "browser type;",
+                  "device information;",
+                  "operating system;",
+                  "login activity;",
+                  "location information;",
+                  "cookies;",
+                  "analytics data;",
+                  "மற்றும் usage patterns."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "3. தகவலை எவ்வாறு பயன்படுத்துகிறோம்",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "information-ஐ பின்வரும் நோக்கங்களுக்காக பயன்படுத்தலாம்:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "user accounts create/manage;",
+              "user authentication/login management;",
+              "Platform operate/improve;",
+              "user matching/interactions enable;",
+              "communications facilitate;",
+              "subscription management;",
+              "customer support;",
+              "analytics மற்றும் business insights;",
+              "fraud prevention மற்றும் platform security;",
+              "service improvement;",
+              "marketing மற்றும் promotional communications;",
+              "legal மற்றும் regulatory compliance;",
+              "மற்றும் எங்கள் terms/policies-ஐ enforce செய்தல்."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "4. குக்கீகள் & பகுப்பாய்வு",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop பயன்படுத்தலாம்:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "cookies;",
+              "pixels;",
+              "analytics tools;",
+              "session tracking;",
+              "performance monitoring technologies;",
+              "மற்றும் related technologies"
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "functionality மேம்படுத்த, user behaviour புரிந்துகொள்ள, platform performance enhance செய்ய."
+          },
+          {
+            "kind": "paragraph",
+            "text": "இந்த technologies உதவலாம்:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "user preferences remember;",
+              "navigation improve;",
+              "traffic analyse;",
+              "platform performance monitor;",
+              "மற்றும் user experience personalise."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "browser/device settings மூலம் cookies disable செய்யலாம். cookies disable செய்தால் Platform-ன் சில features properly function செய்யாது."
+          }
+        ]
+      },
+      {
+        "title": "5. தகவல்தொடர்பு",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Platform பயன்படுத்துவதன் மூலம், பெற ஒப்புதல்:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "transactional emails;",
+              "account notifications;",
+              "login alerts;",
+              "subscription updates;",
+              "support communications;",
+              "service announcements;",
+              "மற்றும் promotional/marketing communications."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "unsubscribe links அல்லது எங்களை தொடர்பு கொண்டு anytime promotional communications-லிருந்து opt out செய்யலாம். essential service-related communications இன்னும் அனுப்பப்படலாம்."
+          }
+        ]
+      },
+      {
+        "title": "6. தரவு பகிர்வு & வெளிப்படுத்தல்",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "information பகிரலாம்:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "hosting மற்றும் cloud service providers;",
+              "technology மற்றும் analytics providers;",
+              "payment/communication service providers;",
+              "professional advisors;",
+              "தேவையான இடங்களில் legal/regulatory authorities;",
+              "மற்றும் normal platform functionality-ன் பகுதியாக other users."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "எ.கா., transactions மற்றும் platform interactions-ஐ எளிதாக்க சில business/listing information மற்ற users-க்கு visible ஆகலாம்."
+          },
+          {
+            "kind": "paragraph",
+            "text": "personal data-ஐ third parties-க்கு விற்க மாட்டோம்."
+          }
+        ]
+      },
+      {
+        "title": "7. User Content & Platform பொறுப்பு",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "பயனர்கள் முழுவதும் பொறுப்பு:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "அவர்கள் upload செய்த information;",
+              "listings;",
+              "business claims;",
+              "pricing;",
+              "certifications;",
+              "communications;",
+              "மற்றும் transaction-related representations."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop user-generated content/third-party information-ன் accuracy, completeness/reliability-க்கு guarantee இல்லை."
+          }
+        ]
+      },
+      {
+        "title": "8. தரவு தக்கவைப்பு",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "reasonably தேவையான காலம் information-ஐ retain செய்வோம்:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "platform operations;",
+              "customer support;",
+              "legal compliance;",
+              "dispute resolution;",
+              "fraud prevention;",
+              "internal analytics;",
+              "மற்றும் legitimate business purposes."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "சில information சட்டம் தேவைப்படும்போது அல்லது operational, security/compliance purposes-க்காக retain செய்யப்படலாம்."
+          }
+        ]
+      },
+      {
+        "title": "9. பயனர் உரிமைகள்",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "applicable law-க்கு உட்பட்டு, users கோரலாம்:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "தங்கள் information-ஐ access செய்ய;",
+              "information update/correct;",
+              "information deletion request;",
+              "certain consents withdraw;",
+              "அல்லது privacy concerns-க்கு எங்களை contact."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Requests submit செய்யலாம்:"
+          },
+          {
+            "kind": "email",
+            "label": "மின்னஞ்சல்:"
+          },
+          {
+            "kind": "paragraph",
+            "text": "தேவைப்படும் இடங்களில் சில information retain செய்வோம்:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "legal obligations;",
+              "dispute resolution;",
+              "fraud prevention;",
+              "audit requirements;",
+              "அல்லது legitimate business purposes."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "10. தரவு பாதுகாப்பு",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "information பாதுகாக்க commercially reasonable safeguards-ஐ implement செய்கிறோம், including:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "restricted access controls;",
+              "password protections;",
+              "reasonable technical measures;",
+              "மற்றும் internal security practices."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "internet transmission/electronic storage முறை completely secure அல்ல."
+          },
+          {
+            "kind": "paragraph",
+            "text": "எனவே, information-ன் absolute security-க்கு guarantee அளிக்க முடியாது."
+          }
+        ]
+      },
+      {
+        "title": "11. மூன்றாம் தரப்பு சேவைகள்",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Platform third-party services, tools/websites links-ஐ integrate/contain செய்யலாம்."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop பொறுப்பு இல்லை:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "third-party privacy practices;",
+              "third-party content;",
+              "அல்லது third-party systems."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "external services-ன் privacy policies-ஐ users த separately review செய்ய வேண்டும்."
+          }
+        ]
+      },
+      {
+        "title": "12. மறுப்புகள்",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "users acknowledge/ agree:"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "internet transmissions always secure அல்ல.",
+              "online share information inherent risks carry;",
+              "மற்றும் Platform use user-ன் own discretion/risk-இல்."
+            ]
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop reasonable measures எடுத்தாலும், unauthorised access, hacking, data loss/security breaches-க்கு absolute protection guarantee இல்லை."
+          }
+        ]
+      },
+      {
+        "title": "13. குழந்தைகள்",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "Platform குறைந்தது 18 years age உடைய business/professional users-க்கு மட்டும்."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Quanta Loop knowingly children-இலிருந்து personal information collect செய்யாது."
+          }
+        ]
+      },
+      {
+        "title": "14. இந்த தனியுரிமைக் கொள்கையில் மாற்றங்கள்",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "இந்த Privacy Policy-ஐ time to time update/modify செய்யலாம்."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Updated versions revised \"Last Updated\" date உடன் Platform-இல் post செய்யப்படும்."
+          },
+          {
+            "kind": "paragraph",
+            "text": "updates-க்குப் பிறகு Platform-ஐ தொடர்ந்து பயன்படுத்துவது revised Privacy Policy acceptance."
+          }
+        ]
+      },
+      {
+        "title": "15. governing law & jurisdiction",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "இந்த Privacy Policy India-ன் laws-ஆல் governed."
+          },
+          {
+            "kind": "paragraph",
+            "text": "Chennai, Tamil Nadu-இல் located Courts, applicable dispute resolution terms-க்கு உட்பட்டு, இந்த Privacy Policy-இலிருந்து எழும் matters-க்கு jurisdiction கொண்டிருக்கும்."
+          }
+        ]
+      },
+      {
+        "title": "16. எங்களை தொடர்பு கொள்ளுங்கள்",
+        "blocks": [
+          {
+            "kind": "paragraph",
+            "text": "privacy-related queries/requests-க்கு, தொடர்பு கொள்ளுங்கள்:"
+          },
+          {
+            "kind": "paragraph",
+            "text": "ASM Fintech Private Limited, புதிய எண். 100, பழைய எண். 86, ராகவன் தெரு, பெரம்பூர், Chennai – 600011, Tamil Nadu, India."
+          },
+          {
+            "kind": "email",
+            "label": "மின்னஞ்சல்:"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,97 @@
+@keyframes network-hub-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes network-line-pulse {
+  0%,
+  100% {
+    stroke-opacity: 0.62;
+  }
+  50% {
+    stroke-opacity: 0.92;
+  }
+}
+
+@keyframes network-flow-dash {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+@keyframes network-signal-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes network-card-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+.network-hub-pulse {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: network-hub-pulse 4s ease-in-out infinite;
+}
+
+.network-line-primary {
+  animation: network-line-pulse 4.5s ease-in-out infinite;
+}
+
+.network-line-flow {
+  stroke-dasharray: 6 10;
+  animation: network-flow-dash 2.8s linear infinite;
+}
+
+.network-junction {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: network-signal-pulse 3s ease-in-out infinite;
+}
+
+.network-junction--delay-1 {
+  animation-delay: 0.6s;
+}
+
+.network-junction--delay-2 {
+  animation-delay: 1.2s;
+}
+
+.network-card-hub {
+  animation: network-card-float 6s ease-in-out infinite;
+}
+
+.network-trust-dot {
+  animation: network-signal-pulse 2.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .network-hub-pulse,
+  .network-line-primary,
+  .network-line-flow,
+  .network-junction,
+  .network-card-hub,
+  .network-trust-dot {
+    animation: none;
+  }
+}

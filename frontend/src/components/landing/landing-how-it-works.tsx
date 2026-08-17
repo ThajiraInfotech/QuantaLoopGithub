@@ -1,0 +1,240 @@
+"use client";
+
+import { Fragment, useMemo, useState } from "react";
+import {
+  ArrowRightLeft,
+  ChevronDown,
+  ChevronRight,
+  Package,
+  Search,
+  ShieldCheck,
+  Target,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
+
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+
+import { landingCardHover, landingSectionY, landingStackGap } from "./landing-styles";
+
+type WorkflowStepData = {
+  step: string;
+  title: string;
+  description: string;
+  label: string;
+};
+
+type WorkflowStep = WorkflowStepData & { icon: LucideIcon };
+
+const SELLER_ICONS: LucideIcon[] = [
+  Package,
+  ShieldCheck,
+  Target,
+  ArrowRightLeft,
+];
+const BUYER_ICONS: LucideIcon[] = [Search, ShieldCheck, Package, ArrowRightLeft];
+
+function WorkflowConnector({
+  orientation,
+}: {
+  orientation: "horizontal" | "vertical";
+}) {
+  if (orientation === "horizontal") {
+    return (
+      <span className="flex w-8 shrink-0 items-center gap-0.5 xl:w-10">
+        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+        <span className="h-px flex-1 bg-accent/40" />
+        <ChevronRight
+          className="h-3.5 w-3.5 shrink-0 text-accent/55"
+          strokeWidth={2}
+          aria-hidden
+        />
+      </span>
+    );
+  }
+
+  return (
+    <span className="flex flex-col items-center gap-0.5 py-1">
+      <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+      <span className="h-4 w-px bg-accent/40" />
+      <ChevronDown
+        className="h-3.5 w-3.5 text-accent/55"
+        strokeWidth={2}
+        aria-hidden
+      />
+      <span className="h-4 w-px bg-accent/40" />
+    </span>
+  );
+}
+
+function WorkflowStepCard({
+  step,
+  title,
+  description,
+  label,
+  icon: Icon,
+}: WorkflowStep) {
+  return (
+    <Card
+      variant="default"
+      className={landingCardHover("h-full border-border bg-card shadow-card")}
+    >
+      <CardContent className="flex h-full min-h-[220px] flex-col p-8">
+        <div className="flex items-start justify-between gap-3">
+          <Badge
+            variant="outline"
+            className="shrink-0 border-border bg-muted/50 px-2 py-0.5 font-mono text-caption text-muted-foreground"
+          >
+            {step}
+          </Badge>
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-accent/20 bg-accent/5 text-accent">
+            <Icon className="h-4 w-4" strokeWidth={1.75} />
+          </span>
+        </div>
+        <h3 className="mt-5 font-heading text-h4 leading-snug text-card-foreground">
+          {title}
+        </h3>
+        <p className="mt-2 flex-1 text-small leading-relaxed text-muted-foreground">
+          {description}
+        </p>
+        <Badge
+          variant="outline"
+          className="mt-5 w-fit border-border/80 bg-muted/30 px-2 py-0.5 text-caption font-normal text-muted-foreground"
+        >
+          {label}
+        </Badge>
+      </CardContent>
+    </Card>
+  );
+}
+
+function WorkflowFlow({ steps }: { steps: WorkflowStep[] }) {
+  return (
+    <>
+      <ol className={cn("flex flex-col lg:hidden", landingStackGap)}>
+        {steps.map((item, index) => (
+          <Fragment key={`${item.step}-${item.title}`}>
+            <li>
+              <WorkflowStepCard {...item} />
+            </li>
+            {index < steps.length - 1 ? (
+              <li className="flex justify-center" aria-hidden>
+                <WorkflowConnector orientation="vertical" />
+              </li>
+            ) : null}
+          </Fragment>
+        ))}
+      </ol>
+
+      <ol
+        className={cn("hidden list-none items-stretch lg:flex", landingStackGap)}
+      >
+        {steps.map((item, index) => (
+          <Fragment key={`${item.step}-${item.title}`}>
+            <li className="flex min-w-0 flex-1">
+              <WorkflowStepCard {...item} />
+            </li>
+            {index < steps.length - 1 ? (
+              <li
+                className="flex shrink-0 items-center self-center px-0.5"
+                aria-hidden
+              >
+                <WorkflowConnector orientation="horizontal" />
+              </li>
+            ) : null}
+          </Fragment>
+        ))}
+      </ol>
+    </>
+  );
+}
+
+function withIcons(
+  steps: WorkflowStepData[],
+  icons: LucideIcon[]
+): WorkflowStep[] {
+  return steps.map((step, index) => ({
+    ...step,
+    icon: icons[index] ?? Package,
+  }));
+}
+
+export function LandingHowItWorks() {
+  const t = useTranslations("landing.howItWorks");
+  const [audience, setAudience] = useState<"seller" | "buyer">("seller");
+
+  const audienceOptions = useMemo(
+    () => [
+      {
+        id: "seller" as const,
+        label: t("seller.label"),
+        subtitle: t("seller.subtitle"),
+        steps: withIcons(
+          t.raw("seller.steps") as WorkflowStepData[],
+          SELLER_ICONS
+        ),
+      },
+      {
+        id: "buyer" as const,
+        label: t("buyer.label"),
+        subtitle: t("buyer.subtitle"),
+        steps: withIcons(
+          t.raw("buyer.steps") as WorkflowStepData[],
+          BUYER_ICONS
+        ),
+      },
+    ],
+    [t]
+  );
+
+  const active = audienceOptions.find((option) => option.id === audience)!;
+
+  return (
+    <section
+      id="how-it-works"
+      className={`scroll-mt-20 border-b border-border bg-background ${landingSectionY}`}
+    >
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-[900px] text-center">
+          <p className="text-eyebrow">{t("eyebrow")}</p>
+          <h2 className="mt-3 font-heading text-[clamp(2.5rem,3vw,3rem)] font-bold leading-[1.1] tracking-[-0.02em] text-foreground">
+            {t("title")}
+          </h2>
+          <p className="mx-auto mt-5 max-w-[700px] text-body leading-relaxed text-muted-foreground sm:mt-6">
+            {active.subtitle}
+          </p>
+
+          <div
+            className="mt-6 inline-flex rounded-lg border border-border bg-muted/30 p-1"
+            role="tablist"
+            aria-label={t("tablistAria")}
+          >
+            {audienceOptions.map((option) => (
+              <button
+                key={option.id}
+                type="button"
+                role="tab"
+                aria-selected={audience === option.id}
+                onClick={() => setAudience(option.id)}
+                className={cn(
+                  "rounded-md px-4 py-2 text-small font-medium transition-colors",
+                  audience === option.id
+                    ? "bg-background text-foreground shadow-subtle"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8 sm:mt-10">
+          <WorkflowFlow steps={active.steps} />
+        </div>
+      </div>
+    </section>
+  );
+}

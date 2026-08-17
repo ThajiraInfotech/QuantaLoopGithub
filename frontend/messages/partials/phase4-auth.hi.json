@@ -1,0 +1,54 @@
+{
+  "verifyEmail": {
+    "title": "ईमेल सत्यापित करें",
+    "shellTitle": "अपना ईमेल सत्यापित करें",
+    "shellDescription": "अपने Quanta Loop खाते को सक्रिय करने के लिए ईमेल में भेजा गया 6-अंकों का कोड दर्ज करें।",
+    "verifyError": "आपका ईमेल सत्यापित नहीं हो सका।",
+    "resendError": "सत्यापन ईमेल पुनः नहीं भेजा जा सका।",
+    "verifying": "आपका ईमेल सत्यापित हो रहा है…",
+    "verifiedTitle": "ईमेल सत्यापित",
+    "verifiedFallback": "आपका ईमेल सफलतापूर्वक सत्यापित हो गया।",
+    "idleTitle": "अपना सत्यापन कोड दर्ज करें",
+    "sentPrefix": "हमने 6-अंकों का कोड भेजा है",
+    "emailFallback": "आपके ईमेल",
+    "sentSuffix": " पर। नेटवर्क में जारी रखने के लिए इसे नीचे दर्ज करें। कोड 10 मिनट में समाप्त हो जाता है।",
+    "codeLabel": "सत्यापन कोड",
+    "codePlaceholder": "000000",
+    "codeInvalid": "अपने ईमेल से 6-अंकों का कोड दर्ज करें।",
+    "verify": "ईमेल सत्यापित करें",
+    "resending": "नया कोड भेजा जा रहा है…",
+    "resend": "कोड पुनः भेजें",
+    "cancelSignup": "रद्द करें और दूसरा ईमेल उपयोग करें",
+    "cancelling": "बाहर निकल रहे हैं…",
+    "backToSignIn": "साइन इन पर वापस जाएँ",
+    "loading": "लोड हो रहा है…"
+  },
+  "passwordStrength": {
+    "label": "पासवर्ड की मज़बूती:",
+    "weak": "कमज़ोर",
+    "medium": "मध्यम",
+    "strong": "मज़बूत"
+  },
+  "google": {
+    "continue": "Google के साथ जारी रखें",
+    "envHintPrefix": "जोड़ें",
+    "envHintSuffix": "Google साइन-इन सक्षम करने के लिए।",
+    "credentialError": "Google से साइन इन नहीं हो सका। कृपया पुनः प्रयास करें।",
+    "signInError": "Google से साइन इन नहीं हो सका।",
+    "cancelled": "Google साइन-इन रद्द या विफल हुआ।",
+    "loading": "Google के साथ जारी…"
+  },
+  "googleAccountSetup": {
+    "accountLabel": "Google खाता",
+    "linkedHint": "यह ईमेल लिंक है। Google या ईमेल और पासवर्ड से साइन इन करने के लिए नीचे पासवर्ड सेट करें।",
+    "contactName": "संपर्क व्यक्ति का नाम",
+    "companyName": "कंपनी का नाम",
+    "passwordSection": "लॉगिन पासवर्ड",
+    "passwordHint": "कम से कम 8 अक्षर उपयोग करें। बाद में खाता सेटिंग्स से बदल सकते हैं।",
+    "password": "पासवर्ड",
+    "confirmPassword": "पासवर्ड की पुष्टि करें",
+    "setupError": "खाता सेटअप पूरा नहीं हो सका",
+    "saving": "खाता सहेजा जा रहा है…",
+    "complete": "खाता सेटअप पूरा करें"
+  }
+}

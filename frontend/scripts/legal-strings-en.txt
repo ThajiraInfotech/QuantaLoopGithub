@@ -1,0 +1,911 @@
+.
+---
+1. ABOUT QUANTA LOOP
+---
+10. DATA SECURITY
+---
+10. THIRD-PARTY SERVICES
+---
+11. DISCLAIMERS
+---
+11. THIRD-PARTY SERVICES
+---
+11.1 Platform Provided "As Is"
+---
+11.2 No Verification
+---
+11.3 No Environmental or Regulatory Responsibility
+---
+12. DISCLAIMERS
+---
+12. LIMITATION OF LIABILITY
+---
+13. CHILDREN
+---
+13. INDEMNITY
+---
+14. ACCOUNT SUSPENSION & TERMINATION
+---
+14. CHANGES TO THIS PRIVACY POLICY
+---
+15. DATA & ANALYTICS
+---
+15. GOVERNING LAW & JURISDICTION
+---
+16. CONTACT US
+---
+16. FORCE MAJEURE
+---
+17. CHANGES TO THE PLATFORM OR TERMS
+---
+18. GOVERNING LAW & DISPUTE RESOLUTION
+---
+19. CONTACT DETAILS
+---
+2. IMPORTANT PLATFORM DISCLAIMER
+---
+2. INFORMATION WE COLLECT
+---
+2.1 Information You Provide
+---
+2.2 Platform & Transaction Information
+---
+2.3 Device & Technical Information
+---
+3. ELIGIBILITY & USER ACCOUNTS
+---
+3. HOW WE USE INFORMATION
+---
+3.1 Eligibility
+---
+3.2 Registration
+---
+3.3 Accuracy of Information
+---
+3.4 Account Security
+---
+4. COOKIES & ANALYTICS
+---
+4. PLATFORM SERVICES & FEATURES
+---
+5. COMMUNICATIONS
+---
+5. SUBSCRIPTIONS & PAYMENTS
+---
+5.1 Subscription Fees
+---
+5.2 User Transactions
+---
+5.3 Refunds
+---
+6. DATA SHARING & DISCLOSURE
+---
+6. USER CONTENT & LISTINGS
+---
+6.1 User Content
+---
+6.2 License to Quanta Loop
+---
+6.3 Content Moderation
+---
+7. PROHIBITED ACTIVITIES
+---
+7. USER CONTENT & PLATFORM RESPONSIBILITY
+---
+8. DATA RETENTION
+---
+8. PRIVACY, COOKIES & COMMUNICATIONS
+---
+9. INTELLECTUAL PROPERTY
+---
+9. USER RIGHTS
+---
+AI recommendations;
+---
+ASM Fintech Private Limited ("ASM Fintech", "Quanta Loop", "we", "our", or "us") respects your privacy and is committed to protecting your personal information.
+---
+ASM Fintech Private Limited;
+---
+Accordingly, we cannot guarantee absolute security of information.
+---
+All responsibility relating to:
+---
+All rights relating to:
+---
+All transactions and dealings occur directly between users at their own discretion and risk.
+---
+Any dispute arising from or relating to these Terms shall be referred to arbitration seated in Chennai under the Arbitration and Conciliation Act, 1996.
+---
+Applicable pricing and plans may be updated periodically.
+---
+Back to home
+---
+By accessing or using the Platform, you agree to this Privacy Policy.
+---
+By registering, accessing or using the Platform, you agree to these Terms. If you do not agree, please do not use the Platform.
+---
+By using the Platform, users consent to:
+---
+By using the Platform, you consent to receive:
+---
+Certain features of the Platform may require payment of subscription or access fees.
+---
+Certain information may continue to be retained where required by law or for operational, security or compliance purposes.
+---
+Commercial transactions between users occur independently outside the Platform.
+---
+Continued use of the Platform after updates constitutes acceptance of revised Terms.
+---
+Continued use of the Platform after updates constitutes acceptance of the revised Privacy Policy.
+---
+Courts at Chennai shall have exclusive jurisdiction for interim or injunctive relief.
+---
+Courts located in Chennai, Tamil Nadu shall have jurisdiction in relation to matters arising from this Privacy Policy, subject to applicable dispute resolution terms.
+---
+Current features may include:
+---
+Email:
+---
+For example, certain business or listing information may be visible to other users to facilitate transactions and platform interactions.
+---
+For privacy-related queries or requests, please contact:
+---
+Future features may include:
+---
+GST information (optional);
+---
+GST registrations;
+---
+However, no method of internet transmission or electronic storage is completely secure.
+---
+I agree to the
+---
+IP address;
+---
+Information displayed or shared on the Platform is generally provided directly by users. Quanta Loop does not independently verify all user-submitted information, listings, claims, certifications, quantities, pricing, business credentials or representations.
+---
+LEGAL_COMPANY_ADDRESS
+---
+Last Updated: {date}
+---
+Operated by {operator}
+---
+Platform operations;
+---
+Privacy Policy
+---
+Quanta Loop acts only as a technology platform/intermediary.
+---
+Quanta Loop does NOT:
+---
+Quanta Loop does not guarantee the accuracy, completeness or reliability of user-generated content or third-party information.
+---
+Quanta Loop does not guarantee:
+---
+Quanta Loop does not independently verify user information, licences, permits, certifications, GST details or environmental approvals.
+---
+Quanta Loop does not independently verify:
+---
+Quanta Loop does not knowingly collect personal information from children.
+---
+Quanta Loop is NOT:
+---
+Quanta Loop is ONLY a technology intermediary platform.
+---
+Quanta Loop is a technology-enabled intermediary platform that enables industrial waste generators to publish waste listings and allows aggregators, recyclers and related stakeholders to discover and express interest in such listings.
+---
+Quanta Loop is a technology-enabled intermediary platform that facilitates connections between industrial waste generators, aggregators, recyclers and related stakeholders.
+---
+Quanta Loop is not a party to transactions between users and shall not be responsible for:
+---
+Quanta Loop is not responsible for:
+---
+Quanta Loop may also remove content or restrict platform access without prior notice where reasonably necessary.
+---
+Quanta Loop may suspend, restrict or terminate accounts at its discretion where:
+---
+Quanta Loop may use aggregated, anonymised or non-identifiable usage data for:
+---
+Quanta Loop may use:
+---
+Quanta Loop may:
+---
+Quanta Loop reserves the right to investigate and take action against violations.
+---
+Quanta Loop reserves the right to modify, suspend, discontinue or introduce features at any time without prior notice.
+---
+Quanta Loop shall not be liable for delays or failures caused by events beyond reasonable control including:
+---
+Quanta Loop shall not be responsible for:
+---
+Quanta Loop;
+---
+Requests may be submitted to:
+---
+Subject to applicable law, users may request to:
+---
+Terms & Conditions
+---
+The Platform is intended for business and professional users who are at least 18 years old and legally capable of entering into binding contracts.
+---
+The Platform is intended only for business and professional users who are at least 18 years of age.
+---
+The Platform is provided on an "as is" and "as available" basis.
+---
+The Platform may integrate with or contain links to third-party services, tools or websites.
+---
+The Platform may integrate with third-party services, tools or software.
+---
+The Platform may provide:
+---
+The arbitration shall be conducted by a sole arbitrator appointed by Quanta Loop.
+---
+The language of arbitration shall be English.
+---
+The total aggregate liability of Quanta Loop arising out of or relating to the Platform shall not exceed the subscription fees paid by the concerned user to Quanta Loop during the preceding three (3) months.
+---
+These Terms & Conditions ("Terms") govern your access to and use of the Quanta Loop platform, website, software, applications and related services (collectively, the "Platform").
+---
+These Terms shall be governed by the laws of India.
+---
+These technologies may help us:
+---
+This Privacy Policy explains how Quanta Loop collects, uses, stores, shares and protects information when you access or use the Quanta Loop platform, website, applications, products or related services (collectively, the "Platform").
+---
+This Privacy Policy shall be governed by the laws of India.
+---
+To the maximum extent permitted by law, Quanta Loop, ASM Fintech Private Limited and their directors, employees, affiliates and representatives shall not be liable for:
+---
+Unless expressly stated otherwise, subscription fees are non-refundable.
+---
+Updated Terms will be posted on the Platform with a revised "Last Updated" date.
+---
+Updated versions will be posted on the Platform with a revised "Last Updated" date.
+---
+Use of third-party services may be subject to separate terms and policies.
+---
+Users acknowledge and agree that:
+---
+Users acknowledge that certain essential service communications may still be sent.
+---
+Users agree to defend, indemnify and hold harmless:
+---
+Users are responsible for independently evaluating and verifying counterparties and transactions.
+---
+Users are responsible for maintaining confidentiality of account credentials and for activities occurring through their accounts.
+---
+Users are solely responsible for:
+---
+Users grant Quanta Loop a worldwide, non-exclusive, royalty-free license to:
+---
+Users interact and transact entirely at their own risk.
+---
+Users may disable cookies through browser or device settings. However, certain features of the Platform may not function properly if cookies are disabled.
+---
+Users may independently communicate and negotiate with each other regarding:
+---
+Users may opt out of promotional communications where applicable.
+---
+Users may register using:
+---
+Users may upload:
+---
+Users remain responsible for all User Content uploaded or shared through the Platform.
+---
+Users shall not:
+---
+Users should review the privacy policies of external services separately.
+---
+We do not sell personal data to third parties.
+---
+We implement commercially reasonable safeguards to help protect information, including:
+---
+We may automatically collect:
+---
+We may collect information relating to:
+---
+We may retain certain information where required for:
+---
+We may share information with:
+---
+We may update or modify this Privacy Policy from time to time.
+---
+We may use information for purposes including:
+---
+We retain information for as long as reasonably necessary for:
+---
+Welcome to Quanta Loop, a digital platform operated by ASM Fintech Private Limited ("ASM Fintech", "Quanta Loop", "we", "our", or "us").
+---
+When you register or use the Platform, you may provide:
+---
+While Quanta Loop takes reasonable measures to protect information, we do not guarantee absolute protection against unauthorised access, hacking, data loss or security breaches.
+---
+You may opt out of promotional communications at any time using unsubscribe links or by contacting us. However, essential service-related communications may still be sent.
+---
+a buyer;
+---
+access their information;
+---
+account activity;
+---
+account notifications;
+---
+accuracy of listings;
+---
+accuracy of submitted information;
+---
+addresses;
+---
+advisors;
+---
+affiliates;
+---
+against any claims, liabilities, damages, penalties, losses or expenses arising from:
+---
+algorithms;
+---
+analyse traffic;
+---
+analyse;
+---
+analytics and business insights;
+---
+analytics data;
+---
+analytics systems;
+---
+analytics tools;
+---
+analytics;
+---
+and
+---
+and additional technology tools.
+---
+and commercial terms.
+---
+and compliance with applicable laws.
+---
+and contractual obligations
+---
+and enforcing our terms and policies.
+---
+and internal security practices.
+---
+and legitimate business purposes.
+---
+and moderate activity
+---
+and optional GST details.
+---
+and other digital tools.
+---
+and other information voluntarily submitted by you.
+---
+and other users as part of normal platform functionality.
+---
+and personalise user experience.
+---
+and platform alerts.
+---
+and promotional or marketing communications.
+---
+and related content ("User Content").
+---
+and related intellectual property
+---
+and related technologies
+---
+and representatives
+---
+and subscription access.
+---
+and support requests.
+---
+and technology development.
+---
+and technology functionality.
+---
+and transaction-related representations.
+---
+and usage patterns.
+---
+and use User Content
+---
+and use of the Platform is at the user's own discretion and risk.
+---
+any part of the Platform without prior written permission.
+---
+at any time.
+---
+audit requirements;
+---
+automated matching;
+---
+belong exclusively to ASM Fintech Private Limited or its licensors.
+---
+branding;
+---
+broker;
+---
+browser type;
+---
+business claims;
+---
+business insights;
+---
+business interruption;
+---
+bypass subscriptions or access controls;
+---
+certifications;
+---
+collection and processing of information as described in the Privacy Policy;
+---
+commercial disputes;
+---
+communication content;
+---
+communication history;
+---
+communications;
+---
+company information;
+---
+company/business details;
+---
+complaints are received;
+---
+cookies;
+---
+copy;
+---
+creating and managing user accounts;
+---
+customer support;
+---
+cyber incidents;
+---
+databases;
+---
+delivery failures;
+---
+delivery;
+---
+descriptions;
+---
+device information;
+---
+display;
+---
+dispute resolution;
+---
+distribute;
+---
+document storage;
+---
+documents;
+---
+email
+---
+email OTP;
+---
+email address;
+---
+employees;
+---
+enabling user matching and interactions;
+---
+engage in fraud or deceptive practices;
+---
+enquiries;
+---
+environmental compliance;
+---
+environmental consultant;
+---
+environmental non-compliance;
+---
+environmental permissions;
+---
+environmental violations;
+---
+error-free functionality;
+---
+external services;
+---
+facilitating communications;
+---
+failed transactions;
+---
+for purposes relating to:
+---
+format;
+---
+fraud prevention and platform security;
+---
+fraud prevention;
+---
+fraud;
+---
+governmental actions;
+---
+guarantee deliveries;
+---
+guarantee payments;
+---
+guarantee quality;
+---
+harass or abuse other users;
+---
+hazardous material handling;
+---
+hazardous material incidents;
+---
+hazardous materials;
+---
+host;
+---
+hosting and cloud service providers;
+---
+images;
+---
+impersonate others;
+---
+improve navigation;
+---
+in-platform chat and communications;
+---
+in-platform messaging/chat;
+---
+indirect or consequential damages;
+---
+information shared online carries inherent risks;
+---
+information uploaded by them;
+---
+infringe intellectual property rights;
+---
+inspect materials;
+---
+inspection agency;
+---
+inspection disputes;
+---
+inspection;
+---
+intellectual property infringement;
+---
+interfaces;
+---
+interfere with platform security or operations;
+---
+internal analytics;
+---
+internet failures;
+---
+internet transmissions may not always be secure;
+---
+investigate complaints;
+---
+its directors;
+---
+legal and regulatory compliance;
+---
+legal compliance;
+---
+legal obligations;
+---
+legal or regulatory authorities where required;
+---
+legal violations;
+---
+legality of listings;
+---
+legality of materials;
+---
+legality;
+---
+licences;
+---
+list
+---
+list hazardous materials in violation of law;
+---
+listing activity;
+---
+listing creation;
+---
+listings;
+---
+live tracking;
+---
+location information;
+---
+login activity;
+---
+login alerts;
+---
+logistics issues;
+---
+logistics provider;
+---
+logistics tracking;
+---
+logistics;
+---
+loss of data;
+---
+loss of profits;
+---
+marketing and promotional communications;
+---
+marketing communications;
+---
+marketing;
+---
+matching systems;
+---
+messages;
+---
+misuse is suspected;
+---
+misuse platform communications;
+---
+mobile OTP;
+---
+mobile number;
+---
+moderation;
+---
+modify the Platform;
+---
+modify;
+---
+monitor platform performance;
+---
+name;
+---
+natural disasters;
+---
+notifications;
+---
+operating and improving the Platform;
+---
+operating system;
+---
+or amend these Terms
+---
+or commercial disagreements.
+---
+or commercial representations.
+---
+or commercially exploit
+---
+or contact us regarding privacy concerns.
+---
+or failed transactions.
+---
+or guarantee completion of transactions.
+---
+or infrastructure failures.
+---
+or legitimate business purposes.
+---
+or misuse of the Platform.
+---
+or platform availability at all times.
+---
+or regulatory breaches by users.
+---
+or regulatory/compliance authority.
+---
+or third-party actions.
+---
+or third-party systems.
+---
+or use the Platform for unlawful activities.
+---
+or users violate these Terms.
+---
+paragraph
+---
+password protections;
+---
+payment completion;
+---
+payment disputes;
+---
+payment failures;
+---
+payment or communication service providers;
+---
+payment;
+---
+performance monitoring technologies;
+---
+permits;
+---
+pixels;
+---
+platform improvement;
+---
+platform integrity is at risk;
+---
+platform operations;
+---
+platform software;
+---
+pollution control approvals;
+---
+pollution control compliance;
+---
+power outages;
+---
+pricing disputes;
+---
+pricing;
+---
+professional advisors;
+---
+profile details;
+---
+quality;
+---
+reasonable technical measures;
+---
+recycler;
+---
+remember user preferences;
+---
+remove content;
+---
+reproduce;
+---
+request deletion of information;
+---
+restrict visibility;
+---
+restricted access controls;
+---
+reverse engineer the Platform;
+---
+reverse engineer;
+---
+revise pricing;
+---
+safety;
+---
+scrape or extract platform data;
+---
+scrape;
+---
+seller;
+---
+send spam or unsolicited communications;
+---
+service announcements;
+---
+service improvement;
+---
+service optimisation;
+---
+service-related notifications;
+---
+session tracking;
+---
+shall remain solely between the concerned users.
+---
+store or transport waste;
+---
+store;
+---
+strikes;
+---
+submit false or misleading information;
+---
+subscription access;
+---
+subscription management;
+---
+subscription updates;
+---
+subscriptions;
+---
+support communications;
+---
+suspend accounts;
+---
+take ownership of waste;
+---
+taxes;
+---
+technology and analytics providers;
+---
+technology;
+---
+third-party actions;
+---
+third-party content;
+---
+third-party privacy practices;
+---
+third-party systems;
+---
+third-party websites;
+---
+to improve functionality, understand user behaviour and enhance platform performance.
+---
+transaction success;
+---
+transaction-related activity;
+---
+transactional communications;
+---
+transactional emails;
+---
+transportation compliance;
+---
+transportation issues;
+---
+transportation;
+---
+transporter;
+---
+uninterrupted availability;
+---
+unlawful activity is suspected;
+---
+update features;
+---
+update or correct information;
+---
+upload illegal, prohibited or unlawful waste listings;
+---
+upload malware or malicious code;
+---
+uploaded documents;
+---
+uploaded images;
+---
+use of cookies and analytics technologies;
+---
+user authentication and login management;
+---
+user authenticity;
+---
+user content;
+---
+user disputes;
+---
+user interactions;
+---
+user misconduct;
+---
+users;
+---
+verify GST registrations;
+---
+verify environmental compliance;
+---
+verify legality of listings;
+---
+verify licences or permissions;
+---
+verify recyclers or aggregators;
+---
+waste disposal legality;
+---
+waste handler;
+---
+waste legality;
+---
+waste listing information;
+---
+waste listings;
+---
+where it reasonably believes such action is necessary for platform integrity, safety or legal compliance.
+---
+withdraw certain consents;
+---
+workflows;

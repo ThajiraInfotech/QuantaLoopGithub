@@ -1,0 +1,1822 @@
+{
+  "Operated by {operator}": {
+    "hi": "{operator} द्वारा संचालित",
+    "ta": "{operator} மூலம் இயக்கப்படுகிறது"
+  },
+  "Last Updated: {date}": {
+    "hi": "अंतिम अपडेट: {date}",
+    "ta": "கடைசியாக புதுப்பிக்கப்பட்டது: {date}"
+  },
+  "Back to home": {
+    "hi": "होम पर वापस जाएँ",
+    "ta": "முகப்புக்குத் திரும்ப"
+  },
+  "I agree to the": {
+    "hi": "मैं ",
+    "ta": "நான் "
+  },
+  "Terms & Conditions": {
+    "hi": "नियम और शर्तें",
+    "ta": "விதிமுறைகள் & நிபந்தனைகள்"
+  },
+  "and": {
+    "hi": " और ",
+    "ta": " மற்றும் "
+  },
+  "Privacy Policy": {
+    "hi": "गोपनीयता नीति",
+    "ta": "தனியுரிமைக் கொள்கை"
+  },
+  ".": {
+    "hi": "से सहमत हूँ।",
+    "ta": "ஒப்புக்கொள்கிறேன்."
+  },
+  "Email:": {
+    "hi": "ईमेल:",
+    "ta": "மின்னஞ்சல்:"
+  },
+  "paragraph": {
+    "hi": "paragraph",
+    "ta": "paragraph"
+  },
+  "list": {
+    "hi": "list",
+    "ta": "list"
+  },
+  "email": {
+    "hi": "email",
+    "ta": "email"
+  },
+  "1. ABOUT QUANTA LOOP": {
+    "hi": "1. QUANTA LOOP के बारे में",
+    "ta": "1. QUANTA LOOP பற்றி"
+  },
+  "2. IMPORTANT PLATFORM DISCLAIMER": {
+    "hi": "2. महत्वपूर्ण Platform अस्वीकरण",
+    "ta": "2. முக்கிய Platform மறுப்பு"
+  },
+  "3. ELIGIBILITY & USER ACCOUNTS": {
+    "hi": "3. पात्रता और उपयोगकर्ता खाते",
+    "ta": "3. தகுதி & பயனர் கணக்குகள்"
+  },
+  "3.1 Eligibility": {
+    "hi": "3.1 पात्रता",
+    "ta": "3.1 தகுதி"
+  },
+  "3.2 Registration": {
+    "hi": "3.2 पंजीकरण",
+    "ta": "3.2 பதிவு"
+  },
+  "3.3 Accuracy of Information": {
+    "hi": "3.3 जानकारी की शुद्धता",
+    "ta": "3.3 தகவலின் துல்லியம்"
+  },
+  "3.4 Account Security": {
+    "hi": "3.4 खाता सुरक्षा",
+    "ta": "3.4 கணக்கு பாதுகாப்பு"
+  },
+  "4. PLATFORM SERVICES & FEATURES": {
+    "hi": "4. Platform सेवाएँ और सुविधाएँ",
+    "ta": "4. Platform சேவைகள் & அம்சங்கள்"
+  },
+  "5. SUBSCRIPTIONS & PAYMENTS": {
+    "hi": "5. सदस्यता और भुगतान",
+    "ta": "5. சந்தா & கட்டணங்கள்"
+  },
+  "5.1 Subscription Fees": {
+    "hi": "5.1 सदस्यता शुल्क",
+    "ta": "5.1 சந்தா கட்டணம்"
+  },
+  "5.2 User Transactions": {
+    "hi": "5.2 उपयोगकर्ता लेनदेन",
+    "ta": "5.2 பயனர் பரிவர்த்தனைகள்"
+  },
+  "5.3 Refunds": {
+    "hi": "5.3 धनवापसी",
+    "ta": "5.3 பணத்திரும்பப்பெறுதல்"
+  },
+  "6. USER CONTENT & LISTINGS": {
+    "hi": "6. User Content और लिस्टिंग",
+    "ta": "6. User Content & பட்டியல்கள்"
+  },
+  "6.1 User Content": {
+    "hi": "6.1 User Content",
+    "ta": "6.1 User Content"
+  },
+  "6.2 License to Quanta Loop": {
+    "hi": "6.2 Quanta Loop को लाइसेंस",
+    "ta": "6.2 Quanta Loop-க்கான உரிமம்"
+  },
+  "6.3 Content Moderation": {
+    "hi": "6.3 सामग्री मॉडरेशन",
+    "ta": "6.3 உள்ளடக்க moderation"
+  },
+  "7. PROHIBITED ACTIVITIES": {
+    "hi": "7. निषिद्ध गतिविधियाँ",
+    "ta": "7. தடைசெய்யப்பட்ட செயல்கள்"
+  },
+  "8. PRIVACY, COOKIES & COMMUNICATIONS": {
+    "hi": "8. गोपनीयता, कुकीज़ और संचार",
+    "ta": "8. தனியுரிமை, குக்கீகள் & தகவல்தொடர்பு"
+  },
+  "9. INTELLECTUAL PROPERTY": {
+    "hi": "9. बौद्धिक संपदा",
+    "ta": "9. அறிவுசார் சொத்து"
+  },
+  "10. THIRD-PARTY SERVICES": {
+    "hi": "10. तृतीय-पक्ष सेवाएँ",
+    "ta": "10. மூன்றாம் தரப்பு சேவைகள்"
+  },
+  "11. DISCLAIMERS": {
+    "hi": "11. अस्वीकरण",
+    "ta": "11. மறுப்புகள்"
+  },
+  "11. THIRD-PARTY SERVICES": {
+    "hi": "11. तृतीय-पक्ष सेवाएँ",
+    "ta": "11. மூன்றாம் தரப்பு சேவைகள்"
+  },
+  "11.1 Platform Provided \"As Is\"": {
+    "hi": "11.1 Platform \"जैसा है\" आधार पर प्रदान",
+    "ta": "11.1 Platform \"உள்ளபடியே\" வழங்கப்படுகிறது"
+  },
+  "11.2 No Verification": {
+    "hi": "11.2 कोई सत्यापन नहीं",
+    "ta": "11.2 சரிபார்ப்பு இல்லை"
+  },
+  "11.3 No Environmental or Regulatory Responsibility": {
+    "hi": "11.3 कोई पर्यावरणीय या नियामक जिम्मेदारी नहीं",
+    "ta": "11.3 சுற்றுச்சூழல் அல்லது முறைப்படுத்தல் பொறுப்பு இல்லை"
+  },
+  "12. LIMITATION OF LIABILITY": {
+    "hi": "12. दायित्व की सीमा",
+    "ta": "12. பொறுப்பின் வரம்பு"
+  },
+  "13. INDEMNITY": {
+    "hi": "13. क्षतिपूर्ति",
+    "ta": "13. indemnity"
+  },
+  "14. ACCOUNT SUSPENSION & TERMINATION": {
+    "hi": "14. खाता निलंबन और समाप्ति",
+    "ta": "14. கணக்கு இடைநிறுத்தம் & நிறுத்தம்"
+  },
+  "15. DATA & ANALYTICS": {
+    "hi": "15. डेटा और विश्लेषण",
+    "ta": "15. தரவு & பகுப்பாய்வு"
+  },
+  "16. FORCE MAJEURE": {
+    "hi": "16. अप्रत्याशित घटना (Force Majeure)",
+    "ta": "16. Force Majeure"
+  },
+  "17. CHANGES TO THE PLATFORM OR TERMS": {
+    "hi": "17. Platform या Terms में परिवर्तन",
+    "ta": "17. Platform அல்லது Terms மாற்றங்கள்"
+  },
+  "18. GOVERNING LAW & DISPUTE RESOLUTION": {
+    "hi": "18. शासी कानून और विवाद समाधान",
+    "ta": "18. governing law & dispute resolution"
+  },
+  "19. CONTACT DETAILS": {
+    "hi": "19. संपर्क विवरण",
+    "ta": "19. தொடர்பு விவரங்கள்"
+  },
+  "2. INFORMATION WE COLLECT": {
+    "hi": "2. हम जो जानकारी एकत्र करते हैं",
+    "ta": "2. நாங்கள் சேகரிக்கும் தகவல்"
+  },
+  "2.1 Information You Provide": {
+    "hi": "2.1 आपके द्वारा प्रदान की गई जानकारी",
+    "ta": "2.1 நீங்கள் வழங்கும் தகவல்"
+  },
+  "2.2 Platform & Transaction Information": {
+    "hi": "2.2 Platform और लेनदेन संबंधी जानकारी",
+    "ta": "2.2 Platform & பரிவர்த்தனை தகவல்"
+  },
+  "2.3 Device & Technical Information": {
+    "hi": "2.3 डिवाइस और तकनीकी जानकारी",
+    "ta": "2.3 சாதன & தொழில்நுட்ப தகவல்"
+  },
+  "3. HOW WE USE INFORMATION": {
+    "hi": "3. हम जानकारी का उपयोग कैसे करते हैं",
+    "ta": "3. தகவலை எவ்வாறு பயன்படுத்துகிறோம்"
+  },
+  "4. COOKIES & ANALYTICS": {
+    "hi": "4. कुकीज़ और विश्लेषण",
+    "ta": "4. குக்கீகள் & பகுப்பாய்வு"
+  },
+  "5. COMMUNICATIONS": {
+    "hi": "5. संचार",
+    "ta": "5. தகவல்தொடர்பு"
+  },
+  "6. DATA SHARING & DISCLOSURE": {
+    "hi": "6. डेटा साझाकरण और प्रकटीकरण",
+    "ta": "6. தரவு பகிர்வு & வெளிப்படுத்தல்"
+  },
+  "7. USER CONTENT & PLATFORM RESPONSIBILITY": {
+    "hi": "7. User Content और Platform जिम्मेदारी",
+    "ta": "7. User Content & Platform பொறுப்பு"
+  },
+  "8. DATA RETENTION": {
+    "hi": "8. डेटा प्रतिधारण",
+    "ta": "8. தரவு தக்கவைப்பு"
+  },
+  "9. USER RIGHTS": {
+    "hi": "9. उपयोगकर्ता अधिकार",
+    "ta": "9. பயனர் உரிமைகள்"
+  },
+  "10. DATA SECURITY": {
+    "hi": "10. डेटा सुरक्षा",
+    "ta": "10. தரவு பாதுகாப்பு"
+  },
+  "12. DISCLAIMERS": {
+    "hi": "12. अस्वीकरण",
+    "ta": "12. மறுப்புகள்"
+  },
+  "13. CHILDREN": {
+    "hi": "13. बच्चे",
+    "ta": "13. குழந்தைகள்"
+  },
+  "14. CHANGES TO THIS PRIVACY POLICY": {
+    "hi": "14. इस गोपनीयता नीति में परिवर्तन",
+    "ta": "14. இந்த தனியுரிமைக் கொள்கையில் மாற்றங்கள்"
+  },
+  "15. GOVERNING LAW & JURISDICTION": {
+    "hi": "15. शासी कानून और अधिकार क्षेत्र",
+    "ta": "15. governing law & jurisdiction"
+  },
+  "16. CONTACT US": {
+    "hi": "16. हमसे संपर्क करें",
+    "ta": "16. எங்களை தொடர்பு கொள்ளுங்கள்"
+  },
+  "Welcome to Quanta Loop, a digital platform operated by ASM Fintech Private Limited (\"ASM Fintech\", \"Quanta Loop\", \"we\", \"our\", or \"us\").": {
+    "hi": "Quanta Loop में आपका स्वागत है, यह ASM Fintech Private Limited (\"ASM Fintech\", \"Quanta Loop\", \"we\", \"our\", या \"us\") द्वारा संचालित एक डिजिटल Platform है।",
+    "ta": "Quanta Loop-க்கு வரவேற்கிறோம்; இது ASM Fintech Private Limited (\"ASM Fintech\", \"Quanta Loop\", \"we\", \"our\", அல்லது \"us\") மூலம் இயக்கப்படும் ஒரு டிஜிட்டல் Platform."
+  },
+  "These Terms & Conditions (\"Terms\") govern your access to and use of the Quanta Loop platform, website, software, applications and related services (collectively, the \"Platform\").": {
+    "hi": "ये नियम और शर्तें (\"Terms\") Quanta Loop Platform, वेबसाइट, सॉफ़्टवेयर, एप्लिकेशन और संबंधित सेवाओं (सामूहिक रूप से, \"Platform\") तक आपकी पहुँच और उपयोग को नियंत्रित करती हैं।",
+    "ta": "இந்த விதிமுறைகள் & நிபந்தனைகள் (\"Terms\") Quanta Loop Platform, website, software, applications மற்றும் தொடர்புடைய சேவைகளுக்கு (ஒன்றாக, \"Platform\") உங்கள் அணுகல் மற்றும் பயன்பாட்டை நிர்வகிக்கின்றன."
+  },
+  "By registering, accessing or using the Platform, you agree to these Terms. If you do not agree, please do not use the Platform.": {
+    "hi": "Platform पर पंजीकरण, पहुँच या उपयोग करके, आप इन Terms से सहमत होते हैं। यदि आप सहमत नहीं हैं, तो कृपया Platform का उपयोग न करें।",
+    "ta": "Platform-ஐ பதிவு செய்து, அணுகி அல்லது பயன்படுத்துவதன் மூலம், இந்த Terms-க்கு நீங்கள் ஒப்புக்கொள்கிறீர்கள். ஒப்புக்கொள்ளவில்லை என்றால், Platform-ஐ பயன்படுத்த வேண்டாம்."
+  },
+  "Quanta Loop is a technology-enabled intermediary platform that enables industrial waste generators to publish waste listings and allows aggregators, recyclers and related stakeholders to discover and express interest in such listings.": {
+    "hi": "Quanta Loop एक technology-enabled मध्यस्थ Platform है जो औद्योगिक अपशिष्ट उत्पादकों को अपशिष्ट लिस्टिंग प्रकाशित करने में सक्षम बनाता है और aggregators, recyclers तथा संबंधित हितधारकों को ऐसी लिस्टिंग खोजने और रुचि व्यक्त करने की अनुमति देता है।",
+    "ta": "Quanta Loop என்பது தொழில்துறை கழிவு உற்பத்தியாளர்கள் கழிவு பட்டியல்களை வெளியிடவும், aggregators, recyclers மற்றும் தொடர்புடைய stakeholders அத்தகைய பட்டியல்களைக் கண்டறிந்து ஆர்வம் தெரிவிக்கவும் உதவும் technology-enabled intermediary Platform ஆகும்."
+  },
+  "The Platform may provide:": {
+    "hi": "Platform प्रदान कर सकता है:",
+    "ta": "Platform வழங்கக்கூடும்:"
+  },
+  "Users may independently communicate and negotiate with each other regarding:": {
+    "hi": "उपयोगकर्ता स्वतंत्र रूप से एक-दूसरे के साथ संवाद और बातचीत कर सकते हैं, संबंध में:",
+    "ta": "பயனர்கள் பின்வருவன தொடர்பாக த independently தகவல் பரிமாறி பேச்சுவார்த்தை நடத்தலாம்:"
+  },
+  "Quanta Loop is ONLY a technology intermediary platform.": {
+    "hi": "Quanta Loop केवल एक technology मध्यस्थ Platform है।",
+    "ta": "Quanta Loop என்பது technology intermediary Platform மட்டுமே."
+  },
+  "Quanta Loop is NOT:": {
+    "hi": "Quanta Loop यह नहीं है:",
+    "ta": "Quanta Loop இவை அல்ல:"
+  },
+  "Quanta Loop does NOT:": {
+    "hi": "Quanta Loop यह नहीं करता:",
+    "ta": "Quanta Loop இவற்றைச் செய்யாது:"
+  },
+  "All transactions and dealings occur directly between users at their own discretion and risk.": {
+    "hi": "सभी लेनदेन और व्यवहार उपयोगकर्ताओं के बीच सीधे उनके अपने विवेक और जोखिम पर होते हैं।",
+    "ta": "அனைத்து பரிவர்த்தனைகளும் Dealings-உம் பயனர்களுக்கிடையே நேரடியாக அவர்களின் சொந்த விருப்பத்திற்கும் ஆபத்திற்கும் உட்பட்டு நடக்கின்றன."
+  },
+  "All responsibility relating to:": {
+    "hi": "से संबंधित सभी जिम्मेदारी:",
+    "ta": "பின்வருவன தொடர்பான அனைத்து பொறுப்பும்:"
+  },
+  "shall remain solely between the concerned users.": {
+    "hi": "केवल concerned users के बीच ही रहेगी।",
+    "ta": "concerned usersக்கிடையே மட்டுமே இருக்கும்."
+  },
+  "Users are solely responsible for:": {
+    "hi": "उपयोगकर्ता पूर्णतः जिम्मेदार हैं:",
+    "ta": "பயனர்கள் முழுவதும் பொறுப்பு:"
+  },
+  "Quanta Loop does not independently verify user information, licences, permits, certifications, GST details or environmental approvals.": {
+    "hi": "Quanta Loop उपयोगकर्ता जानकारी, licences, permits, certifications, GST details या environmental approvals की स्वतंत्र रूप से पुष्टि नहीं करता।",
+    "ta": "Quanta Loop பயனர் தகவல், licences, permits, certifications, GST details அல்லது environmental approvals-ஐ independently verify செய்யாது."
+  },
+  "The Platform is intended for business and professional users who are at least 18 years old and legally capable of entering into binding contracts.": {
+    "hi": "Platform व्यावसायिक और पेशेवर उपयोगकर्ताओं के लिए है जो कम से कम 18 वर्ष के हैं और कानूनी रूप से binding अनुबंधों में प्रवेश करने में सक्षम हैं।",
+    "ta": "Platform வணிக மற்றும் professional பயனர்களுக்காக உள்ளது; அவர்கள் குறைந்தது 18 வயதுடையவர்களாகவும், binding contracts-ஐ செய்ய சட்டப்படி தகுதியுடையவர்களாகவும் இருக்க வேண்டும்."
+  },
+  "Users may register using:": {
+    "hi": "उपयोगकर्ता पंजीकरण कर सकते हैं:",
+    "ta": "பயனர்கள் பின்வருவன மூலம் பதிவு செய்யலாம்:"
+  },
+  "Users are responsible for maintaining confidentiality of account credentials and for activities occurring through their accounts.": {
+    "hi": "उपयोगकर्ता खाता credentials की गोपनीयता बनाए रखने और अपने खातों के माध्यम से होने वाली गतिविधियों के लिए जिम्मेदार हैं।",
+    "ta": "கணக்கு credentials-ஐ ரகசியமாக வைத்திருப்பதற்கும், அவர்களின் கணக்குகள் வழியாக நடக்கும் செயல்களுக்கும் பயனர்கள் பொறுப்பு."
+  },
+  "Current features may include:": {
+    "hi": "वर्तमान सुविधाएँ शामिल हो सकती हैं:",
+    "ta": "தற்போதைய அம்சங்கள் பின்வருவனவற்றை உள்ளடக்கலாம்:"
+  },
+  "Future features may include:": {
+    "hi": "भविष्य की सुविधाएँ शामिल हो सकती हैं:",
+    "ta": "எதிர்கால அம்சங்கள் பின்வருவனவற்றை உள்ளடக்கலாம்:"
+  },
+  "Quanta Loop reserves the right to modify, suspend, discontinue or introduce features at any time without prior notice.": {
+    "hi": "Quanta Loop बिना पूर्व सूचना के किसी भी समय सुविधाओं को संशोधित, निलंबित, बंद या पेश करने का अधिकार सुरक्षित रखता है।",
+    "ta": "Quanta Loop முன் அறிவிப்பின்றி எந்த நேரத்திலும் அம்சங்களை மாற்ற, இடைநிறுத்த, நிறுத்த அல்லது அறிமுகப்படுத்த உரிமை கொண்டுள்ளது."
+  },
+  "Certain features of the Platform may require payment of subscription or access fees.": {
+    "hi": "Platform की कुछ सुविधाओं के लिए subscription या access fees का भुगतान आवश्यक हो सकता है।",
+    "ta": "Platform-ன் சில அம்சங்களுக்கு subscription அல்லது access fees செலுத்த வேண்டியிருக்கலாம்."
+  },
+  "Applicable pricing and plans may be updated periodically.": {
+    "hi": "लागू pricing और plans समय-समय पर अपडेट किए जा सकते हैं।",
+    "ta": "பொருந்தும் pricing மற்றும் plans அவ்வப்போது புதுப்பிக்கப்படலாம்."
+  },
+  "Commercial transactions between users occur independently outside the Platform.": {
+    "hi": "उपयोगकर्ताओं के बीच व्यावसायिक लेनदेन Platform के बाहर स्वतंत्र रूप से होते हैं।",
+    "ta": "பயனர்களுக்கிடையிலான commercial transactions Platform-க்கு வெளியே independently நடக்கின்றன."
+  },
+  "Quanta Loop is not a party to transactions between users and shall not be responsible for:": {
+    "hi": "Quanta Loop उपयोगकर्ताओं के बीच लेनदेन का पक्ष नहीं है और जिम्मेदार नहीं होगा:",
+    "ta": "Quanta Loop பயனர்களுக்கிடையிலான transactions-இல் party அல்ல; பின்வருவனவற்றுக்கு பொறுப்பு இல்லை:"
+  },
+  "Unless expressly stated otherwise, subscription fees are non-refundable.": {
+    "hi": "जब तक स्पष्ट रूप से अन्यथा न कहा जाए, subscription fees non-refundable हैं।",
+    "ta": "வெளிப்படையாக வேறு குறிப்பிடப்படாவிட்டால், subscription fees திரும்பப் பெற முடியாது."
+  },
+  "Users may upload:": {
+    "hi": "उपयोगकर्ता upload कर सकते हैं:",
+    "ta": "பயனர்கள் upload செய்யலாம்:"
+  },
+  "Users remain responsible for all User Content uploaded or shared through the Platform.": {
+    "hi": "Platform के माध्यम से upload या share किए गए सभी User Content के लिए उपयोगकर्ता जिम्मेदार रहते हैं।",
+    "ta": "Platform வழியாக upload அல்லது share செய்யப்பட்ட அனைத்து User Content-க்கும் பயனர்கள் பொறுப்பு."
+  },
+  "Users grant Quanta Loop a worldwide, non-exclusive, royalty-free license to:": {
+    "hi": "उपयोगकर्ता Quanta Loop को worldwide, non-exclusive, royalty-free license प्रदान करते हैं:",
+    "ta": "பயனர்கள் Quanta Loop-க்கு worldwide, non-exclusive, royalty-free license வழங்குகின்றனர்:"
+  },
+  "for purposes relating to:": {
+    "hi": "से संबंधित उद्देश्यों के लिए:",
+    "ta": "பின்வரும் நோக்கங்களுக்காக:"
+  },
+  "Quanta Loop may:": {
+    "hi": "Quanta Loop कर सकता है:",
+    "ta": "Quanta Loop செய்யலாம்:"
+  },
+  "where it reasonably believes such action is necessary for platform integrity, safety or legal compliance.": {
+    "hi": "जहाँ यह reasonably मानता है कि platform integrity, safety या legal compliance के लिए ऐसी कार्रवाई आवश्यक है।",
+    "ta": "platform integrity, safety அல்லது legal compliance-க்கு அத்தகைய action தேவை என்று reasonably நம்பும் போது."
+  },
+  "Users shall not:": {
+    "hi": "उपयोगकर्ता नहीं करेंगे:",
+    "ta": "பயனர்கள் செய்யக்கூடாது:"
+  },
+  "Quanta Loop reserves the right to investigate and take action against violations.": {
+    "hi": "Quanta Loop उल्लंघनों की जाँच करने और कार्रवाई करने का अधिकार सुरक्षित रखता है।",
+    "ta": "Quanta Loop மீறல்களை விசாரித்து action எடுக்க உரிமை கொண்டுள்ளது."
+  },
+  "By using the Platform, users consent to:": {
+    "hi": "Platform का उपयोग करके, उपयोगकर्ता सहमति देते हैं:",
+    "ta": "Platform-ஐ பயன்படுத்துவதன் மூலம், பயனர்கள் ஒப்புதல் அளிக்கின்றனர்:"
+  },
+  "Users may opt out of promotional communications where applicable.": {
+    "hi": "उपयोगकर्ता जहाँ लागू हो, promotional communications से opt out कर सकते हैं।",
+    "ta": "பொருந்தும் இடங்களில் promotional communications-லிருந்து opt out செய்யலாம்."
+  },
+  "Users acknowledge that certain essential service communications may still be sent.": {
+    "hi": "उपयोगकर्ता स्वीकार करते हैं कि कुछ essential service communications अभी भी भेजी जा सकती हैं।",
+    "ta": "சில essential service communications இன்னும் அனுப்பப்படலாம் என்பதை பயனர்கள் ஒப்புக்கொள்கின்றனர்."
+  },
+  "All rights relating to:": {
+    "hi": "से संबंधित सभी अधिकार:",
+    "ta": "பின்வருவன தொடர்பான அனைத்து உரிமைகளும்:"
+  },
+  "belong exclusively to ASM Fintech Private Limited or its licensors.": {
+    "hi": "विशेष रूप से ASM Fintech Private Limited या उसके licensors के पास हैं।",
+    "ta": "ASM Fintech Private Limited அல்லது அதன் licensors-க்கு exclusively சொந்தமானவை."
+  },
+  "any part of the Platform without prior written permission.": {
+    "hi": "Platform के किसी भी भाग को prior written permission के बिना।",
+    "ta": "Platform-ன் எந்தப் பகுதியையும் prior written permission இல்லாமல்."
+  },
+  "The Platform may integrate with third-party services, tools or software.": {
+    "hi": "Platform third-party services, tools या software के साथ integrate हो सकता है।",
+    "ta": "Platform third-party services, tools அல்லது software-உடன் integrate ஆகலாம்."
+  },
+  "Quanta Loop is not responsible for:": {
+    "hi": "Quanta Loop जिम्मेदार नहीं है:",
+    "ta": "Quanta Loop பொறுப்பு இல்லை:"
+  },
+  "Use of third-party services may be subject to separate terms and policies.": {
+    "hi": "Third-party services का उपयोग अलग terms और policies के अधीन हो सकता है।",
+    "ta": "Third-party services பயன்பாடு தனி terms மற்றும் policies-க்கு உட்பட்டதாக இருக்கலாம்."
+  },
+  "The Platform is provided on an \"as is\" and \"as available\" basis.": {
+    "hi": "Platform \"as is\" और \"as available\" आधार पर प्रदान किया जाता है।",
+    "ta": "Platform \"as is\" மற்றும் \"as available\" அடிப்படையில் வழங்கப்படுகிறது."
+  },
+  "Quanta Loop does not guarantee:": {
+    "hi": "Quanta Loop guarantee नहीं करता:",
+    "ta": "Quanta Loop உத்தரவாதம் அளிக்காது:"
+  },
+  "Quanta Loop does not independently verify:": {
+    "hi": "Quanta Loop स्वतंत्र रूप से verify नहीं करता:",
+    "ta": "Quanta Loop independently verify செய்யாது:"
+  },
+  "Users interact and transact entirely at their own risk.": {
+    "hi": "उपयोगकर्ता पूर्णतः अपने जोखिम पर interact और transact करते हैं।",
+    "ta": "பயனர்கள் entirely தங்கள் சொந்த ஆபத்தில் interact மற்றும் transact செய்கின்றனர்."
+  },
+  "Quanta Loop shall not be responsible for:": {
+    "hi": "Quanta Loop जिम्मेदार नहीं होगा:",
+    "ta": "Quanta Loop பொறுப்பு இல்லை:"
+  },
+  "To the maximum extent permitted by law, Quanta Loop, ASM Fintech Private Limited and their directors, employees, affiliates and representatives shall not be liable for:": {
+    "hi": "कानून द्वारा अनुमत अधिकतम सीमा तक, Quanta Loop, ASM Fintech Private Limited और उनके directors, employees, affiliates और representatives जिम्मेदार नहीं होंगे:",
+    "ta": "சட்டம் அனுமதிக்கும் அதிகபட்ச அளவ까지, Quanta Loop, ASM Fintech Private Limited மற்றும் அவர்களின் directors, employees, affiliates மற்றும் representatives பொறுப்பு இல்லை:"
+  },
+  "The total aggregate liability of Quanta Loop arising out of or relating to the Platform shall not exceed the subscription fees paid by the concerned user to Quanta Loop during the preceding three (3) months.": {
+    "hi": "Platform से उत्पन्न या संबंधित Quanta Loop की कुल aggregate liability concerned user द्वारा पिछले तीन (3) महीनों में Quanta Loop को भुगतान subscription fees से अधिक नहीं होगी।",
+    "ta": "Platform-இலிருந்து எழும் அல்லது தொடர்புடைய Quanta Loop-ன் மொத்த aggregate liability, concerned user கடந்த மூன்று (3) மாதங்களில் Quanta Loop-க்கு செலுத்திய subscription fees-ஐ விட அதிகமாக இருக்காது."
+  },
+  "Users agree to defend, indemnify and hold harmless:": {
+    "hi": "उपयोगकर्ता defend, indemnify और hold harmless करने के लिए सहमत हैं:",
+    "ta": "பயனர்கள் defend, indemnify மற்றும் hold harmless செய்ய ஒப்புக்கொள்கின்றனர்:"
+  },
+  "against any claims, liabilities, damages, penalties, losses or expenses arising from:": {
+    "hi": "से उत्पन्न claims, liabilities, damages, penalties, losses या expenses के विरुद्ध:",
+    "ta": "பின்வருவனவற்றிலிருந்து எழும் claims, liabilities, damages, penalties, losses அல்லது expenses-க்கு எதிராக:"
+  },
+  "Quanta Loop may suspend, restrict or terminate accounts at its discretion where:": {
+    "hi": "Quanta Loop अपने विवेक से accounts suspend, restrict या terminate कर सकता है जहाँ:",
+    "ta": "Quanta Loop தனது விருப்பப்படி accounts-ஐ suspend, restrict அல்லது terminate செய்யலாம், இங்கு:"
+  },
+  "Quanta Loop may also remove content or restrict platform access without prior notice where reasonably necessary.": {
+    "hi": "Quanta Loop reasonably आवश्यक होने पर prior notice के बिना content हटा या platform access restrict भी कर सकता है।",
+    "ta": "reasonably தேவைப்படும் போது Quanta Loop முன் அறிவிப்பின்றி content-ஐ நீக்கவும் platform access-ஐ restrict செய்யவும் கூடும்."
+  },
+  "Quanta Loop may use aggregated, anonymised or non-identifiable usage data for:": {
+    "hi": "Quanta Loop aggregated, anonymised या non-identifiable usage data का उपयोग कर सकता है:",
+    "ta": "Quanta Loop aggregated, anonymised அல்லது non-identifiable usage data-ஐ பின்வருவனவற்றுக்காக பயன்படுத்தலாம்:"
+  },
+  "Quanta Loop shall not be liable for delays or failures caused by events beyond reasonable control including:": {
+    "hi": "Quanta Loop reasonable control से परे की घटनाओं के कारण delays या failures के लिए liable नहीं होगा, जिनमें शामिल हैं:",
+    "ta": "reasonable control-க்கு அப்பாற்பட்ட நிகழ்வுகளால் ஏற்படும் delays அல்லது failures-க்கு Quanta Loop liable அல்ல, அவை:"
+  },
+  "at any time.": {
+    "hi": "किसी भी समय।",
+    "ta": "எந்த நேரத்திலும்."
+  },
+  "Updated Terms will be posted on the Platform with a revised \"Last Updated\" date.": {
+    "hi": "अपडेटेड Terms Platform पर revised \"Last Updated\" date के साथ पोस्ट किए जाएँगे।",
+    "ta": "புதுப்பிக்கப்பட்ட Terms revised \"Last Updated\" date உடன் Platform-இல் வெளியிடப்படும்."
+  },
+  "Continued use of the Platform after updates constitutes acceptance of revised Terms.": {
+    "hi": "अपडेट के बाद Platform का निरंतर उपयोग revised Terms की स्वीकृति है।",
+    "ta": "புதுப்பிப்புகளுக்குப் பிறகு Platform-ஐ தொடர்ந்து பயன்படுத்துவது revised Terms-ஐ ஏற்றுக்கொள்வதாகும்."
+  },
+  "These Terms shall be governed by the laws of India.": {
+    "hi": "ये Terms India के कानूनों द्वारा governed होंगे।",
+    "ta": "இந்த Terms India-ன் சட்டங்களால் governed ஆகும்."
+  },
+  "Any dispute arising from or relating to these Terms shall be referred to arbitration seated in Chennai under the Arbitration and Conciliation Act, 1996.": {
+    "hi": "इन Terms से उत्पन्न या संबंधित कोई भी dispute Chennai में Arbitration and Conciliation Act, 1996 के तहत arbitration के लिए referred किया जाएगा।",
+    "ta": "இந்த Terms-இலிருந்து எழும் அல்லது தொடர்புடைய எந்த dispute-யும் Chennai-இல் Arbitration and Conciliation Act, 1996-க்குட்பட்ட arbitration-க்கு referred செய்யப்படும்."
+  },
+  "The arbitration shall be conducted by a sole arbitrator appointed by Quanta Loop.": {
+    "hi": "Arbitration Quanta Loop द्वारा नियुक्त sole arbitrator द्वारा conducted होगी।",
+    "ta": "Arbitration Quanta Loop நியமிக்கும் sole arbitrator மூலம் conducted செய்யப்படும்."
+  },
+  "The language of arbitration shall be English.": {
+    "hi": "Arbitration की language English होगी।",
+    "ta": "Arbitration-ன் language English ஆக இருக்கும்."
+  },
+  "Courts at Chennai shall have exclusive jurisdiction for interim or injunctive relief.": {
+    "hi": "Chennai की Courts interim या injunctive relief के लिए exclusive jurisdiction रखेंगी।",
+    "ta": "Chennai Courts interim அல்லது injunctive relief-க்கு exclusive jurisdiction கொண்டிருக்கும்."
+  },
+  "ASM Fintech Private Limited (\"ASM Fintech\", \"Quanta Loop\", \"we\", \"our\", or \"us\") respects your privacy and is committed to protecting your personal information.": {
+    "hi": "ASM Fintech Private Limited (\"ASM Fintech\", \"Quanta Loop\", \"we\", \"our\", या \"us\") आपकी privacy का सम्मान करता है और आपकी personal information की सुरक्षा के लिए committed है।",
+    "ta": "ASM Fintech Private Limited (\"ASM Fintech\", \"Quanta Loop\", \"we\", \"our\", அல்லது \"us\") உங்கள் privacy-ஐ மதிக்கிறது; உங்கள் personal information-ஐ பாதுகாப்பதில் committed."
+  },
+  "This Privacy Policy explains how Quanta Loop collects, uses, stores, shares and protects information when you access or use the Quanta Loop platform, website, applications, products or related services (collectively, the \"Platform\").": {
+    "hi": "यह गोपनीयता नीति बताती है कि Quanta Loop Quanta Loop Platform, website, applications, products या related services (सामूहिक रूप से, \"Platform\") तक access या use करने पर information कैसे collect, use, store, share और protect करता है।",
+    "ta": "இந்த தனியுரிமைக் கொள்கை Quanta Loop Platform, website, applications, products அல்லது related services (ஒன்றாக, \"Platform\")-ஐ access/use செய்யும்போது information-ஐ எவ்வாறு collect, use, store, share, protect செய்கிறது என்பதை விளக்குகிறது."
+  },
+  "By accessing or using the Platform, you agree to this Privacy Policy.": {
+    "hi": "Platform access या use करके, आप इस Privacy Policy से सहमत होते हैं।",
+    "ta": "Platform-ஐ access/use செய்வதன் மூலம், இந்த Privacy Policy-க்கு நீங்கள் ஒப்புக்கொள்கிறீர்கள்."
+  },
+  "Quanta Loop is a technology-enabled intermediary platform that facilitates connections between industrial waste generators, aggregators, recyclers and related stakeholders.": {
+    "hi": "Quanta Loop एक technology-enabled intermediary Platform है जो industrial waste generators, aggregators, recyclers और related stakeholders के बीच connections facilitate करता है।",
+    "ta": "Quanta Loop என்பது industrial waste generators, aggregators, recyclers மற்றும் related stakeholders-க்கிடையே connections-ஐ எளிதாக்கும் technology-enabled intermediary Platform."
+  },
+  "Quanta Loop acts only as a technology platform/intermediary.": {
+    "hi": "Quanta Loop केवल technology platform/intermediary के रूप में कार्य करता है।",
+    "ta": "Quanta Loop technology platform/intermediary ஆக மட்டும் செயல்படுகிறது."
+  },
+  "Information displayed or shared on the Platform is generally provided directly by users. Quanta Loop does not independently verify all user-submitted information, listings, claims, certifications, quantities, pricing, business credentials or representations.": {
+    "hi": "Platform पर display या share की गई information आमतौर पर users द्वारा directly प्रदान की जाती है। Quanta Loop सभी user-submitted information, listings, claims, certifications, quantities, pricing, business credentials या representations की independently verify नहीं करता।",
+    "ta": "Platform-இல் display/share செய்யப்படும் information பொதுவாக users நேரடியாக வழங்குகின்றனர். Quanta Loop அனைத்து user-submitted information, listings, claims, certifications, quantities, pricing, business credentials அல்லது representations-ஐயும் independently verify செய்யாது."
+  },
+  "Users are responsible for independently evaluating and verifying counterparties and transactions.": {
+    "hi": "Users counterparties और transactions की independently evaluate और verify करने के लिए जिम्मेदार हैं।",
+    "ta": "counterparties மற்றும் transactions-ஐ independently evaluate/verify செய்வதற்கு users பொறுப்பு."
+  },
+  "When you register or use the Platform, you may provide:": {
+    "hi": "जब आप Platform register या use करते हैं, तो provide कर सकते हैं:",
+    "ta": "Platform-ஐ register/use செய்யும்போது, வழங்கலாம்:"
+  },
+  "We may collect information relating to:": {
+    "hi": "हम information collect कर सकते हैं, संबंध में:",
+    "ta": "பின்வருவன தொடர்பான information-ஐ சேகரிக்கலாம்:"
+  },
+  "We may automatically collect:": {
+    "hi": "हम automatically collect कर सकते हैं:",
+    "ta": "automatically சேகரிக்கலாம்:"
+  },
+  "We may use information for purposes including:": {
+    "hi": "हम information का उपयोग purposes सहित कर सकते हैं:",
+    "ta": "information-ஐ பின்வரும் நோக்கங்களுக்காக பயன்படுத்தலாம்:"
+  },
+  "Quanta Loop may use:": {
+    "hi": "Quanta Loop उपयोग कर सकता है:",
+    "ta": "Quanta Loop பயன்படுத்தலாம்:"
+  },
+  "to improve functionality, understand user behaviour and enhance platform performance.": {
+    "hi": "functionality improve करने, user behaviour समझने और platform performance enhance करने के लिए।",
+    "ta": "functionality மேம்படுத்த, user behaviour புரிந்துகொள்ள, platform performance enhance செய்ய."
+  },
+  "These technologies may help us:": {
+    "hi": "ये technologies हमारी मदद कर सकती हैं:",
+    "ta": "இந்த technologies உதவலாம்:"
+  },
+  "Users may disable cookies through browser or device settings. However, certain features of the Platform may not function properly if cookies are disabled.": {
+    "hi": "Users browser या device settings के माध्यम से cookies disable कर सकते हैं। हालाँकि, cookies disabled होने पर Platform की कुछ features properly function नहीं कर सकतीं।",
+    "ta": "browser/device settings மூலம் cookies disable செய்யலாம். cookies disable செய்தால் Platform-ன் சில features properly function செய்யாது."
+  },
+  "By using the Platform, you consent to receive:": {
+    "hi": "Platform use करके, receive करने की consent देते हैं:",
+    "ta": "Platform பயன்படுத்துவதன் மூலம், பெற ஒப்புதல்:"
+  },
+  "You may opt out of promotional communications at any time using unsubscribe links or by contacting us. However, essential service-related communications may still be sent.": {
+    "hi": "Unsubscribe links या हमसे contact करके किसी भी समय promotional communications से opt out कर सकते हैं। हालाँकि, essential service-related communications अभी भी भेजी जा सकती हैं।",
+    "ta": "unsubscribe links அல்லது எங்களை தொடர்பு கொண்டு anytime promotional communications-லிருந்து opt out செய்யலாம். essential service-related communications இன்னும் அனுப்பப்படலாம்."
+  },
+  "We may share information with:": {
+    "hi": "हम information share कर सकते हैं:",
+    "ta": "information பகிரலாம்:"
+  },
+  "For example, certain business or listing information may be visible to other users to facilitate transactions and platform interactions.": {
+    "hi": "उदाहरण के लिए, कुछ business या listing information transactions और platform interactions facilitate करने के लिए other users को visible हो सकती है।",
+    "ta": "எ.கா., transactions மற்றும் platform interactions-ஐ எளிதாக்க சில business/listing information மற்ற users-க்கு visible ஆகலாம்."
+  },
+  "We do not sell personal data to third parties.": {
+    "hi": "हम personal data third parties को sell नहीं करते।",
+    "ta": "personal data-ஐ third parties-க்கு விற்க மாட்டோம்."
+  },
+  "Quanta Loop does not guarantee the accuracy, completeness or reliability of user-generated content or third-party information.": {
+    "hi": "Quanta Loop user-generated content या third-party information की accuracy, completeness या reliability guarantee नहीं करता।",
+    "ta": "Quanta Loop user-generated content/third-party information-ன் accuracy, completeness/reliability-க்கு guarantee இல்லை."
+  },
+  "We retain information for as long as reasonably necessary for:": {
+    "hi": "हम information reasonably necessary period तक retain करते हैं:",
+    "ta": "reasonably தேவையான காலம் information-ஐ retain செய்வோம்:"
+  },
+  "Certain information may continue to be retained where required by law or for operational, security or compliance purposes.": {
+    "hi": "कुछ information law द्वारा required होने या operational, security या compliance purposes के लिए retain होती रह सकती है।",
+    "ta": "சில information சட்டம் தேவைப்படும்போது அல்லது operational, security/compliance purposes-க்காக retain செய்யப்படலாம்."
+  },
+  "Subject to applicable law, users may request to:": {
+    "hi": "Applicable law के अधीन, users request कर सकते हैं:",
+    "ta": "applicable law-க்கு உட்பட்டு, users கோரலாம்:"
+  },
+  "Requests may be submitted to:": {
+    "hi": "Requests submit की जा सकती हैं:",
+    "ta": "Requests submit செய்யலாம்:"
+  },
+  "We may retain certain information where required for:": {
+    "hi": "हम कुछ information retain कर सकते हैं जहाँ required:",
+    "ta": "தேவைப்படும் இடங்களில் சில information retain செய்வோம்:"
+  },
+  "We implement commercially reasonable safeguards to help protect information, including:": {
+    "hi": "हम commercially reasonable safeguards implement करते हैं information protect करने के लिए, including:",
+    "ta": "information பாதுகாக்க commercially reasonable safeguards-ஐ implement செய்கிறோம், including:"
+  },
+  "However, no method of internet transmission or electronic storage is completely secure.": {
+    "hi": "हालाँकि, internet transmission या electronic storage का कोई method completely secure नहीं है।",
+    "ta": "internet transmission/electronic storage முறை completely secure அல்ல."
+  },
+  "Accordingly, we cannot guarantee absolute security of information.": {
+    "hi": "अतः, हम information की absolute security guarantee नहीं कर सकते।",
+    "ta": "எனவே, information-ன் absolute security-க்கு guarantee அளிக்க முடியாது."
+  },
+  "The Platform may integrate with or contain links to third-party services, tools or websites.": {
+    "hi": "Platform third-party services, tools या websites के links integrate या contain कर सकता है।",
+    "ta": "Platform third-party services, tools/websites links-ஐ integrate/contain செய்யலாம்."
+  },
+  "Users should review the privacy policies of external services separately.": {
+    "hi": "Users external services की privacy policies separately review करें।",
+    "ta": "external services-ன் privacy policies-ஐ users த separately review செய்ய வேண்டும்."
+  },
+  "Users acknowledge and agree that:": {
+    "hi": "Users acknowledge और agree करते हैं कि:",
+    "ta": "users acknowledge/ agree:"
+  },
+  "While Quanta Loop takes reasonable measures to protect information, we do not guarantee absolute protection against unauthorised access, hacking, data loss or security breaches.": {
+    "hi": "Quanta Loop information protect करने के reasonable measures लेता है, हम unauthorised access, hacking, data loss या security breaches के against absolute protection guarantee नहीं करते।",
+    "ta": "Quanta Loop reasonable measures எடுத்தாலும், unauthorised access, hacking, data loss/security breaches-க்கு absolute protection guarantee இல்லை."
+  },
+  "The Platform is intended only for business and professional users who are at least 18 years of age.": {
+    "hi": "Platform केवल कम से कम 18 years age के business और professional users के लिए है।",
+    "ta": "Platform குறைந்தது 18 years age உடைய business/professional users-க்கு மட்டும்."
+  },
+  "Quanta Loop does not knowingly collect personal information from children.": {
+    "hi": "Quanta Loop knowingly children से personal information collect नहीं करता।",
+    "ta": "Quanta Loop knowingly children-இலிருந்து personal information collect செய்யாது."
+  },
+  "We may update or modify this Privacy Policy from time to time.": {
+    "hi": "हम इस Privacy Policy को time to time update या modify कर सकते हैं।",
+    "ta": "இந்த Privacy Policy-ஐ time to time update/modify செய்யலாம்."
+  },
+  "Updated versions will be posted on the Platform with a revised \"Last Updated\" date.": {
+    "hi": "Updated versions Platform पर revised \"Last Updated\" date के साथ post होंगे।",
+    "ta": "Updated versions revised \"Last Updated\" date உடன் Platform-இல் post செய்யப்படும்."
+  },
+  "Continued use of the Platform after updates constitutes acceptance of the revised Privacy Policy.": {
+    "hi": "Updates के बाद Platform का continued use revised Privacy Policy की acceptance है।",
+    "ta": "updates-க்குப் பிறகு Platform-ஐ தொடர்ந்து பயன்படுத்துவது revised Privacy Policy acceptance."
+  },
+  "This Privacy Policy shall be governed by the laws of India.": {
+    "hi": "यह Privacy Policy India के laws द्वारा governed होगी।",
+    "ta": "இந்த Privacy Policy India-ன் laws-ஆல் governed."
+  },
+  "Courts located in Chennai, Tamil Nadu shall have jurisdiction in relation to matters arising from this Privacy Policy, subject to applicable dispute resolution terms.": {
+    "hi": "Chennai, Tamil Nadu में located Courts इस Privacy Policy से arising matters के relation में jurisdiction रखेंगी, applicable dispute resolution terms के अधीन।",
+    "ta": "Chennai, Tamil Nadu-இல் located Courts, applicable dispute resolution terms-க்கு உட்பட்டு, இந்த Privacy Policy-இலிருந்து எழும் matters-க்கு jurisdiction கொண்டிருக்கும்."
+  },
+  "For privacy-related queries or requests, please contact:": {
+    "hi": "Privacy-related queries या requests के लिए, contact करें:",
+    "ta": "privacy-related queries/requests-க்கு, தொடர்பு கொள்ளுங்கள்:"
+  },
+  "AI recommendations;": {
+    "hi": "AI recommendations;",
+    "ta": "AI recommendations;"
+  },
+  "ASM Fintech Private Limited;": {
+    "hi": "ASM Fintech Private Limited;",
+    "ta": "ASM Fintech Private Limited;"
+  },
+  "GST information (optional);": {
+    "hi": "GST information (optional);",
+    "ta": "GST information (optional);"
+  },
+  "GST registrations;": {
+    "hi": "GST registrations;",
+    "ta": "GST registrations;"
+  },
+  "IP address;": {
+    "hi": "IP address;",
+    "ta": "IP address;"
+  },
+  "Platform operations;": {
+    "hi": "Platform operations;",
+    "ta": "Platform operations;"
+  },
+  "Quanta Loop;": {
+    "hi": "Quanta Loop;",
+    "ta": "Quanta Loop;"
+  },
+  "a buyer;": {
+    "hi": "a buyer;",
+    "ta": "a buyer;"
+  },
+  "access their information;": {
+    "hi": "अपनी information access करें;",
+    "ta": "தங்கள் information-ஐ access செய்ய;"
+  },
+  "account activity;": {
+    "hi": "account activity;",
+    "ta": "account activity;"
+  },
+  "account notifications;": {
+    "hi": "account notifications;",
+    "ta": "account notifications;"
+  },
+  "accuracy of listings;": {
+    "hi": "listings की accuracy;",
+    "ta": "listings-ன் accuracy;"
+  },
+  "accuracy of submitted information;": {
+    "hi": "submitted information की accuracy;",
+    "ta": "submitted information-ன் accuracy;"
+  },
+  "addresses;": {
+    "hi": "addresses;",
+    "ta": "addresses;"
+  },
+  "advisors;": {
+    "hi": "advisors;",
+    "ta": "advisors;"
+  },
+  "affiliates;": {
+    "hi": "affiliates;",
+    "ta": "affiliates;"
+  },
+  "algorithms;": {
+    "hi": "algorithms;",
+    "ta": "algorithms;"
+  },
+  "analyse traffic;": {
+    "hi": "traffic analyse करना;",
+    "ta": "traffic analyse;"
+  },
+  "analyse;": {
+    "hi": "analyse;",
+    "ta": "analyse;"
+  },
+  "analytics and business insights;": {
+    "hi": "analytics और business insights;",
+    "ta": "analytics மற்றும் business insights;"
+  },
+  "analytics data;": {
+    "hi": "analytics data;",
+    "ta": "analytics data;"
+  },
+  "analytics systems;": {
+    "hi": "analytics systems;",
+    "ta": "analytics systems;"
+  },
+  "analytics tools;": {
+    "hi": "analytics tools;",
+    "ta": "analytics tools;"
+  },
+  "analytics;": {
+    "hi": "analytics;",
+    "ta": "analytics;"
+  },
+  "and additional technology tools.": {
+    "hi": "और additional technology tools.",
+    "ta": "மற்றும் additional technology tools."
+  },
+  "and commercial terms.": {
+    "hi": "और commercial terms.",
+    "ta": "மற்றும் commercial terms."
+  },
+  "and compliance with applicable laws.": {
+    "hi": "और applicable laws के साथ compliance.",
+    "ta": "மற்றும் applicable laws-க்கு compliance."
+  },
+  "and contractual obligations": {
+    "hi": "और contractual obligations",
+    "ta": "மற்றும் contractual obligations"
+  },
+  "and enforcing our terms and policies.": {
+    "hi": "और हमारे terms और policies enforce करना.",
+    "ta": "மற்றும் எங்கள் terms/policies-ஐ enforce செய்தல்."
+  },
+  "and internal security practices.": {
+    "hi": "और internal security practices.",
+    "ta": "மற்றும் internal security practices."
+  },
+  "and legitimate business purposes.": {
+    "hi": "और legitimate business purposes.",
+    "ta": "மற்றும் legitimate business purposes."
+  },
+  "and moderate activity": {
+    "hi": "और activity moderate करना",
+    "ta": "மற்றும் activity moderate"
+  },
+  "and optional GST details.": {
+    "hi": "और optional GST details.",
+    "ta": "மற்றும் optional GST details."
+  },
+  "and other digital tools.": {
+    "hi": "और other digital tools.",
+    "ta": "மற்றும் other digital tools."
+  },
+  "and other information voluntarily submitted by you.": {
+    "hi": "और आपके द्वारा voluntarily submitted other information.",
+    "ta": "மற்றும் நீங்கள் voluntarily submit செய்த other information."
+  },
+  "and other users as part of normal platform functionality.": {
+    "hi": "और normal platform functionality के हिस्से के रूप में other users.",
+    "ta": "மற்றும் normal platform functionality-ன் பகுதியாக other users."
+  },
+  "and personalise user experience.": {
+    "hi": "और user experience personalise करना.",
+    "ta": "மற்றும் user experience personalise."
+  },
+  "and platform alerts.": {
+    "hi": "और platform alerts.",
+    "ta": "மற்றும் platform alerts."
+  },
+  "and promotional or marketing communications.": {
+    "hi": "और promotional या marketing communications.",
+    "ta": "மற்றும் promotional/marketing communications."
+  },
+  "and related content (\"User Content\").": {
+    "hi": "और related content (\"User Content\").",
+    "ta": "மற்றும் related content (\"User Content\")."
+  },
+  "and related intellectual property": {
+    "hi": "और related intellectual property",
+    "ta": "மற்றும் related intellectual property"
+  },
+  "and related technologies": {
+    "hi": "और related technologies",
+    "ta": "மற்றும் related technologies"
+  },
+  "and representatives": {
+    "hi": "और representatives",
+    "ta": "மற்றும் representatives"
+  },
+  "and subscription access.": {
+    "hi": "और subscription access.",
+    "ta": "மற்றும் subscription access."
+  },
+  "and support requests.": {
+    "hi": "और support requests.",
+    "ta": "மற்றும் support requests."
+  },
+  "and technology development.": {
+    "hi": "और technology development.",
+    "ta": "மற்றும் technology development."
+  },
+  "and technology functionality.": {
+    "hi": "और technology functionality.",
+    "ta": "மற்றும் technology functionality."
+  },
+  "and transaction-related representations.": {
+    "hi": "और transaction-related representations.",
+    "ta": "மற்றும் transaction-related representations."
+  },
+  "and usage patterns.": {
+    "hi": "और usage patterns.",
+    "ta": "மற்றும் usage patterns."
+  },
+  "and use User Content": {
+    "hi": "और User Content use करना",
+    "ta": "மற்றும் User Content use"
+  },
+  "and use of the Platform is at the user's own discretion and risk.": {
+    "hi": "और Platform का use user के own discretion और risk पर है.",
+    "ta": "மற்றும் Platform use user-ன் own discretion/risk-இல்."
+  },
+  "audit requirements;": {
+    "hi": "audit requirements;",
+    "ta": "audit requirements;"
+  },
+  "automated matching;": {
+    "hi": "automated matching;",
+    "ta": "automated matching;"
+  },
+  "branding;": {
+    "hi": "branding;",
+    "ta": "branding;"
+  },
+  "broker;": {
+    "hi": "broker;",
+    "ta": "broker;"
+  },
+  "browser type;": {
+    "hi": "browser type;",
+    "ta": "browser type;"
+  },
+  "business claims;": {
+    "hi": "business claims;",
+    "ta": "business claims;"
+  },
+  "business insights;": {
+    "hi": "business insights;",
+    "ta": "business insights;"
+  },
+  "business interruption;": {
+    "hi": "business interruption;",
+    "ta": "business interruption;"
+  },
+  "bypass subscriptions or access controls;": {
+    "hi": "subscriptions या access controls bypass करना;",
+    "ta": "subscriptions/access controls bypass;"
+  },
+  "certifications;": {
+    "hi": "certifications;",
+    "ta": "certifications;"
+  },
+  "collection and processing of information as described in the Privacy Policy;": {
+    "hi": "Privacy Policy में described information का collection और processing;",
+    "ta": "Privacy Policy-இல் விவரிக்கப்பட்ட information collection/processing;"
+  },
+  "commercial disputes;": {
+    "hi": "commercial disputes;",
+    "ta": "commercial disputes;"
+  },
+  "communication content;": {
+    "hi": "communication content;",
+    "ta": "communication content;"
+  },
+  "communication history;": {
+    "hi": "communication history;",
+    "ta": "communication history;"
+  },
+  "communications;": {
+    "hi": "communications;",
+    "ta": "communications;"
+  },
+  "company information;": {
+    "hi": "company information;",
+    "ta": "company information;"
+  },
+  "company/business details;": {
+    "hi": "company/business details;",
+    "ta": "company/business details;"
+  },
+  "complaints are received;": {
+    "hi": "complaints received होते हैं;",
+    "ta": "complaints received;"
+  },
+  "cookies;": {
+    "hi": "cookies;",
+    "ta": "cookies;"
+  },
+  "copy;": {
+    "hi": "copy;",
+    "ta": "copy;"
+  },
+  "creating and managing user accounts;": {
+    "hi": "user accounts create और manage करना;",
+    "ta": "user accounts create/manage;"
+  },
+  "customer support;": {
+    "hi": "customer support;",
+    "ta": "customer support;"
+  },
+  "cyber incidents;": {
+    "hi": "cyber incidents;",
+    "ta": "cyber incidents;"
+  },
+  "databases;": {
+    "hi": "databases;",
+    "ta": "databases;"
+  },
+  "delivery failures;": {
+    "hi": "delivery failures;",
+    "ta": "delivery failures;"
+  },
+  "delivery;": {
+    "hi": "delivery;",
+    "ta": "delivery;"
+  },
+  "descriptions;": {
+    "hi": "descriptions;",
+    "ta": "descriptions;"
+  },
+  "device information;": {
+    "hi": "device information;",
+    "ta": "device information;"
+  },
+  "display;": {
+    "hi": "display;",
+    "ta": "display;"
+  },
+  "dispute resolution;": {
+    "hi": "dispute resolution;",
+    "ta": "dispute resolution;"
+  },
+  "distribute;": {
+    "hi": "distribute;",
+    "ta": "distribute;"
+  },
+  "document storage;": {
+    "hi": "document storage;",
+    "ta": "document storage;"
+  },
+  "documents;": {
+    "hi": "documents;",
+    "ta": "documents;"
+  },
+  "email OTP;": {
+    "hi": "email OTP;",
+    "ta": "email OTP;"
+  },
+  "email address;": {
+    "hi": "email address;",
+    "ta": "email address;"
+  },
+  "employees;": {
+    "hi": "employees;",
+    "ta": "employees;"
+  },
+  "enabling user matching and interactions;": {
+    "hi": "user matching और interactions enable करना;",
+    "ta": "user matching/interactions enable;"
+  },
+  "engage in fraud or deceptive practices;": {
+    "hi": "fraud या deceptive practices में engage करना;",
+    "ta": "fraud/deceptive practices-இல் engage;"
+  },
+  "enquiries;": {
+    "hi": "enquiries;",
+    "ta": "enquiries;"
+  },
+  "environmental compliance;": {
+    "hi": "environmental compliance;",
+    "ta": "environmental compliance;"
+  },
+  "environmental consultant;": {
+    "hi": "environmental consultant;",
+    "ta": "environmental consultant;"
+  },
+  "environmental non-compliance;": {
+    "hi": "environmental non-compliance;",
+    "ta": "environmental non-compliance;"
+  },
+  "environmental permissions;": {
+    "hi": "environmental permissions;",
+    "ta": "environmental permissions;"
+  },
+  "environmental violations;": {
+    "hi": "environmental violations;",
+    "ta": "environmental violations;"
+  },
+  "error-free functionality;": {
+    "hi": "error-free functionality;",
+    "ta": "error-free functionality;"
+  },
+  "external services;": {
+    "hi": "external services;",
+    "ta": "external services;"
+  },
+  "facilitating communications;": {
+    "hi": "communications facilitate करना;",
+    "ta": "communications facilitate;"
+  },
+  "failed transactions;": {
+    "hi": "failed transactions;",
+    "ta": "failed transactions;"
+  },
+  "format;": {
+    "hi": "format;",
+    "ta": "format;"
+  },
+  "fraud prevention and platform security;": {
+    "hi": "fraud prevention और platform security;",
+    "ta": "fraud prevention மற்றும் platform security;"
+  },
+  "fraud prevention;": {
+    "hi": "fraud prevention;",
+    "ta": "fraud prevention;"
+  },
+  "fraud;": {
+    "hi": "fraud;",
+    "ta": "fraud;"
+  },
+  "governmental actions;": {
+    "hi": "governmental actions;",
+    "ta": "governmental actions;"
+  },
+  "guarantee deliveries;": {
+    "hi": "deliveries guarantee करना;",
+    "ta": "deliveries guarantee;"
+  },
+  "guarantee payments;": {
+    "hi": "payments guarantee करना;",
+    "ta": "payments guarantee;"
+  },
+  "guarantee quality;": {
+    "hi": "quality guarantee करना;",
+    "ta": "quality guarantee;"
+  },
+  "harass or abuse other users;": {
+    "hi": "other users को harass या abuse करना;",
+    "ta": "other users-ஐ harass/abuse;"
+  },
+  "hazardous material handling;": {
+    "hi": "hazardous material handling;",
+    "ta": "hazardous material handling;"
+  },
+  "hazardous material incidents;": {
+    "hi": "hazardous material incidents;",
+    "ta": "hazardous material incidents;"
+  },
+  "hazardous materials;": {
+    "hi": "hazardous materials;",
+    "ta": "hazardous materials;"
+  },
+  "host;": {
+    "hi": "host;",
+    "ta": "host;"
+  },
+  "hosting and cloud service providers;": {
+    "hi": "hosting और cloud service providers;",
+    "ta": "hosting மற்றும் cloud service providers;"
+  },
+  "images;": {
+    "hi": "images;",
+    "ta": "images;"
+  },
+  "impersonate others;": {
+    "hi": "others की impersonate करना;",
+    "ta": "others impersonate;"
+  },
+  "improve navigation;": {
+    "hi": "navigation improve करna;",
+    "ta": "navigation improve;"
+  },
+  "in-platform chat and communications;": {
+    "hi": "in-platform chat और communications;",
+    "ta": "in-platform chat மற்றும் communications;"
+  },
+  "in-platform messaging/chat;": {
+    "hi": "in-platform messaging/chat;",
+    "ta": "in-platform messaging/chat;"
+  },
+  "indirect or consequential damages;": {
+    "hi": "indirect या consequential damages;",
+    "ta": "indirect/consequential damages;"
+  },
+  "information shared online carries inherent risks;": {
+    "hi": "online share की information inherent risks carry करती है;",
+    "ta": "online share information inherent risks carry;"
+  },
+  "information uploaded by them;": {
+    "hi": "उनके द्वारा uploaded information;",
+    "ta": "அவர்கள் upload செய்த information;"
+  },
+  "infringe intellectual property rights;": {
+    "hi": "intellectual property rights infringe करना;",
+    "ta": "intellectual property rights infringe;"
+  },
+  "inspect materials;": {
+    "hi": "materials inspect करना;",
+    "ta": "materials inspect;"
+  },
+  "inspection agency;": {
+    "hi": "inspection agency;",
+    "ta": "inspection agency;"
+  },
+  "inspection disputes;": {
+    "hi": "inspection disputes;",
+    "ta": "inspection disputes;"
+  },
+  "inspection;": {
+    "hi": "inspection;",
+    "ta": "inspection;"
+  },
+  "intellectual property infringement;": {
+    "hi": "intellectual property infringement;",
+    "ta": "intellectual property infringement;"
+  },
+  "interfaces;": {
+    "hi": "interfaces;",
+    "ta": "interfaces;"
+  },
+  "interfere with platform security or operations;": {
+    "hi": "platform security या operations में interfere करना;",
+    "ta": "platform security/operations interfere;"
+  },
+  "internal analytics;": {
+    "hi": "internal analytics;",
+    "ta": "internal analytics;"
+  },
+  "internet failures;": {
+    "hi": "internet failures;",
+    "ta": "internet failures;"
+  },
+  "internet transmissions may not always be secure;": {
+    "hi": "internet transmissions हमेशा secure नहीं हो सकतीं;",
+    "ta": "internet transmissions always secure அல்ல."
+  },
+  "investigate complaints;": {
+    "hi": "complaints investigate करना;",
+    "ta": "complaints investigate;"
+  },
+  "its directors;": {
+    "hi": "its directors;",
+    "ta": "its directors;"
+  },
+  "legal and regulatory compliance;": {
+    "hi": "legal और regulatory compliance;",
+    "ta": "legal மற்றும் regulatory compliance;"
+  },
+  "legal compliance;": {
+    "hi": "legal compliance;",
+    "ta": "legal compliance;"
+  },
+  "legal obligations;": {
+    "hi": "legal obligations;",
+    "ta": "legal obligations;"
+  },
+  "legal or regulatory authorities where required;": {
+    "hi": "जहाँ required, legal या regulatory authorities;",
+    "ta": "தேவையான இடங்களில் legal/regulatory authorities;"
+  },
+  "legal violations;": {
+    "hi": "legal violations;",
+    "ta": "legal violations;"
+  },
+  "legality of listings;": {
+    "hi": "listings की legality;",
+    "ta": "listings-ன் legality;"
+  },
+  "legality of materials;": {
+    "hi": "materials की legality;",
+    "ta": "materials-ன் legality;"
+  },
+  "legality;": {
+    "hi": "legality;",
+    "ta": "legality;"
+  },
+  "licences;": {
+    "hi": "licences;",
+    "ta": "licences;"
+  },
+  "list hazardous materials in violation of law;": {
+    "hi": "law violation में hazardous materials list करना;",
+    "ta": "law violation-இல் hazardous materials list;"
+  },
+  "listing activity;": {
+    "hi": "listing activity;",
+    "ta": "listing activity;"
+  },
+  "listing creation;": {
+    "hi": "listing creation;",
+    "ta": "listing creation;"
+  },
+  "listings;": {
+    "hi": "listings;",
+    "ta": "listings;"
+  },
+  "live tracking;": {
+    "hi": "live tracking;",
+    "ta": "live tracking;"
+  },
+  "location information;": {
+    "hi": "location information;",
+    "ta": "location information;"
+  },
+  "login activity;": {
+    "hi": "login activity;",
+    "ta": "login activity;"
+  },
+  "login alerts;": {
+    "hi": "login alerts;",
+    "ta": "login alerts;"
+  },
+  "logistics issues;": {
+    "hi": "logistics issues;",
+    "ta": "logistics issues;"
+  },
+  "logistics provider;": {
+    "hi": "logistics provider;",
+    "ta": "logistics provider;"
+  },
+  "logistics tracking;": {
+    "hi": "logistics tracking;",
+    "ta": "logistics tracking;"
+  },
+  "logistics;": {
+    "hi": "logistics;",
+    "ta": "logistics;"
+  },
+  "loss of data;": {
+    "hi": "data loss;",
+    "ta": "data loss;"
+  },
+  "loss of profits;": {
+    "hi": "profits loss;",
+    "ta": "profits loss;"
+  },
+  "marketing and promotional communications;": {
+    "hi": "marketing और promotional communications;",
+    "ta": "marketing மற்றும் promotional communications;"
+  },
+  "marketing communications;": {
+    "hi": "marketing communications;",
+    "ta": "marketing communications;"
+  },
+  "marketing;": {
+    "hi": "marketing;",
+    "ta": "marketing;"
+  },
+  "matching systems;": {
+    "hi": "matching systems;",
+    "ta": "matching systems;"
+  },
+  "messages;": {
+    "hi": "messages;",
+    "ta": "messages;"
+  },
+  "misuse is suspected;": {
+    "hi": "misuse suspected है;",
+    "ta": "misuse suspected;"
+  },
+  "misuse platform communications;": {
+    "hi": "platform communications misuse करना;",
+    "ta": "platform communications misuse;"
+  },
+  "mobile OTP;": {
+    "hi": "mobile OTP;",
+    "ta": "mobile OTP;"
+  },
+  "mobile number;": {
+    "hi": "mobile number;",
+    "ta": "mobile number;"
+  },
+  "moderation;": {
+    "hi": "moderation;",
+    "ta": "moderation;"
+  },
+  "modify the Platform;": {
+    "hi": "Platform modify करना;",
+    "ta": "Platform modify;"
+  },
+  "modify;": {
+    "hi": "modify;",
+    "ta": "modify;"
+  },
+  "monitor platform performance;": {
+    "hi": "platform performance monitor करना;",
+    "ta": "platform performance monitor;"
+  },
+  "name;": {
+    "hi": "name;",
+    "ta": "name;"
+  },
+  "natural disasters;": {
+    "hi": "natural disasters;",
+    "ta": "natural disasters;"
+  },
+  "notifications;": {
+    "hi": "notifications;",
+    "ta": "notifications;"
+  },
+  "operating and improving the Platform;": {
+    "hi": "Platform operate और improve करना;",
+    "ta": "Platform operate/improve;"
+  },
+  "operating system;": {
+    "hi": "operating system;",
+    "ta": "operating system;"
+  },
+  "or amend these Terms": {
+    "hi": "या these Terms amend करना",
+    "ta": "அல்லது these Terms amend"
+  },
+  "or commercial disagreements.": {
+    "hi": "या commercial disagreements.",
+    "ta": "அல்லது commercial disagreements."
+  },
+  "or commercial representations.": {
+    "hi": "या commercial representations.",
+    "ta": "அல்லது commercial representations."
+  },
+  "or commercially exploit": {
+    "hi": "या commercially exploit",
+    "ta": "அல்லது commercially exploit"
+  },
+  "or contact us regarding privacy concerns.": {
+    "hi": "या privacy concerns के regarding हमसे contact.",
+    "ta": "அல்லது privacy concerns-க்கு எங்களை contact."
+  },
+  "or failed transactions.": {
+    "hi": "या failed transactions.",
+    "ta": "அல்லது failed transactions."
+  },
+  "or guarantee completion of transactions.": {
+    "hi": "या transactions completion guarantee.",
+    "ta": "அல்லது transactions completion guarantee."
+  },
+  "or infrastructure failures.": {
+    "hi": "या infrastructure failures.",
+    "ta": "அல்லது infrastructure failures."
+  },
+  "or legitimate business purposes.": {
+    "hi": "या legitimate business purposes.",
+    "ta": "அல்லது legitimate business purposes."
+  },
+  "or misuse of the Platform.": {
+    "hi": "या Platform misuse.",
+    "ta": "அல்லது Platform misuse."
+  },
+  "or platform availability at all times.": {
+    "hi": "या all times platform availability.",
+    "ta": "அல்லது all times platform availability."
+  },
+  "or regulatory breaches by users.": {
+    "hi": "या users द्वारा regulatory breaches.",
+    "ta": "அல்லது users regulatory breaches."
+  },
+  "or regulatory/compliance authority.": {
+    "hi": "या regulatory/compliance authority.",
+    "ta": "அல்லது regulatory/compliance authority."
+  },
+  "or third-party actions.": {
+    "hi": "या third-party actions.",
+    "ta": "அல்லது third-party actions."
+  },
+  "or third-party systems.": {
+    "hi": "या third-party systems.",
+    "ta": "அல்லது third-party systems."
+  },
+  "or use the Platform for unlawful activities.": {
+    "hi": "या unlawful activities के लिए Platform use.",
+    "ta": "அல்லது unlawful activities-க்கு Platform use."
+  },
+  "or users violate these Terms.": {
+    "hi": "या users these Terms violate करें.",
+    "ta": "அல்லது users these Terms violate."
+  },
+  "password protections;": {
+    "hi": "password protections;",
+    "ta": "password protections;"
+  },
+  "payment completion;": {
+    "hi": "payment completion;",
+    "ta": "payment completion;"
+  },
+  "payment disputes;": {
+    "hi": "payment disputes;",
+    "ta": "payment disputes;"
+  },
+  "payment failures;": {
+    "hi": "payment failures;",
+    "ta": "payment failures;"
+  },
+  "payment or communication service providers;": {
+    "hi": "payment या communication service providers;",
+    "ta": "payment/communication service providers;"
+  },
+  "payment;": {
+    "hi": "payment;",
+    "ta": "payment;"
+  },
+  "performance monitoring technologies;": {
+    "hi": "performance monitoring technologies;",
+    "ta": "performance monitoring technologies;"
+  },
+  "permits;": {
+    "hi": "permits;",
+    "ta": "permits;"
+  },
+  "pixels;": {
+    "hi": "pixels;",
+    "ta": "pixels;"
+  },
+  "platform improvement;": {
+    "hi": "platform improvement;",
+    "ta": "platform improvement;"
+  },
+  "platform integrity is at risk;": {
+    "hi": "platform integrity risk में है;",
+    "ta": "platform integrity risk-இல்;"
+  },
+  "platform operations;": {
+    "hi": "platform operations;",
+    "ta": "platform operations;"
+  },
+  "platform software;": {
+    "hi": "platform software;",
+    "ta": "platform software;"
+  },
+  "pollution control approvals;": {
+    "hi": "pollution control approvals;",
+    "ta": "pollution control approvals;"
+  },
+  "pollution control compliance;": {
+    "hi": "pollution control compliance;",
+    "ta": "pollution control compliance;"
+  },
+  "power outages;": {
+    "hi": "power outages;",
+    "ta": "power outages;"
+  },
+  "pricing disputes;": {
+    "hi": "pricing disputes;",
+    "ta": "pricing disputes;"
+  },
+  "pricing;": {
+    "hi": "pricing;",
+    "ta": "pricing;"
+  },
+  "professional advisors;": {
+    "hi": "professional advisors;",
+    "ta": "professional advisors;"
+  },
+  "profile details;": {
+    "hi": "profile details;",
+    "ta": "profile details;"
+  },
+  "quality;": {
+    "hi": "quality;",
+    "ta": "quality;"
+  },
+  "reasonable technical measures;": {
+    "hi": "reasonable technical measures;",
+    "ta": "reasonable technical measures;"
+  },
+  "recycler;": {
+    "hi": "recycler;",
+    "ta": "recycler;"
+  },
+  "remember user preferences;": {
+    "hi": "user preferences remember करना;",
+    "ta": "user preferences remember;"
+  },
+  "remove content;": {
+    "hi": "content remove करना;",
+    "ta": "content remove;"
+  },
+  "reproduce;": {
+    "hi": "reproduce;",
+    "ta": "reproduce;"
+  },
+  "request deletion of information;": {
+    "hi": "information deletion request;",
+    "ta": "information deletion request;"
+  },
+  "restrict visibility;": {
+    "hi": "visibility restrict करना;",
+    "ta": "visibility restrict;"
+  },
+  "restricted access controls;": {
+    "hi": "restricted access controls;",
+    "ta": "restricted access controls;"
+  },
+  "reverse engineer the Platform;": {
+    "hi": "Platform reverse engineer करना;",
+    "ta": "Platform reverse engineer;"
+  },
+  "reverse engineer;": {
+    "hi": "reverse engineer;",
+    "ta": "reverse engineer;"
+  },
+  "revise pricing;": {
+    "hi": "pricing revise करना;",
+    "ta": "pricing revise;"
+  },
+  "safety;": {
+    "hi": "safety;",
+    "ta": "safety;"
+  },
+  "scrape or extract platform data;": {
+    "hi": "platform data scrape या extract करना;",
+    "ta": "platform data scrape/extract;"
+  },
+  "scrape;": {
+    "hi": "scrape;",
+    "ta": "scrape;"
+  },
+  "seller;": {
+    "hi": "seller;",
+    "ta": "seller;"
+  },
+  "send spam or unsolicited communications;": {
+    "hi": "spam या unsolicited communications send करना;",
+    "ta": "spam/unsolicited communications send;"
+  },
+  "service announcements;": {
+    "hi": "service announcements;",
+    "ta": "service announcements;"
+  },
+  "service improvement;": {
+    "hi": "service improvement;",
+    "ta": "service improvement;"
+  },
+  "service optimisation;": {
+    "hi": "service optimisation;",
+    "ta": "service optimisation;"
+  },
+  "service-related notifications;": {
+    "hi": "service-related notifications;",
+    "ta": "service-related notifications;"
+  },
+  "session tracking;": {
+    "hi": "session tracking;",
+    "ta": "session tracking;"
+  },
+  "store or transport waste;": {
+    "hi": "waste store या transport करना;",
+    "ta": "waste store/transport;"
+  },
+  "store;": {
+    "hi": "store;",
+    "ta": "store;"
+  },
+  "strikes;": {
+    "hi": "strikes;",
+    "ta": "strikes;"
+  },
+  "submit false or misleading information;": {
+    "hi": "false या misleading information submit करना;",
+    "ta": "false/misleading information submit;"
+  },
+  "subscription access;": {
+    "hi": "subscription access;",
+    "ta": "subscription access;"
+  },
+  "subscription management;": {
+    "hi": "subscription management;",
+    "ta": "subscription management;"
+  },
+  "subscription updates;": {
+    "hi": "subscription updates;",
+    "ta": "subscription updates;"
+  },
+  "subscriptions;": {
+    "hi": "subscriptions;",
+    "ta": "subscriptions;"
+  },
+  "support communications;": {
+    "hi": "support communications;",
+    "ta": "support communications;"
+  },
+  "suspend accounts;": {
+    "hi": "accounts suspend करना;",
+    "ta": "accounts suspend;"
+  },
+  "take ownership of waste;": {
+    "hi": "waste ownership लेना;",
+    "ta": "waste ownership;"
+  },
+  "taxes;": {
+    "hi": "taxes;",
+    "ta": "taxes;"
+  },
+  "technology and analytics providers;": {
+    "hi": "technology और analytics providers;",
+    "ta": "technology மற்றும் analytics providers;"
+  },
+  "technology;": {
+    "hi": "technology;",
+    "ta": "technology;"
+  },
+  "third-party actions;": {
+    "hi": "third-party actions;",
+    "ta": "third-party actions;"
+  },
+  "third-party content;": {
+    "hi": "third-party content;",
+    "ta": "third-party content;"
+  },
+  "third-party privacy practices;": {
+    "hi": "third-party privacy practices;",
+    "ta": "third-party privacy practices;"
+  },
+  "third-party systems;": {
+    "hi": "third-party systems;",
+    "ta": "third-party systems;"
+  },
+  "third-party websites;": {
+    "hi": "third-party websites;",
+    "ta": "third-party websites;"
+  },
+  "transaction success;": {
+    "hi": "transaction success;",
+    "ta": "transaction success;"
+  },
+  "transaction-related activity;": {
+    "hi": "transaction-related activity;",
+    "ta": "transaction-related activity;"
+  },
+  "transactional communications;": {
+    "hi": "transactional communications;",
+    "ta": "transactional communications;"
+  },
+  "transactional emails;": {
+    "hi": "transactional emails;",
+    "ta": "transactional emails;"
+  },
+  "transportation compliance;": {
+    "hi": "transportation compliance;",
+    "ta": "transportation compliance;"
+  },
+  "transportation issues;": {
+    "hi": "transportation issues;",
+    "ta": "transportation issues;"
+  },
+  "transportation;": {
+    "hi": "transportation;",
+    "ta": "transportation;"
+  },
+  "transporter;": {
+    "hi": "transporter;",
+    "ta": "transporter;"
+  },
+  "uninterrupted availability;": {
+    "hi": "uninterrupted availability;",
+    "ta": "uninterrupted availability;"
+  },
+  "unlawful activity is suspected;": {
+    "hi": "unlawful activity suspected है;",
+    "ta": "unlawful activity suspected;"
+  },
+  "update features;": {
+    "hi": "features update करना;",
+    "ta": "features update;"
+  },
+  "update or correct information;": {
+    "hi": "information update या correct करना;",
+    "ta": "information update/correct;"
+  },
+  "upload illegal, prohibited or unlawful waste listings;": {
+    "hi": "illegal, prohibited या unlawful waste listings upload करना;",
+    "ta": "illegal/prohibited/unlawful waste listings upload;"
+  },
+  "upload malware or malicious code;": {
+    "hi": "malware या malicious code upload करना;",
+    "ta": "malware/malicious code upload;"
+  },
+  "uploaded documents;": {
+    "hi": "uploaded documents;",
+    "ta": "uploaded documents;"
+  },
+  "uploaded images;": {
+    "hi": "uploaded images;",
+    "ta": "uploaded images;"
+  },
+  "use of cookies and analytics technologies;": {
+    "hi": "cookies और analytics technologies का use;",
+    "ta": "cookies/analytics technologies use;"
+  },
+  "user authentication and login management;": {
+    "hi": "user authentication और login management;",
+    "ta": "user authentication/login management;"
+  },
+  "user authenticity;": {
+    "hi": "user authenticity;",
+    "ta": "user authenticity;"
+  },
+  "user content;": {
+    "hi": "user content;",
+    "ta": "user content;"
+  },
+  "user disputes;": {
+    "hi": "user disputes;",
+    "ta": "user disputes;"
+  },
+  "user interactions;": {
+    "hi": "user interactions;",
+    "ta": "user interactions;"
+  },
+  "user misconduct;": {
+    "hi": "user misconduct;",
+    "ta": "user misconduct;"
+  },
+  "users;": {
+    "hi": "users;",
+    "ta": "users;"
+  },
+  "verify GST registrations;": {
+    "hi": "GST registrations verify करना;",
+    "ta": "GST registrations verify;"
+  },
+  "verify environmental compliance;": {
+    "hi": "environmental compliance verify करना;",
+    "ta": "environmental compliance verify;"
+  },
+  "verify legality of listings;": {
+    "hi": "listings की legality verify करना;",
+    "ta": "listings legality verify;"
+  },
+  "verify licences or permissions;": {
+    "hi": "licences या permissions verify करना;",
+    "ta": "licences/permissions verify;"
+  },
+  "verify recyclers or aggregators;": {
+    "hi": "recyclers या aggregators verify करना;",
+    "ta": "recyclers/aggregators verify;"
+  },
+  "waste disposal legality;": {
+    "hi": "waste disposal legality;",
+    "ta": "waste disposal legality;"
+  },
+  "waste handler;": {
+    "hi": "waste handler;",
+    "ta": "waste handler;"
+  },
+  "waste legality;": {
+    "hi": "waste legality;",
+    "ta": "waste legality;"
+  },
+  "waste listing information;": {
+    "hi": "waste listing information;",
+    "ta": "waste listing information;"
+  },
+  "waste listings;": {
+    "hi": "waste listings;",
+    "ta": "waste listings;"
+  },
+  "withdraw certain consents;": {
+    "hi": "certain consents withdraw करना;",
+    "ta": "certain consents withdraw;"
+  },
+  "workflows;": {
+    "hi": "workflows;",
+    "ta": "workflows;"
+  }
+}
