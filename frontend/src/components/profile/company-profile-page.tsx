@@ -164,6 +164,8 @@ export function CompanyProfilePage() {
   }
 
   async function onSubmit(values: CompanyProfileFormValues) {
+    if (!user) return;
+
     setSaveStatus(null);
     setSaveError(null);
 

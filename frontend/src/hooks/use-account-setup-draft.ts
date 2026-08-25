@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { UseFormReturn } from "react-hook-form";
+import type { Path, PathValue, UseFormReturn } from "react-hook-form";
 
 import { useOnboardingHydration } from "@/hooks/use-onboarding-hydration";
 import {
@@ -16,6 +16,14 @@ type AccountSetupFormFields = {
   password?: string;
   confirmPassword?: string;
 };
+
+function setDraftField<T extends AccountSetupFormFields>(
+  form: UseFormReturn<T>,
+  name: keyof AccountSetupFormFields & string,
+  value: string,
+) {
+  form.setValue(name as Path<T>, value as PathValue<T, Path<T>>);
+}
 
 type UseAccountSetupDraftOptions = {
   includeEmail?: boolean;
@@ -66,16 +74,16 @@ export function useAccountSetupDraftPersistence<T extends AccountSetupFormFields
     const nextCompany = draft.companyName || options.fallbackCompanyName || "";
     const nextEmail = draft.email || options.fallbackEmail || "";
 
-    if (nextName) form.setValue("name", nextName as T["name"]);
-    if (nextCompany) form.setValue("companyName", nextCompany as T["companyName"]);
+    if (nextName) setDraftField(form, "name", nextName);
+    if (nextCompany) setDraftField(form, "companyName", nextCompany);
     if (includeEmail && nextEmail) {
-      form.setValue("email", nextEmail as T["email"]);
+      setDraftField(form, "email", nextEmail);
     }
     if (draft.password) {
-      form.setValue("password", draft.password as T["password"]);
+      setDraftField(form, "password", draft.password);
     }
     if (draft.confirmPassword) {
-      form.setValue("confirmPassword", draft.confirmPassword as T["confirmPassword"]);
+      setDraftField(form, "confirmPassword", draft.confirmPassword);
     }
     if (draft.legalConsent) setLegalConsent(true);
 
