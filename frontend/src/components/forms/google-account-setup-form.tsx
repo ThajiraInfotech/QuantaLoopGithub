@@ -7,7 +7,10 @@ import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { LegalConsentCheckbox } from "@/components/legal/legal-consent-checkbox";
-import { onboardingPrimaryButtonClass } from "@/components/onboarding/onboarding-accent";
+import {
+  onboardingFieldClass,
+  onboardingPrimaryButtonClass,
+} from "@/components/onboarding/onboarding-accent";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,6 +18,7 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { PasswordStrengthMeter } from "@/components/ui/password-strength-meter";
 import { getPostAuthRedirect } from "@/lib/auth-routing";
 import { cn } from "@/lib/utils";
+import { useAccountSetupDraftPersistence } from "@/hooks/use-account-setup-draft";
 import { completeAccountSetupRequest } from "@/services/auth/auth.service";
 import { useAuthStore } from "@/store/auth-store";
 import { useOnboardingStore } from "@/store/onboarding-store";
@@ -74,9 +78,19 @@ export function GoogleAccountSetupForm() {
 
   const passwordValue = form.watch("password");
 
+  useAccountSetupDraftPersistence(form, legalConsent, setLegalConsent, {
+    includeEmail: false,
+    fallbackName: user?.name ?? "",
+    fallbackCompanyName: user?.companyName ?? "",
+  });
+
   useEffect(() => {
-    if (user?.name) form.setValue("name", user.name);
-    if (user?.companyName) form.setValue("companyName", user.companyName);
+    if (user?.name && !form.getValues("name")) {
+      form.setValue("name", user.name);
+    }
+    if (user?.companyName && !form.getValues("companyName")) {
+      form.setValue("companyName", user.companyName);
+    }
   }, [form, user?.name, user?.companyName]);
 
   useEffect(() => {
@@ -122,7 +136,12 @@ export function GoogleAccountSetupForm() {
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2 sm:col-span-2">
           <Label htmlFor="name">{t("contactName")}</Label>
-          <Input id="name" autoComplete="name" {...form.register("name")} />
+          <Input
+            id="name"
+            autoComplete="name"
+            className={onboardingFieldClass}
+            {...form.register("name")}
+          />
           {form.formState.errors.name?.message ? (
             <p className="text-sm text-red-600" role="alert">
               {form.formState.errors.name.message}
@@ -135,6 +154,7 @@ export function GoogleAccountSetupForm() {
           <Input
             id="companyName"
             autoComplete="organization"
+            className={onboardingFieldClass}
             {...form.register("companyName")}
           />
           {form.formState.errors.companyName?.message ? (
@@ -155,6 +175,7 @@ export function GoogleAccountSetupForm() {
             <PasswordInput
               id="password"
               autoComplete="new-password"
+              inputClassName={onboardingFieldClass}
               {...form.register("password")}
             />
             <PasswordStrengthMeter password={passwordValue} />
@@ -170,6 +191,7 @@ export function GoogleAccountSetupForm() {
             <PasswordInput
               id="confirmPassword"
               autoComplete="new-password"
+              inputClassName={onboardingFieldClass}
               {...form.register("confirmPassword")}
             />
             {form.formState.errors.confirmPassword?.message ? (
@@ -200,7 +222,10 @@ export function GoogleAccountSetupForm() {
       <Button
         type="submit"
         variant="accent"
-        className={cn("w-full", onboardingPrimaryButtonClass)}
+        className={cn(
+          "h-auto min-h-11 w-full whitespace-normal py-2.5 sm:h-10 sm:py-2",
+          onboardingPrimaryButtonClass
+        )}
         disabled={form.formState.isSubmitting || !legalConsent}
       >
         {form.formState.isSubmitting ? t("saving") : t("complete")}

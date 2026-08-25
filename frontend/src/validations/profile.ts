@@ -40,10 +40,7 @@ export const companyProfileFormSchema = z.object({
   companyDescription: z.string().max(8000),
   website: z.union([z.string().url().max(500), z.literal("")]),
   industriesText: z.string().max(2000),
-  materialsText: z.string().max(4000),
   industryType: z.string().max(120),
-  operationalLocation: z.string().max(300),
-  location: z.string().max(300),
   employeeRange: z.string().max(80),
   establishedYear: z.string().max(4),
   responseRate: z.preprocess((val) => {
@@ -69,7 +66,6 @@ export function companyFormToPatch(
   values: CompanyProfileFormValues
 ): ProfilePatchInput {
   const industriesHandled = splitList(values.industriesText).slice(0, 40);
-  const materialsHandled = splitList(values.materialsText);
   const yearStr = values.establishedYear?.trim() ?? "";
   const establishedYear =
     yearStr && /^\d{4}$/.test(yearStr)
@@ -82,10 +78,7 @@ export function companyFormToPatch(
     companyDescription: values.companyDescription,
     website: values.website,
     industriesHandled,
-    materialsHandled,
     industryType: values.industryType,
-    operationalLocation: values.operationalLocation,
-    location: values.location,
     employeeRange: values.employeeRange,
     responseRate: values.responseRate,
     averageResponseTime: values.averageResponseTime,

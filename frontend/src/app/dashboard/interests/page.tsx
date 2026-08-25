@@ -184,8 +184,8 @@ export default function InterestsPage() {
 
   if (loading) {
     return (
-      <div className="mx-auto max-w-3xl space-y-4 py-8">
-        <div className="grid gap-3 sm:grid-cols-2">
+      <div className="mx-auto max-w-3xl space-y-4 py-6 sm:py-8">
+        <div className="grid grid-cols-2 gap-3">
           {[0, 1].map((k) => (
             <div
               key={k}
@@ -205,11 +205,16 @@ export default function InterestsPage() {
 
   if (error) {
     return (
-      <div className="mx-auto max-w-3xl space-y-4 py-8">
-        <p className="text-sm text-red-700" role="alert">
+      <div className="mx-auto max-w-3xl space-y-4 py-6 sm:py-8">
+        <p className="text-sm leading-relaxed text-pretty text-red-700" role="alert">
           {error}
         </p>
-        <Button type="button" variant="outline" size="sm" onClick={() => void load()}>
+        <Button
+          type="button"
+          variant="outline"
+          className="min-h-11 w-full sm:h-9 sm:w-auto"
+          onClick={() => void load()}
+        >
           {tCommon("retry")}
         </Button>
       </div>
@@ -218,15 +223,17 @@ export default function InterestsPage() {
 
   if (items.length === 0) {
     return (
-      <div className="mx-auto max-w-3xl space-y-8 py-4">
+      <div className="mx-auto max-w-3xl space-y-5 py-4 sm:space-y-8">
         <PageHeader isProvider={isProvider} pendingCount={0} />
-        <div className="rounded-xl border border-dashed border-zinc-200 bg-zinc-50/80 px-6 py-12 text-center">
-          <p className="text-sm font-medium text-zinc-800">
+        <div className="rounded-xl border border-dashed border-zinc-200 bg-zinc-50/80 px-4 py-10 text-center sm:px-6 sm:py-12">
+          <p className="text-sm font-medium text-pretty text-zinc-800">
             {isProvider ? t("emptyProvider") : t("emptyBuyer")}
           </p>
           <Link
             href={ROUTES.materials}
-            className={primaryActionLinkClassName("mt-6")}
+            className={primaryActionLinkClassName(
+              "mt-6 h-12 w-full text-base sm:h-10 sm:w-auto sm:text-small"
+            )}
           >
             {isProvider ? "View Materials" : "Browse materials"}
           </Link>
@@ -237,14 +244,14 @@ export default function InterestsPage() {
 
   if (filterLabel && displayItems.length === 0) {
     return (
-      <div className="mx-auto max-w-3xl space-y-6 py-4">
+      <div className="mx-auto max-w-3xl space-y-5 py-4 sm:space-y-6">
         <PageHeader isProvider={isProvider} pendingCount={0} />
         <div className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-700">
           <p className="font-medium">{filterLabel}</p>
-          <p className="mt-1 text-zinc-600">No interests match this filter right now.</p>
+          <p className="mt-1 text-pretty text-zinc-600">No interests match this filter right now.</p>
           <Link
             href={ROUTES.interests}
-            className="mt-3 inline-block text-sm font-medium text-zinc-900 underline-offset-4 hover:underline"
+            className="mt-3 inline-flex min-h-11 items-center text-sm font-medium text-zinc-900 underline-offset-4 hover:underline"
           >
             {t("clearFilter")} →
           </Link>
@@ -254,17 +261,17 @@ export default function InterestsPage() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl space-y-8">
+    <div className="mx-auto max-w-3xl space-y-5 sm:space-y-8">
       <PageHeader isProvider={isProvider} pendingCount={kpis.pending} />
 
       {filterLabel ? (
-        <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-amber-200/80 bg-amber-50/60 px-4 py-3 text-sm text-amber-950">
-          <p>
+        <div className="flex flex-col gap-2 rounded-lg border border-amber-200/80 bg-amber-50/60 px-4 py-3 text-sm text-amber-950 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+          <p className="text-pretty">
             <span className="font-medium">Filter active:</span> {filterLabel}
           </p>
           <Link
             href={ROUTES.interests}
-            className="font-medium underline-offset-4 hover:underline"
+            className="inline-flex min-h-11 items-center font-medium underline-offset-4 hover:underline sm:min-h-0"
           >
             {t("clearFilter")}
           </Link>
@@ -272,7 +279,7 @@ export default function InterestsPage() {
       ) : null}
 
       {isProvider ? (
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid grid-cols-2 gap-3">
           <KpiTile label={t("pending")} value={kpis.pending} tone="amber" />
           <KpiTile label={t("inProgress")} value={kpis.active} tone="blue" />
         </div>
@@ -317,7 +324,7 @@ export default function InterestsPage() {
             <button
               type="button"
               onClick={() => setHistoryExpanded((v) => !v)}
-              className="text-sm font-medium text-zinc-600 underline-offset-4 hover:text-zinc-900 hover:underline"
+              className="inline-flex min-h-11 items-center text-sm font-medium text-zinc-600 underline-offset-4 hover:text-zinc-900 hover:underline sm:min-h-0"
             >
               {historyExpanded ? "Hide past discussions" : "Show past discussions"}
             </button>
@@ -334,7 +341,7 @@ export default function InterestsPage() {
       ) : null}
 
       {isProvider && pending.length === 0 && active.length === 0 && history.length > 0 ? (
-        <p className="text-sm text-zinc-500">
+        <p className="text-sm leading-relaxed text-pretty text-zinc-500">
           No active interests right now. Expand past discussions to review closed opportunities.
         </p>
       ) : null}
@@ -353,10 +360,10 @@ function PageHeader({
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
+      <h1 className="text-[1.5rem] font-semibold tracking-tight text-balance text-zinc-900 sm:text-3xl">
         {isProvider ? t("titleProvider") : t("titleBuyer")}
       </h1>
-      <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+      <p className="mt-2 text-sm leading-relaxed text-pretty text-zinc-600">
         {isProvider
           ? pendingCount > 0
             ? `${pendingCount} interest${pendingCount === 1 ? "" : "s"} need${pendingCount === 1 ? "s" : ""} your response. Reply and advance deals here.`
@@ -418,7 +425,7 @@ function InboxSection({
   return (
     <section
       className={cn(
-        "space-y-4 rounded-xl border p-5 sm:p-6",
+        "space-y-4 rounded-xl border p-4 sm:p-6",
         tone === "amber" && "border-amber-200/70 bg-amber-50/20",
         tone === "muted" && "border-zinc-200/80 bg-zinc-50/50",
         tone === "default" && "border-zinc-200/80 bg-white"
@@ -430,7 +437,7 @@ function InboxSection({
             {title}
           </h2>
           {description ? (
-            <p className="mt-1 text-sm text-zinc-600">{description}</p>
+            <p className="mt-1 text-sm leading-relaxed text-pretty text-zinc-600">{description}</p>
           ) : null}
         </div>
         {action}

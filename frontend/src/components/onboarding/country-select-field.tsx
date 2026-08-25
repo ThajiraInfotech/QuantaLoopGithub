@@ -35,11 +35,12 @@ export function CountrySelectField({
   return (
     <div className={cn("space-y-2", className)}>
       <Label htmlFor={id}>{label}</Label>
-      {hint ? <p className="text-xs text-zinc-500">{hint}</p> : null}
+      {hint ? <p className="text-xs leading-relaxed text-zinc-500">{hint}</p> : null}
       <SelectField
         id={id}
         value={normalizeCountryCode(value)}
         onChange={(e) => onChange(normalizeCountryCode(e.target.value))}
+        className="h-12 border-zinc-200 bg-white text-base sm:h-10 sm:text-small"
       >
         {options.map((country) => (
           <option key={country.code} value={country.code}>

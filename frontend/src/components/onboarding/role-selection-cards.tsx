@@ -53,7 +53,7 @@ export function RoleSelectionCards() {
   }
 
   return (
-    <div className="grid gap-5 md:grid-cols-2 md:items-stretch">
+    <div className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2 md:items-stretch">
       {options.map((opt) => {
         const isSelected = selected === opt.role;
         const Icon = opt.icon;
@@ -75,7 +75,7 @@ export function RoleSelectionCards() {
           >
             <Card
               className={cn(
-                "flex h-full w-full flex-col bg-white shadow-sm shadow-zinc-950/5",
+                "relative flex h-full w-full flex-col bg-white shadow-sm shadow-zinc-950/5",
                 onboardingCardTransitionClass,
                 isSelected
                   ? onboardingCardSelectedClass
@@ -83,46 +83,48 @@ export function RoleSelectionCards() {
               )}
             >
               {isSelected ? (
-                <span className="absolute right-5 top-5 z-10 inline-flex items-center gap-1 text-xs font-semibold text-[#33B573]">
+                <span className="absolute right-4 top-4 z-10 inline-flex items-center gap-1 text-xs font-semibold text-[#33B573] sm:right-5 sm:top-5">
                   <Check className="h-3.5 w-3.5" strokeWidth={2.5} aria-hidden />
                   {tCommon("selected")}
                 </span>
               ) : null}
 
-              <CardContent className="flex flex-1 flex-col p-6 sm:p-7">
+              <CardContent className="flex flex-1 flex-col p-5 sm:p-7">
                 <span
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-[#CFEFDF] bg-[#F7FCF9] text-[#33B573]"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-[#CFEFDF] bg-[#F7FCF9] text-[#33B573] sm:h-11 sm:w-11"
                   aria-hidden
                 >
                   <Icon className="h-5 w-5" strokeWidth={1.75} />
                 </span>
 
-                <h2 className="mt-4 pr-16 text-lg font-semibold leading-snug text-zinc-900">
+                <h2 className="mt-4 pr-20 text-base font-semibold leading-snug text-zinc-900 sm:text-lg">
                   {opt.title}
                 </h2>
-                <p className="mt-2 min-h-[4.5rem] text-sm font-medium leading-relaxed text-zinc-700">
+                <p className="mt-2 text-sm font-medium leading-relaxed text-zinc-700 md:min-h-[4.5rem]">
                   {opt.summary}
                 </p>
 
-                <span
-                  role="presentation"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelected(opt.role);
-                    continueWith(opt.role);
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
+                <div className="mt-auto pt-5">
+                  <span
+                    role="presentation"
+                    onClick={(e) => {
                       e.stopPropagation();
-                      e.preventDefault();
                       setSelected(opt.role);
                       continueWith(opt.role);
-                    }
-                  }}
-                  className="mt-auto w-fit cursor-pointer pt-5 text-sm font-semibold text-[#33B573] transition-colors duration-[250ms] ease-[ease] hover:opacity-90"
-                >
-                  {t("continueArrow")}
-                </span>
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        setSelected(opt.role);
+                        continueWith(opt.role);
+                      }
+                    }}
+                    className="inline-flex min-h-11 w-full cursor-pointer items-center justify-center rounded-lg border border-[#CFEFDF] bg-[#F7FCF9] px-4 text-sm font-semibold text-[#33B573] transition-colors duration-[250ms] ease-[ease] hover:opacity-90 sm:w-fit sm:justify-start sm:border-0 sm:bg-transparent sm:px-0"
+                  >
+                    {t("continueArrow")}
+                  </span>
+                </div>
               </CardContent>
             </Card>
           </div>

@@ -31,11 +31,11 @@ export function LegalConsentCheckbox({
         type="checkbox"
         checked={checked}
         onChange={(e) => onCheckedChange(e.target.checked)}
-        className="mt-0.5 size-4 shrink-0 cursor-pointer rounded border-zinc-300 text-[#33B573] accent-[#33B573] focus:ring-2 focus:ring-[#33B573]/30 focus:ring-offset-0"
+        className="mt-1 size-5 shrink-0 cursor-pointer rounded border-zinc-300 text-[#33B573] accent-[#33B573] focus:ring-2 focus:ring-[#33B573]/30 focus:ring-offset-0 sm:mt-0.5 sm:size-4"
       />
       <label
         htmlFor={id}
-        className="cursor-pointer text-sm leading-relaxed text-zinc-600"
+        className="min-w-0 cursor-pointer text-sm leading-relaxed text-pretty text-zinc-600"
       >
         {t("prefix")}{" "}
         <Link href={ROUTES.legalTerms} className={legalLinkClass}>

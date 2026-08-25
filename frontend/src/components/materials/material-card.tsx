@@ -86,20 +86,20 @@ export function MaterialCard({
     >
       <Link
         href={ROUTES.materialDetail(material.id)}
-        className="block cursor-pointer p-5 pr-14"
+        className="block cursor-pointer p-4 pr-16 sm:p-5 sm:pr-14"
         aria-label={t("viewAria", { title: material.title })}
       >
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
           <div className="min-w-0 space-y-2">
             <div className="flex flex-wrap items-center gap-2">
-              <h2 className="truncate text-base font-semibold tracking-tight text-zinc-900 transition-colors group-hover:text-zinc-950">
+              <h2 className="text-pretty text-base font-semibold tracking-tight text-zinc-900 transition-colors group-hover:text-zinc-950 sm:truncate">
                 {material.title}
               </h2>
               <span className="rounded-md border border-zinc-200 bg-zinc-50 px-2 py-0.5 text-xs font-medium text-zinc-600">
                 {material.materialSubtype || material.materialType}
               </span>
             </div>
-            <p className="text-sm text-zinc-600">
+            <p className="text-sm leading-relaxed text-zinc-600">
               <span className="font-medium text-zinc-800">
                 {material.quantity} {material.unit}
               </span>
@@ -107,7 +107,7 @@ export function MaterialCard({
               {material.location}
             </p>
           </div>
-          <div className="flex shrink-0 flex-col items-end gap-1.5 text-right text-xs text-zinc-500 sm:max-w-[40%]">
+          <div className="flex flex-col items-start gap-1.5 text-left text-xs text-zinc-500 sm:max-w-[40%] sm:shrink-0 sm:items-end sm:text-right">
             {fitScore != null ? <MaterialFitBadge score={fitScore} /> : null}
             <MatchLocationNote
               locationScope={locationScope}
@@ -139,7 +139,7 @@ export function MaterialCard({
             onToggleSave(material.id, saved);
           }}
           className={cn(
-            "absolute right-4 top-4 z-10 inline-flex h-9 w-9 items-center justify-center rounded-md border border-zinc-200 bg-white text-zinc-500 transition-colors hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900",
+            "absolute right-3 top-3 z-10 inline-flex h-11 w-11 items-center justify-center rounded-md border border-zinc-200 bg-white text-zinc-500 transition-colors hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900 sm:right-4 sm:top-4 sm:h-9 sm:w-9",
             saved && "border-rose-200 text-rose-600 hover:text-rose-700"
           )}
         >

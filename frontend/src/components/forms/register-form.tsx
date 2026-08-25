@@ -8,7 +8,10 @@ import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { LegalConsentCheckbox } from "@/components/legal/legal-consent-checkbox";
-import { onboardingPrimaryButtonClass } from "@/components/onboarding/onboarding-accent";
+import {
+  onboardingFieldClass,
+  onboardingPrimaryButtonClass,
+} from "@/components/onboarding/onboarding-accent";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { flushOnboardingDraftToProfile } from "@/lib/onboarding-flush";
@@ -23,6 +26,7 @@ import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/ui/password-input";
 import { PasswordStrengthMeter } from "@/components/ui/password-strength-meter";
 import { ROUTES } from "@/constants/routes";
+import { useAccountSetupDraftPersistence } from "@/hooks/use-account-setup-draft";
 import { registerRequest } from "@/services/auth/auth.service";
 import { useAuthStore } from "@/store/auth-store";
 import {
@@ -80,17 +84,15 @@ export function RegisterForm() {
 
   const passwordValue = form.watch("password");
 
+  useAccountSetupDraftPersistence(form, legalConsent, setLegalConsent, {
+    fallbackEmail: pendingSignupEmail,
+  });
+
   useEffect(() => {
     if (pendingRole) {
       form.setValue("role", pendingRole);
     }
   }, [form, pendingRole]);
-
-  useEffect(() => {
-    if (pendingSignupEmail) {
-      form.setValue("email", pendingSignupEmail);
-    }
-  }, [form, pendingSignupEmail]);
 
   async function onSubmit(values: RegisterFormValues) {
     setFormError(null);
@@ -208,7 +210,12 @@ export function RegisterForm() {
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2 sm:col-span-2">
           <Label htmlFor="name">{t("contactName")}</Label>
-          <Input id="name" autoComplete="name" {...form.register("name")} />
+          <Input
+            id="name"
+            autoComplete="name"
+            className={onboardingFieldClass}
+            {...form.register("name")}
+          />
           {form.formState.errors.name?.message ? (
             <p className="text-sm text-red-600" role="alert">
               {form.formState.errors.name.message}
@@ -221,6 +228,7 @@ export function RegisterForm() {
           <Input
             id="companyName"
             autoComplete="organization"
+            className={onboardingFieldClass}
             {...form.register("companyName")}
           />
           {form.formState.errors.companyName?.message ? (
@@ -236,6 +244,7 @@ export function RegisterForm() {
             id="email"
             type="email"
             autoComplete="email"
+            className={onboardingFieldClass}
             {...form.register("email")}
           />
           <p className="text-sm text-zinc-500">{t("emailHint")}</p>
@@ -251,6 +260,7 @@ export function RegisterForm() {
           <PasswordInput
             id="password"
             autoComplete="new-password"
+            inputClassName={onboardingFieldClass}
             {...form.register("password")}
           />
           <PasswordStrengthMeter password={passwordValue} />
@@ -266,6 +276,7 @@ export function RegisterForm() {
           <PasswordInput
             id="confirmPassword"
             autoComplete="new-password"
+            inputClassName={onboardingFieldClass}
             {...form.register("confirmPassword")}
           />
           {form.formState.errors.confirmPassword?.message ? (
@@ -294,7 +305,10 @@ export function RegisterForm() {
       <Button
         type="submit"
         variant="accent"
-        className={cn("w-full", onboardingPrimaryButtonClass)}
+        className={cn(
+          "h-auto min-h-11 w-full whitespace-normal py-2.5 sm:h-10 sm:py-2",
+          onboardingPrimaryButtonClass
+        )}
         disabled={
           form.formState.isSubmitting ||
           (requiresLegalConsent && !legalConsent)

@@ -74,15 +74,17 @@ export function RemindersStrip({ compact = false }: { compact?: boolean }) {
           return (
             <li
               key={r.id}
-              className="flex flex-wrap items-start justify-between gap-2 rounded-lg border border-zinc-100 bg-white px-3 py-2"
+              className="flex flex-col gap-2 rounded-lg border border-zinc-100 bg-white px-3 py-3 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between sm:py-2"
             >
               <div className="min-w-0">
                 <p className="text-sm font-medium text-zinc-900">{r.title}</p>
-                <p className="mt-0.5 text-xs text-zinc-600">{r.message}</p>
+                <p className="mt-0.5 text-xs leading-relaxed text-zinc-600">
+                  {r.message}
+                </p>
                 {href ? (
                   <Link
                     href={href}
-                    className="mt-1 inline-block text-xs font-medium text-zinc-800 underline-offset-4 hover:underline"
+                    className="mt-1 inline-flex min-h-11 items-center text-sm font-medium text-zinc-800 underline-offset-4 hover:underline sm:min-h-0 sm:text-xs"
                   >
                     Open →
                   </Link>
@@ -92,7 +94,7 @@ export function RemindersStrip({ compact = false }: { compact?: boolean }) {
                 type="button"
                 size="sm"
                 variant="ghost"
-                className="shrink-0 text-xs"
+                className="min-h-11 w-full shrink-0 text-sm sm:h-8 sm:min-h-0 sm:w-auto sm:text-xs"
                 onClick={() => void dismiss(r.id)}
               >
                 Dismiss

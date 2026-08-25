@@ -8,6 +8,8 @@ const { createSubscriptionCatalog } = require("../../config/subscriptionCatalog"
 const { createRazorpayClient } = require("./razorpay.client");
 const { createSubscriptionService } = require("./subscription.service");
 const { createSubscriptionController } = require("./subscription.controller");
+const { createBillingService } = require("../billing/billing.service");
+const { sendInvoiceEmail } = require("../../services/email/email.service");
 
 function createDependencies(env) {
   const catalog = createSubscriptionCatalog(env);
@@ -15,10 +17,18 @@ function createDependencies(env) {
     keyId: env.RAZORPAY_KEY_ID,
     keySecret: env.RAZORPAY_KEY_SECRET,
   });
+  const billingService = createBillingService({
+    env,
+    catalog,
+    emailService: {
+      sendInvoiceEmail: (payload) => sendInvoiceEmail(env, payload),
+    },
+  });
   const service = createSubscriptionService({
     client,
     catalog,
     keySecret: env.RAZORPAY_KEY_SECRET,
+    billingService,
   });
   return {
     catalog,

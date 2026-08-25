@@ -39,7 +39,7 @@ export async function LoginBrandingPanel() {
 
   return (
     <div
-      className="relative flex min-h-screen flex-col overflow-hidden border-b lg:border-b-0 lg:border-r"
+      className="relative flex h-full min-h-svh flex-col overflow-hidden border-r"
       style={{
         backgroundColor: loginTheme.bgLeft,
         borderColor: loginTheme.panelDivider,

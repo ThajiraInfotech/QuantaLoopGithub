@@ -14,7 +14,14 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-import { landingCardHover, landingSectionY, landingStackGap } from "./landing-styles";
+import {
+  landingCardHover,
+  landingContainerWide,
+  landingHeading,
+  landingLeadCentered,
+  landingSectionY,
+  landingStackGap,
+} from "./landing-styles";
 
 const ACCESS_ICONS: LucideIcon[] = [
   UserPlus,
@@ -75,7 +82,7 @@ function AccessStepCard({
         "flex h-full w-full flex-col border-border/90 bg-card shadow-card"
       )}
     >
-      <CardContent className="flex h-full min-h-[200px] flex-col p-5 sm:p-6">
+      <CardContent className="flex h-full min-h-0 flex-col p-4 sm:p-6 lg:min-h-[200px]">
         <div className="flex items-start justify-between gap-3">
           <Badge
             variant="outline"
@@ -87,7 +94,7 @@ function AccessStepCard({
             <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} />
           </span>
         </div>
-        <h3 className="mt-4 font-heading text-h4 leading-snug text-card-foreground">
+        <h3 className="mt-4 font-heading text-lg leading-snug text-card-foreground sm:text-h4">
           {title}
         </h3>
         <p className="mt-2 flex-1 text-small leading-relaxed text-muted-foreground">
@@ -110,37 +117,18 @@ export async function LandingAccessProcess() {
         landingSectionY
       )}
     >
-      <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
+      <div className={landingContainerWide}>
         <div className="mx-auto max-w-[900px] text-center">
           <p className="text-eyebrow">{t("eyebrow")}</p>
-          <h2 className="mt-3 font-heading text-[clamp(2rem,3vw,2.75rem)] font-bold leading-[1.12] tracking-[-0.02em] text-foreground text-balance">
-            {t("title")}
-          </h2>
-          <p className="mx-auto mt-5 max-w-[700px] text-[22px] leading-[1.6] text-muted-foreground sm:mt-6">
-            {t("description")}
-          </p>
+          <h2 className={cn("mt-3", landingHeading)}>{t("title")}</h2>
+          <p className={landingLeadCentered}>{t("description")}</p>
         </div>
 
-        <ol className={cn("flex flex-col lg:hidden", landingStackGap)}>
-          {accessSteps.map((item, index) => (
-            <Fragment key={item.step}>
-              <li className="flex">
-                <AccessStepCard
-                  {...item}
-                  icon={ACCESS_ICONS[index] ?? UserPlus}
-                />
-              </li>
-              {index < accessSteps.length - 1 ? (
-                <li className="flex justify-center" aria-hidden>
-                  <ProcessConnector orientation="vertical" />
-                </li>
-              ) : null}
-            </Fragment>
-          ))}
-        </ol>
-
         <ol
-          className={cn("hidden list-none items-stretch lg:flex", landingStackGap)}
+          className={cn(
+            "grid list-none grid-cols-1 md:grid-cols-2 md:gap-5 lg:flex lg:items-stretch lg:gap-0",
+            landingStackGap
+          )}
         >
           {accessSteps.map((item, index) => (
             <Fragment key={item.step}>
@@ -151,18 +139,23 @@ export async function LandingAccessProcess() {
                 />
               </li>
               {index < accessSteps.length - 1 ? (
-                <li
-                  className="flex shrink-0 items-center self-center px-0.5"
-                  aria-hidden
-                >
-                  <ProcessConnector orientation="horizontal" />
-                </li>
+                <>
+                  <li className="flex justify-center md:hidden" aria-hidden>
+                    <ProcessConnector orientation="vertical" />
+                  </li>
+                  <li
+                    className="hidden shrink-0 items-center self-center px-0.5 lg:flex"
+                    aria-hidden
+                  >
+                    <ProcessConnector orientation="horizontal" />
+                  </li>
+                </>
               ) : null}
             </Fragment>
           ))}
         </ol>
 
-        <p className="mx-auto mt-10 max-w-[640px] text-center text-small leading-relaxed text-muted-foreground sm:mt-12">
+        <p className="mx-auto mt-8 max-w-[640px] px-1 text-center text-small leading-relaxed text-muted-foreground sm:mt-12">
           {t("footer")}
         </p>
       </div>

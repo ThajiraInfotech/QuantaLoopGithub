@@ -96,17 +96,23 @@ function createSubscriptionController({ service, catalog, env }) {
       planId: result.data.planId,
       idempotencyKey: result.data.idempotencyKey,
     });
+    const plan = catalog.getPlan(result.data.planId);
     sendSuccess(
       res,
       {
         subscription,
         checkout: {
           keyId: env.RAZORPAY_KEY_ID || null,
+          orderId: subscription.razorpayOrderId,
+          razorpayOrderId: subscription.razorpayOrderId,
+          amount: plan.amountMinor,
+          currency: plan.currency,
+          // Legacy fields kept empty for older clients.
           subscriptionId: subscription.razorpaySubscriptionId,
           razorpaySubscriptionId: subscription.razorpaySubscriptionId,
         },
       },
-      "Checkout subscription created"
+      "Checkout order created"
     );
   });
 
@@ -116,6 +122,7 @@ function createSubscriptionController({ service, catalog, env }) {
     const subscription = await service.verifyAndReconcile({
       userId: req.user.id,
       paymentId: result.data.razorpayPaymentId,
+      orderId: result.data.razorpayOrderId,
       subscriptionId: result.data.razorpaySubscriptionId,
       signature: result.data.razorpaySignature,
     });

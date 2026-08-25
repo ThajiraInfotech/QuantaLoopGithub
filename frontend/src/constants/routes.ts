@@ -11,12 +11,9 @@ export const ROUTES = {
   dashboard: "/dashboard",
   profile: "/dashboard/profile",
   participantProfile: (id: string) => `/dashboard/participants/${id}`,
-  access: "/dashboard/access",
   network: "/dashboard/network",
   materials: "/dashboard/materials",
   materialsNew: "/dashboard/materials/new",
-  materialsDuplicate: (id: string) =>
-    `/dashboard/materials/new?duplicate=${encodeURIComponent(id)}`,
   materialDetail: (id: string) => `/dashboard/materials/${id}`,
   materialEdit: (id: string) => `/dashboard/materials/${id}/edit`,
   interests: "/dashboard/interests",
@@ -47,6 +44,7 @@ export const ROUTES = {
   adminInterestsCompleted: "/admin/interests?status=completed",
   adminInterestsReported: "/admin/interests?reportedOnly=true",
   adminDiscussions: "/admin/discussions",
+  adminInvoices: "/admin/invoices",
   adminMaterialsForParticipant: (id: string) =>
     `/admin/materials?participant=${encodeURIComponent(id)}`,
   adminInterestsForParticipant: (

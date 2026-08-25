@@ -202,30 +202,36 @@ export async function getCurrentSubscription(): Promise<CurrentSubscription | nu
   });
 }
 
+function normalizeAccessState(value: unknown): SubscriptionAccessState | null {
+  const payload = asRecord(value);
+  if (!payload || typeof payload.entitled !== "boolean") return null;
+
+  return {
+    entitled: payload.entitled,
+    status: firstString(payload, "status"),
+    reason: firstString(payload, "reason"),
+    expiresAt: firstString(payload, "expiresAt", "expires_at"),
+    currentEndAt: firstString(
+      payload,
+      "currentEndAt",
+      "current_end_at",
+      "currentPeriodEnd"
+    ),
+    daysRemaining:
+      firstNumber(payload, "daysRemaining", "days_remaining") ?? null,
+    expiringSoon: payload.expiringSoon === true,
+    subscription: normalizeSubscription(payload.subscription),
+  };
+}
+
 export async function getSubscriptionAccessState(): Promise<SubscriptionAccessState> {
   return request(async () => {
     const { data } = await apiClient.get<unknown>("/subscriptions/access-state");
-    const payload = asRecord(unwrapResponse(data));
-    if (!payload || typeof payload.entitled !== "boolean") {
+    const access = normalizeAccessState(unwrapResponse(data));
+    if (!access) {
       throw new Error("Unexpected subscription access response");
     }
-
-    return {
-      entitled: payload.entitled,
-      status: firstString(payload, "status"),
-      reason: firstString(payload, "reason"),
-      expiresAt: firstString(payload, "expiresAt", "expires_at"),
-      currentEndAt: firstString(
-        payload,
-        "currentEndAt",
-        "current_end_at",
-        "currentPeriodEnd"
-      ),
-      daysRemaining:
-        firstNumber(payload, "daysRemaining", "days_remaining") ?? null,
-      expiringSoon: payload.expiringSoon === true,
-      subscription: normalizeSubscription(payload.subscription),
-    };
+    return access;
   });
 }
 
@@ -240,33 +246,42 @@ export async function createSubscriptionCheckout(
     const nested = payload
       ? asRecord(payload.checkout) ?? asRecord(payload.subscription) ?? payload
       : null;
-    const subscriptionId = nested
+    const orderId = nested
       ? firstString(
           nested,
-          "subscriptionId",
-          "subscription_id",
-          "razorpaySubscriptionId",
-          "razorpay_subscription_id",
-          "id"
+          "orderId",
+          "order_id",
+          "razorpayOrderId",
+          "razorpay_order_id"
         )
       : undefined;
+    const amount =
+      (nested && firstNumber(nested, "amount", "amountMinor", "amount_paise")) ??
+      699900;
+    const currency =
+      (nested && firstString(nested, "currency")) ?? "INR";
 
-    if (!subscriptionId) {
-      throw new Error("Checkout did not return a subscription ID");
+    if (!orderId) {
+      throw new Error("Checkout did not return an order ID");
     }
-    return { subscriptionId };
+    return { orderId, amount, currency };
   });
 }
 
 export async function verifySubscription(
   input: VerifySubscriptionInput
-): Promise<void> {
-  await request(async () => {
+): Promise<SubscriptionAccessState | null> {
+  return request(async () => {
     const { data } = await apiClient.post<unknown>(
       "/subscriptions/verify",
       input
     );
-    unwrapResponse(data);
+    const payload = asRecord(unwrapResponse(data));
+    if (!payload) return null;
+    return (
+      normalizeAccessState(payload.accessState) ??
+      normalizeAccessState(payload)
+    );
   });
 }
 

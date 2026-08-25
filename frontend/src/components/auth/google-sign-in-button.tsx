@@ -2,7 +2,7 @@
 
 import { GoogleLogin } from "@react-oauth/google";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 import {
   loginErrorClass,
@@ -47,6 +47,23 @@ export function GoogleSignInButton({
   const t = useTranslations("auth.google");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const widthRef = useRef<HTMLDivElement>(null);
+  const [buttonWidth, setButtonWidth] = useState(320);
+
+  useLayoutEffect(() => {
+    const node = widthRef.current;
+    if (!node) return;
+
+    const updateWidth = () => {
+      const next = Math.max(200, Math.floor(node.clientWidth));
+      setButtonWidth(next);
+    };
+
+    updateWidth();
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   if (!clientId) {
     return (
@@ -74,18 +91,20 @@ export function GoogleSignInButton({
   return (
     <div className="space-y-2">
       <div
+        ref={widthRef}
         className={
           disabled || loading
-            ? "pointer-events-none opacity-60 [&>div]:flex [&>div]:w-full [&>div]:justify-center"
-            : "[&>div]:flex [&>div]:w-full [&>div]:justify-center"
+            ? "pointer-events-none w-full opacity-60 [&>div]:flex [&>div]:w-full [&>div]:justify-center"
+            : "w-full [&>div]:flex [&>div]:w-full [&>div]:justify-center"
         }
       >
         <GoogleLogin
+          key={buttonWidth}
           text="continue_with"
           shape="rectangular"
           theme="outline"
           size="large"
-          width="400"
+          width={String(buttonWidth)}
           onSuccess={async (response) => {
             if (!response.credential) {
               setError(t("credentialError"));

@@ -67,6 +67,24 @@ const listAdminInterestsQuerySchema = z.object({
   limit: z.coerce.number().int().min(1).max(100).optional().default(20),
 });
 
+const listAdminInvoicesQuerySchema = z.object({
+  search: z.string().optional().default(""),
+  month: z
+    .string()
+    .optional()
+    .default("")
+    .transform((value) => String(value || "").trim())
+    .refine((value) => value === "" || /^\d{4}-\d{2}$/.test(value), {
+      message: "month must be YYYY-MM",
+    }),
+  taxType: z
+    .enum(["all", "cgst_sgst", "igst", "export_zero_rated"])
+    .optional()
+    .default("all"),
+  page: z.coerce.number().int().min(1).optional().default(1),
+  limit: z.coerce.number().int().min(1).max(200).optional().default(50),
+});
+
 function safeParseListParticipants(query) {
   return listParticipantsQuerySchema.safeParse(query);
 }
@@ -111,6 +129,10 @@ const listAdminReportsQuerySchema = z.object({
   limit: z.coerce.number().int().min(1).max(100).optional().default(20),
 });
 
+function safeParseListAdminInvoices(query) {
+  return listAdminInvoicesQuerySchema.safeParse(query);
+}
+
 function safeParseListAdminInterests(query) {
   return listAdminInterestsQuerySchema.safeParse(query);
 }
@@ -127,4 +149,5 @@ module.exports = {
   safeParseBulkModerateMaterials,
   safeParseListAdminInterests,
   safeParseListAdminReports,
+  safeParseListAdminInvoices,
 };

@@ -5,6 +5,9 @@ import { CtaLink } from "@/components/landing/cta-link";
 import { LandingValueComparison } from "@/components/landing/landing-value-comparison";
 import {
   landingCardHover,
+  landingContainerWide,
+  landingHeading,
+  landingLeadCentered,
   landingSectionY,
   landingStackGap,
 } from "@/components/landing/landing-styles";
@@ -54,15 +57,11 @@ export async function LandingPricing() {
         landingSectionY
       )}
     >
-      <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
+      <div className={landingContainerWide}>
         <div className="mx-auto max-w-[900px] text-center">
           <p className="text-eyebrow">{t("eyebrow")}</p>
-          <h2 className="mt-3 font-heading text-[clamp(2rem,3vw,2.75rem)] font-bold leading-[1.12] tracking-[-0.02em] text-foreground text-balance">
-            {t("title")}
-          </h2>
-          <p className="mx-auto mt-5 max-w-[700px] text-[22px] leading-[1.6] text-muted-foreground sm:mt-6">
-            {t("description")}
-          </p>
+          <h2 className={cn("mt-3", landingHeading)}>{t("title")}</h2>
+          <p className={landingLeadCentered}>{t("description")}</p>
         </div>
 
         <div className={cn("mx-auto max-w-[560px]", landingStackGap)}>
@@ -70,17 +69,17 @@ export async function LandingPricing() {
             variant="default"
             className={landingCardHover("border-border/90 bg-card shadow-card")}
           >
-            <CardContent className="p-8 sm:p-10">
-              <h3 className="font-heading text-[1.5rem] font-semibold leading-snug text-card-foreground sm:text-h3">
+            <CardContent className="p-5 sm:p-8 lg:p-10">
+              <h3 className="font-heading text-[1.25rem] font-semibold leading-snug text-card-foreground sm:text-h3">
                 {t("membershipTitle")}
               </h3>
               <p className="mt-3 text-body leading-relaxed text-muted-foreground">
                 {t("membershipDescription")}
               </p>
 
-              <div className="mt-8 border-t border-border/80 pt-8">
+              <div className="mt-6 border-t border-border/80 pt-6 sm:mt-8 sm:pt-8">
                 <div className="flex flex-wrap items-end gap-3">
-                  <p className="font-heading text-[clamp(2rem,3vw,2.5rem)] font-bold leading-none tracking-[-0.02em] text-foreground">
+                  <p className="font-heading text-[clamp(1.75rem,3vw,2.5rem)] font-bold leading-none tracking-[-0.02em] text-foreground">
                     {t("price")}
                     <span className="text-h4 font-medium text-muted-foreground">
                       {t("perYear")}
@@ -101,14 +100,14 @@ export async function LandingPricing() {
                 </p>
               </div>
 
-              <ul className="mt-8 flex flex-col gap-3.5 border-t border-border/80 pt-8">
+              <ul className="mt-6 flex flex-col gap-3.5 border-t border-border/80 pt-6 sm:mt-8 sm:pt-8">
                 {membershipFeatures.map((feature) => (
                   <FeatureItem key={feature}>{feature}</FeatureItem>
                 ))}
               </ul>
 
               <div
-                className="mt-8 flex flex-col gap-3 border-t border-border/80 pt-8 md:flex-row md:flex-wrap md:justify-center md:gap-x-8 md:gap-y-2"
+                className="mt-6 flex flex-col gap-3 border-t border-border/80 pt-6 sm:mt-8 sm:pt-8 md:flex-row md:flex-wrap md:justify-center md:gap-x-8 md:gap-y-2"
                 role="list"
                 aria-label={t("trustAria")}
               >
@@ -117,7 +116,7 @@ export async function LandingPricing() {
                 ))}
               </div>
 
-              <div className="mt-8 border-t border-border/80 pt-8 sm:mt-9">
+              <div className="mt-6 border-t border-border/80 pt-6 sm:mt-8 sm:pt-8 lg:mt-9">
                 <CtaLink
                   href={ROUTES.onboardingRole}
                   variant="accent"

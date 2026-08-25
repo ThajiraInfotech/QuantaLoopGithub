@@ -4,7 +4,12 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-import { landingCardHover, landingSectionY } from "./landing-styles";
+import {
+  landingCardHover,
+  landingHeading,
+  landingPad,
+  landingSectionY,
+} from "./landing-styles";
 
 type Transformation = {
   from: string;
@@ -53,15 +58,15 @@ function TransformCard({
     <Card
       variant="default"
       className={landingCardHover(
-        "group flex max-h-[360px] flex-col border-border/90 bg-card"
+        "group flex h-full flex-col border-border/90 bg-card"
       )}
     >
-      <CardContent className="flex flex-col items-center justify-center px-5 py-6 text-center sm:px-6 sm:py-7">
+      <CardContent className="flex flex-col items-center justify-center px-4 py-5 text-center sm:px-6 sm:py-7">
         <p className="text-small font-medium text-muted-foreground">{from}</p>
 
         <TransformMarker />
 
-        <p className="font-heading text-balance text-2xl font-bold leading-[1.15] tracking-[-0.02em] text-foreground sm:text-3xl">
+        <p className="font-heading text-balance text-xl font-bold leading-[1.15] tracking-[-0.02em] text-foreground sm:text-2xl lg:text-3xl">
           {to}
         </p>
         <p className="mt-2 max-w-[14rem] text-small leading-snug text-muted-foreground">
@@ -79,35 +84,40 @@ export async function LandingProblem() {
 
   return (
     <section className={`border-b border-border bg-muted/30 ${landingSectionY}`}>
-      <div className="mx-auto max-w-[900px] px-4 text-center sm:px-6 lg:px-8">
-        <h2 className="font-heading text-[clamp(1.875rem,3vw,2.75rem)] font-bold leading-[1.15] tracking-[-0.02em] text-foreground text-balance">
+      <div className={cn("mx-auto max-w-[900px] text-center", landingPad)}>
+        <h2 className={landingHeading}>
           <span className="block">{t("titleLine1")}</span>
           <span className="block">{t("titleLine2")}</span>
         </h2>
-        <p className="mx-auto mt-5 max-w-[700px] text-body leading-relaxed text-muted-foreground sm:mt-6">
+        <p className="mx-auto mt-4 max-w-[700px] text-body leading-relaxed text-muted-foreground sm:mt-5 md:mt-6">
           {t("description")}
         </p>
       </div>
 
       <div
         className={cn(
-          "mx-auto grid max-w-6xl gap-4 px-4 mt-10 sm:grid-cols-2 sm:mt-11 sm:px-6 lg:grid-cols-3 lg:gap-5 lg:mt-12 lg:px-8"
+          "mx-auto mt-8 grid max-w-6xl gap-4 sm:mt-10 md:grid-cols-2 lg:mt-12 lg:grid-cols-3 lg:gap-5",
+          landingPad
         )}
       >
         {transformations.map((item) => (
-          <TransformCard
+          <div
             key={item.from}
-            from={item.from}
-            to={item.to}
-            description={item.description}
-          />
+            className="min-w-0 md:last:col-span-2 md:last:mx-auto md:last:max-w-md lg:last:col-span-1 lg:last:mx-0 lg:last:max-w-none"
+          >
+            <TransformCard
+              from={item.from}
+              to={item.to}
+              description={item.description}
+            />
+          </div>
         ))}
       </div>
 
       <div
         className={cn(
-          "mx-auto flex max-w-6xl flex-col items-center px-4 sm:px-6 lg:px-8",
-          "mt-8 sm:mt-10"
+          "mx-auto mt-8 flex max-w-6xl flex-col items-center sm:mt-10",
+          landingPad
         )}
       >
         <p className="text-small text-muted-foreground">{t("categoriesLabel")}</p>

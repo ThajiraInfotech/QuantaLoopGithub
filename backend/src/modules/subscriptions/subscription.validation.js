@@ -21,11 +21,20 @@ const cancelCurrentSchema = z.object({
   cancelAtCycleEnd: z.boolean().optional().default(true),
 });
 
-const verifyCheckoutSchema = z.object({
-  razorpayPaymentId: identifier,
-  razorpaySubscriptionId: identifier,
-  razorpaySignature: z.string().regex(/^[a-f0-9]{64}$/i),
-});
+const verifyCheckoutSchema = z
+  .object({
+    razorpayPaymentId: identifier,
+    razorpayOrderId: identifier.optional(),
+    razorpaySubscriptionId: identifier.optional(),
+    razorpaySignature: z.string().regex(/^[a-f0-9]{64}$/i),
+  })
+  .refine(
+    (value) => Boolean(value.razorpayOrderId || value.razorpaySubscriptionId),
+    {
+      message: "razorpayOrderId or razorpaySubscriptionId is required",
+      path: ["razorpayOrderId"],
+    }
+  );
 
 const cancelSchema = z.object({
   cancelAtCycleEnd: z.boolean().optional().default(true),

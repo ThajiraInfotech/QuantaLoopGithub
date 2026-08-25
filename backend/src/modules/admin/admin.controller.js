@@ -26,10 +26,21 @@ const {
   safeParseBulkModerateMaterials,
   safeParseListAdminInterests,
   safeParseListAdminReports,
+  safeParseListAdminInvoices,
 } = require("./admin.validation");
+const { createSubscriptionCatalog } = require("../../config/subscriptionCatalog");
+const { createBillingService } = require("../billing/billing.service");
 
 function validationError(next, flatten) {
   next(new AppError("Validation failed", 400, "VALIDATION_ERROR", flatten));
+}
+
+function billingServiceFor(req) {
+  const env = req.app.locals.env;
+  return createBillingService({
+    env,
+    catalog: createSubscriptionCatalog(env),
+  });
 }
 
 const getDashboard = asyncHandler(async (req, res) => {
@@ -203,6 +214,29 @@ const getInterest = asyncHandler(async (req, res, next) => {
   sendSuccess(res, detail, "Interest detail");
 });
 
+const getInvoices = asyncHandler(async (req, res, next) => {
+  const parsed = safeParseListAdminInvoices(req.query);
+  if (!parsed.success) {
+    validationError(next, parsed.error.flatten());
+    return;
+  }
+  const result = await billingServiceFor(req).listAdminInvoices({
+    ...parsed.data,
+    month: parsed.data.month || undefined,
+  });
+  sendSuccess(res, result, "Invoices");
+});
+
+const getInvoiceHtml = asyncHandler(async (req, res, next) => {
+  const { invoiceId } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(invoiceId)) {
+    next(new AppError("Invalid invoice id", 400, "INVALID_ID"));
+    return;
+  }
+  const html = await billingServiceFor(req).getAdminInvoiceHtml(invoiceId);
+  res.status(200).type("html").send(html);
+});
+
 module.exports = {
   getDashboard,
   getParticipants,
@@ -216,4 +250,6 @@ module.exports = {
   postMaterialsBulk,
   getInterests,
   getInterest,
+  getInvoices,
+  getInvoiceHtml,
 };

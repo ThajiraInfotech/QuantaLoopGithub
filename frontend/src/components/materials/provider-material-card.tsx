@@ -12,7 +12,8 @@ import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants/routes";
 import { useLocalizedTime } from "@/hooks/use-localized-time";
 import { cn } from "@/lib/utils";
-import { updateMaterial } from "@/services/materials/material.service";
+import { deleteMaterial } from "@/services/materials/material.service";
+import { useMaterialStore } from "@/store/material-store";
 import type { Material } from "@/types/material";
 
 type ProviderMaterialCardProps = {
@@ -32,7 +33,8 @@ export function ProviderMaterialCard({
   const tAvail = useTranslations("materials.availability");
   const { formatRelativeTime } = useLocalizedTime();
   const router = useRouter();
-  const [archiving, setArchiving] = useState(false);
+  const removeFromStore = useMaterialStore((s) => s.remove);
+  const [removing, setRemoving] = useState(false);
   const posted = formatRelativeTime(material.createdAt);
   const updated = formatRelativeTime(material.updatedAt);
   const availabilityKey = material.availabilityFrequency as
@@ -51,29 +53,28 @@ export function ProviderMaterialCard({
             ? tAvail("monthly")
             : "";
   const completed = isCompletedMaterial(material.status);
-  const canArchive = !completed;
-
-  async function handleArchive() {
+  async function handleRemove() {
     const ok = window.confirm(
-      t("archiveConfirm", { title: material.title })
+      t("removeConfirm", { title: material.title })
     );
     if (!ok) return;
-    setArchiving(true);
+    setRemoving(true);
     try {
-      await updateMaterial(material.id, { status: "archived" });
-      toast.success(t("archived"));
+      await deleteMaterial(material.id);
+      removeFromStore(material.id);
+      toast.success(t("removed"));
       onUpdated();
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : t("archiveError"));
+      toast.error(e instanceof Error ? e.message : t("removeError"));
     } finally {
-      setArchiving(false);
+      setRemoving(false);
     }
   }
 
   return (
     <article
       className={cn(
-        "rounded-xl border border-zinc-200/80 bg-white p-5 shadow-sm shadow-zinc-950/5",
+        "rounded-xl border border-zinc-200/80 bg-white p-4 shadow-sm shadow-zinc-950/5 sm:p-5",
         className
       )}
     >
@@ -81,7 +82,7 @@ export function ProviderMaterialCard({
         <div className="min-w-0 flex-1 space-y-3">
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <h2 className="text-base font-semibold tracking-tight text-zinc-900">
+              <h2 className="text-base font-semibold tracking-tight text-pretty text-zinc-900">
                 {material.title}
               </h2>
               <span className="rounded-md border border-zinc-200 bg-zinc-50 px-2 py-0.5 text-xs font-medium text-zinc-600">
@@ -101,44 +102,27 @@ export function ProviderMaterialCard({
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
             <Link
               href={ROUTES.materialDetail(material.id)}
-              className="inline-flex h-9 items-center justify-center rounded-md border border-zinc-200 bg-white px-3 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-50"
+              className="inline-flex min-h-11 w-full items-center justify-center rounded-md border border-zinc-200 bg-white px-3 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-50 sm:h-9 sm:min-h-0 sm:w-auto"
             >
               {t("viewDetails")}
             </Link>
-            {completed ? (
-              <Link
-                href={ROUTES.materialsDuplicate(material.id)}
-                className="inline-flex h-9 items-center justify-center rounded-md border border-zinc-200 bg-zinc-50 px-3 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100"
-              >
-                {t("duplicate")}
-              </Link>
-            ) : (
+            {completed ? null : (
               <>
                 <Link
                   href={ROUTES.materialEdit(material.id)}
-                  className="inline-flex h-9 items-center justify-center rounded-md border border-zinc-200 bg-white px-3 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-50"
+                  className="inline-flex min-h-11 w-full items-center justify-center rounded-md border border-zinc-200 bg-white px-3 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-50 sm:h-9 sm:min-h-0 sm:w-auto"
                 >
                   {t("edit")}
                 </Link>
-                {canArchive ? (
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="ghost"
-                    disabled={archiving}
-                    onClick={() => void handleArchive()}
-                  >
-                    {archiving ? t("archiving") : t("archive")}
-                  </Button>
-                ) : null}
                 {interestCount > 0 ? (
                   <Button
                     type="button"
                     size="sm"
                     variant="ghost"
+                    className="min-h-11 w-full sm:h-9 sm:min-h-0 sm:w-auto"
                     onClick={() => router.push(ROUTES.interests)}
                   >
                     {t("viewInterests")}
@@ -146,6 +130,16 @@ export function ProviderMaterialCard({
                 ) : null}
               </>
             )}
+            <Button
+              type="button"
+              size="sm"
+              variant="ghost"
+              disabled={removing}
+              className="min-h-11 w-full sm:h-9 sm:min-h-0 sm:w-auto"
+              onClick={() => void handleRemove()}
+            >
+              {removing ? t("removing") : t("remove")}
+            </Button>
           </div>
         </div>
 

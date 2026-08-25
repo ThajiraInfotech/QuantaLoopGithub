@@ -17,6 +17,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ROUTES } from "@/constants/routes";
+import { toBrowserMediaUrl } from "@/lib/media-url";
 import {
   fetchAdminMaterialDetail,
   moderateAdminMaterial,
@@ -205,13 +206,13 @@ export function AdminMaterialDetailView({
                       {material.imageUrls.map((url) => (
                         <a
                           key={url}
-                          href={url}
+                          href={toBrowserMediaUrl(url)}
                           target="_blank"
                           rel="noreferrer"
                           className="relative aspect-[4/3] overflow-hidden rounded-lg border border-zinc-200 bg-zinc-50"
                         >
                           <img
-                            src={url}
+                            src={toBrowserMediaUrl(url)}
                             alt={material.title}
                             className="h-full w-full object-cover"
                           />

@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
+import { materialFieldClass } from "@/components/materials/material-form-styles";
 import {
   MATERIAL_SUBTYPE_OTHER,
   getCategoryTaxonomy,
@@ -57,6 +58,7 @@ export function MaterialSubtypeField({
         id="material-subtype"
         value={selectValue}
         disabled={!category}
+        className={materialFieldClass}
         onChange={(e) => {
           const next = e.target.value;
           if (next === MATERIAL_SUBTYPE_OTHER) {
@@ -94,6 +96,7 @@ export function MaterialSubtypeField({
             placeholder={t("otherMaterialPlaceholder")}
             maxLength={120}
             autoComplete="off"
+            className={materialFieldClass}
           />
           <p className="text-xs text-zinc-500">{t("otherMaterialHint")}</p>
         </div>

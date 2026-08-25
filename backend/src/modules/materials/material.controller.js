@@ -5,6 +5,15 @@ const { AppError } = require("../../utils/AppError");
 const { asyncHandler } = require("../../utils/asyncHandler");
 const { notifyBuyersOfNewMaterial } = require("../matches/match.service");
 const { User } = require("../users/user.model");
+const { Conversation } = require("../conversations/conversation.model");
+const { Interest } = require("../interests/interest.model");
+const { Message } = require("../messages/message.model");
+const { Notification } = require("../notifications/notification.model");
+const { IntroductionRequest } = require("../network/introduction.model");
+const { Reminder } = require("../reminders/reminder.model");
+const { Report } = require("../reports/report.model");
+const { SavedMaterial } = require("../saved-materials/saved-material.model");
+const { TimelineEvent } = require("../timeline/timeline.model");
 const { Material, toPublicMaterial } = require("./material.model");
 const { normalizeCategory } = require("../../utils/materialCategories");
 const { isListedForNetworkBrowse } = require("./material-status.helper");
@@ -323,6 +332,67 @@ const updateMaterial = asyncHandler(async (req, res, next) => {
   sendSuccess(res, { material: toPublicMaterial(populated) }, "Material updated");
 });
 
+async function deleteRelatedMaterialRecords(materialId) {
+  const mid = new mongoose.Types.ObjectId(materialId);
+  const [conversations, interests] = await Promise.all([
+    Conversation.find({ material: mid }).select("_id").lean(),
+    Interest.find({ material: mid }).select("_id").lean(),
+  ]);
+  const conversationIds = conversations.map((c) => c._id);
+  const interestIds = interests.map((i) => i._id);
+
+  await Promise.all([
+    conversationIds.length
+      ? Message.deleteMany({ conversation: { $in: conversationIds } })
+      : Promise.resolve(),
+    Conversation.deleteMany({ material: mid }),
+    Interest.deleteMany({ material: mid }),
+    SavedMaterial.deleteMany({ material: mid }),
+    TimelineEvent.deleteMany({
+      $or: [
+        { material: mid },
+        ...(interestIds.length ? [{ interest: { $in: interestIds } }] : []),
+      ],
+    }),
+    Reminder.deleteMany({ relatedMaterial: mid }),
+    Notification.deleteMany({
+      $or: [
+        { relatedMaterial: mid },
+        ...(interestIds.length
+          ? [{ relatedInterest: { $in: interestIds } }]
+          : []),
+      ],
+    }),
+    IntroductionRequest.deleteMany({ relatedMaterial: mid }),
+    Report.deleteMany({ targetMaterial: mid }),
+  ]);
+}
+
+const deleteMaterial = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    next(new AppError("Invalid material id", 400, "INVALID_ID"));
+    return;
+  }
+
+  const doc = await Material.findById(id);
+  if (!doc) {
+    next(new AppError("Material not found", 404, "NOT_FOUND"));
+    return;
+  }
+
+  const providerId = doc.provider.toString();
+  if (req.user.role === "material_provider" && providerId !== req.user.id) {
+    next(new AppError("Forbidden", 403, "FORBIDDEN"));
+    return;
+  }
+
+  await deleteRelatedMaterialRecords(id);
+  await Material.deleteOne({ _id: doc._id });
+
+  sendSuccess(res, { id }, "Material removed");
+});
+
 const uploadMaterialImageHandler = asyncHandler(async (req, res, next) => {
   if (!req.file) {
     next(new AppError("Image file is required", 400, "IMAGE_REQUIRED"));
@@ -349,5 +419,6 @@ module.exports = {
   getMaterialTimeline,
   createMaterial,
   updateMaterial,
+  deleteMaterial,
   uploadMaterialImageHandler,
 };

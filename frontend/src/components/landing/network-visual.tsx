@@ -31,7 +31,7 @@ export function NetworkVisual({ className }: NetworkVisualProps) {
 
   return (
     <div className={cn("flex w-full flex-col gap-1.5", className)}>
-      <div className="relative aspect-[5/4] w-full sm:aspect-[6/5] lg:aspect-[10/9]">
+      <div className="relative aspect-[4/5] w-full min-[420px]:aspect-[5/4] sm:aspect-[6/5] lg:aspect-[10/9]">
         {/* Frame + connections */}
         <div className="absolute inset-0 overflow-hidden rounded-2xl border border-border bg-muted/20 shadow-subtle">
           <svg
@@ -165,11 +165,11 @@ export function NetworkVisual({ className }: NetworkVisualProps) {
         </div>
 
         {/* Cards — flex zones with consistent inset padding */}
-        <div className="relative z-10 flex h-full flex-col justify-between p-3 sm:p-3.5 lg:p-4">
+        <div className="relative z-10 flex h-full flex-col justify-between p-2.5 min-[420px]:p-3 sm:p-3.5 lg:p-4">
           <div className="flex justify-start">
             <Card
               variant="elevated"
-              className="w-[min(100%,72%)] max-w-[15rem] border-border/90 p-3 shadow-card sm:max-w-[16rem] lg:max-w-[18rem] lg:p-3.5"
+              className="w-[min(100%,78%)] max-w-[15rem] border-border/90 p-2.5 shadow-card min-[420px]:w-[min(100%,72%)] min-[420px]:p-3 sm:max-w-[16rem] lg:max-w-[18rem] lg:p-3.5"
             >
               <div className="flex items-start justify-between gap-2">
                 <p className="font-heading text-small font-semibold text-card-foreground">
@@ -192,7 +192,7 @@ export function NetworkVisual({ className }: NetworkVisualProps) {
           <div className="flex items-center justify-center py-0.5">
             <Card
               variant="elevated"
-              className="network-card-hub w-[min(100%,78%)] max-w-[14rem] border-2 border-accent/40 bg-card p-3 shadow-elevated sm:max-w-[15.5rem] lg:max-w-[17.5rem] lg:p-3.5"
+              className="network-card-hub w-[min(100%,84%)] max-w-[14rem] border-2 border-accent/40 bg-card p-2.5 shadow-elevated min-[420px]:w-[min(100%,78%)] min-[420px]:p-3 sm:max-w-[15.5rem] lg:max-w-[17.5rem] lg:p-3.5"
             >
               <div className="mb-2 flex items-center gap-2 border-b border-border/80 pb-2">
                 <span className="flex h-5 w-5 items-center justify-center rounded-md bg-accent/10">
@@ -220,7 +220,7 @@ export function NetworkVisual({ className }: NetworkVisualProps) {
           <div className="flex justify-end">
             <Card
               variant="elevated"
-              className="w-[min(100%,72%)] max-w-[15rem] border-border/90 p-3 shadow-card sm:max-w-[16rem] lg:max-w-[18rem] lg:p-3.5"
+              className="w-[min(100%,78%)] max-w-[15rem] border-border/90 p-2.5 shadow-card min-[420px]:w-[min(100%,72%)] min-[420px]:p-3 sm:max-w-[16rem] lg:max-w-[18rem] lg:p-3.5"
             >
               <div className="flex items-start justify-between gap-2">
                 <p className="font-heading text-small font-semibold text-card-foreground">
@@ -240,14 +240,16 @@ export function NetworkVisual({ className }: NetworkVisualProps) {
       </div>
 
       {/* Legend outside frame — no overlap with buyer card */}
-      <div className="flex items-center justify-center gap-2 rounded-lg border border-border bg-background px-3 py-1.5 shadow-subtle">
+      <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-lg border border-border bg-background px-3 py-1.5 shadow-subtle">
         <span className="network-trust-dot h-2 w-2 shrink-0 rounded-full bg-accent" />
         <span className="text-caption font-medium text-muted-foreground">
           Matching flow
         </span>
-        <span className="text-caption text-muted-foreground/80">·</span>
+        <span className="hidden text-caption text-muted-foreground/80 min-[380px]:inline">
+          ·
+        </span>
         <span className="text-caption text-muted-foreground">
-        Direct Buyer-Seller Connections
+          Direct Buyer-Seller Connections
         </span>
       </div>
     </div>

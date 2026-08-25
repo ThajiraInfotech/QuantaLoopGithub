@@ -6,6 +6,7 @@ type MaterialStore = {
   items: Material[];
   setItems: (items: Material[]) => void;
   upsert: (material: Material) => void;
+  remove: (id: string) => void;
   clear: () => void;
 };
 
@@ -22,5 +23,7 @@ export const useMaterialStore = create<MaterialStore>((set) => ({
       next[idx] = material;
       return { items: next };
     }),
+  remove: (id) =>
+    set((state) => ({ items: state.items.filter((m) => m.id !== id) })),
   clear: () => set({ items: [] }),
 }));

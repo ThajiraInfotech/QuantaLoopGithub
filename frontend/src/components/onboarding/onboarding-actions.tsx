@@ -34,7 +34,7 @@ export function OnboardingActions({
           <Button
             type="button"
             variant="outline"
-            className="w-full border-zinc-200 sm:w-auto"
+            className="h-auto min-h-11 w-full whitespace-normal border-zinc-200 py-2.5 sm:h-10 sm:w-auto sm:py-2"
             onClick={onSkip}
             disabled={submitting}
           >
@@ -46,7 +46,10 @@ export function OnboardingActions({
         <Button
           type="button"
           variant="accent"
-          className={cn("w-full sm:w-auto sm:min-w-[140px]", onboardingPrimaryButtonClass)}
+          className={cn(
+            "h-auto min-h-11 w-full whitespace-normal px-4 py-2.5 sm:h-10 sm:w-auto sm:min-w-[140px] sm:py-2",
+            onboardingPrimaryButtonClass
+          )}
           disabled={submitting || continueDisabled}
           onClick={onContinue}
         >

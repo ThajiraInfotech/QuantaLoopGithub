@@ -1,23 +1,59 @@
 "use client";
 
-import { CalendarDays, LockKeyhole, ShieldCheck } from "lucide-react";
+import { CalendarDays, Loader2, LockKeyhole, ShieldCheck } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
+import {
+  MembershipBillingForm,
+  emptyBillingForm,
+  type BillingFormValues,
+} from "@/components/onboarding/membership-billing-form";
 import { OnboardingShell } from "@/components/onboarding/onboarding-shell";
+import { onboardingPrimaryButtonClass } from "@/components/onboarding/onboarding-accent";
 import { Button } from "@/components/ui/button";
+import { getStateByCode } from "@/constants/indian-locations";
 import { ROUTES } from "@/constants/routes";
+import { cn } from "@/lib/utils";
 import { useAuthHydration } from "@/hooks/use-auth-hydration";
+import { useInterceptBrowserBack } from "@/hooks/use-intercept-browser-back";
 import { useMembershipCheckout } from "@/hooks/use-membership-checkout";
 import { userNeedsAccountSetup } from "@/lib/auth-routing";
 import {
   cancelSignupRequest,
   logoutRequest,
 } from "@/services/auth/auth.service";
+import {
+  getBillingProfile,
+  getTaxPreview,
+  saveBillingProfile,
+} from "@/services/billing/billing.service";
 import { getSubscriptionAccessState } from "@/services/subscriptions/subscription.service";
 import { useAuthStore } from "@/store/auth-store";
 import { useOnboardingStore } from "@/store/onboarding-store";
+import type { BillingProfile, TaxPreview } from "@/types/billing";
+
+function validateBillingForm(values: BillingFormValues): string | null {
+  if (!values.legalName.trim()) return "Enter the billing / legal name.";
+  if (!values.line1.trim()) return "Enter the billing address.";
+  if (!values.city.trim()) return "Enter the billing city.";
+  if (!values.pincode.trim()) return "Enter the billing PIN / postal code.";
+  if (values.country === "IN") {
+    if (!values.stateCode.trim()) return "Select the billing state.";
+    if (values.gstRegistered) {
+      const gstin = values.gstin.trim().toUpperCase();
+      if (
+        !/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/.test(
+          gstin
+        )
+      ) {
+        return "Enter a valid 15-character GSTIN.";
+      }
+    }
+  }
+  return null;
+}
 
 export function MembershipPaymentPage() {
   const t = useTranslations("onboarding.membership");
@@ -35,6 +71,14 @@ export function MembershipPaymentPage() {
   const [confirmingCancel, setConfirmingCancel] = useState(false);
   const [cancelling, setCancelling] = useState(false);
   const [cancelError, setCancelError] = useState<string | null>(null);
+  const [showActivationRecheck, setShowActivationRecheck] = useState(false);
+  const [billingProfile, setBillingProfile] = useState<BillingProfile | null>(
+    null
+  );
+  const [taxPreview, setTaxPreview] = useState<TaxPreview | null>(null);
+  const [billingError, setBillingError] = useState<string | null>(null);
+  const [billingLoading, setBillingLoading] = useState(true);
+  const billingValuesRef = useRef<BillingFormValues | null>(null);
   const isAdmin = user?.role === "admin";
   const sessionReady = authHydrated && Boolean(accessToken && user);
 
@@ -43,10 +87,102 @@ export function MembershipPaymentPage() {
     router.refresh();
   }, [router]);
 
+  const billingDefaults = {
+    legalName: user?.companyName || user?.name || "",
+    email: user?.email || "",
+    country: user?.country || "IN",
+    stateCode: user?.stateCode || "",
+    state: user?.state || "",
+    city: user?.city || user?.location || "",
+  };
+
+  const handleBillingChange = useCallback((values: BillingFormValues) => {
+    billingValuesRef.current = values;
+  }, []);
+
+  const refreshTaxPreview = useCallback(
+    async (values: BillingFormValues) => {
+      const localError = validateBillingForm(values);
+      if (localError) {
+        setTaxPreview(null);
+        return;
+      }
+      try {
+        const stateName =
+          values.state || getStateByCode(values.stateCode)?.name || "";
+        const saved = await saveBillingProfile({
+          legalName: values.legalName.trim(),
+          billingEmail: user?.email || "",
+          customerType: values.customerType,
+          gstRegistered: values.country === "IN" ? values.gstRegistered : false,
+          gstin: values.gstRegistered ? values.gstin.trim().toUpperCase() : "",
+          taxId: values.country === "IN" ? "" : values.taxId.trim(),
+          address: {
+            line1: values.line1.trim(),
+            line2: values.line2.trim(),
+            city: values.city.trim(),
+            state: stateName,
+            stateCode: values.stateCode.trim().toUpperCase(),
+            pincode: values.pincode.trim(),
+            country: values.country.trim().toUpperCase(),
+          },
+        });
+        setBillingProfile(saved.profile);
+        setTaxPreview(saved.taxPreview);
+        setBillingError(null);
+      } catch {
+        /* preview is best-effort until pay */
+      }
+    },
+    [user?.email]
+  );
+
+  const saveBillingBeforePay = useCallback(async () => {
+    const values =
+      billingValuesRef.current || emptyBillingForm(billingDefaults);
+    const localError = validateBillingForm(values);
+    if (localError) {
+      setBillingError(localError);
+      throw new Error(localError);
+    }
+    setBillingError(null);
+    const stateName =
+      values.state ||
+      getStateByCode(values.stateCode)?.name ||
+      "";
+    const saved = await saveBillingProfile({
+      legalName: values.legalName.trim(),
+      billingEmail: user?.email || "",
+      customerType: values.customerType,
+      gstRegistered: values.country === "IN" ? values.gstRegistered : false,
+      gstin: values.gstRegistered ? values.gstin.trim().toUpperCase() : "",
+      taxId: values.country === "IN" ? "" : values.taxId.trim(),
+      address: {
+        line1: values.line1.trim(),
+        line2: values.line2.trim(),
+        city: values.city.trim(),
+        state: stateName,
+        stateCode: values.stateCode.trim().toUpperCase(),
+        pincode: values.pincode.trim(),
+        country: values.country.trim().toUpperCase(),
+      },
+    });
+    setBillingProfile(saved.profile);
+    setTaxPreview(saved.taxPreview);
+  }, [
+    billingDefaults.city,
+    billingDefaults.country,
+    billingDefaults.legalName,
+    billingDefaults.state,
+    billingDefaults.stateCode,
+    user?.email,
+  ]);
+
   // Loaded alongside the access check so the pay button is live immediately.
   const checkout = useMembershipCheckout({
     enabled: sessionReady && !isAdmin,
     onEntitled: enterNetwork,
+    beforePay: saveBillingBeforePay,
   });
 
   const runAccessCheck = useCallback(() => {
@@ -73,6 +209,37 @@ export function MembershipPaymentPage() {
   useEffect(() => {
     if (sessionReady && !isAdmin) clearOnboardingDraft();
   }, [clearOnboardingDraft, isAdmin, sessionReady]);
+
+  useEffect(() => {
+    if (!sessionReady || isAdmin) {
+      setBillingLoading(false);
+      return;
+    }
+    let cancelled = false;
+    setBillingLoading(true);
+    getBillingProfile()
+      .then(async (profile) => {
+        if (cancelled) return;
+        setBillingProfile(profile);
+        if (profile) {
+          try {
+            const preview = await getTaxPreview("annual_access");
+            if (!cancelled) setTaxPreview(preview);
+          } catch {
+            /* incomplete profile is fine */
+          }
+        }
+      })
+      .catch(() => {
+        /* first-time payers may have no profile yet */
+      })
+      .finally(() => {
+        if (!cancelled) setBillingLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [isAdmin, sessionReady]);
 
   // Anyone who already paid (or renewed elsewhere) skips this step entirely.
   useEffect(() => {
@@ -144,6 +311,26 @@ export function MembershipPaymentPage() {
   const price = checkout.plan
     ? `₹${checkout.plan.amountInr.toLocaleString("en-IN")}`
     : "₹6,999";
+  const canStartOver =
+    sessionReady &&
+    !isAdmin &&
+    !checkout.loading &&
+    !checkout.isRenewal &&
+    !checkout.awaitingActivation &&
+    checkout.busy === null;
+
+  useInterceptBrowserBack(canStartOver, () => {
+    setConfirmingCancel(true);
+  });
+
+  useEffect(() => {
+    if (!checkout.awaitingActivation) {
+      setShowActivationRecheck(false);
+      return;
+    }
+    const timeoutId = window.setTimeout(() => setShowActivationRecheck(true), 10_000);
+    return () => window.clearTimeout(timeoutId);
+  }, [checkout.awaitingActivation]);
 
   return (
     <OnboardingShell
@@ -151,138 +338,212 @@ export function MembershipPaymentPage() {
       title={checkout.isRenewal ? t("renewTitle") : t("title")}
       description={checkout.isRenewal ? t("renewDescription") : t("description")}
     >
-      <div className="rounded-xl border border-zinc-200 bg-white p-6 sm:p-8">
-        <div className="flex items-baseline gap-2">
-          <span className="text-4xl font-semibold tracking-tight text-zinc-950">
+      <div className="rounded-xl border border-zinc-200 bg-white p-4 sm:p-8">
+        {confirmingCancel && canStartOver ? (
+          <div className="mb-5 rounded-lg border border-red-200 bg-red-50 p-3 sm:p-4">
+            <p className="text-sm leading-relaxed text-pretty text-red-900">
+              {t("cancel.confirm")}
+            </p>
+            <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+              <Button
+                variant="destructive"
+                size="sm"
+                className="h-auto min-h-11 w-full whitespace-normal py-2.5 sm:h-9 sm:w-auto sm:py-0"
+                disabled={cancelling}
+                onClick={handleCancelSignup}
+              >
+                {cancelling ? t("cancel.working") : t("cancel.confirmCta")}
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-auto min-h-11 w-full whitespace-normal py-2.5 sm:h-9 sm:w-auto sm:py-0"
+                disabled={cancelling}
+                onClick={() => setConfirmingCancel(false)}
+              >
+                {t("cancel.keep")}
+              </Button>
+            </div>
+            {cancelError ? (
+              <p role="alert" className="mt-3 text-sm text-red-700">
+                {cancelError}
+              </p>
+            ) : null}
+          </div>
+        ) : canStartOver ? (
+          <button
+            type="button"
+            onClick={() => setConfirmingCancel(true)}
+            disabled={cancelling}
+            className="mb-4 inline-flex min-h-11 items-center text-sm font-medium text-zinc-600 underline-offset-4 transition-colors hover:text-zinc-900 hover:underline disabled:opacity-60 sm:min-h-0"
+          >
+            {t("startOver")}
+          </button>
+        ) : null}
+        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+          <span className="text-[2rem] font-semibold leading-none tracking-tight text-zinc-950 sm:text-4xl">
             {price}
           </span>
           <span className="text-sm text-zinc-500">{t("perYear")}</span>
         </div>
 
-        <ul className="mt-6 space-y-3 border-t border-zinc-100 pt-6 text-sm text-zinc-700">
+        <ul className="mt-5 space-y-3 border-t border-zinc-100 pt-5 text-sm leading-relaxed text-zinc-700 sm:mt-6 sm:pt-6">
           <li className="flex gap-3">
-            <CalendarDays className="mt-0.5 h-4 w-4 shrink-0 text-[#33B573]" />
-            {t("oneYear")}
+            <CalendarDays className="mt-0.5 h-5 w-5 shrink-0 text-[#33B573] sm:h-4 sm:w-4" />
+            <span className="min-w-0 text-pretty">{t("oneYear")}</span>
           </li>
           <li className="flex gap-3">
-            <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#33B573]" />
-            {t("networkAccess")}
+            <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-[#33B573] sm:h-4 sm:w-4" />
+            <span className="min-w-0 text-pretty">{t("networkAccess")}</span>
           </li>
           <li className="flex gap-3">
-            <LockKeyhole className="mt-0.5 h-4 w-4 shrink-0 text-[#33B573]" />
-            {t("secure")}
+            <LockKeyhole className="mt-0.5 h-5 w-5 shrink-0 text-[#33B573] sm:h-4 sm:w-4" />
+            <span className="min-w-0 text-pretty">{t("secure")}</span>
           </li>
         </ul>
 
-        <div className="mt-7 space-y-3">
+        {!accessError && !checkout.awaitingActivation && sessionReady && !isAdmin ? (
+          <div className="mt-6">
+            {billingLoading ? (
+              <p className="text-sm text-zinc-500">{t("billing.loading")}</p>
+            ) : (
+              <MembershipBillingForm
+                initialProfile={billingProfile}
+                defaults={billingDefaults}
+                taxPreview={taxPreview}
+                disabled={busyPaying}
+                error={billingError}
+                onChange={handleBillingChange}
+                onTaxRelevantChange={(values) => {
+                  billingValuesRef.current = values;
+                  void refreshTaxPreview(values);
+                }}
+              />
+            )}
+          </div>
+        ) : null}
+
+        <div className="mt-6 space-y-3 sm:mt-7">
           {accessError ? (
             <>
-              <p role="alert" className="text-sm text-amber-800">
+              <p role="alert" className="text-sm leading-relaxed text-pretty text-amber-800">
                 {accessError}
               </p>
-              <Button variant="outline" onClick={retryAccessCheck}>
+              <Button
+                variant="outline"
+                className="h-auto min-h-11 w-full whitespace-normal py-2.5 sm:h-10 sm:w-auto sm:py-2"
+                onClick={retryAccessCheck}
+              >
                 {t("retry")}
               </Button>
             </>
           ) : (
             <>
-              <Button
-                size="lg"
-                className="w-full sm:w-auto"
-                disabled={
-                  checking ||
-                  checkout.loading ||
-                  !checkout.plan ||
-                  checkout.busy !== null ||
-                  checkout.awaitingActivation
-                }
-                aria-busy={busyPaying}
-                onClick={() => void checkout.pay()}
-              >
-                {busyPaying
-                  ? t("checkout.opening")
-                  : t("checkout.pay", { price })}
-              </Button>
-
               {checkout.awaitingActivation ? (
-                <div className="space-y-2">
-                  <p role="alert" aria-live="polite" className="text-sm text-amber-800">
-                    {t("checkout.processing")}
-                  </p>
-                  <Button
-                    variant="outline"
-                    disabled={checkout.busy !== null}
-                    onClick={() => void checkout.recheck()}
-                  >
-                    {t("checkout.recheck")}
-                  </Button>
+                <div className="rounded-xl border border-[#B5E8D0] bg-[#DFF5EA] px-4 py-5">
+                  <div className="flex items-start gap-3">
+                    <Loader2
+                      className="mt-0.5 h-5 w-5 shrink-0 animate-spin text-[#33B573]"
+                      aria-hidden
+                    />
+                    <div className="min-w-0">
+                      <p className="text-base font-semibold text-zinc-900">
+                        {checkout.error
+                          ? t("checkout.processing")
+                          : t("checkout.paidTitle")}
+                      </p>
+                      <p
+                        role="status"
+                        aria-live="polite"
+                        className="mt-1 text-sm leading-relaxed text-pretty text-zinc-600"
+                      >
+                        {t("checkout.activating")}
+                      </p>
+                    </div>
+                  </div>
+                  {checkout.error ? (
+                    <p role="alert" className="mt-3 text-sm leading-relaxed text-pretty text-red-700">
+                      {checkout.error}
+                    </p>
+                  ) : null}
+                  {showActivationRecheck ? (
+                    <Button
+                      variant="outline"
+                      className="mt-4 h-auto min-h-11 w-full whitespace-normal py-2.5 sm:h-10 sm:w-auto sm:py-2"
+                      disabled={checkout.busy !== null}
+                      onClick={() => void checkout.recheck()}
+                    >
+                      {t("checkout.recheck")}
+                    </Button>
+                  ) : null}
                 </div>
-              ) : null}
+              ) : (
+                <Button
+                  size="lg"
+                  variant="accent"
+                  className={cn(
+                    "h-auto min-h-12 w-full whitespace-normal px-4 py-3 text-base sm:h-11 sm:min-h-11 sm:w-auto sm:py-2 sm:text-body",
+                    onboardingPrimaryButtonClass
+                  )}
+                  disabled={
+                    checking ||
+                    checkout.loading ||
+                    billingLoading ||
+                    !checkout.plan ||
+                    checkout.busy !== null
+                  }
+                  aria-busy={busyPaying}
+                  onClick={() => void checkout.pay()}
+                >
+                  {busyPaying
+                    ? t("checkout.opening")
+                    : t("checkout.pay", { price })}
+                </Button>
+              )}
 
               {checkout.error && !checkout.awaitingActivation ? (
-                <p role="alert" aria-live="polite" className="text-sm text-red-700">
+                <p role="alert" aria-live="polite" className="text-sm leading-relaxed text-pretty text-red-700">
                   {checkout.error}
                 </p>
               ) : null}
 
-              <p className="text-xs leading-relaxed text-zinc-500">
-                {t("checkout.security")}
-              </p>
+              {checkout.awaitingActivation ? null : (
+                <p className="text-xs leading-relaxed text-pretty text-zinc-500">
+                  {t("checkout.security")}
+                </p>
+              )}
             </>
           )}
         </div>
 
         {sessionReady && !isAdmin ? (
           <div className="mt-6 border-t border-zinc-100 pt-5">
-            <p className="text-sm text-zinc-600">
-              {t("signedInAs", { email: user?.email ?? "" })}{" "}
+            <p className="text-sm leading-relaxed text-zinc-600">
+              <span className="break-all">
+                {t("signedInAs", { email: user?.email ?? "" })}
+              </span>{" "}
               <button
                 type="button"
                 onClick={handleSignOut}
                 disabled={signingOut}
-                className="font-medium text-zinc-900 underline underline-offset-4 transition-colors hover:text-zinc-600 disabled:opacity-60"
+                className="inline-flex min-h-11 items-center font-medium text-zinc-900 underline underline-offset-4 transition-colors hover:text-zinc-600 disabled:opacity-60 sm:min-h-0"
               >
                 {signingOut ? t("signingOut") : t("signOut")}
               </button>
             </p>
-            <p className="mt-1 text-xs text-zinc-500">{t("payLaterHint")}</p>
+            <p className="mt-2 text-xs leading-relaxed text-pretty text-zinc-500 sm:mt-1">
+              {t("payLaterHint")}
+            </p>
 
-            {confirmingCancel ? (
-              <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-4">
-                <p className="text-sm text-red-900">{t("cancel.confirm")}</p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    disabled={cancelling}
-                    onClick={handleCancelSignup}
-                  >
-                    {cancelling ? t("cancel.working") : t("cancel.confirmCta")}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    disabled={cancelling}
-                    onClick={() => setConfirmingCancel(false)}
-                  >
-                    {t("cancel.keep")}
-                  </Button>
-                </div>
-                {cancelError ? (
-                  <p role="alert" className="mt-3 text-sm text-red-700">
-                    {cancelError}
-                  </p>
-                ) : null}
-              </div>
-            ) : (
+            {canStartOver && !confirmingCancel ? (
               <button
                 type="button"
                 onClick={() => setConfirmingCancel(true)}
-                className="mt-3 text-xs font-medium text-zinc-500 underline underline-offset-4 transition-colors hover:text-red-700"
+                className="mt-3 inline-flex min-h-11 items-center text-left text-xs font-medium text-zinc-500 underline underline-offset-4 transition-colors hover:text-red-700 sm:min-h-0"
               >
                 {t("cancel.cta")}
               </button>
-            )}
+            ) : null}
           </div>
         ) : null}
       </div>

@@ -10,7 +10,7 @@ export default function MaterialDetailPage() {
 
   if (!id) {
     return (
-      <p className="text-sm text-zinc-600">Invalid material reference.</p>
+      <p className="text-sm leading-relaxed text-zinc-600">Invalid material reference.</p>
     );
   }
 

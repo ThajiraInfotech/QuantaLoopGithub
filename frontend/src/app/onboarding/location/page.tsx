@@ -100,7 +100,7 @@ function LocationOnboardingContent() {
       {indiaSelected ? (
         <GeographySelection value={locationDraft} onChange={setLocationDraft} />
       ) : (
-        <p className="rounded-xl border border-zinc-200 bg-zinc-50/80 px-4 py-3 text-sm text-zinc-600">
+        <p className="rounded-xl border border-zinc-200 bg-zinc-50/80 px-4 py-3 text-sm leading-relaxed text-pretty text-zinc-600">
           Abroad accounts use country-level matching only — no city or state
           proximity.
         </p>

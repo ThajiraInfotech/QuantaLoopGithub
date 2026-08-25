@@ -11,9 +11,9 @@ export async function LandingValueComparison() {
 
   return (
     <div className={cn("mx-auto max-w-6xl", landingStackGap)}>
-      <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
-        <div className="max-w-md">
-          <h3 className="font-heading text-[clamp(1.5rem,2.6vw,2rem)] font-bold leading-[1.15] tracking-[-0.02em] text-foreground text-balance">
+      <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
+        <div className="max-w-md min-w-0">
+          <h3 className="font-heading text-[clamp(1.375rem,2.6vw,2rem)] font-bold leading-[1.15] tracking-[-0.02em] text-balance text-foreground">
             {t("title")}
           </h3>
 
@@ -22,7 +22,12 @@ export async function LandingValueComparison() {
           </p>
 
           <div className="mt-6">
-            <CtaLink href={ROUTES.onboardingRole} variant="primary" size="lg">
+            <CtaLink
+              href={ROUTES.onboardingRole}
+              variant="primary"
+              size="lg"
+              className="w-full sm:w-auto"
+            >
               {t("cta")}
             </CtaLink>
           </div>
@@ -35,6 +40,7 @@ export async function LandingValueComparison() {
             width={640}
             height={360}
             className="h-auto w-full max-w-[32rem] object-contain"
+            sizes="(max-width: 1024px) 100vw, 32rem"
           />
         </div>
       </div>

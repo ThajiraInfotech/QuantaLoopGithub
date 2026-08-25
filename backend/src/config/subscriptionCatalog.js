@@ -50,12 +50,16 @@ function configuredPlanMap(env) {
 
 function createSubscriptionCatalog(env) {
   const planMap = configuredPlanMap(env || {});
+  const paymentsConfigured = Boolean(
+    env?.RAZORPAY_KEY_ID && env?.RAZORPAY_KEY_SECRET
+  );
 
   function listCatalogPlans() {
     return Object.values(CATALOG).map((plan) => ({
       ...plan,
       razorpayPlanId: planMap[plan.id] || null,
-      purchasable: Boolean(planMap[plan.id]),
+      // One-time Orders checkout only needs API keys — no Razorpay plan.
+      purchasable: paymentsConfigured,
     }));
   }
 

@@ -69,7 +69,7 @@ export function ExpressInterestModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:p-4">
       <button
         type="button"
         className="absolute inset-0 bg-zinc-950/45 backdrop-blur-[1px]"
@@ -79,11 +79,11 @@ export function ExpressInterestModal({
       <div
         role="dialog"
         aria-modal="true"
-        className="relative z-10 w-full max-w-lg rounded-xl border border-zinc-200/90 bg-white p-6 shadow-xl shadow-zinc-950/15 sm:p-8"
+        className="relative z-10 max-h-[min(92dvh,40rem)] w-full overflow-y-auto overscroll-contain rounded-t-2xl border border-zinc-200/90 bg-white p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-xl shadow-zinc-950/15 sm:max-w-lg sm:rounded-xl sm:p-8"
       >
         <div className="space-y-1">
-          <h2 className="text-lg font-semibold text-zinc-900">{t("title")}</h2>
-          <p className="text-sm leading-relaxed text-zinc-600">{t("description")}</p>
+          <h2 className="text-lg font-semibold text-balance text-zinc-900">{t("title")}</h2>
+          <p className="text-sm leading-relaxed text-pretty text-zinc-600">{t("description")}</p>
         </div>
 
         <form
@@ -95,6 +95,7 @@ export function ExpressInterestModal({
             <Label htmlFor="pickupTimeline">{t("pickupLabel")}</Label>
             <Input
               id="pickupTimeline"
+              className="min-h-11 sm:min-h-0"
               placeholder={t("pickupPlaceholder")}
               {...form.register("pickupTimeline")}
             />
@@ -103,6 +104,7 @@ export function ExpressInterestModal({
             <Label htmlFor="message">{t("messageLabel")}</Label>
             <Textarea
               id="message"
+              className="min-h-[7rem] text-base sm:text-sm"
               placeholder={t("messagePlaceholder")}
               {...form.register("message")}
             />
@@ -115,12 +117,21 @@ export function ExpressInterestModal({
           ) : null}
 
           <div className="space-y-3 pt-2">
-            <p className="text-xs text-zinc-500">{t("notifyHint")}</p>
-            <div className="flex flex-wrap justify-end gap-2">
-              <Button type="button" variant="ghost" onClick={onClose}>
+            <p className="text-xs leading-relaxed text-zinc-500">{t("notifyHint")}</p>
+            <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+              <Button
+                type="button"
+                variant="ghost"
+                className="min-h-11 w-full sm:min-h-0 sm:w-auto"
+                onClick={onClose}
+              >
                 {tCommon("cancel")}
               </Button>
-              <Button type="submit" disabled={form.formState.isSubmitting}>
+              <Button
+                type="submit"
+                disabled={form.formState.isSubmitting}
+                className="min-h-11 w-full sm:min-h-0 sm:w-auto"
+              >
                 {form.formState.isSubmitting ? t("sending") : t("submit")}
               </Button>
             </div>

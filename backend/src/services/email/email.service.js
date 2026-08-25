@@ -2,6 +2,7 @@ const nodemailer = require("nodemailer");
 
 const { buildEmailVerificationEmail } = require("./templates/email-verification-email");
 const { buildGoogleAccountEmail } = require("./templates/google-account-email");
+const { buildNotificationEmail } = require("./templates/notification-email");
 const { buildPasswordResetEmail } = require("./templates/password-reset-email");
 
 function isEmailConfigured(env) {
@@ -95,9 +96,45 @@ async function sendEmailVerificationEmail(env, { to, otp }) {
   });
 }
 
+async function sendNotificationEmail(
+  env,
+  { to, recipientName, title, message, actionUrl, matchScore, matchLabel }
+) {
+  const { subject, html, text } = buildNotificationEmail({
+    recipientName,
+    title,
+    message,
+    actionUrl,
+    supportEmail: env.SUPPORT_EMAIL,
+    logoUrl: logoUrl(env),
+    matchScore,
+    matchLabel,
+  });
+
+  await deliverEmail(env, {
+    to,
+    subject,
+    html,
+    text,
+    devLabel: `Notification: ${title}`,
+  });
+}
+
+async function sendInvoiceEmail(env, { to, invoiceNumber, html, text }) {
+  await deliverEmail(env, {
+    to,
+    subject: `Tax invoice ${invoiceNumber} — Quanta Loop`,
+    html,
+    text,
+    devLabel: `Invoice ${invoiceNumber}`,
+  });
+}
+
 module.exports = {
   sendPasswordResetEmail,
   sendGoogleAccountEmail,
   sendEmailVerificationEmail,
+  sendNotificationEmail,
+  sendInvoiceEmail,
   isEmailConfigured,
 };

@@ -2,10 +2,12 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
 import { CtaLink } from "@/components/landing/cta-link";
+import { landingPad } from "@/components/landing/landing-styles";
 import { EarthGlobeIcon } from "@/components/shared/earth-globe-icon";
 import { IndiaMapIcon } from "@/components/shared/india-map-icon";
 import { Logo } from "@/components/shared/logo";
 import { ROUTES } from "@/constants/routes";
+import { cn } from "@/lib/utils";
 
 type FooterLink = {
   label: string;
@@ -23,7 +25,7 @@ function FooterLinkColumn({
   ariaLabel: string;
 }) {
   return (
-    <nav className="flex min-w-[128px] flex-col gap-2" aria-label={ariaLabel}>
+    <nav className="flex min-w-0 flex-1 flex-col gap-2 sm:min-w-[128px] sm:flex-none" aria-label={ariaLabel}>
       <p className="text-eyebrow">{title}</p>
       {links.map((item) =>
         item.external ? (
@@ -76,10 +78,15 @@ export async function LandingFooter() {
 
   return (
     <footer className="border-t border-border bg-background">
-      <div className="mx-auto max-w-[1200px] px-4 pb-7 pt-5 sm:px-6 sm:pb-8 sm:pt-6 lg:px-8">
-        <div className="flex w-full flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
+      <div
+        className={cn(
+          "mx-auto max-w-[1200px] pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-5 sm:pb-8 sm:pt-6",
+          landingPad
+        )}
+      >
+        <div className="flex w-full flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-[460px] shrink-0 text-left">
-            <Logo withLink={false} className="h-10" />
+            <Logo withLink={false} className="h-9 sm:h-10" />
             <p className="mt-3 text-small leading-relaxed text-muted-foreground">
               {t("description1")}
             </p>
@@ -88,14 +95,14 @@ export async function LandingFooter() {
             </p>
           </div>
 
-          <div className="ml-auto flex shrink-0 items-start gap-6 sm:gap-8 md:gap-10">
+          <div className="flex w-full shrink-0 items-start gap-6 sm:w-auto sm:gap-8 md:gap-10 lg:ml-auto">
             <FooterLinkColumn
               title={t("navigation")}
               links={navigationLinks}
               ariaLabel="Footer navigation"
             />
             <nav
-              className="flex min-w-[128px] flex-col gap-2"
+              className="flex min-w-0 flex-1 flex-col gap-2 sm:min-w-[128px] sm:flex-none"
               aria-label="Footer company"
             >
               <p className="text-eyebrow">{t("company")}</p>
@@ -125,7 +132,7 @@ export async function LandingFooter() {
                 <CtaLink
                   href={ROUTES.onboardingRole}
                   variant="link"
-                  className="mt-1.5 inline-flex h-auto items-center p-0 text-small font-semibold text-accent whitespace-nowrap transition-[color,transform] duration-200 ease-out hover:translate-x-1 hover:text-[#228a58]"
+                  className="mt-1.5 inline-flex h-auto items-center p-0 text-small font-semibold text-accent transition-[color,transform] duration-200 ease-out hover:translate-x-1 hover:text-[#228a58] sm:whitespace-nowrap"
                 >
                   {t("startTrial")}
                 </CtaLink>
@@ -134,8 +141,8 @@ export async function LandingFooter() {
           </div>
         </div>
 
-        <div className="mt-6 flex flex-col gap-3 border-t border-border pt-5 sm:mt-7 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-          <p className="text-caption leading-relaxed text-muted-foreground">
+        <div className="mt-6 flex flex-col gap-4 border-t border-border pt-5 sm:mt-7 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+          <p className="max-w-3xl text-pretty text-caption leading-relaxed text-muted-foreground">
             © {year} Quanta Loop{" "}
             <span className="text-muted-foreground/45" aria-hidden>
               •
@@ -152,17 +159,17 @@ export async function LandingFooter() {
           </p>
 
           <p
-            className="inline-flex shrink-0 items-center gap-3 self-start rounded-full border border-border bg-muted/40 px-5 py-2.5 font-heading text-body font-semibold tracking-tight text-foreground sm:self-auto"
+            className="inline-flex max-w-full shrink-0 flex-wrap items-center gap-2 self-start rounded-full border border-border bg-muted/40 px-3 py-2 font-heading text-small font-semibold tracking-tight text-foreground sm:gap-3 sm:self-auto sm:px-5 sm:py-2.5 sm:text-body"
             aria-label={t("fromToAria")}
           >
             {fromToPrefix ? <span>{fromToPrefix}</span> : null}
             <span className="inline-flex text-accent" title={t("indiaIconLabel")}>
-              <IndiaMapIcon className="h-8 w-8" />
+              <IndiaMapIcon className="h-6 w-6 sm:h-8 sm:w-8" />
               <span className="sr-only">{t("indiaIconLabel")}</span>
             </span>
             <span className="text-muted-foreground">{t("fromToConnector")}</span>
             <span className="inline-flex text-accent" title={t("worldIconLabel")}>
-              <EarthGlobeIcon className="h-8 w-8" />
+              <EarthGlobeIcon className="h-6 w-6 sm:h-8 sm:w-8" />
               <span className="sr-only">{t("worldIconLabel")}</span>
             </span>
             {fromToSuffix ? <span>{fromToSuffix}</span> : null}

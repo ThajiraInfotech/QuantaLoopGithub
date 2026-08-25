@@ -44,7 +44,7 @@ export function SignupOptions({ context, googleClientId }: SignupOptionsProps) {
           clientId={googleClientId}
           onSuccess={previewGoogleSignup}
         />
-        <p className="text-sm text-zinc-500">{t("googleHint")}</p>
+        <p className="text-sm leading-relaxed text-zinc-500">{t("googleHint")}</p>
       </div>
       <SignupOptionsDivider />
       <RegisterForm />

@@ -62,6 +62,19 @@ function applyProfilePatch(user, data) {
       user.materialTypes = categories;
     }
   }
+  // Typed or partial clients that only send materialTypes still have to
+  // drive smart matching, which reads the role-specific category lists.
+  if (
+    data.preferredMaterialCategories === undefined &&
+    data.requiredMaterialCategories === undefined &&
+    (data.materialsHandled !== undefined || data.materialTypes !== undefined)
+  ) {
+    if (user.role === "material_provider") {
+      user.preferredMaterialCategories = user.materialTypes;
+    } else if (user.role === "verified_buyer") {
+      user.requiredMaterialCategories = user.materialTypes;
+    }
+  }
   if (data.state !== undefined) {
     user.state = String(data.state).trim();
   }

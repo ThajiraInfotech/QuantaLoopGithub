@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
+import { materialFieldClass } from "@/components/materials/material-form-styles";
 import {
   MATERIAL_CLEANLINESS_OPTIONS,
   MATERIAL_CLEANLINESS_OTHER,
@@ -47,6 +48,7 @@ export function MaterialCleanlinessField({
       <SelectField
         id="material-cleanliness"
         value={selectValue}
+        className={materialFieldClass}
         onChange={(e) => {
           const next = e.target.value;
           if (next === MATERIAL_CLEANLINESS_OTHER) {
@@ -78,6 +80,7 @@ export function MaterialCleanlinessField({
             placeholder={t("otherCleanlinessPlaceholder")}
             maxLength={60}
             autoComplete="off"
+            className={materialFieldClass}
           />
         </div>
       ) : null}

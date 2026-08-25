@@ -68,6 +68,38 @@ export function normalizeLocationDraft(value: unknown): LocationDraft {
   };
 }
 
+export type AccountSetupDraft = {
+  name: string;
+  companyName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  legalConsent: boolean;
+};
+
+export const emptyAccountSetupDraft = (): AccountSetupDraft => ({
+  name: "",
+  companyName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  legalConsent: false,
+});
+
+export function normalizeAccountSetupDraft(value: unknown): AccountSetupDraft {
+  if (!value || typeof value !== "object") return emptyAccountSetupDraft();
+  const v = value as Partial<AccountSetupDraft>;
+  return {
+    name: typeof v.name === "string" ? v.name : "",
+    companyName: typeof v.companyName === "string" ? v.companyName : "",
+    email: typeof v.email === "string" ? v.email : "",
+    password: typeof v.password === "string" ? v.password : "",
+    confirmPassword:
+      typeof v.confirmPassword === "string" ? v.confirmPassword : "",
+    legalConsent: v.legalConsent === true,
+  };
+}
+
 export type OnboardingDraftState = {
   pendingSignupRole: SignupRole | null;
   pendingSignupEmail: string;
@@ -76,6 +108,7 @@ export type OnboardingDraftState = {
   draftIndustry: IndustryDraft;
   draftMaterials: string[];
   draftLocation: LocationDraft;
+  draftAccountSetup: AccountSetupDraft;
   setPendingSignupRole: (role: SignupRole | null) => void;
   setPendingSignupEmail: (email: string) => void;
   setPendingGoogleProfile: (profile: {
@@ -87,6 +120,7 @@ export type OnboardingDraftState = {
   setDraftIndustry: (draft: IndustryDraft) => void;
   setDraftMaterials: (materials: string[]) => void;
   setDraftLocation: (draft: LocationDraft) => void;
+  setDraftAccountSetup: (draft: Partial<AccountSetupDraft>) => void;
   clearOnboardingDraft: () => void;
   hasOnboardingDraft: () => boolean;
 };
@@ -99,6 +133,7 @@ const initialDraft = {
   draftIndustry: emptyIndustryDraft(),
   draftMaterials: [] as string[],
   draftLocation: emptyLocationDraft(),
+  draftAccountSetup: emptyAccountSetupDraft(),
 };
 
 function normalizePersistedState(
@@ -151,6 +186,7 @@ function normalizePersistedState(
       ? state.draftMaterials.filter((m) => typeof m === "string")
       : [],
     draftLocation,
+    draftAccountSetup: normalizeAccountSetupDraft(state.draftAccountSetup),
   };
 }
 
@@ -178,6 +214,13 @@ export const useOnboardingStore = create<OnboardingDraftState>()(
       setDraftMaterials: (materials) => set({ draftMaterials: materials }),
       setDraftLocation: (draft) =>
         set({ draftLocation: normalizeLocationDraft(draft) }),
+      setDraftAccountSetup: (draft) =>
+        set({
+          draftAccountSetup: normalizeAccountSetupDraft({
+            ...get().draftAccountSetup,
+            ...draft,
+          }),
+        }),
       clearOnboardingDraft: () => set({ ...initialDraft }),
       hasOnboardingDraft: () => {
         const s = get();
@@ -202,6 +245,7 @@ export const useOnboardingStore = create<OnboardingDraftState>()(
         draftIndustry: normalizeIndustryDraft(state.draftIndustry),
         draftMaterials: state.draftMaterials,
         draftLocation: normalizeLocationDraft(state.draftLocation),
+        draftAccountSetup: normalizeAccountSetupDraft(state.draftAccountSetup),
       }),
       merge: (persisted, current) => ({
         ...current,
@@ -211,7 +255,7 @@ export const useOnboardingStore = create<OnboardingDraftState>()(
         ...initialDraft,
         ...normalizePersistedState(persisted),
       }),
-      version: 5,
+      version: 6,
     },
   ),
 );

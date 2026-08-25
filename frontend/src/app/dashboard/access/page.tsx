@@ -1,13 +1,8 @@
-import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { redirect } from "next/navigation";
 
-import { NetworkAccessPage } from "@/components/access/network-access-page";
+import { ROUTES } from "@/constants/routes";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("dashboard.access");
-  return { title: t("title") };
-}
-
-export default function AccessDashboardPage() {
-  return <NetworkAccessPage />;
+/** Access was a duplicate of membership payment. Old links land on the dashboard. */
+export default function AccessDashboardRedirect() {
+  redirect(ROUTES.dashboard);
 }

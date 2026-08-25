@@ -8,6 +8,7 @@ const {
   getMaterialTimeline,
   createMaterial,
   updateMaterial,
+  deleteMaterial,
   uploadMaterialImageHandler,
 } = require("./material.controller");
 
@@ -28,6 +29,7 @@ function createMaterialsRouter(env) {
   router.get("/:id/timeline", requireAuth, getMaterialTimeline);
   router.get("/:id", requireAuth, getMaterialById);
   router.patch("/:id", requireAuth, canPublishMaterial, updateMaterial);
+  router.delete("/:id", requireAuth, canPublishMaterial, deleteMaterial);
 
   return router;
 }

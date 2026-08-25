@@ -77,7 +77,7 @@ export function SavedOpportunitiesPage() {
 
   if (loading) {
     return (
-      <div className="mx-auto max-w-3xl space-y-3 py-8">
+      <div className="mx-auto max-w-3xl space-y-3 py-1 sm:py-8">
         {[0, 1].map((k) => (
           <div
             key={k}
@@ -90,28 +90,35 @@ export function SavedOpportunitiesPage() {
 
   if (error) {
     return (
-      <p className="text-sm text-red-700" role="alert">
+      <p className="text-sm leading-relaxed text-red-700" role="alert">
         {error}
       </p>
     );
   }
 
   return (
-    <div className="mx-auto max-w-3xl space-y-8">
+    <div className="mx-auto max-w-3xl space-y-5 sm:space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
+        <h1 className="text-[1.5rem] font-semibold tracking-tight text-balance text-zinc-900 sm:text-3xl">
           {t("title")}
         </h1>
-        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-600">
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-pretty text-zinc-600">
           {t("subtitle")}
         </p>
       </div>
 
       {items.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-zinc-200 bg-zinc-50/80 px-6 py-12 text-center">
+        <div className="rounded-xl border border-dashed border-zinc-200 bg-zinc-50/80 px-4 py-10 text-center sm:px-6 sm:py-12">
           <p className="text-sm font-medium text-zinc-800">{t("emptyTitle")}</p>
-          <p className="mt-2 text-sm text-zinc-600">{t("emptyDescription")}</p>
-          <Link href={ROUTES.materials} className={primaryActionLinkClassName("mt-6")}>
+          <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+            {t("emptyDescription")}
+          </p>
+          <Link
+            href={ROUTES.materials}
+            className={primaryActionLinkClassName(
+              "mt-6 h-12 w-full text-base sm:h-10 sm:w-auto sm:text-small"
+            )}
+          >
             {t("browseMaterials")}
           </Link>
         </div>
@@ -149,29 +156,32 @@ function SavedMaterialCard({
     <li className="rounded-xl border border-zinc-200/80 bg-white p-4 shadow-sm shadow-zinc-950/5">
       <div className="space-y-3">
         <div className="min-w-0 space-y-2">
-          <h2 className="text-base font-semibold text-zinc-900">{row.title}</h2>
-          <p className="text-sm text-zinc-600">{row.location}</p>
-          <p className="text-xs text-zinc-500">
+          <h2 className="text-base font-semibold text-pretty text-zinc-900">
+            {row.title}
+          </h2>
+          <p className="text-sm leading-relaxed text-zinc-600">{row.location}</p>
+          <p className="text-xs leading-relaxed text-zinc-500">
             {row.materialType} · {t("savedPrefix", { time: formatRelativeTime(row.createdAt) })}
           </p>
           <MaterialStatusBadge status={asMaterialStatus(row.status)} />
         </div>
-        <div className="flex flex-wrap gap-2 border-t border-zinc-100 pt-3">
+        <div className="flex flex-col gap-2 border-t border-zinc-100 pt-3 sm:flex-row sm:flex-wrap">
+          <Link
+            href={ROUTES.materialDetail(row.materialId)}
+            className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-zinc-900 px-4 text-sm font-medium text-white transition-colors hover:bg-zinc-800 sm:h-9 sm:min-h-0 sm:w-auto"
+          >
+            {t("openListing")}
+          </Link>
           <Button
             type="button"
             variant="outline"
             size="sm"
+            className="min-h-11 w-full sm:h-9 sm:min-h-0 sm:w-auto"
             disabled={removeBusy}
             onClick={onRemove}
           >
             {removeBusy ? t("removing") : t("remove")}
           </Button>
-          <Link
-            href={ROUTES.materialDetail(row.materialId)}
-            className="inline-flex h-9 items-center justify-center rounded-md bg-zinc-900 px-4 text-sm font-medium text-white transition-colors hover:bg-zinc-800"
-          >
-            {t("openListing")}
-          </Link>
         </div>
       </div>
     </li>

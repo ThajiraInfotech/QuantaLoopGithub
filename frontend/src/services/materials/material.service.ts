@@ -74,6 +74,20 @@ export async function updateMaterial(
   }
 }
 
+export async function deleteMaterial(id: string): Promise<void> {
+  try {
+    const { data } = await apiClient.delete<unknown>(`/materials/${id}`);
+    if (isApiError(data)) {
+      throw new Error(data.error.message);
+    }
+    if (!isApiSuccess<{ id: string }>(data)) {
+      throw new Error("Unexpected response");
+    }
+  } catch (e) {
+    throw new Error(getAxiosErrorMessage(e));
+  }
+}
+
 export async function createMaterial(
   body: CreateMaterialFormValues
 ): Promise<Material> {

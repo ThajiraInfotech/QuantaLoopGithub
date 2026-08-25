@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 
@@ -11,8 +11,6 @@ import { useAuthStore } from "@/store/auth-store";
 
 export default function NewMaterialPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const duplicateFromId = searchParams.get("duplicate") ?? undefined;
   const user = useAuthStore((s) => s.user);
 
   useEffect(() => {
@@ -33,7 +31,7 @@ export default function NewMaterialPage() {
 
   return (
     <div className="mx-auto max-w-5xl">
-      <MaterialCreateForm duplicateFromId={duplicateFromId} />
+      <MaterialCreateForm />
     </div>
   );
 }

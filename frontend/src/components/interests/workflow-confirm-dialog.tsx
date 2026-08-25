@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export type WorkflowConfirmKind = "complete" | "close";
 
@@ -38,7 +39,7 @@ export function WorkflowConfirmDialog({
         role="dialog"
         aria-modal="true"
         aria-labelledby="workflow-confirm-title"
-        className="relative z-10 w-full max-w-md rounded-xl border border-zinc-200/90 bg-white p-6 shadow-xl shadow-zinc-950/15 sm:p-8"
+        className="relative z-10 w-full max-w-md rounded-xl border border-zinc-200/90 bg-white p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-xl shadow-zinc-950/15 sm:p-8 sm:pb-8"
       >
         <div className="space-y-2">
           <h2 id="workflow-confirm-title" className="text-lg font-semibold text-zinc-900">
@@ -47,14 +48,22 @@ export function WorkflowConfirmDialog({
           <p className="text-sm leading-relaxed text-zinc-600">{body}</p>
         </div>
 
-        <div className="mt-6 flex flex-wrap justify-end gap-2">
-          <Button type="button" variant="ghost" onClick={onCancel}>
+        <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:flex-wrap sm:justify-end">
+          <Button
+            type="button"
+            variant="ghost"
+            className="h-12 w-full sm:h-10 sm:w-auto"
+            onClick={onCancel}
+          >
             {t("cancel")}
           </Button>
           <Button
             type="button"
             variant={kind === "close" ? "outline" : "primary"}
-            className={kind === "close" ? "border-zinc-300 text-zinc-800" : undefined}
+            className={cn(
+              "h-12 w-full sm:h-10 sm:w-auto",
+              kind === "close" ? "border-zinc-300 text-zinc-800" : undefined
+            )}
             onClick={onConfirm}
           >
             {t("confirm")}

@@ -45,7 +45,7 @@ export function MaterialMarketScopeField({
               type="button"
               onClick={() => onChange(option.value)}
               className={cn(
-                "rounded-xl border px-4 py-3 text-left transition",
+                "min-h-11 rounded-xl border px-4 py-3.5 text-left transition",
                 selected
                   ? "border-emerald-600 bg-emerald-50/80 ring-1 ring-emerald-600"
                   : "border-zinc-200 bg-white hover:border-zinc-300"

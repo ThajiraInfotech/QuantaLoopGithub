@@ -32,11 +32,15 @@ function createRazorpayClient({ keyId, keySecret, timeoutMs = 10000, fetchImpl =
       if (!response.ok) {
         const remoteDescription =
           data?.error?.description || data?.error?.reason || "Razorpay request failed";
+        const message =
+          remoteDescription === "Authentication failed"
+            ? "Razorpay authentication failed. Check RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET (same test/live pair)."
+            : remoteDescription;
         throw new AppError(
-          remoteDescription,
+          message,
           response.status >= 500 ? 502 : 400,
           "RAZORPAY_API_ERROR",
-          { remoteStatus: response.status }
+          { remoteStatus: response.status, remoteDescription }
         );
       }
       return data;
@@ -51,46 +55,9 @@ function createRazorpayClient({ keyId, keySecret, timeoutMs = 10000, fetchImpl =
     }
   }
 
-  async function listPlans() {
-    const result = await request("GET", "/plans?count=100");
-    return Array.isArray(result?.items) ? result.items : [];
-  }
-
-  async function createPlan(catalogPlan) {
-    return request("POST", "/plans", {
-      period: catalogPlan.period || catalogPlan.interval,
-      interval: catalogPlan.intervalCount,
-      item: {
-        name: catalogPlan.name,
-        amount: catalogPlan.amountMinor,
-        currency: catalogPlan.currency,
-        description: catalogPlan.description,
-      },
-      notes: { catalog_plan_id: catalogPlan.id, product: "quanta_loop" },
-    });
-  }
-
-  async function resolvePlanId(catalogPlan, pinnedPlanId) {
-    if (pinnedPlanId) return pinnedPlanId;
-    const plans = await listPlans();
-    const existing = plans.find(
-      (plan) =>
-        plan?.notes?.catalog_plan_id === catalogPlan.id &&
-        plan?.item?.amount === catalogPlan.amountMinor &&
-        plan?.item?.currency === catalogPlan.currency
-    );
-    const plan = existing || (await createPlan(catalogPlan));
-    if (!plan?.id) {
-      throw new AppError(
-        "Unable to create Razorpay plan",
-        502,
-        "PAYMENT_PROVIDER_ERROR"
-      );
-    }
-    return plan.id;
-  }
-
   return {
+    createOrder: (body) => request("POST", "/orders", body),
+    fetchOrder: (id) => request("GET", `/orders/${encodeURIComponent(id)}`),
     createSubscription: (body) => request("POST", "/subscriptions", body),
     fetchSubscription: (id) =>
       request("GET", `/subscriptions/${encodeURIComponent(id)}`),
@@ -99,7 +66,15 @@ function createRazorpayClient({ keyId, keySecret, timeoutMs = 10000, fetchImpl =
       request("POST", `/subscriptions/${encodeURIComponent(id)}/cancel`, {
         cancel_at_cycle_end: Boolean(cancelAtCycleEnd),
       }),
-    resolvePlanId,
+    resolvePlanId: async () => null,
+    listPlans: async () => [],
+    createPlan: async () => {
+      throw new AppError(
+        "Razorpay subscription plans are not used",
+        400,
+        "ORDERS_ONLY"
+      );
+    },
   };
 }
 

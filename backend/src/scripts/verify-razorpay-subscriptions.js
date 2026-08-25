@@ -9,6 +9,8 @@ const {
   verifyCheckoutSignature,
   calculateWebhookSignature,
   verifyWebhookSignature,
+  paymentUnlocksMembership,
+  keepPaidStatus,
 } = require("../modules/subscriptions/subscription.service");
 
 const secret = "unit-test-secret";
@@ -37,6 +39,29 @@ assert.equal(
   false
 );
 assert.equal(verifyCheckoutSignature(secret, paymentId, subscriptionId, "bad"), false);
+
+const orderId = "order_unit789";
+const expectedOrderCheckout = crypto
+  .createHmac("sha256", secret)
+  .update(`${orderId}|${paymentId}`)
+  .digest("hex");
+assert.equal(
+  require("../modules/subscriptions/subscription.service").calculateOrderCheckoutSignature(
+    secret,
+    orderId,
+    paymentId
+  ),
+  expectedOrderCheckout
+);
+assert.equal(
+  require("../modules/subscriptions/subscription.service").verifyOrderCheckoutSignature(
+    secret,
+    orderId,
+    paymentId,
+    expectedOrderCheckout
+  ),
+  true
+);
 
 const rawBody = Buffer.from('{"event":"subscription.activated","amount":699900}');
 const expectedWebhook = crypto
@@ -89,5 +114,46 @@ assert.equal(
   addInterval(paidFrom, undefined, 0).toISOString(),
   "2027-08-14T00:00:00.000Z"
 );
+
+const annualPlan = { amountMinor: 699900, currency: "INR" };
+assert.equal(
+  paymentUnlocksMembership(
+    { status: "captured", amount: 699900, currency: "INR" },
+    annualPlan
+  ),
+  true
+);
+assert.equal(
+  paymentUnlocksMembership(
+    { status: "authorized", amount: 699900, currency: "INR" },
+    annualPlan
+  ),
+  false
+);
+assert.equal(
+  paymentUnlocksMembership(
+    { status: "captured", amount: 100, currency: "INR" },
+    annualPlan
+  ),
+  false
+);
+assert.equal(
+  paymentUnlocksMembership(
+    { status: "captured", amount: 699900, currency: "USD" },
+    annualPlan
+  ),
+  false
+);
+assert.equal(
+  paymentUnlocksMembership(
+    { status: "captured", amount: 699900, currency: "INR", refund_status: "full" },
+    annualPlan
+  ),
+  false
+);
+assert.equal(keepPaidStatus("active", "authenticated"), "active");
+assert.equal(keepPaidStatus("completed", "created"), "completed");
+assert.equal(keepPaidStatus("authenticated", "active"), "active");
+assert.equal(keepPaidStatus("created", "authenticated"), "authenticated");
 
 process.stdout.write("Razorpay subscription signature/status checks passed\n");

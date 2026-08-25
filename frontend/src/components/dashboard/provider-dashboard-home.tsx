@@ -76,17 +76,17 @@ export function ProviderDashboardHome() {
 
   if (loading) {
     return (
-      <div className="mx-auto max-w-5xl space-y-4 py-4">
+      <div className="mx-auto max-w-5xl space-y-5 py-1 sm:space-y-8 sm:py-4">
         <div className="space-y-2">
-          <div className="h-9 w-72 max-w-full animate-pulse rounded-lg bg-zinc-100" />
-          <div className="h-4 w-96 max-w-full animate-pulse rounded-md bg-zinc-50" />
+          <div className="h-8 w-56 max-w-full animate-pulse rounded-lg bg-zinc-100 sm:h-9 sm:w-72" />
+          <div className="h-4 w-full max-w-md animate-pulse rounded-md bg-zinc-50 sm:w-96" />
         </div>
-        <div className="h-24 animate-pulse rounded-xl border border-zinc-200/80 bg-zinc-50" />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="h-36 animate-pulse rounded-xl border border-zinc-200/80 bg-zinc-50 sm:h-24" />
+        <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
           {[0, 1, 2].map((k) => (
             <div
               key={k}
-              className="h-24 animate-pulse rounded-xl border border-zinc-200/80 bg-zinc-50"
+              className="h-20 animate-pulse rounded-xl border border-zinc-200/80 bg-zinc-50 sm:h-24"
             />
           ))}
         </div>
@@ -96,24 +96,24 @@ export function ProviderDashboardHome() {
 
   if (error) {
     return (
-      <div className="mx-auto max-w-2xl rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+      <div className="mx-auto max-w-2xl rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm leading-relaxed text-pretty text-red-800">
         {error}
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-5xl space-y-8">
-      <header className="space-y-2">
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
+    <div className="mx-auto max-w-5xl space-y-5 sm:space-y-8">
+      <header className="space-y-1.5 sm:space-y-2">
+        <h1 className="text-[1.5rem] font-semibold tracking-tight text-balance text-zinc-900 sm:text-3xl">
           {greeting}
         </h1>
-        <p className="max-w-2xl text-sm leading-relaxed text-zinc-500">
+        <p className="max-w-2xl text-sm leading-relaxed text-pretty text-zinc-500">
           {t("subtitle")}
         </p>
       </header>
 
-      <section className="rounded-2xl border border-zinc-200/80 bg-white p-6 shadow-sm shadow-zinc-950/[0.04]">
+      <section className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-sm shadow-zinc-950/[0.04] sm:p-6">
         <h2 className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-400">
           {t("quickActions")}
         </h2>
@@ -122,7 +122,7 @@ export function ProviderDashboardHome() {
             href={ROUTES.materialsNew}
             className={cn(
               primaryActionLinkClassName(),
-              "h-14 w-full text-base font-semibold sm:text-lg"
+              "h-12 w-full text-base font-semibold sm:h-14 sm:text-lg"
             )}
           >
             + {t("publishMaterial")}
@@ -130,7 +130,7 @@ export function ProviderDashboardHome() {
           <div className="grid gap-3 sm:grid-cols-2">
             <Link
               href={ROUTES.interests}
-              className="inline-flex h-11 items-center justify-center rounded-md border border-zinc-200 bg-zinc-50 px-4 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100"
+              className="inline-flex min-h-11 items-center justify-center rounded-md border border-zinc-200 bg-zinc-50 px-4 py-2.5 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100 sm:h-11 sm:py-0"
             >
               {t("viewInterests")}
               {pendingInterests.length > 0 ? (
@@ -141,7 +141,7 @@ export function ProviderDashboardHome() {
             </Link>
             <Link
               href={ROUTES.profile}
-              className="inline-flex h-11 items-center justify-center rounded-md border border-zinc-200 bg-zinc-50 px-4 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100"
+              className="inline-flex min-h-11 items-center justify-center rounded-md border border-zinc-200 bg-zinc-50 px-4 py-2.5 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100 sm:h-11 sm:py-0"
             >
               {t("completeProfile")}
             </Link>
@@ -150,23 +150,23 @@ export function ProviderDashboardHome() {
       </section>
 
       {hasNoActiveMaterials ? (
-        <section className="relative overflow-hidden rounded-2xl border border-dashed border-emerald-200/90 bg-gradient-to-br from-emerald-50/90 via-white to-white px-6 py-12 text-center shadow-sm shadow-emerald-950/[0.03] sm:px-12">
+        <section className="relative overflow-hidden rounded-2xl border border-dashed border-emerald-200/90 bg-gradient-to-br from-emerald-50/90 via-white to-white px-4 py-8 text-center shadow-sm shadow-emerald-950/[0.03] sm:px-12 sm:py-12">
           <div
             aria-hidden
             className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-emerald-100/60 blur-2xl"
           />
           <div className="relative mx-auto max-w-md space-y-3">
-            <h2 className="text-lg font-semibold tracking-tight text-zinc-900 sm:text-xl">
+            <h2 className="text-lg font-semibold tracking-tight text-balance text-zinc-900 sm:text-xl">
               {t("emptyTitle")}
             </h2>
-            <p className="text-sm leading-relaxed text-zinc-600">
+            <p className="text-sm leading-relaxed text-pretty text-zinc-600">
               {t("emptyDescription")}
             </p>
             <Link
               href={ROUTES.materialsNew}
               className={cn(
                 primaryActionLinkClassName(),
-                "mt-5 h-12 px-8 text-base shadow-sm shadow-emerald-900/10"
+                "mt-5 h-12 w-full px-8 text-base shadow-sm shadow-emerald-900/10 sm:w-auto"
               )}
             >
               + {t("publishMaterial")}
@@ -175,7 +175,7 @@ export function ProviderDashboardHome() {
         </section>
       ) : null}
 
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
         <StatCard
           label={t("activeMaterials")}
           value={activeMaterials.length}
@@ -198,33 +198,33 @@ export function ProviderDashboardHome() {
 
       {pendingInterests.length > 0 ? (
         <Card className="border-amber-200/80 bg-amber-50/40">
-          <CardHeader className="pb-2">
+          <CardHeader className="p-4 pb-2 sm:p-6 sm:pb-2">
             <CardTitle className="text-base">{t("needsResponse")}</CardTitle>
             <CardDescription>
               {t("needsResponseDescription", { count: pendingInterests.length })}
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-2">
+          <CardContent className="space-y-2 p-4 pt-4 sm:p-6 sm:pt-6">
             {interests
               .filter((i) => i.status === "pending")
               .slice(0, 3)
               .map((i) => (
                 <div
                   key={i.id}
-                  className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-amber-100 bg-white px-3 py-2"
+                  className="flex flex-col gap-2 rounded-lg border border-amber-100 bg-white px-3 py-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:py-2"
                 >
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium text-zinc-900">
                       {i.materialTitle}
                     </p>
-                    <p className="text-xs text-zinc-500">
+                    <p className="text-xs leading-relaxed text-zinc-500">
                       {i.buyer?.companyName ?? t("buyerFallback")} ·{" "}
                       {formatRelativeTime(i.createdAt)}
                     </p>
                   </div>
                   <Link
                     href={ROUTES.interestsOpen(i.id)}
-                    className="shrink-0 text-xs font-medium text-zinc-800 underline-offset-4 hover:underline"
+                    className="inline-flex min-h-11 shrink-0 items-center text-sm font-medium text-zinc-800 underline-offset-4 hover:underline sm:min-h-0 sm:text-xs"
                   >
                     {t("respond")} →
                   </Link>
@@ -236,26 +236,26 @@ export function ProviderDashboardHome() {
 
       {sortedMaterials.length > 0 ? (
         <Card className="border-zinc-200/80">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0">
-            <div>
+          <CardHeader className="flex flex-col gap-2 space-y-0 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+            <div className="min-w-0">
               <CardTitle className="text-base">{t("yourMaterials")}</CardTitle>
               <CardDescription>{t("yourMaterialsDescription")}</CardDescription>
             </div>
             <Link
               href={ROUTES.materials}
-              className="text-xs font-medium text-zinc-700 underline-offset-4 hover:underline"
+              className="inline-flex min-h-11 shrink-0 items-center text-sm font-medium text-zinc-700 underline-offset-4 hover:underline sm:min-h-0 sm:text-xs"
             >
               {t("viewAll")} →
             </Link>
           </CardHeader>
-          <CardContent className="space-y-2">
+          <CardContent className="space-y-2 p-4 pt-4 sm:p-6 sm:pt-6">
             {sortedMaterials.slice(0, 5).map((m) => {
               const interestCount = interestCountByMaterial.get(m.id) ?? 0;
               return (
                 <Link
                   key={m.id}
                   href={ROUTES.materialDetail(m.id)}
-                  className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-zinc-100 bg-zinc-50/60 px-3 py-2 transition-colors hover:border-zinc-200"
+                  className="flex min-h-11 flex-col gap-2 rounded-lg border border-zinc-100 bg-zinc-50/60 px-3 py-3 transition-colors hover:border-zinc-200 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:py-2"
                 >
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium text-zinc-900">
@@ -310,7 +310,7 @@ function StatCard({
     <Link
       href={href}
       className={cn(
-        "block rounded-2xl border p-5 shadow-sm shadow-zinc-950/[0.04] transition-all hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md hover:shadow-zinc-950/[0.06]",
+        "block rounded-2xl border p-4 shadow-sm shadow-zinc-950/[0.04] transition-all hover:border-zinc-300 hover:shadow-md hover:shadow-zinc-950/[0.06] sm:p-5 sm:hover:-translate-y-0.5",
         STAT_TONE_STYLES[tone]
       )}
     >
@@ -319,7 +319,7 @@ function StatCard({
       </p>
       <p
         className={cn(
-          "mt-2 text-3xl font-semibold tabular-nums",
+          "mt-2 text-[1.75rem] font-semibold tabular-nums sm:text-3xl",
           STAT_VALUE_STYLES[tone]
         )}
       >

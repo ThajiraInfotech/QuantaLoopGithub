@@ -46,7 +46,7 @@
       "trust1": "Smart match recommendations",
       "trust2": "Registered businesses",
       "trust3": "Any quantity accepted",
-      "trust4": "Direct buyer connections"
+      "trust4": "Direct Business connections"
     },
     "footer": {
       "description1": "Private industrial recovery network connecting material providers, buyers, processors, and recovery operators.",
@@ -338,7 +338,7 @@
         },
         {
           "label": "Connections",
-          "title": "Direct Buyer Connections",
+          "title": "Direct Business Connections",
           "description": "Connect directly with registered buyers and sellers.",
           "outcomes": [
             {
@@ -466,7 +466,7 @@
       "titleLine2": "for Your Materials",
       "description": "Access India's industrial recovery network — list materials, discover matches, and connect with registered businesses.",
       "trust1": "Registered Businesses",
-      "trust2": "Direct Buyer Connections",
+      "trust2": "Direct Business Connections",
       "trust3": "Secure Communication"
     },
     "loginFlow": {
@@ -594,7 +594,8 @@
       "notifications": "Notifications",
       "administration": "Administration",
       "participants": "Participants",
-      "reports": "Reports"
+      "reports": "Reports",
+      "invoices": "Invoices"
     },
     "home": {
       "greeting": {
@@ -628,6 +629,9 @@
       "buyer": {
         "title": "Overview",
         "subtitle": "Track your interests, saved materials, and follow-ups.",
+        "quickActions": "Quick actions",
+        "viewInterests": "View interests",
+        "viewSaved": "Saved materials",
         "activeInterests": "Active interests",
         "savedMaterials": "Saved materials",
         "followUpsPending": "Follow-ups pending",
@@ -958,7 +962,8 @@
       "signedInAs": "Signed in as {email}.",
       "signOut": "Sign out",
       "signingOut": "Signing out…",
-      "payLaterHint": "Your details are saved. Sign in any time to finish this payment.",
+      "startOver": "Go back and start over",
+      "payLaterHint": "Until you pay, you are not listed as a network participant. Sign in later to finish this payment, or start over from the first step.",
       "cancel": {
         "cta": "Cancel signup and delete my details",
         "confirm": "This deletes the account you just created, including your role, materials, and location. You will start from the first screen next time.",
@@ -970,9 +975,42 @@
       "checkout": {
         "opening": "Opening secure checkout…",
         "pay": "Pay {price} securely",
+        "paidTitle": "Payment successful",
+        "activating": "Activating your membership…",
         "processing": "Payment received. We are confirming your membership — this takes a few seconds.",
         "recheck": "Check again",
         "security": "Payment details are collected securely by Razorpay. Quanta Loop never receives your card or banking credentials."
+      },
+      "billing": {
+        "loading": "Loading billing details…",
+        "title": "Billing details for invoice",
+        "description": "We use these details to calculate GST and issue your tax invoice. The membership price stays ₹6,999.",
+        "legalName": "Legal / billing name",
+        "customerType": "Purchasing as",
+        "business": "Business",
+        "individual": "Individual",
+        "country": "Country",
+        "addressLine1": "Address line 1",
+        "addressLine2": "Address line 2 (optional)",
+        "city": "City",
+        "pincode": "PIN / postal code",
+        "state": "State",
+        "selectState": "Select state",
+        "gstRegistered": "GST-registered business?",
+        "gstYes": "Yes — I have a GSTIN",
+        "gstNo": "No",
+        "gstHint": "Choose Yes if you need a GST invoice for ITC.",
+        "gstin": "GSTIN",
+        "taxId": "Tax / business ID (optional)",
+        "exportHint": "Tax treatment for overseas buyers follows applicable export rules configured for Quanta Loop.",
+        "breakdownTitle": "GST breakup",
+        "taxable": "Taxable value",
+        "cgst": "CGST @ 9%",
+        "sgst": "SGST @ 9%",
+        "igst": "IGST @ 18%",
+        "gst": "GST",
+        "serviceValue": "Service value",
+        "total": "Total payable"
       }
     },
     "header": {
@@ -1041,7 +1079,7 @@
       "inDiscussion": "In discussion",
       "completed": "Completed",
       "fulfilled": "Fulfilled",
-      "archived": "Archived"
+      "archived": "Removed"
     },
     "availability": {
       "oneTime": "One-time",
@@ -1158,11 +1196,11 @@
       "viewDetails": "View details",
       "duplicate": "Duplicate",
       "edit": "Edit",
-      "archive": "Archive",
-      "archiving": "Archiving…",
-      "archived": "Material archived",
-      "archiveError": "Unable to archive material",
-      "archiveConfirm": "Archive \"{title}\"? It will no longer appear in buyer search.",
+      "remove": "Remove material",
+      "removing": "Removing…",
+      "removed": "Material removed",
+      "removeError": "Unable to remove material",
+      "removeConfirm": "Remove \"{title}\" permanently? This cannot be undone.",
       "viewInterests": "View interests",
       "posted": "Posted {time}",
       "interestCount": "{count} interest(s)",
@@ -1314,8 +1352,8 @@
         "description": "Identity and narrative context visible to qualified counterparties."
       },
       "operational": {
-        "title": "Operational focus",
-        "description": "Industries and materials you routinely handle or source."
+        "title": "Matching profile",
+        "description": "Material categories and location used for smart suggestions. Saving new details updates matching immediately."
       },
       "response": {
         "title": "Response posture",
@@ -1332,22 +1370,47 @@
         "establishedYear": "Established year",
         "industryType": "Primary industry label",
         "industriesText": "Industries (comma-separated)",
-        "materialsText": "Materials handled (comma-separated)",
-        "operationalLocation": "Operational region",
-        "locationOnFile": "Location on file",
+        "operatingLocation": "Operating location",
+        "operatingLocationHint": "Used for proximity in smart suggestions. Indian accounts keep city and state matching.",
+        "country": "Country",
+        "countryHint": "Indian users keep city and state proximity. Abroad users match by country.",
+        "abroadLocationNote": "Abroad accounts use country-level matching only — no city or state proximity.",
         "responseRate": "Response rate (%)",
         "responseWindow": "Typical response window",
         "responseWindowPlaceholder": "e.g. Within 2 business days"
       }
+    },
+    "payments": {
+      "title": "Payments & invoices",
+      "description": "Your Quanta Loop membership invoices with GST breakup. Download or view for your accounts.",
+      "loading": "Loading invoices…",
+      "empty": "No invoices yet. After you pay for membership, invoices appear here.",
+      "loadError": "Unable to load invoices",
+      "openError": "Unable to open invoice",
+      "viewInvoice": "View invoice",
+      "taxCgstSgst": "CGST + SGST",
+      "taxIgst": "IGST",
+      "taxExport": "Export"
     }
   },
   "notifications": {
     "bell": {
       "title": "Notifications",
-      "subtitle": "Recent updates",
-      "loading": "Loading…",
+      "subtitle": "Live operational updates",
+      "loading": "Syncing…",
       "empty": "No notifications",
-      "viewAll": "View all",
+      "emptyTitle": "You're all caught up",
+      "emptyDescription": "New interests, matches, and messages will appear here instantly.",
+      "new": "New",
+      "actionRequired": "{count, plural, one {# item needs your attention} other {# items need your attention}}",
+      "statusLive": "Live",
+      "statusConnecting": "Connecting",
+      "statusPolling": "Syncing",
+      "statusOffline": "Offline",
+      "markAllRead": "Mark all read",
+      "markingAll": "Marking…",
+      "markAllSuccess": "All notifications marked read",
+      "markAllError": "Unable to mark notifications read",
       "ariaDefault": "Notifications",
       "ariaWithCount": "Notifications, {count} unread"
     },
@@ -1486,6 +1549,7 @@
     "common": {
       "operatedBy": "Operated by {operator}",
       "lastUpdated": "Last Updated: {date}",
+      "back": "Back",
       "backToHome": "Back to home"
     },
     "consent": {

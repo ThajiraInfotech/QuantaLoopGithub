@@ -10,7 +10,7 @@ export function OnboardingTrustNotes() {
 
   return (
     <div
-      className="mt-8 max-w-[900px] rounded-xl border border-[#DCEFE5] border-l-4 border-l-[#33B573] bg-[#F7FCF9] px-8 py-6"
+      className="mt-6 max-w-[900px] rounded-xl border border-[#DCEFE5] border-l-4 border-l-[#33B573] bg-[#F7FCF9] px-4 py-4 sm:mt-8 sm:px-8 sm:py-6"
       aria-labelledby="onboarding-trust-title"
     >
       <h2

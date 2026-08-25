@@ -14,7 +14,7 @@ export async function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <LandingNavbar />
-      <main className="flex-1">
+      <main className="min-w-0 flex-1 overflow-x-hidden">
         <LandingHero />
         <LandingProblem />
         <LandingRecommendationEngine />

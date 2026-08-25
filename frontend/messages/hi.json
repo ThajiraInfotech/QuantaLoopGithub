@@ -593,7 +593,8 @@
       "notifications": "सूचनाएँ",
       "administration": "प्रशासन",
       "participants": "प्रतिभागी",
-      "reports": "रिपोर्ट"
+      "reports": "रिपोर्ट",
+      "invoices": "इनवॉइस"
     },
     "home": {
       "greeting": {
@@ -627,6 +628,9 @@
       "buyer": {
         "title": "अवलोकन",
         "subtitle": "अपनी रुचियाँ, सहेजी गई सामग्री और फ़ॉलो-अप ट्रैक करें।",
+        "quickActions": "त्वरित क्रियाएँ",
+        "viewInterests": "रुचियाँ देखें",
+        "viewSaved": "सहेजी गई सामग्री",
         "activeInterests": "सक्रिय रुचियाँ",
         "savedMaterials": "सहेजी गई सामग्री",
         "followUpsPending": "लंबित फ़ॉलो-अप",
@@ -957,7 +961,8 @@
       "signedInAs": "{email} के रूप में साइन इन हैं।",
       "signOut": "साइन आउट",
       "signingOut": "साइन आउट हो रहा है…",
-      "payLaterHint": "आपका विवरण सुरक्षित है। यह भुगतान पूरा करने के लिए कभी भी साइन इन करें।",
+      "startOver": "वापस जाएँ और नए सिरे से शुरू करें",
+      "payLaterHint": "भुगतान से पहले आप नेटवर्क प्रतिभागी नहीं हैं। बाद में साइन इन करके भुगतान पूरा करें, या पहले चरण से नए सिरे से शुरू करें।",
       "cancel": {
         "cta": "साइनअप रद्द करें और मेरा विवरण हटाएँ",
         "confirm": "इससे आपका अभी बनाया गया खाता, आपकी भूमिका, सामग्री और स्थान सहित हट जाएगा। अगली बार आप पहली स्क्रीन से शुरू करेंगे।",
@@ -969,9 +974,42 @@
       "checkout": {
         "opening": "सुरक्षित चेकआउट खुल रहा है…",
         "pay": "{price} सुरक्षित रूप से भुगतान करें",
+        "paidTitle": "भुगतान सफल रहा",
+        "activating": "आपकी सदस्यता सक्रिय की जा रही है…",
         "processing": "भुगतान प्राप्त हुआ। हम आपकी सदस्यता की पुष्टि कर रहे हैं — इसमें कुछ सेकंड लगते हैं।",
         "recheck": "फिर जाँचें",
         "security": "भुगतान विवरण Razorpay द्वारा सुरक्षित रूप से एकत्र किए जाते हैं। Quanta Loop को आपके कार्ड या बैंकिंग क्रेडेंशियल कभी नहीं मिलते।"
+      },
+      "billing": {
+        "loading": "बिलिंग विवरण लोड हो रहा है…",
+        "title": "इनवॉइस के लिए बिलिंग विवरण",
+        "description": "GST गणना और टैक्स इनवॉइस के लिए ये विवरण उपयोग होते हैं। सदस्यता मूल्य ₹6,999 ही रहता है।",
+        "legalName": "कानूनी / बिलिंग नाम",
+        "customerType": "खरीद प्रकार",
+        "business": "व्यवसाय",
+        "individual": "व्यक्ति",
+        "country": "देश",
+        "addressLine1": "पता पंक्ति 1",
+        "addressLine2": "पता पंक्ति 2 (वैकल्पिक)",
+        "city": "शहर",
+        "pincode": "पिन / पोस्टल कोड",
+        "state": "राज्य",
+        "selectState": "राज्य चुनें",
+        "gstRegistered": "GST-पंजीकृत व्यवसाय?",
+        "gstYes": "हाँ — मेरे पास GSTIN है",
+        "gstNo": "नहीं",
+        "gstHint": "ITC के लिए GST इनवॉइस चाहिए तो हाँ चुनें।",
+        "gstin": "GSTIN",
+        "taxId": "टैक्स / व्यवसाय ID (वैकल्पिक)",
+        "exportHint": "विदेशी खरीदारों का कर उपचार Quanta Loop की लागू निर्यात नियमों के अनुसार होगा।",
+        "breakdownTitle": "GST विवरण",
+        "taxable": "कर योग्य मूल्य",
+        "cgst": "CGST @ 9%",
+        "sgst": "SGST @ 9%",
+        "igst": "IGST @ 18%",
+        "gst": "GST",
+        "serviceValue": "सेवा मूल्य",
+        "total": "कुल देय"
       }
     },
     "header": {
@@ -1040,7 +1078,7 @@
       "inDiscussion": "चर्चा में",
       "completed": "पूर्ण",
       "fulfilled": "पूरा हुआ",
-      "archived": "संग्रहीत"
+      "archived": "हटाई गई"
     },
     "availability": {
       "oneTime": "एक बार",
@@ -1144,11 +1182,11 @@
       "viewDetails": "विवरण देखें",
       "duplicate": "प्रतिलिपि बनाएँ",
       "edit": "संपादित करें",
-      "archive": "संग्रहीत करें",
-      "archiving": "संग्रहीत हो रहा है…",
-      "archived": "सामग्री संग्रहीत की गई",
-      "archiveError": "सामग्री संग्रहीत नहीं हो सकी",
-      "archiveConfirm": "\"{title}\" संग्रहीत करें? यह खरीदार खोज में दिखाई नहीं देगी।",
+      "remove": "सामग्री हटाएँ",
+      "removing": "हटाया जा रहा है…",
+      "removed": "सामग्री हटा दी गई",
+      "removeError": "सामग्री हटाई नहीं जा सकी",
+      "removeConfirm": "\"{title}\" को हमेशा के लिए हटाएँ? यह वापस नहीं आएगा।",
       "viewInterests": "रुचियाँ देखें",
       "posted": "{time} को पोस्ट किया गया",
       "interestCount": "{count} रुचि",
@@ -1298,8 +1336,8 @@
         "description": "Identity and narrative context visible to qualified counterparties."
       },
       "operational": {
-        "title": "Operational focus",
-        "description": "Industries and materials you routinely handle or source."
+        "title": "मैचिंग प्रोफ़ाइल",
+        "description": "स्मार्ट सुझावों के लिए सामग्री श्रेणियाँ और स्थान। नए विवरण सहेजने पर मैचिंग तुरंत अपडेट होती है।"
       },
       "response": {
         "title": "Response posture",
@@ -1316,22 +1354,47 @@
         "establishedYear": "Established year",
         "industryType": "Primary industry label",
         "industriesText": "Industries (comma-separated)",
-        "materialsText": "Materials handled (comma-separated)",
-        "operationalLocation": "Operational region",
-        "locationOnFile": "Location on file",
+        "operatingLocation": "संचालन स्थान",
+        "operatingLocationHint": "स्मार्ट सुझावों में निकटता के लिए उपयोग होता है। भारतीय खातों में शहर और राज्य मैचिंग रहती है।",
+        "country": "देश",
+        "countryHint": "भारतीय उपयोगकर्ता शहर और राज्य निकटता रखते हैं। विदेश खाते देश के अनुसार मैच होते हैं।",
+        "abroadLocationNote": "विदेश खाते केवल देश-स्तर की मैचिंग का उपयोग करते हैं — शहर या राज्य निकटता नहीं।",
         "responseRate": "Response rate (%)",
         "responseWindow": "Typical response window",
         "responseWindowPlaceholder": "e.g. Within 2 business days"
       }
+    },
+    "payments": {
+      "title": "भुगतान और इनवॉइस",
+      "description": "GST विवरण सहित आपकी Quanta Loop सदस्यता इनवॉइस। लेखांकन के लिए देखें या डाउनलोड करें।",
+      "loading": "इनवॉइस लोड हो रहे हैं…",
+      "empty": "अभी कोई इनवॉइस नहीं। सदस्यता भुगतान के बाद इनवॉइस यहाँ दिखेंगे।",
+      "loadError": "इनवॉइस लोड नहीं हो सके",
+      "openError": "इनवॉइस नहीं खुल सका",
+      "viewInvoice": "इनवॉइस देखें",
+      "taxCgstSgst": "CGST + SGST",
+      "taxIgst": "IGST",
+      "taxExport": "निर्यात"
     }
   },
   "notifications": {
     "bell": {
       "title": "सूचनाएँ",
-      "subtitle": "हाल के अपडेट",
-      "loading": "लोड हो रहा है…",
+      "subtitle": "लाइव परिचालन अपडेट",
+      "loading": "सिंक हो रहा है…",
       "empty": "कोई सूचना नहीं",
-      "viewAll": "सभी देखें",
+      "emptyTitle": "आप अप-टू-डेट हैं",
+      "emptyDescription": "नई रुचियाँ, मैच और संदेश यहाँ तुरंत दिखेंगे।",
+      "new": "नया",
+      "actionRequired": "{count, plural, one {# आइटम पर आपका ध्यान चाहिए} other {# आइटम पर आपका ध्यान चाहिए}}",
+      "statusLive": "लाइव",
+      "statusConnecting": "कनेक्ट हो रहा है",
+      "statusPolling": "सिंक",
+      "statusOffline": "ऑफ़लाइन",
+      "markAllRead": "सभी पढ़ा चिह्नित करें",
+      "markingAll": "चिह्नित हो रहा है…",
+      "markAllSuccess": "सभी सूचनाएँ पढ़ी गईं",
+      "markAllError": "सूचनाएँ पढ़ी चिह्नित नहीं हो सकीं",
       "ariaDefault": "सूचनाएँ",
       "ariaWithCount": "सूचनाएँ, {count} अपठित"
     },
@@ -1470,6 +1533,7 @@
     "common": {
       "operatedBy": "{operator} द्वारा संचालित",
       "lastUpdated": "अंतिम अपडेट: {date}",
+      "back": "वापस जाएँ",
       "backToHome": "होम पर वापस जाएँ"
     },
     "consent": {

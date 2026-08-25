@@ -130,12 +130,11 @@ export function InterestInlineMessages({
             onChange={(e) => setDraft(e.target.value)}
             rows={2}
             placeholder={t("placeholder")}
-            className="min-h-[64px] flex-1 resize-none border-zinc-200 bg-white text-sm"
+            className="min-h-[5.5rem] flex-1 resize-none border-zinc-200 bg-white text-base sm:min-h-[64px] sm:text-sm"
           />
           <Button
             type="button"
-            size="sm"
-            className="shrink-0"
+            className="h-12 w-full shrink-0 sm:h-9 sm:w-auto"
             disabled={sending || !draft.trim()}
             onClick={() => void send()}
           >

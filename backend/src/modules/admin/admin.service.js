@@ -9,10 +9,12 @@ const {
 const { Message } = require("../messages/message.model");
 const { Report } = require("../reports/report.model");
 const { User, toPublicJSON } = require("../users/user.model");
+const {
+  paidParticipantFilter,
+  userHasPaidMembership,
+} = require("../subscriptions/paid-participants");
 const MS_48H = 48 * 60 * 60 * 1000;
 const MS_7D = 7 * 24 * 60 * 60 * 1000;
-
-const PARTICIPANT_FILTER = { role: { $ne: "admin" } };
 
 function weekAgo() {
   return new Date(Date.now() - MS_7D);
@@ -149,11 +151,12 @@ async function enrichOpenReports(limit = 5) {
 }
 
 async function getParticipantSummary() {
+  const participantFilter = await paidParticipantFilter();
   const [total, providers, buyers, suspended] = await Promise.all([
-    User.countDocuments(PARTICIPANT_FILTER),
-    User.countDocuments({ ...PARTICIPANT_FILTER, role: "material_provider" }),
-    User.countDocuments({ ...PARTICIPANT_FILTER, role: "verified_buyer" }),
-    User.countDocuments({ ...PARTICIPANT_FILTER, accountStatus: "suspended" }),
+    User.countDocuments(participantFilter),
+    User.countDocuments({ ...participantFilter, role: "material_provider" }),
+    User.countDocuments({ ...participantFilter, role: "verified_buyer" }),
+    User.countDocuments({ ...participantFilter, accountStatus: "suspended" }),
   ]);
 
   return { total, providers, buyers, suspended };
@@ -163,6 +166,7 @@ async function getDashboardStats() {
   const weekStart = weekAgo();
   const stale48h = hours48Ago();
   const { thisMonthStart, lastMonthStart } = monthRangeBounds();
+  const participantFilter = await paidParticipantFilter();
 
   const [
     participants,
@@ -189,18 +193,18 @@ async function getDashboardStats() {
     openReportsPreview,
     inactivePreview,
   ] = await Promise.all([
-    User.countDocuments(PARTICIPANT_FILTER),
+    User.countDocuments(participantFilter),
     Material.countDocuments({}),
     Interest.countDocuments({
       status: { $in: ["discussion", "pickup_scheduled"] },
     }),
     Interest.countDocuments({ status: "completed" }),
     User.countDocuments({
-      ...PARTICIPANT_FILTER,
+      ...participantFilter,
       createdAt: { $gte: thisMonthStart },
     }),
     User.countDocuments({
-      ...PARTICIPANT_FILTER,
+      ...participantFilter,
       createdAt: { $gte: lastMonthStart, $lt: thisMonthStart },
     }),
     Material.countDocuments({ createdAt: { $gte: thisMonthStart } }),
@@ -213,8 +217,8 @@ async function getDashboardStats() {
       createdAt: { $lte: stale48h },
     }),
     countInactiveDiscussions(),
-    User.countDocuments({ ...PARTICIPANT_FILTER, accountStatus: "suspended" }),
-    User.countDocuments({ ...PARTICIPANT_FILTER, createdAt: { $gte: weekStart } }),
+    User.countDocuments({ ...participantFilter, accountStatus: "suspended" }),
+    User.countDocuments({ ...participantFilter, createdAt: { $gte: weekStart } }),
     Material.countDocuments({ createdAt: { $gte: weekStart } }),
     Interest.countDocuments({ createdAt: { $gte: weekStart } }),
     Interest.countDocuments({
@@ -229,7 +233,7 @@ async function getDashboardStats() {
       status: { $in: ["pickup_scheduled", "completed"] },
     }),
     Interest.countDocuments({ status: "completed" }),
-    User.find(PARTICIPANT_FILTER)
+    User.find(participantFilter)
       .select("name companyName email role createdAt")
       .sort({ createdAt: -1 })
       .limit(5)
@@ -366,7 +370,7 @@ async function listParticipants({
   page = 1,
   limit = 20,
 }) {
-  const filter = { ...PARTICIPANT_FILTER };
+  const filter = { ...(await paidParticipantFilter()) };
   const safePage = Math.max(1, Number(page) || 1);
   const safeLimit = Math.min(100, Math.max(1, Number(limit) || 20));
 
@@ -530,6 +534,9 @@ async function getParticipantDetail(userId) {
   if (!user || user.role === "admin") {
     return null;
   }
+  if (!(await userHasPaidMembership(user._id))) {
+    return null;
+  }
 
   const uid = user._id;
   const participantFilter = { $or: [{ buyer: uid }, { provider: uid }] };
@@ -605,6 +612,9 @@ async function getParticipantDetail(userId) {
 async function patchParticipantAccount(userId, accountStatus) {
   const user = await User.findById(userId);
   if (!user || user.role === "admin") {
+    return null;
+  }
+  if (!(await userHasPaidMembership(user._id))) {
     return null;
   }
   user.accountStatus = accountStatus;

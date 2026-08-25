@@ -15,7 +15,10 @@
     "billing:bootstrap-plan": "node src/scripts/bootstrap-razorpay-plan.js",
     "test:subscription-access": "node src/scripts/verify-subscription-access.js",
     "test:subscriptions": "node src/scripts/verify-razorpay-subscriptions.js && node src/scripts/verify-subscription-access.js",
-    "test:payment-gate": "node src/scripts/verify-payment-gate-e2e.js"
+    "test:billing-gst": "node src/scripts/verify-billing-gst.js",
+    "billing:seed-local-invoice": "node src/scripts/seed-local-gst-invoice.js",
+    "test:payment-gate": "node src/scripts/verify-payment-gate-e2e.js",
+    "test:notification-emails": "node src/scripts/verify-notification-emails.js"
   },
   "keywords": [],
   "author": "",

@@ -15,10 +15,14 @@ import { MaterialMarketScopeField } from "@/components/materials/material-market
 import { MaterialPhotoField } from "@/components/materials/material-photo-field";
 import { MaterialSubtypeField } from "@/components/materials/material-subtype-field";
 import { MaterialUnitField } from "@/components/materials/material-unit-field";
+import {
+  materialFieldClass,
+  materialPrimaryButtonClass,
+  materialTextareaClass,
+} from "@/components/materials/material-form-styles";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
 import {
   countryNameFromCode,
@@ -53,9 +57,6 @@ export function MaterialEditForm({ materialId }: MaterialEditFormProps) {
   const t = useTranslations("materials.form");
   const tf = useTranslations("materials.form.fields");
   const tv = useTranslations("validation.material");
-  const tStatus = useTranslations("materials.status");
-  const tAvail = useTranslations("materials.availability");
-  const td = useTranslations("materials.detail");
   const router = useRouter();
   const user = useAuthStore((s) => s.user);
   const companyLocation = userToLocationDraft(user);
@@ -156,7 +157,14 @@ export function MaterialEditForm({ materialId }: MaterialEditFormProps) {
     setFormError(null);
     try {
       const material = await updateMaterial(materialId, {
-        ...values,
+        title: values.title,
+        materialType: values.materialType,
+        materialSubtype: values.materialSubtype,
+        materialForm: values.materialForm,
+        cleanliness: values.cleanliness,
+        description: values.description,
+        quantity: values.quantity,
+        unit: values.unit,
         country: isIndianSeller ? "IN" : userCountry,
         marketScope: isIndianSeller
           ? values.marketScope === "global"
@@ -192,12 +200,14 @@ export function MaterialEditForm({ materialId }: MaterialEditFormProps) {
   return (
     <form
       onSubmit={form.handleSubmit(onSubmit)}
-      className="space-y-8"
+      className="space-y-6 sm:space-y-8"
       noValidate
     >
-      <div className="rounded-xl border border-zinc-200/80 bg-white p-6 shadow-sm shadow-zinc-950/5 sm:p-8">
+      <div className="rounded-xl border border-zinc-200/80 bg-white p-4 shadow-sm shadow-zinc-950/5 sm:p-8">
         <div className="max-w-2xl space-y-2">
-          <h2 className="text-lg font-semibold text-zinc-900">{t("editTitle")}</h2>
+          <h2 className="text-[1.5rem] font-semibold tracking-tight text-pretty text-zinc-900 sm:text-2xl">
+            {t("editTitle")}
+          </h2>
           <p className="text-sm leading-relaxed text-zinc-600">
             {t("editDescription")}
           </p>
@@ -265,22 +275,29 @@ export function MaterialEditForm({ materialId }: MaterialEditFormProps) {
 
           <div className="space-y-2">
             <Label htmlFor="title">{tf("title")}</Label>
-            <Input id="title" {...form.register("title")} />
-            {form.formState.errors.title?.message ? (
-              <p className="text-sm text-red-600" role="alert">
-                {form.formState.errors.title.message}
-              </p>
-            ) : null}
+            <Input
+              id="title"
+              placeholder={tf("titlePlaceholder")}
+              className={materialFieldClass}
+              {...form.register("title")}
+            />
+            <p className="text-xs text-zinc-500">{t("titleOptionalHint")}</p>
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="description">{tf("description")}</Label>
-            <Textarea id="description" {...form.register("description")} />
+            <Textarea
+              id="description"
+              rows={4}
+              placeholder={tf("descriptionPlaceholder")}
+              className={materialTextareaClass}
+              {...form.register("description")}
+            />
           </div>
 
           <MaterialPhotoField value={imageUrls} onChange={setImageUrls} />
 
-          <div className="grid gap-6 sm:grid-cols-2">
+          <div className="grid gap-5 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="quantity">{tf("quantity")}</Label>
               <Input
@@ -288,8 +305,16 @@ export function MaterialEditForm({ materialId }: MaterialEditFormProps) {
                 type="number"
                 min={0}
                 step="any"
-                {...form.register("quantity", { valueAsNumber: true })}
+                placeholder={tf("quantityPlaceholder")}
+                inputMode="decimal"
+                className={materialFieldClass}
+                {...form.register("quantity")}
               />
+              {form.formState.errors.quantity?.message ? (
+                <p className="text-sm text-red-600" role="alert">
+                  {form.formState.errors.quantity.message}
+                </p>
+              ) : null}
             </div>
             <Controller
               name="unit"
@@ -304,33 +329,31 @@ export function MaterialEditForm({ materialId }: MaterialEditFormProps) {
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="location">{tf("location")}</Label>
-            <Controller
-              name="location"
-              control={form.control}
-              render={({ field }) =>
-                isIndianSeller ? (
-                  <MaterialLocationField
-                    companyLocation={companyLocation}
-                    value={field.value}
-                    onChange={field.onChange}
-                    error={form.formState.errors.location?.message}
-                  />
-                ) : (
-                  <div className="rounded-xl border border-zinc-200/80 bg-zinc-50/60 p-4">
-                    <p className="text-sm font-medium text-zinc-900">
-                      {countryNameFromCode(userCountry)}
-                    </p>
-                    <p className="mt-1 text-xs text-zinc-500">
-                      Abroad listings use country only — no city or state
-                      proximity.
-                    </p>
-                  </div>
-                )
-              }
-            />
-          </div>
+          <Controller
+            name="location"
+            control={form.control}
+            render={({ field }) =>
+              isIndianSeller ? (
+                <MaterialLocationField
+                  companyLocation={companyLocation}
+                  value={field.value}
+                  onChange={field.onChange}
+                  error={form.formState.errors.location?.message}
+                />
+              ) : (
+                <div className="space-y-2 rounded-xl border border-zinc-200/80 bg-zinc-50/60 p-4">
+                  <Label>Listing country</Label>
+                  <p className="text-sm font-medium text-zinc-900">
+                    {countryNameFromCode(userCountry)}
+                  </p>
+                  <p className="text-xs text-zinc-500">
+                    Abroad listings use country only — no city or state
+                    proximity.
+                  </p>
+                </div>
+              )
+            }
+          />
 
           {isIndianSeller ? (
             <Controller
@@ -344,63 +367,6 @@ export function MaterialEditForm({ materialId }: MaterialEditFormProps) {
               )}
             />
           ) : null}
-
-          <div className="grid gap-6 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="availabilityFrequency">{tf("availabilityRhythm")}</Label>
-              <SelectField
-                id="availabilityFrequency"
-                {...form.register("availabilityFrequency")}
-              >
-                <option value="one_time">{tf("oneTimeAvailability")}</option>
-                <option value="daily">{tAvail("daily")}</option>
-                <option value="weekly">{tAvail("weekly")}</option>
-                <option value="monthly">{tAvail("monthly")}</option>
-              </SelectField>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="visibility">{tf("visibility")}</Label>
-              <SelectField id="visibility" {...form.register("visibility")}>
-                <option value="network">{td("visibilityNetwork")}</option>
-                <option value="restricted">{tf("visibilityRestricted")}</option>
-              </SelectField>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="status">{tf("status")}</Label>
-            <SelectField id="status" {...form.register("status")}>
-              <option value="available">{tStatus("available")}</option>
-              <option value="in_discussion">{tStatus("inDiscussion")}</option>
-              <option value="fulfilled">{tf("statusFulfilled")}</option>
-              <option value="archived">{tStatus("archived")}</option>
-            </SelectField>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="industryType">{tf("industryContext")}</Label>
-            <Input id="industryType" {...form.register("industryType")} />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="estimatedValueRange">{tf("valueRange")}</Label>
-            <Input
-              id="estimatedValueRange"
-              {...form.register("estimatedValueRange")}
-            />
-          </div>
-
-          <div className="flex items-start gap-3 rounded-lg border border-zinc-200/80 bg-zinc-50/80 px-4 py-3">
-            <input
-              id="pickupAvailable"
-              type="checkbox"
-              className="mt-1 h-4 w-4 rounded border-zinc-300"
-              {...form.register("pickupAvailable")}
-            />
-            <Label htmlFor="pickupAvailable" className="cursor-pointer">
-              {tf("pickupOnSite")}
-            </Label>
-          </div>
         </div>
       </div>
 
@@ -410,17 +376,24 @@ export function MaterialEditForm({ materialId }: MaterialEditFormProps) {
         </p>
       ) : null}
 
-      <div className="flex flex-wrap items-center gap-3">
-        <Button type="submit" disabled={form.formState.isSubmitting}>
-          {form.formState.isSubmitting ? t("saving") : t("saveChanges")}
-        </Button>
-        <Button
-          type="button"
-          variant="ghost"
-          onClick={() => router.push(ROUTES.materialDetail(materialId))}
-        >
-          {t("cancel")}
-        </Button>
+      <div className="sticky bottom-0 z-20 -mx-4 border-t border-zinc-200 bg-white/95 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur sm:-mx-6 sm:px-6 lg:static lg:mx-0 lg:border-0 lg:bg-transparent lg:px-0 lg:py-0">
+        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
+          <Button
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            className={materialPrimaryButtonClass}
+          >
+            {form.formState.isSubmitting ? t("saving") : t("saveChanges")}
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            className={materialPrimaryButtonClass}
+            onClick={() => router.push(ROUTES.materialDetail(materialId))}
+          >
+            {t("cancel")}
+          </Button>
+        </div>
       </div>
     </form>
   );

@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useProviderMvpRedirect } from "@/lib/use-provider-mvp-redirect";
+import { useProviderOnlyRedirect } from "@/lib/use-provider-mvp-redirect";
 import { fetchNetworkOverview } from "@/services/network/network.service";
 import type { NetworkOverview } from "@/types/network";
 import type { UserRole } from "@/types/user";
@@ -28,7 +28,7 @@ function useRoleLabel() {
 export function NetworkOverviewPage() {
   const t = useTranslations("dashboard.network");
   const roleLabel = useRoleLabel();
-  const isProvider = useProviderMvpRedirect();
+  const isProvider = useProviderOnlyRedirect();
   const [data, setData] = useState<NetworkOverview | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -55,12 +55,19 @@ export function NetworkOverviewPage() {
 
   if (loading) {
     return (
-      <div className="mx-auto max-w-4xl space-y-4 py-4">
-        <div className="h-8 w-1/3 animate-pulse rounded-md bg-zinc-100" />
-        <div className="grid gap-4 md:grid-cols-3">
-          <div className="h-28 animate-pulse rounded-xl border border-zinc-200/80 bg-zinc-50" />
-          <div className="h-28 animate-pulse rounded-xl border border-zinc-200/80 bg-zinc-50" />
-          <div className="h-28 animate-pulse rounded-xl border border-zinc-200/80 bg-zinc-50" />
+      <div className="mx-auto max-w-5xl space-y-5 py-1 sm:space-y-8 sm:py-4">
+        <div className="space-y-2">
+          <div className="h-3 w-24 animate-pulse rounded bg-zinc-100" />
+          <div className="h-8 w-full max-w-md animate-pulse rounded-lg bg-zinc-100 sm:h-9" />
+          <div className="h-4 w-full max-w-lg animate-pulse rounded-md bg-zinc-50" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
+          {[0, 1, 2].map((k) => (
+            <div
+              key={k}
+              className="h-28 animate-pulse rounded-xl border border-zinc-200/80 bg-zinc-50 sm:h-32"
+            />
+          ))}
         </div>
       </div>
     );
@@ -68,56 +75,62 @@ export function NetworkOverviewPage() {
 
   if (error || !data) {
     return (
-      <div className="mx-auto max-w-2xl rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+      <div className="mx-auto max-w-2xl rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm leading-relaxed text-red-800">
         {error ?? t("unavailable")}
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-4xl space-y-10">
-      <div>
+    <div className="mx-auto max-w-5xl space-y-5 sm:space-y-10">
+      <header className="space-y-2 sm:space-y-3">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
           {t("eyebrow")}
         </p>
-        <h1 className="mt-2 text-2xl font-semibold tracking-tight text-zinc-900">
+        <h1 className="text-[1.5rem] font-semibold tracking-tight text-balance text-zinc-900 sm:text-3xl">
           {t("pageTitle")}
         </h1>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-600">
+        <p className="max-w-2xl text-sm leading-relaxed text-pretty text-zinc-600">
           {t("subtitle")}
         </p>
-      </div>
+      </header>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
         <Card className="border-zinc-200/80">
-          <CardHeader>
+          <CardHeader className="p-4 pb-2 sm:p-6 sm:pb-2">
             <CardTitle className="text-base">{t("registeredParticipants")}</CardTitle>
-            <CardDescription>{t("registeredParticipantsDesc")}</CardDescription>
+            <CardDescription className="leading-relaxed">
+              {t("registeredParticipantsDesc")}
+            </CardDescription>
           </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-semibold tabular-nums text-zinc-900">
+          <CardContent className="p-4 pt-2 sm:p-6 sm:pt-2">
+            <p className="text-[1.75rem] font-semibold tabular-nums text-zinc-900 sm:text-3xl">
               {data.registeredParticipants ?? data.verifiedParticipants}
             </p>
           </CardContent>
         </Card>
         <Card className="border-zinc-200/80">
-          <CardHeader>
+          <CardHeader className="p-4 pb-2 sm:p-6 sm:pb-2">
             <CardTitle className="text-base">{t("activeListings")}</CardTitle>
-            <CardDescription>{t("activeListingsDesc")}</CardDescription>
+            <CardDescription className="leading-relaxed">
+              {t("activeListingsDesc")}
+            </CardDescription>
           </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-semibold tabular-nums text-zinc-900">
+          <CardContent className="p-4 pt-2 sm:p-6 sm:pt-2">
+            <p className="text-[1.75rem] font-semibold tabular-nums text-zinc-900 sm:text-3xl">
               {data.activeMaterials}
             </p>
           </CardContent>
         </Card>
         <Card className="border-zinc-200/80">
-          <CardHeader>
+          <CardHeader className="p-4 pb-2 sm:p-6 sm:pb-2">
             <CardTitle className="text-base">{t("opportunityMotion")}</CardTitle>
-            <CardDescription>{t("opportunityMotionDesc")}</CardDescription>
+            <CardDescription className="leading-relaxed">
+              {t("opportunityMotionDesc")}
+            </CardDescription>
           </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-semibold tabular-nums text-zinc-900">
+          <CardContent className="p-4 pt-2 sm:p-6 sm:pt-2">
+            <p className="text-[1.75rem] font-semibold tabular-nums text-zinc-900 sm:text-3xl">
               {data.recentOpportunityActivity}
             </p>
           </CardContent>
@@ -125,21 +138,21 @@ export function NetworkOverviewPage() {
       </div>
 
       <Card className="border-zinc-200/80">
-        <CardHeader>
+        <CardHeader className="p-4 sm:p-6">
           <CardTitle className="text-base">{t("spotlightTitle")}</CardTitle>
-          <CardDescription>{t("spotlightDesc")}</CardDescription>
+          <CardDescription className="leading-relaxed">{t("spotlightDesc")}</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
           {data.spotlight.length === 0 ? (
-            <p className="text-sm text-zinc-500">{t("spotlightEmpty")}</p>
+            <p className="text-sm leading-relaxed text-zinc-500">{t("spotlightEmpty")}</p>
           ) : (
             <ul className="divide-y divide-zinc-100 rounded-lg border border-zinc-100 bg-zinc-50/40">
               {data.spotlight.map((row) => (
                 <li
                   key={`${row.companyName}-${row.role}`}
-                  className="flex flex-wrap items-center justify-between gap-2 px-3 py-2.5 text-sm"
+                  className="flex flex-col gap-1 px-3 py-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-2 sm:py-2.5"
                 >
-                  <span className="font-medium text-zinc-900">
+                  <span className="text-sm font-medium text-pretty text-zinc-900">
                     {row.companyName}
                   </span>
                   <span className="text-xs text-zinc-500">

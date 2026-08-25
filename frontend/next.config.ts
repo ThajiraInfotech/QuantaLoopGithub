@@ -3,7 +3,34 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
+const devApiOrigin = (
+  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") || "http://127.0.0.1:5000"
+);
+
 const nextConfig: NextConfig = {
+  /** Allow phone/tablet testing on the same Wi‑Fi during `npm run dev` */
+  allowedDevOrigins: [
+    "192.168.1.5",
+    "192.168.1.3",
+    "172.29.208.1",
+    "localhost",
+    "127.0.0.1",
+  ],
+  async rewrites() {
+    if (process.env.NODE_ENV === "production") {
+      return [];
+    }
+    return [
+      {
+        source: "/api/v1/:path*",
+        destination: `${devApiOrigin}/api/v1/:path*`,
+      },
+      {
+        source: "/uploads/materials/:path*",
+        destination: `${devApiOrigin}/uploads/materials/:path*`,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

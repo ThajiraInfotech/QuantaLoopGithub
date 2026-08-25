@@ -1,11 +1,8 @@
-import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 
-import { NotificationCenter } from "@/components/notifications/notification-center";
+import { ROUTES } from "@/constants/routes";
 
-export const metadata: Metadata = {
-  title: "Notifications",
-};
-
-export default function NotificationsDashboardPage() {
-  return <NotificationCenter />;
+/** Notifications live in the header bell. Old links land on the dashboard. */
+export default function NotificationsDashboardRedirect() {
+  redirect(ROUTES.dashboard);
 }

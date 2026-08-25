@@ -85,6 +85,10 @@ async function notifyBuyersOfNewMaterial(materialDoc) {
       message: matchCopy.message,
       relatedMaterial: materialDoc._id,
       relatedInterest: null,
+      emailExtras: {
+        matchScore: match.total,
+        matchLabel: match.matchLabel,
+      },
     });
     sent += 1;
   }

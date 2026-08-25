@@ -15,6 +15,10 @@ import type {
   AdminReportsResult,
   AccountStatus,
 } from "@/types/admin";
+import type {
+  AdminInvoiceRow,
+  AdminInvoicesResult,
+} from "@/types/billing";
 import type { User } from "@/types/user";
 import type { UserRole } from "@/types/user";
 
@@ -374,4 +378,61 @@ export async function fetchAdminReportDetail(
   } catch (e) {
     throw new Error(getAxiosErrorMessage(e));
   }
+}
+
+export type AdminInvoiceListParams = {
+  search?: string;
+  month?: string;
+  taxType?: "all" | "cgst_sgst" | "igst" | "export_zero_rated";
+  page?: number;
+  limit?: number;
+};
+
+export async function fetchAdminInvoices(
+  params: AdminInvoiceListParams = {}
+): Promise<AdminInvoicesResult> {
+  try {
+    const { data } = await apiClient.get<unknown>("/admin/invoices", {
+      params,
+    });
+    if (isApiError(data)) {
+      throw new Error(data.error.message);
+    }
+    if (!isApiSuccess<AdminInvoicesResult>(data)) {
+      throw new Error("Unexpected response");
+    }
+    return data.data;
+  } catch (e) {
+    throw new Error(getAxiosErrorMessage(e));
+  }
+}
+
+export async function fetchAllAdminInvoices(
+  params: Omit<AdminInvoiceListParams, "page" | "limit"> = {}
+): Promise<AdminInvoiceRow[]> {
+  const limit = 100;
+  let page = 1;
+  const rows: AdminInvoiceRow[] = [];
+
+  while (true) {
+    const result = await fetchAdminInvoices({ ...params, page, limit });
+    rows.push(...result.items);
+    if (rows.length >= result.total || result.items.length === 0) {
+      break;
+    }
+    page += 1;
+  }
+
+  return rows;
+}
+
+export async function openAdminInvoiceHtml(invoiceId: string): Promise<void> {
+  const { data } = await apiClient.get<string>(
+    `/admin/invoices/${encodeURIComponent(invoiceId)}/html`,
+    { responseType: "text" }
+  );
+  const blob = new Blob([data], { type: "text/html;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  window.open(url, "_blank", "noopener,noreferrer");
+  window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
 }

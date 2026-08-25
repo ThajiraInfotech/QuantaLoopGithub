@@ -19,9 +19,9 @@ import type {
 
 const RAZORPAY_SCRIPT_URL = "https://checkout.razorpay.com/v1/checkout.js";
 const RAZORPAY_SCRIPT_ID = "razorpay-checkout-js";
-// Razorpay activates the subscription moments after the first charge, so the
-// success handler waits it out instead of handing back an unpaid-looking state.
-const ACCESS_RECHECK_DELAYS_MS = [0, 750, 1_250, 2_000, 3_000, 4_000, 5_000];
+const ACCESS_RECHECK_DELAYS_MS = [0, 400, 800, 1_200, 2_000, 3_000, 4_000, 5_000];
+const ACTIVATION_POLL_DELAYS_MS = [1_500, 2_000, 3_000, 4_000, 5_000];
+const ACTIVATION_POLL_ATTEMPTS = 16;
 const ANNUAL_INTERVALS = new Set(["year", "yearly", "annual", "annually"]);
 const ANNUAL_PLAN_CODE = "annual_access";
 const TERMINAL_STATUSES = new Set(["cancelled", "completed", "expired"]);
@@ -35,7 +35,8 @@ const CANCELLABLE_STATUSES = new Set([
 
 type RazorpaySuccess = {
   razorpay_payment_id: string;
-  razorpay_subscription_id: string;
+  razorpay_order_id?: string;
+  razorpay_subscription_id?: string;
   razorpay_signature: string;
 };
 
@@ -45,7 +46,10 @@ type RazorpayFailure = {
 
 type RazorpayOptions = {
   key: string;
-  subscription_id: string;
+  order_id?: string;
+  subscription_id?: string;
+  amount?: number;
+  currency?: string;
   name: string;
   description: string;
   prefill: { name?: string; email?: string };
@@ -173,6 +177,11 @@ type UseMembershipCheckoutOptions = {
   onEntitled?: (access: SubscriptionAccessState) => void | Promise<void>;
   /** Skipped for roles that never pay, such as admins. */
   enabled?: boolean;
+  /**
+   * Optional gate before Razorpay opens (e.g. save billing profile).
+   * Must resolve successfully for checkout to continue.
+   */
+  beforePay?: () => Promise<void>;
 };
 
 /**
@@ -183,6 +192,7 @@ type UseMembershipCheckoutOptions = {
 export function useMembershipCheckout({
   onEntitled,
   enabled = true,
+  beforePay,
 }: UseMembershipCheckoutOptions = {}): MembershipCheckout {
   const user = useAuthStore((state) => state.user);
   const [plan, setPlan] = useState<SubscriptionPlan | null>(null);
@@ -196,6 +206,7 @@ export function useMembershipCheckout({
   const [awaitingActivation, setAwaitingActivation] = useState(false);
   const busyRef = useRef<MembershipCheckoutBusy | null>(null);
   const loadStarted = useRef(false);
+  const awaitingRef = useRef(false);
 
   const claim = (next: MembershipCheckoutBusy): boolean => {
     if (busyRef.current) return false;
@@ -237,9 +248,11 @@ export function useMembershipCheckout({
   const settle = useCallback(
     async (access: SubscriptionAccessState) => {
       if (!access.entitled) {
+        awaitingRef.current = true;
         setAwaitingActivation(true);
         return;
       }
+      awaitingRef.current = false;
       setAwaitingActivation(false);
       const current = await getCurrentSubscription().catch(() => null);
       if (current) setSubscription(current);
@@ -248,19 +261,54 @@ export function useMembershipCheckout({
     [onEntitled]
   );
 
+  useEffect(() => {
+    if (!awaitingActivation) return;
+    let cancelled = false;
+
+    void (async () => {
+      for (let attempt = 0; attempt < ACTIVATION_POLL_ATTEMPTS; attempt += 1) {
+        const delay =
+          ACTIVATION_POLL_DELAYS_MS[
+            Math.min(attempt, ACTIVATION_POLL_DELAYS_MS.length - 1)
+          ];
+        await new Promise((resolve) => window.setTimeout(resolve, delay));
+        if (cancelled || !awaitingRef.current) return;
+        try {
+          const access = await getSubscriptionAccessState();
+          if (cancelled || !awaitingRef.current) return;
+          if (access.entitled) {
+            await settle(access);
+            return;
+          }
+        } catch {
+          /* keep polling — webhook lag is the usual cause */
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [awaitingActivation, settle]);
+
   const pay = useCallback(async () => {
     if (!plan || !publicKey || !claim("pay")) return;
     setError(null);
     try {
+      if (beforePay) {
+        await beforePay();
+      }
       await loadRazorpay();
-      const { subscriptionId } = await createSubscriptionCheckout(plan.code);
+      const session = await createSubscriptionCheckout(plan.code);
       if (!window.Razorpay) {
         throw new Error("Secure checkout is unavailable");
       }
 
       const checkout = new window.Razorpay({
         key: publicKey,
-        subscription_id: subscriptionId,
+        order_id: session.orderId,
+        amount: session.amount,
+        currency: session.currency,
         name: "Quanta Loop",
         description: `${plan.name} membership`,
         prefill: { name: user?.name, email: user?.email },
@@ -271,18 +319,24 @@ export function useMembershipCheckout({
         },
         theme: { color: "#33B573" },
         handler: async (response) => {
+          awaitingRef.current = true;
+          setAwaitingActivation(true);
+          setError(null);
+          release();
           try {
-            await verifySubscription({
+            const verifiedAccess = await verifySubscription({
               razorpayPaymentId: response.razorpay_payment_id,
-              razorpaySubscriptionId: response.razorpay_subscription_id,
+              razorpayOrderId:
+                response.razorpay_order_id || session.orderId,
               razorpaySignature: response.razorpay_signature,
             });
+            if (verifiedAccess?.entitled) {
+              await settle(verifiedAccess);
+              return;
+            }
             await settle(await waitForEntitlement());
           } catch (verifyError) {
-            setAwaitingActivation(true);
             setError(errorMessage(verifyError));
-          } finally {
-            release();
           }
         },
         modal: { ondismiss: release },
@@ -299,7 +353,7 @@ export function useMembershipCheckout({
       setError(errorMessage(checkoutError));
       release();
     }
-  }, [plan, publicKey, settle, user]);
+  }, [beforePay, plan, publicKey, settle, user]);
 
   const recheck = useCallback(async () => {
     if (!claim("recheck")) return;

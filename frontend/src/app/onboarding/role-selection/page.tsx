@@ -23,30 +23,30 @@ export default async function RoleSelectionPage() {
   const tCommon = await getTranslations("common");
 
   return (
-    <div className="flex min-h-screen flex-col bg-zinc-50">
+    <div className="flex min-h-svh flex-col overflow-x-hidden bg-zinc-50">
       <MarketingHeader variant="onboarding" />
       <main className="flex-1">
-        <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
-          <div className="max-w-2xl space-y-5">
+        <div className="mx-auto max-w-5xl px-4 py-8 pb-[max(2rem,env(safe-area-inset-bottom))] sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+          <div className="max-w-2xl space-y-4 sm:space-y-5">
             <OnboardingProgress activeStep={1} />
             <OnboardingTrustBanner />
             <div>
-              <h1 className="text-3xl font-semibold tracking-tight text-zinc-900 sm:text-4xl">
+              <h1 className="text-[1.625rem] font-semibold tracking-tight text-balance text-zinc-900 sm:text-3xl lg:text-4xl">
                 {t("title")}
               </h1>
-              <p className="mt-4 text-base leading-relaxed text-zinc-600">
+              <p className="mt-3 text-sm leading-relaxed text-zinc-600 sm:mt-4 sm:text-base">
                 {t("description")}
               </p>
             </div>
           </div>
 
-          <div className="mt-8">
+          <div className="mt-6 sm:mt-8">
             <RoleSelectionCards />
           </div>
 
           <OnboardingTrustNotes />
 
-          <p className="mt-8 text-sm text-zinc-600">
+          <p className="mt-6 text-sm text-zinc-600 sm:mt-8">
             {t("alreadyOnboarded")}{" "}
             <Link href={ROUTES.login} className={cn(ghostLink)}>
               {tCommon("signIn")}

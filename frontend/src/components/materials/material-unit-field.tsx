@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
+import { materialFieldClass } from "@/components/materials/material-form-styles";
 import {
   MATERIAL_UNIT_OPTIONS,
   MATERIAL_UNIT_OTHER,
@@ -47,6 +48,7 @@ export function MaterialUnitField({
       <SelectField
         id="unit"
         value={selectValue}
+        className={materialFieldClass}
         onChange={(e) => {
           const next = e.target.value;
           if (next === MATERIAL_UNIT_OTHER) {
@@ -78,6 +80,7 @@ export function MaterialUnitField({
             placeholder={t("otherUnitPlaceholder")}
             maxLength={60}
             autoComplete="off"
+            className={materialFieldClass}
           />
         </div>
       ) : null}

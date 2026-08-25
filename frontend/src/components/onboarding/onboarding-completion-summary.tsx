@@ -51,12 +51,12 @@ export function OnboardingCompletionSummary() {
   ] as const;
 
   return (
-    <div className="rounded-lg border border-[#DCEFE5] bg-[#F7FCF9] px-4 py-3">
+    <div className="rounded-lg border border-[#DCEFE5] bg-[#F7FCF9] px-3 py-3 sm:px-4">
       <p className="text-xs font-semibold uppercase tracking-wide text-zinc-600">
         {t("title")}
       </p>
       <p className="mt-1 text-xs text-zinc-500">{t("description")}</p>
-      <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+      <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
         {items.map((item) => (
           <li
             key={item.label}

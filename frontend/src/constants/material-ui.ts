@@ -11,7 +11,7 @@ export const MATERIAL_STATUS_LABELS: Record<MaterialStatus, string> = {
   available: "Available",
   in_discussion: "In discussion",
   fulfilled: "Fulfilled",
-  archived: "Archived",
+  archived: "Removed",
   active: "Available (legacy)",
-  inactive: "Archived (legacy)",
+  inactive: "Removed (legacy)",
 };

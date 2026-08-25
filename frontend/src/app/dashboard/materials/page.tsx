@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 
 import { MaterialCard } from "@/components/materials/material-card";
+import { materialFieldClass } from "@/components/materials/material-form-styles";
 import { ProviderMaterialCard } from "@/components/materials/provider-material-card";
 import {
   buyerFiltersActive,
@@ -370,18 +371,20 @@ export default function MaterialsPage() {
   const subline = canPublish ? t("subtitleProvider") : t("subtitleBuyer");
 
   return (
-    <div className="mx-auto max-w-4xl space-y-8">
+    <div className="mx-auto max-w-4xl space-y-5 sm:space-y-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="max-w-2xl space-y-2">
-          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
+          <h1 className="text-[1.5rem] font-semibold tracking-tight text-balance text-zinc-900 sm:text-3xl">
             {headline}
           </h1>
-          <p className="text-sm leading-relaxed text-zinc-600">{subline}</p>
+          <p className="text-sm leading-relaxed text-pretty text-zinc-600">{subline}</p>
         </div>
         {canPublish ? (
           <Link
             href={ROUTES.materialsNew}
-            className={primaryActionLinkClassName()}
+            className={primaryActionLinkClassName(
+              "h-12 w-full text-base sm:h-10 sm:w-auto sm:text-small"
+            )}
           >
             {t("publish")}
           </Link>
@@ -389,7 +392,7 @@ export default function MaterialsPage() {
       </div>
 
       {canPublish && !loading && items.length > 0 ? (
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           <SummaryTile label={t("summaryAvailable")} value={buckets.available} />
           <SummaryTile label={t("summaryInDiscussion")} value={buckets.inDiscussion} />
           <SummaryTile label={t("summaryCompleted")} value={buckets.completed} />
@@ -410,7 +413,7 @@ export default function MaterialsPage() {
                 type="button"
                 onClick={() => setStatusFilter(tab.id)}
                 className={cn(
-                  "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+                  "inline-flex min-h-11 items-center rounded-md px-3 py-2 text-sm font-medium transition-colors sm:min-h-0 sm:py-1.5",
                   statusFilter === tab.id
                     ? "bg-zinc-900 text-white"
                     : "border border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50"
@@ -426,7 +429,7 @@ export default function MaterialsPage() {
               placeholder={t("searchPlaceholder")}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full"
+              className={`${materialFieldClass} w-full`}
               aria-label={t("searchAria")}
             />
             <BuyerFilterSelect
@@ -459,7 +462,7 @@ export default function MaterialsPage() {
                   setPage(1);
                 }}
                 className={cn(
-                  "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+                  "inline-flex min-h-11 items-center rounded-md px-3 py-2 text-sm font-medium transition-colors sm:min-h-0 sm:py-1.5",
                   marketTab === "india"
                     ? "bg-zinc-900 text-white"
                     : "border border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50"
@@ -474,7 +477,7 @@ export default function MaterialsPage() {
                   setPage(1);
                 }}
                 className={cn(
-                  "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+                  "inline-flex min-h-11 items-center rounded-md px-3 py-2 text-sm font-medium transition-colors sm:min-h-0 sm:py-1.5",
                   marketTab === "global"
                     ? "bg-zinc-900 text-white"
                     : "border border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50"
@@ -489,7 +492,7 @@ export default function MaterialsPage() {
             placeholder={t("searchPlaceholder")}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full"
+            className={`${materialFieldClass} w-full`}
             aria-label={t("searchAria")}
           />
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -537,7 +540,7 @@ export default function MaterialsPage() {
             type="button"
             variant="outline"
             size="sm"
-            className="mt-3"
+            className="mt-3 min-h-11 w-full sm:w-auto"
             onClick={() => void load()}
           >
             {t("retry")}
@@ -562,7 +565,9 @@ export default function MaterialsPage() {
           {canPublish ? (
             <Link
               href={ROUTES.materialsNew}
-              className={primaryActionLinkClassName("mt-6")}
+              className={primaryActionLinkClassName(
+                "mt-6 h-12 w-full text-base sm:h-10 sm:w-auto sm:text-small"
+              )}
             >
               {t("publish")}
             </Link>
@@ -766,7 +771,7 @@ function RecommendedMaterialsSection({
         <button
           type="button"
           onClick={onToggleExpanded}
-          className="text-sm font-medium text-zinc-800 underline-offset-4 hover:underline"
+          className="min-h-11 text-sm font-medium text-zinc-800 underline-offset-4 hover:underline"
         >
           {expanded
             ? "Show fewer matches"
@@ -836,6 +841,7 @@ function PaginationBar({
         type="button"
         variant="outline"
         size="sm"
+        className="min-h-11 sm:h-9 sm:min-h-0"
         disabled={page <= 1}
         onClick={() => onPageChange(page - 1)}
       >
@@ -853,7 +859,7 @@ function PaginationBar({
               type="button"
               onClick={() => onPageChange(p)}
               className={cn(
-                "inline-flex h-9 min-w-9 items-center justify-center rounded-md border px-2 text-sm font-medium transition-colors",
+                "inline-flex h-11 min-w-11 items-center justify-center rounded-md border px-2 text-sm font-medium transition-colors sm:h-9 sm:min-w-9",
                 p === page
                   ? "border-zinc-900 bg-zinc-900 text-white"
                   : "border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50"
@@ -868,6 +874,7 @@ function PaginationBar({
         type="button"
         variant="outline"
         size="sm"
+        className="min-h-11 sm:h-9 sm:min-h-0"
         disabled={page >= totalPages}
         onClick={() => onPageChange(page + 1)}
       >
@@ -902,7 +909,7 @@ function BuyerFilterSelect({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="flex h-10 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900"
+        className="flex h-12 w-full rounded-md border border-zinc-200 bg-white px-3 text-base text-zinc-900 sm:h-10 sm:text-sm"
       >
         {showAllOption ? (
           <option value="">{tCommon("all")}</option>

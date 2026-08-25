@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { MATERIAL_CATEGORY_GROUPS } from "@/constants/material-categories";
+import { materialFieldClass } from "@/components/materials/material-form-styles";
 
 type MaterialCategoryFieldProps = {
   id?: string;
@@ -27,6 +28,7 @@ export function MaterialCategoryField({
         id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        className={materialFieldClass}
       >
         <option value="" disabled>
           {t("selectCategory")}

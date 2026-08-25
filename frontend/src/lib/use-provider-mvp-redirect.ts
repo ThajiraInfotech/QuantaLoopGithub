@@ -6,7 +6,22 @@ import { useEffect } from "react";
 import { ROUTES } from "@/constants/routes";
 import { useAuthStore } from "@/store/auth-store";
 
-/** Sends provider and buyer roles to the dashboard from Phase 2 routes. */
+/** Sends material providers to the dashboard from buyer-only Phase 2 routes. */
+export function useProviderOnlyRedirect(): boolean {
+  const router = useRouter();
+  const user = useAuthStore((s) => s.user);
+  const isProvider = user?.role === "material_provider";
+
+  useEffect(() => {
+    if (isProvider) {
+      router.replace(ROUTES.dashboard);
+    }
+  }, [isProvider, router]);
+
+  return isProvider;
+}
+
+/** Sends provider and buyer roles to the dashboard from deferred Phase 2 routes. */
 export function useProviderMvpRedirect(): boolean {
   const router = useRouter();
   const user = useAuthStore((s) => s.user);

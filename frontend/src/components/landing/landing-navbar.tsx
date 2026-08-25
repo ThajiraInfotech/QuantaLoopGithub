@@ -130,13 +130,13 @@ export function LandingNavbar() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 border-b transition-[border-color,background-color,box-shadow] duration-300",
+        "sticky top-0 z-50 border-b pt-[env(safe-area-inset-top)] transition-[border-color,background-color,box-shadow] duration-300",
         scrolled || mobileOpen
           ? "border-border/70 bg-background/92 shadow-subtle backdrop-blur-xl"
           : "border-transparent bg-background/75 backdrop-blur-md"
       )}
     >
-      <div className="mx-auto flex h-[4.25rem] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:px-8">
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-3 px-4 sm:h-[4.25rem] sm:gap-4 sm:px-6 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:px-8">
         <div className="shrink-0 lg:justify-self-start">
           <Logo />
         </div>
@@ -167,7 +167,7 @@ export function LandingNavbar() {
             href={ROUTES.onboardingRole}
             variant="primary"
             size="sm"
-            className="hidden shadow-sm lg:inline-flex"
+            className="hidden shrink-0 shadow-sm md:inline-flex"
           >
             {tCommon("getStarted")}
           </CtaLink>
@@ -175,7 +175,7 @@ export function LandingNavbar() {
             type="button"
             variant="outline"
             size="sm"
-            className="lg:hidden"
+            className="h-10 w-10 shrink-0 p-0 lg:hidden"
             aria-expanded={mobileOpen}
             aria-controls="landing-mobile-nav"
             aria-label={mobileOpen ? tCommon("closeMenu") : tCommon("openMenu")}
@@ -193,15 +193,15 @@ export function LandingNavbar() {
       <nav
         id="landing-mobile-nav"
         className={cn(
-          "overflow-hidden border-t transition-[max-height,opacity,border-color] duration-300 ease-out lg:hidden",
+          "border-t transition-[max-height,opacity,border-color] duration-300 ease-out lg:hidden",
           mobileOpen
-            ? "max-h-[min(28rem,80vh)] border-border/80 bg-background/96 opacity-100 backdrop-blur-xl"
-            : "max-h-0 border-transparent opacity-0"
+            ? "max-h-[calc(100dvh-3.5rem-env(safe-area-inset-top))] overflow-y-auto overscroll-contain border-border/80 bg-background/96 opacity-100 backdrop-blur-xl sm:max-h-[calc(100dvh-4.25rem-env(safe-area-inset-top))]"
+            : "max-h-0 overflow-hidden border-transparent opacity-0"
         )}
         aria-label="Mobile"
         aria-hidden={!mobileOpen}
       >
-        <div className="mx-auto flex max-w-7xl flex-col gap-0.5 px-4 py-4 sm:px-6">
+        <div className="mx-auto flex max-w-7xl flex-col gap-0.5 px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6">
           <div className="mb-2 sm:hidden">
             <LanguageSwitcher />
           </div>

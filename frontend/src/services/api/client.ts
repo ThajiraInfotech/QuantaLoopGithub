@@ -1,12 +1,10 @@
 import axios from "axios";
 
 import { useAuthStore } from "@/store/auth-store";
-import { getPublicApiBaseUrl } from "@/utils/env";
-
-const baseURL = getPublicApiBaseUrl();
+import { getApiV1BaseUrl } from "@/utils/env";
 
 export const apiClient = axios.create({
-  baseURL: `${baseURL}/api/v1`,
+  baseURL: getApiV1BaseUrl(),
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
@@ -14,6 +12,7 @@ export const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use((config) => {
+  config.baseURL = getApiV1BaseUrl();
   const token = useAuthStore.getState().accessToken;
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;

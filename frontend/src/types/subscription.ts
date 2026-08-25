@@ -48,11 +48,16 @@ export type SubscriptionAccessState = {
 };
 
 export type CheckoutSession = {
-  subscriptionId: string;
+  orderId: string;
+  amount: number;
+  currency: string;
+  /** @deprecated Orders checkout — kept for older clients */
+  subscriptionId?: string;
 };
 
 export type VerifySubscriptionInput = {
   razorpayPaymentId: string;
-  razorpaySubscriptionId: string;
+  razorpayOrderId?: string;
+  razorpaySubscriptionId?: string;
   razorpaySignature: string;
 };

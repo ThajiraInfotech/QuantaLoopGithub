@@ -5,7 +5,13 @@ import { getTranslations } from "next-intl/server";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-import { landingSectionY, landingStackGap } from "./landing-styles";
+import {
+  landingContainer,
+  landingHeadingXl,
+  landingLeadCentered,
+  landingSectionY,
+  landingStackGap,
+} from "./landing-styles";
 
 const AUDIENCE_ICONS: LucideIcon[] = [Factory, ShieldCheck, Network];
 
@@ -65,7 +71,7 @@ function AudienceCard({
         "hover:-translate-y-1.5 hover:border-[#A7F3D0] hover:shadow-[0_20px_40px_rgba(0,0,0,0.06)]"
       )}
     >
-      <CardContent className="flex h-full flex-col p-8">
+      <CardContent className="flex h-full flex-col p-5 sm:p-6 lg:p-8">
         <div>
           <div className="flex items-start justify-between gap-3">
             <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-accent/85">
@@ -76,7 +82,7 @@ function AudienceCard({
             </span>
           </div>
 
-          <h3 className="mt-3 font-heading text-h4 leading-snug text-card-foreground">
+          <h3 className="mt-3 font-heading text-lg leading-snug text-card-foreground sm:text-h4">
             {title}
           </h3>
 
@@ -110,25 +116,24 @@ export async function LandingAudience() {
       id="network"
       className={`scroll-mt-20 border-b border-border bg-muted/30 ${landingSectionY}`}
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className={landingContainer}>
         <div className="mx-auto max-w-[900px] text-center">
           <p className="text-eyebrow">{t("eyebrow")}</p>
-          <h2 className="mt-3 font-heading text-[clamp(2.5rem,3vw,3rem)] font-bold leading-[1.1] tracking-[-0.02em] text-foreground">
-            {t("title")}
-          </h2>
-          <p className="mx-auto mt-5 max-w-[700px] text-[22px] leading-[1.6] text-muted-foreground sm:mt-6">
-            {t("description")}
-          </p>
+          <h2 className={cn("mt-3", landingHeadingXl)}>{t("title")}</h2>
+          <p className={landingLeadCentered}>{t("description")}</p>
         </div>
 
         <ul
           className={cn(
-            "grid list-none items-stretch justify-items-center gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3 lg:gap-10",
+            "grid list-none items-stretch justify-items-center gap-5 sm:gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3 lg:gap-10",
             landingStackGap
           )}
         >
           {audiences.map((item, index) => (
-            <li key={item.title} className="flex h-full w-full max-w-[420px]">
+            <li
+              key={item.title}
+              className="flex h-full w-full max-w-[420px] md:last:col-span-2 md:last:max-w-[420px] lg:last:col-span-1"
+            >
               <AudienceCard
                 {...item}
                 icon={AUDIENCE_ICONS[index] ?? Factory}

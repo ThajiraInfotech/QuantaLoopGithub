@@ -17,7 +17,13 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-import { landingCardHover, landingSectionY, landingStackGap } from "./landing-styles";
+import {
+  landingCardHover,
+  landingContainer,
+  landingHeadingXl,
+  landingSectionY,
+  landingStackGap,
+} from "./landing-styles";
 
 type WorkflowStepData = {
   step: string;
@@ -81,7 +87,7 @@ function WorkflowStepCard({
       variant="default"
       className={landingCardHover("h-full border-border bg-card shadow-card")}
     >
-      <CardContent className="flex h-full min-h-[220px] flex-col p-8">
+      <CardContent className="flex h-full min-h-0 flex-col p-5 sm:p-6 lg:min-h-[220px] lg:p-8">
         <div className="flex items-start justify-between gap-3">
           <Badge
             variant="outline"
@@ -93,7 +99,7 @@ function WorkflowStepCard({
             <Icon className="h-4 w-4" strokeWidth={1.75} />
           </span>
         </div>
-        <h3 className="mt-5 font-heading text-h4 leading-snug text-card-foreground">
+        <h3 className="mt-4 font-heading text-lg leading-snug text-card-foreground sm:mt-5 sm:text-h4">
           {title}
         </h3>
         <p className="mt-2 flex-1 text-small leading-relaxed text-muted-foreground">
@@ -112,42 +118,33 @@ function WorkflowStepCard({
 
 function WorkflowFlow({ steps }: { steps: WorkflowStep[] }) {
   return (
-    <>
-      <ol className={cn("flex flex-col lg:hidden", landingStackGap)}>
-        {steps.map((item, index) => (
-          <Fragment key={`${item.step}-${item.title}`}>
-            <li>
-              <WorkflowStepCard {...item} />
-            </li>
-            {index < steps.length - 1 ? (
-              <li className="flex justify-center" aria-hidden>
+    <ol
+      className={cn(
+        "grid list-none grid-cols-1 md:grid-cols-2 md:gap-5 lg:flex lg:items-stretch lg:gap-0",
+        landingStackGap
+      )}
+    >
+      {steps.map((item, index) => (
+        <Fragment key={`${item.step}-${item.title}`}>
+          <li className="flex min-w-0 flex-1">
+            <WorkflowStepCard {...item} />
+          </li>
+          {index < steps.length - 1 ? (
+            <>
+              <li className="flex justify-center md:hidden" aria-hidden>
                 <WorkflowConnector orientation="vertical" />
               </li>
-            ) : null}
-          </Fragment>
-        ))}
-      </ol>
-
-      <ol
-        className={cn("hidden list-none items-stretch lg:flex", landingStackGap)}
-      >
-        {steps.map((item, index) => (
-          <Fragment key={`${item.step}-${item.title}`}>
-            <li className="flex min-w-0 flex-1">
-              <WorkflowStepCard {...item} />
-            </li>
-            {index < steps.length - 1 ? (
               <li
-                className="flex shrink-0 items-center self-center px-0.5"
+                className="hidden shrink-0 items-center self-center px-0.5 lg:flex"
                 aria-hidden
               >
                 <WorkflowConnector orientation="horizontal" />
               </li>
-            ) : null}
-          </Fragment>
-        ))}
-      </ol>
-    </>
+            </>
+          ) : null}
+        </Fragment>
+      ))}
+    </ol>
   );
 }
 
@@ -196,18 +193,16 @@ export function LandingHowItWorks() {
       id="how-it-works"
       className={`scroll-mt-20 border-b border-border bg-background ${landingSectionY}`}
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className={landingContainer}>
         <div className="mx-auto max-w-[900px] text-center">
           <p className="text-eyebrow">{t("eyebrow")}</p>
-          <h2 className="mt-3 font-heading text-[clamp(2.5rem,3vw,3rem)] font-bold leading-[1.1] tracking-[-0.02em] text-foreground">
-            {t("title")}
-          </h2>
-          <p className="mx-auto mt-5 max-w-[700px] text-body leading-relaxed text-muted-foreground sm:mt-6">
+          <h2 className={cn("mt-3", landingHeadingXl)}>{t("title")}</h2>
+          <p className="mx-auto mt-4 max-w-[700px] text-body leading-relaxed text-muted-foreground sm:mt-5 md:mt-6">
             {active.subtitle}
           </p>
 
           <div
-            className="mt-6 inline-flex rounded-lg border border-border bg-muted/30 p-1"
+            className="mx-auto mt-6 flex w-full max-w-md rounded-lg border border-border bg-muted/30 p-1 sm:inline-flex sm:w-auto sm:max-w-none"
             role="tablist"
             aria-label={t("tablistAria")}
           >
@@ -219,7 +214,7 @@ export function LandingHowItWorks() {
                 aria-selected={audience === option.id}
                 onClick={() => setAudience(option.id)}
                 className={cn(
-                  "rounded-md px-4 py-2 text-small font-medium transition-colors",
+                  "min-h-10 flex-1 rounded-md px-3 py-2 text-small font-medium transition-colors sm:flex-none sm:px-4",
                   audience === option.id
                     ? "bg-background text-foreground shadow-subtle"
                     : "text-muted-foreground hover:text-foreground"
@@ -231,7 +226,7 @@ export function LandingHowItWorks() {
           </div>
         </div>
 
-        <div className="mt-8 sm:mt-10">
+        <div className="mt-6 sm:mt-8 lg:mt-10">
           <WorkflowFlow steps={active.steps} />
         </div>
       </div>

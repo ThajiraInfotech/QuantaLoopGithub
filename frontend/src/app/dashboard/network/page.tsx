@@ -1,13 +1,8 @@
-import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { redirect } from "next/navigation";
 
-import { NetworkOverviewPage } from "@/components/network/network-overview-page";
+import { ROUTES } from "@/constants/routes";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("dashboard.network");
-  return { title: t("title") };
-}
-
-export default function NetworkDashboardPage() {
-  return <NetworkOverviewPage />;
+/** Network overview is deferred from MVP. Old links land on the dashboard. */
+export default function NetworkDashboardRedirect() {
+  redirect(ROUTES.dashboard);
 }

@@ -11,15 +11,17 @@ import { ActivityTimeline } from "@/components/activity/activity-timeline";
 import { ExpressInterestModal } from "@/components/interests/express-interest-modal";
 import { ReportActions } from "@/components/reports/report-actions";
 import { MaterialStatusBadge } from "@/components/materials/material-status-badge";
+import { isCompletedMaterial } from "@/components/materials/materials-inventory-utils";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants/routes";
 import { useLocalizedTime } from "@/hooks/use-localized-time";
+import { toBrowserMediaUrl } from "@/lib/media-url";
 import { cn } from "@/lib/utils";
 import {
   fetchMyInterestForMaterial,
   fetchMyInterests,
 } from "@/services/interests/interest.service";
-import { fetchMaterialById, fetchMaterialTimeline } from "@/services/materials/material.service";
+import { fetchMaterialById, fetchMaterialTimeline, deleteMaterial } from "@/services/materials/material.service";
 import {
   fetchSavedMaterials,
   saveMaterialRequest,
@@ -55,7 +57,7 @@ type MaterialDetailViewProps = {
 };
 
 const headerActionClass =
-  "inline-flex h-9 items-center justify-center rounded-md border border-zinc-200 bg-white px-3 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-50";
+  "inline-flex min-h-11 items-center justify-center rounded-md border border-zinc-200 bg-white px-4 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-50 sm:h-9 sm:min-h-0 sm:px-3";
 
 function HeartIcon({ filled }: { filled: boolean }) {
   return (
@@ -93,6 +95,7 @@ function DetailField({
 
 export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
   const t = useTranslations("materials.detail");
+  const tCard = useTranslations("materials.providerCard");
   const tf = useTranslations("materials.form.fields");
   const tReport = useTranslations("reports");
   const tAvail = useTranslations("materials.availability");
@@ -112,6 +115,7 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
   const [timelineExpanded, setTimelineExpanded] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [saveBusy, setSaveBusy] = useState(false);
+  const [removing, setRemoving] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -170,6 +174,26 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
     [timeline]
   );
 
+  async function handleRemove() {
+    if (!material) return;
+    const ok = window.confirm(
+      tCard("removeConfirm", { title: material.title })
+    );
+    if (!ok) return;
+    setRemoving(true);
+    try {
+      await deleteMaterial(material.id);
+      useMaterialStore.getState().remove(material.id);
+      toast.success(tCard("removed"));
+      router.push(ROUTES.materials);
+      router.refresh();
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : tCard("removeError"));
+    } finally {
+      setRemoving(false);
+    }
+  }
+
   async function toggleSave() {
     setSaveBusy(true);
     try {
@@ -189,10 +213,10 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
 
   if (loading) {
     return (
-      <div className="mx-auto max-w-4xl space-y-4 py-8">
-        <div className="h-8 w-40 animate-pulse rounded-md bg-zinc-100" />
-        <div className="h-10 w-2/3 animate-pulse rounded-md bg-zinc-100" />
-        <div className="aspect-[16/9] animate-pulse rounded-2xl bg-zinc-100" />
+      <div className="mx-auto max-w-5xl space-y-4 py-1 sm:space-y-5 sm:py-4">
+        <div className="h-8 w-40 max-w-full animate-pulse rounded-md bg-zinc-100" />
+        <div className="h-10 w-full max-w-md animate-pulse rounded-md bg-zinc-100" />
+        <div className="aspect-[4/3] animate-pulse rounded-2xl bg-zinc-100 sm:aspect-[16/9]" />
         <div className="h-56 animate-pulse rounded-2xl border border-zinc-200/80 bg-zinc-50" />
       </div>
     );
@@ -200,17 +224,24 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
 
   if (error || !material) {
     return (
-      <div className="mx-auto max-w-2xl space-y-4 py-12">
-        <p className="text-sm text-red-700">{error ?? t("notFound")}</p>
-        <Button type="button" variant="outline" onClick={() => router.back()}>
-          {t("goBack")}
-        </Button>
-        <Link
-          href={ROUTES.materials}
-          className="ml-3 text-sm font-medium text-zinc-700 underline-offset-4 hover:underline"
-        >
-          {t("backToMaterials")}
-        </Link>
+      <div className="mx-auto max-w-2xl space-y-4 py-6 sm:py-12">
+        <p className="text-sm leading-relaxed text-red-700">{error ?? t("notFound")}</p>
+        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
+          <Button
+            type="button"
+            variant="outline"
+            className="min-h-11 w-full sm:w-auto"
+            onClick={() => router.back()}
+          >
+            {t("goBack")}
+          </Button>
+          <Link
+            href={ROUTES.materials}
+            className="inline-flex min-h-11 items-center justify-center text-sm font-medium text-zinc-700 underline-offset-4 hover:underline sm:min-h-0"
+          >
+            {t("backToMaterials")}
+          </Link>
+        </div>
       </div>
     );
   }
@@ -277,35 +308,46 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
   ].filter(Boolean) as { label: string; value: string }[];
 
   return (
-    <div className="mx-auto max-w-4xl space-y-6 pb-10">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div className="mx-auto max-w-5xl space-y-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:space-y-8 sm:pb-10">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <Link
           href={ROUTES.materials}
-          className="inline-flex w-fit items-center text-sm font-medium text-zinc-600 transition-colors hover:text-zinc-900"
+          className="inline-flex min-h-11 w-fit items-center text-sm font-medium text-zinc-600 transition-colors hover:text-zinc-900 sm:min-h-0"
         >
           ← {t("backToMaterials")}
         </Link>
         {isOwner ? (
-          <div className="flex flex-wrap items-center gap-2">
-            <Link href={ROUTES.materialEdit(materialId)} className={headerActionClass}>
-              {t("editMaterial")}
-            </Link>
-            <Link href={ROUTES.materialsDuplicate(materialId)} className={headerActionClass}>
-              {t("duplicate")}
-            </Link>
+          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
+            {!isCompletedMaterial(material.status) ? (
+              <Link
+                href={ROUTES.materialEdit(materialId)}
+                className={cn(headerActionClass, "w-full sm:w-auto")}
+              >
+                {t("editMaterial")}
+              </Link>
+            ) : null}
+            <Button
+              type="button"
+              variant="ghost"
+              disabled={removing}
+              className={cn(headerActionClass, "w-full sm:w-auto")}
+              onClick={() => void handleRemove()}
+            >
+              {removing ? tCard("removing") : tCard("remove")}
+            </Button>
           </div>
         ) : null}
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-2 sm:space-y-3">
         <div className="flex flex-wrap items-center gap-2">
           <MaterialStatusBadge status={material.status} />
         </div>
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
+        <h1 className="text-[1.5rem] font-semibold tracking-tight text-balance text-zinc-900 sm:text-3xl">
           {material.title}
         </h1>
         {!isOwner ? (
-          <p className="text-sm text-zinc-600">
+          <p className="text-sm leading-relaxed text-pretty text-zinc-600">
             {t("listedBy", { company: material.provider.companyName })}
           </p>
         ) : null}
@@ -325,13 +367,13 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
           {material.imageUrls.map((url) => (
             <a
               key={url}
-              href={url}
+              href={toBrowserMediaUrl(url)}
               target="_blank"
               rel="noreferrer"
               className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-100"
             >
               <img
-                src={url}
+                src={toBrowserMediaUrl(url)}
                 alt={material.title}
                 className="h-full w-full object-cover transition-transform hover:scale-[1.02]"
               />
@@ -340,12 +382,12 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
         </div>
       ) : null}
 
-      <section className="rounded-2xl border border-zinc-200/80 bg-white p-6 shadow-sm shadow-zinc-950/[0.04] sm:p-8">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-500">
+      <section className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-sm shadow-zinc-950/[0.04] sm:p-8">
+        <h2 className="text-xs font-semibold uppercase tracking-wide text-zinc-500 sm:text-sm">
           {t("materialInfo")}
         </h2>
 
-        <dl className="mt-6 grid gap-6 sm:grid-cols-2">
+        <dl className="mt-4 grid gap-4 sm:mt-6 sm:grid-cols-2 sm:gap-6">
           <DetailField label={tf("materialCategory")} value={material.materialType} />
           <DetailField
             label={tf("material")}
@@ -368,11 +410,11 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
         </dl>
 
         {material.description ? (
-          <div className="mt-8 border-t border-zinc-100 pt-6">
+          <div className="mt-6 border-t border-zinc-100 pt-5 sm:mt-8 sm:pt-6">
             <h3 className="text-xs font-medium uppercase tracking-wide text-zinc-500">
               {tf("description")}
             </h3>
-            <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-zinc-700">
+            <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-pretty text-zinc-700">
               {material.description}
             </p>
           </div>
@@ -380,32 +422,39 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
       </section>
 
       {isBuyer ? (
-        <section className="rounded-2xl border border-zinc-200/80 bg-white p-5 shadow-sm shadow-zinc-950/[0.04] sm:p-6">
-          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+        <section className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-sm shadow-zinc-950/[0.04] sm:p-6">
+          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
             <Button
               type="button"
               variant="outline"
               disabled={saveBusy}
               onClick={() => void toggleSave()}
-              className={cn(isSaved && "border-rose-200 text-rose-600 hover:text-rose-700")}
+              className={cn(
+                "min-h-11 w-full sm:w-auto",
+                isSaved && "border-rose-200 text-rose-600 hover:text-rose-700"
+              )}
             >
               <HeartIcon filled={isSaved} />
               <span className="ml-2">{isSaved ? t("saved") : t("save")}</span>
             </Button>
             {canExpress ? (
-              <Button type="button" onClick={() => setInterestOpen(true)}>
+              <Button
+                type="button"
+                className="min-h-11 w-full sm:w-auto"
+                onClick={() => setInterestOpen(true)}
+              >
                 {t("expressInterest")}
               </Button>
             ) : null}
             {myInterest?.status === "pending" ? (
-              <span className="text-sm font-medium text-zinc-700">
+              <span className="px-1 text-sm font-medium text-zinc-700">
                 {t("interestPending")}
               </span>
             ) : null}
             {interestActive ? (
               <Link
                 href={ROUTES.interestsOpen(myInterest!.id)}
-                className="inline-flex h-10 items-center justify-center rounded-md bg-zinc-900 px-4 text-sm font-medium text-white transition-colors hover:bg-zinc-800"
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-zinc-900 px-4 text-sm font-medium text-white transition-colors hover:bg-zinc-800 sm:w-auto"
               >
                 {t("openInbox")}
               </Link>
@@ -414,6 +463,7 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
           {canReportListing ? (
             <ReportActions
               className="mt-4 border-t border-zinc-100 pt-4"
+              buttonClassName="inline-flex min-h-11 items-center text-sm font-medium text-zinc-600 underline-offset-4 hover:text-zinc-900 hover:underline sm:min-h-0 sm:text-xs"
               items={[
                 {
                   label: tReport("actions.material"),
@@ -433,7 +483,7 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
       {isOwner ? (
         <section
           className={cn(
-            "rounded-2xl border p-5 sm:p-6",
+            "rounded-2xl border p-4 sm:p-6",
             materialInterests.length > 0
               ? "border-emerald-200 bg-emerald-50/70"
               : "border-zinc-200/80 bg-zinc-50/80"
@@ -441,15 +491,17 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
         >
           {materialInterests.length > 0 ? (
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="text-base font-semibold text-emerald-900">
+              <div className="min-w-0">
+                <p className="text-base font-semibold text-pretty text-emerald-900">
                   {t("buyersInterested", { count: materialInterests.length })}
                 </p>
-                <p className="mt-1 text-sm text-emerald-800/90">{t("reviewInbox")}</p>
+                <p className="mt-1 text-sm leading-relaxed text-emerald-800/90">
+                  {t("reviewInbox")}
+                </p>
               </div>
               <Link
                 href={ROUTES.interests}
-                className="inline-flex h-9 items-center justify-center rounded-md bg-zinc-900 px-4 text-sm font-medium text-white transition-colors hover:bg-zinc-800"
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-zinc-900 px-4 text-sm font-medium text-white transition-colors hover:bg-zinc-800 sm:h-9 sm:min-h-0 sm:w-auto"
               >
                 {t("viewInbox")}
               </Link>
@@ -457,7 +509,7 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
           ) : (
             <div>
               <p className="text-base font-semibold text-zinc-900">{t("noBuyerInterest")}</p>
-              <p className="mt-1 text-sm text-zinc-600">
+              <p className="mt-1 text-sm leading-relaxed text-zinc-600">
                 {t("published", { time: formatRelativeTime(material.createdAt) })}
               </p>
             </div>
@@ -466,8 +518,8 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
       ) : null}
 
       {isOwner && providerTimeline.length > 0 ? (
-        <section className="rounded-2xl border border-zinc-200/80 bg-white p-6 shadow-sm shadow-zinc-950/[0.04] sm:p-8">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-500">
+        <section className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-sm shadow-zinc-950/[0.04] sm:p-8">
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-zinc-500 sm:text-sm">
             {t("recentActivity")}
           </h2>
           <div className="mt-4">
@@ -476,7 +528,7 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
             ) : (
               <ul className="space-y-2">
                 {recentTimeline.map((ev) => (
-                  <li key={ev.id} className="text-sm text-zinc-800">
+                  <li key={ev.id} className="text-sm leading-relaxed text-zinc-800">
                     <span className="text-zinc-400">•</span>{" "}
                     {COMPACT_TIMELINE_TYPES.includes(ev.type as CompactTimelineType)
                       ? t(`timeline.${ev.type as CompactTimelineType}`)
@@ -490,7 +542,7 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
             <button
               type="button"
               onClick={() => setTimelineExpanded((open) => !open)}
-              className="mt-4 text-sm font-medium text-zinc-800 underline-offset-4 hover:underline"
+              className="mt-4 inline-flex min-h-11 items-center text-sm font-medium text-zinc-800 underline-offset-4 hover:underline sm:min-h-0"
             >
               {timelineExpanded ? t("showLess") : t("viewFullTimeline")}
             </button>

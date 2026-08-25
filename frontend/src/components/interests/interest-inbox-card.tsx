@@ -146,7 +146,7 @@ export function InterestInboxCard({
         expanded && showInlineMessages && "ring-1 ring-zinc-200"
       )}
     >
-      <CardHeader className="pb-3">
+      <CardHeader className="p-4 pb-3 sm:p-6 sm:pb-3">
         {variant === "pending" && isProvider ? (
           <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-amber-800">
             {t("waitingDecision")}
@@ -156,7 +156,7 @@ export function InterestInboxCard({
           <div className="min-w-0 flex-1 space-y-1">
             {isProvider ? (
               <>
-                <CardTitle className="text-base font-semibold text-zinc-900">
+                <CardTitle className="text-base font-semibold text-pretty text-zinc-900">
                   {i.buyer?.companyName ?? t("buyerFallback")}
                 </CardTitle>
                 <CardDescription className="text-sm text-zinc-600">
@@ -169,7 +169,7 @@ export function InterestInboxCard({
             ) : (
               <>
                 <div className="flex flex-wrap items-center gap-2">
-                  <CardTitle className="text-base font-semibold text-zinc-900">
+                  <CardTitle className="text-base font-semibold text-pretty text-zinc-900">
                     {i.materialTitle}
                   </CardTitle>
                   <InterestStatusBadge status={i.status} />
@@ -206,7 +206,7 @@ export function InterestInboxCard({
                 <button
                   type="button"
                   onClick={onToggleExpand}
-                  className="text-xs font-medium text-zinc-600 underline-offset-4 hover:text-zinc-900 hover:underline"
+                  className="inline-flex min-h-11 items-center text-sm font-medium text-zinc-600 underline-offset-4 hover:text-zinc-900 hover:underline sm:min-h-0 sm:text-xs"
                 >
                   {expanded ? t("collapse") : t("expand")}
                 </button>
@@ -219,7 +219,7 @@ export function InterestInboxCard({
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-3 text-sm text-zinc-700">
+      <CardContent className="space-y-3 p-4 pt-0 text-sm text-zinc-700 sm:p-6 sm:pt-0">
         {isProvider && i.pickupTimeline ? (
           <p>
             <span className="font-medium text-zinc-800">
@@ -242,14 +242,18 @@ export function InterestInboxCard({
         ) : null}
 
         {isProvider && isPending ? (
-          <div className="flex flex-wrap gap-2 pt-1">
-            <Button type="button" size="sm" onClick={() => onRespond(i.id, "accepted")}>
+          <div className="flex flex-col gap-2 pt-1 sm:flex-row sm:flex-wrap">
+            <Button
+              type="button"
+              className="h-12 w-full sm:h-9 sm:w-auto"
+              onClick={() => onRespond(i.id, "accepted")}
+            >
               {t("startDiscussion")}
             </Button>
             <Button
               type="button"
-              size="sm"
               variant="outline"
+              className="h-12 w-full sm:h-9 sm:w-auto"
               onClick={() => onRespond(i.id, "rejected")}
             >
               {t("reject")}
@@ -259,6 +263,7 @@ export function InterestInboxCard({
 
         <ReportActions
           className="border-t border-zinc-100 pt-3"
+          buttonClassName="inline-flex min-h-11 items-center text-sm font-medium text-zinc-600 underline-offset-4 hover:text-zinc-800 hover:underline sm:min-h-0 sm:text-xs sm:text-zinc-500"
           items={[
             {
               label: tReport("actions.material"),
@@ -299,19 +304,18 @@ export function InterestInboxCard({
                   </p>
                   <p className="mt-1 text-sm text-zinc-600">{workflowStep.helper}</p>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
                   <Button
                     type="button"
-                    size="sm"
+                    className="h-12 w-full sm:h-9 sm:w-auto"
                     onClick={() => requestWorkflowAction(workflowStep.primary.next)}
                   >
                     {workflowStep.primary.label}
                   </Button>
                   <Button
                     type="button"
-                    size="sm"
                     variant="outline"
-                    className="text-zinc-700"
+                    className="h-12 w-full text-zinc-700 sm:h-9 sm:w-auto"
                     onClick={() => requestWorkflowAction(workflowStep.secondary.next)}
                   >
                     {workflowStep.secondary.label}
@@ -326,7 +330,7 @@ export function InterestInboxCard({
           <button
             type="button"
             onClick={onToggleExpand}
-            className="text-sm font-medium text-zinc-800 underline-offset-4 hover:underline"
+            className="inline-flex min-h-11 items-center text-sm font-medium text-zinc-800 underline-offset-4 hover:underline"
           >
             {t("openMessages")} →
           </button>
@@ -335,7 +339,7 @@ export function InterestInboxCard({
         <div>
           <Link
             href={ROUTES.materialDetail(i.materialId)}
-            className="text-xs font-medium text-zinc-600 underline-offset-4 hover:underline"
+            className="inline-flex min-h-11 items-center text-sm font-medium text-zinc-600 underline-offset-4 hover:underline sm:min-h-0 sm:text-xs"
           >
             {t("viewMaterial")} →
           </Link>

@@ -13,7 +13,13 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-import { landingCardHover, landingSectionY, landingStackGap } from "./landing-styles";
+import {
+  landingCardHover,
+  landingContainer,
+  landingHeading,
+  landingSectionY,
+  landingStackGap,
+} from "./landing-styles";
 
 const FACTOR_ICONS: LucideIcon[] = [Layers, MapPin, Users, Target];
 
@@ -64,11 +70,11 @@ function MatchFactorCard({
       variant="default"
       className={landingCardHover("h-full border-border bg-card shadow-card")}
     >
-      <CardContent className="flex h-full flex-col p-5 sm:p-6">
+      <CardContent className="flex h-full flex-col p-4 sm:p-6">
         <span className="flex h-10 w-10 items-center justify-center rounded-lg border border-accent/20 bg-accent/5 text-accent">
           <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} />
         </span>
-        <h3 className="mt-4 font-heading text-h4 leading-snug text-card-foreground">
+        <h3 className="mt-3 font-heading text-lg leading-snug text-card-foreground sm:mt-4 sm:text-h4">
           {title}
         </h3>
         <p className="mt-2 text-small leading-relaxed text-muted-foreground">
@@ -90,8 +96,8 @@ function MatchPreviewCard({
   const tierStyle = TIER_STYLES[tier];
 
   return (
-    <div className="rounded-xl border border-border/90 bg-card p-4 shadow-subtle">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+    <div className="rounded-xl border border-border/90 bg-card p-3.5 shadow-subtle sm:p-4">
+      <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
           <p className="font-medium text-small text-foreground">{title}</p>
           <p className="mt-1 text-caption text-muted-foreground">{meta}</p>
@@ -137,20 +143,18 @@ export async function LandingRecommendationEngine() {
         landingSectionY
       )}
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <div>
+      <div className={landingContainer}>
+        <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
+          <div className="min-w-0">
             <p className="text-eyebrow">{t("eyebrow")}</p>
-            <h2 className="mt-3 font-heading text-[clamp(2rem,3vw,2.75rem)] font-bold leading-[1.1] tracking-[-0.02em] text-foreground">
-              {t("title")}
-            </h2>
-            <p className="mt-5 text-body leading-relaxed text-muted-foreground">
+            <h2 className={cn("mt-3", landingHeading)}>{t("title")}</h2>
+            <p className="mt-4 text-body leading-relaxed text-muted-foreground sm:mt-5">
               {t("description")}
             </p>
 
             <ul
               className={cn(
-                "grid list-none gap-4 sm:grid-cols-2",
+                "grid list-none grid-cols-1 gap-3 min-[480px]:grid-cols-2 min-[480px]:gap-4",
                 landingStackGap
               )}
             >
@@ -172,7 +176,7 @@ export async function LandingRecommendationEngine() {
             />
 
             <Card className="relative overflow-hidden border-border/90 bg-card shadow-elevated">
-              <CardContent className="p-6 sm:p-8">
+              <CardContent className="p-4 sm:p-6 lg:p-8">
                 <div className="flex items-center gap-3">
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-accent/25 bg-accent/10 text-accent">
                     <Sparkles className="h-5 w-5" strokeWidth={1.75} />
@@ -187,7 +191,7 @@ export async function LandingRecommendationEngine() {
                   </div>
                 </div>
 
-                <div className="mt-6 flex items-center gap-2 text-caption text-muted-foreground">
+                <div className="mt-5 flex flex-wrap items-center gap-2 text-caption text-muted-foreground sm:mt-6">
                   <span className="rounded-md border border-border bg-muted/40 px-2 py-1">
                     {t("yourMaterials")}
                   </span>

@@ -40,10 +40,38 @@ const {
   createSubscriptionsRouter,
   createSubscriptionWebhookRouter,
 } = require("./modules/subscriptions/subscription.routes");
+const { createBillingRouter } = require("./modules/billing/billing.routes");
 const { LOCAL_UPLOAD_DIR } = require("./services/storage/material-image.service");
+const {
+  configureNotificationEmails,
+} = require("./modules/notifications/notification.service");
+const { sendInvoiceEmail } = require("./services/email/email.service");
+
+function isPrivateLanHostname(hostname) {
+  return (
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "[::1]" ||
+    /^192\.168\.\d{1,3}\.\d{1,3}$/.test(hostname) ||
+    /^10\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(hostname) ||
+    /^172\.(1[6-9]|2\d|3[0-1])\.\d{1,3}\.\d{1,3}$/.test(hostname)
+  );
+}
+
+function isAllowedCorsOrigin(origin, env) {
+  if (!origin) return true;
+  if (origin === env.CLIENT_ORIGIN) return true;
+  if (env.NODE_ENV === "production") return false;
+  try {
+    return isPrivateLanHostname(new URL(origin).hostname);
+  } catch {
+    return false;
+  }
+}
 
 function createApp(env) {
   const app = express();
+  configureNotificationEmails(env);
   const requirePaidAccess = [
     authenticate({ jwtSecret: env.JWT_SECRET }),
     requireCompletedOnboarding,
@@ -65,7 +93,9 @@ function createApp(env) {
   }
   app.use(
     cors({
-      origin: env.CLIENT_ORIGIN,
+      origin(origin, callback) {
+        callback(null, isAllowedCorsOrigin(origin, env));
+      },
       credentials: true,
     })
   );
@@ -97,6 +127,14 @@ function createApp(env) {
   app.use("/api/v1/verification", createVerificationRouter(env));
   app.use("/api/v1/access", createAccessRouter(env));
   app.use("/api/v1/subscriptions", createSubscriptionsRouter(env));
+  app.use(
+    "/api/v1/billing",
+    createBillingRouter(env, {
+      emailService: {
+        sendInvoiceEmail: (payload) => sendInvoiceEmail(env, payload),
+      },
+    })
+  );
   app.use("/api/v1/network", ...requirePaidAccess, createNetworkRouter(env));
   app.use("/api/v1/materials", ...requirePaidAccess, createMaterialsRouter(env));
   app.use("/api/v1/interests", ...requirePaidAccess, createInterestsRouter(env));

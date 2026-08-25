@@ -116,8 +116,7 @@ export function MaterialLocationField({
           <Button
             type="button"
             variant="outline"
-            size="sm"
-            className="mt-4"
+            className="mt-4 h-12 w-full sm:h-9 sm:w-auto"
             onClick={openCustomLocation}
             disabled={!isLocationDraftComplete(companyLocation)}
           >
@@ -130,8 +129,7 @@ export function MaterialLocationField({
               <Button
                 type="button"
                 variant="ghost"
-                size="sm"
-                className="px-0 text-emerald-800 hover:bg-transparent hover:text-emerald-900"
+                className="h-11 w-full px-0 text-emerald-800 hover:bg-transparent hover:text-emerald-900 sm:h-9 sm:w-auto"
                 onClick={useCompanyDefault}
               >
                 {t("useCompanyInstead")}

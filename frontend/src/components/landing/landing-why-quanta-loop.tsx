@@ -12,7 +12,13 @@ import { getTranslations } from "next-intl/server";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-import { landingSectionY, landingStackGap } from "./landing-styles";
+import {
+  landingContainerWide,
+  landingHeadingXl,
+  landingLeadCentered,
+  landingSectionY,
+  landingStackGap,
+} from "./landing-styles";
 
 const WHY_ICONS: LucideIcon[] = [
   ShieldCheck,
@@ -63,7 +69,7 @@ function WhyCard({
         "hover:-translate-y-1.5 hover:border-[#BBF7D0] hover:shadow-[0_20px_40px_rgba(0,0,0,0.05)]"
       )}
     >
-      <CardContent className="flex h-full flex-col p-5 sm:p-6">
+      <CardContent className="flex h-full flex-col p-4 sm:p-6">
         <div className="flex items-start justify-between gap-3">
           <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-accent/85">
             {label}
@@ -73,7 +79,7 @@ function WhyCard({
           </span>
         </div>
 
-        <h3 className="mt-3 font-heading text-h4 leading-snug text-card-foreground">
+        <h3 className="mt-3 font-heading text-lg leading-snug text-card-foreground sm:text-h4">
           {title}
         </h3>
 
@@ -98,22 +104,21 @@ export async function LandingWhyQuantaLoop() {
   return (
     <section
       id="why-quanta-loop"
-      className={cn("border-b border-border bg-[#F8FAF8]", landingSectionY)}
+      className={cn(
+        "scroll-mt-20 border-b border-border bg-[#F8FAF8]",
+        landingSectionY
+      )}
     >
-      <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
+      <div className={landingContainerWide}>
         <div className="mx-auto max-w-[900px] text-center">
           <p className="text-eyebrow">{t("eyebrow")}</p>
-          <h2 className="mt-3 font-heading text-[clamp(2.5rem,3vw,3rem)] font-bold leading-[1.1] tracking-[-0.02em] text-foreground">
-            {t("title")}
-          </h2>
-          <p className="mx-auto mt-5 max-w-[700px] text-[22px] leading-[1.6] text-muted-foreground sm:mt-6">
-            {t("description")}
-          </p>
+          <h2 className={cn("mt-3", landingHeadingXl)}>{t("title")}</h2>
+          <p className={landingLeadCentered}>{t("description")}</p>
         </div>
 
         <ul
           className={cn(
-            "grid list-none items-stretch gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-7",
+            "grid list-none items-stretch gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-7",
             landingStackGap
           )}
         >

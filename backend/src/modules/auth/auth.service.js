@@ -15,6 +15,9 @@ const {
   sendGoogleAccountEmail,
   sendEmailVerificationEmail,
 } = require("../../services/email/email.service");
+const {
+  userHasPaidMembership,
+} = require("../subscriptions/paid-participants");
 
 const SALT_ROUNDS = 12;
 const RESET_TOKEN_BYTES = 32;
@@ -79,10 +82,26 @@ async function sendVerificationEmailForUser(user, env) {
   });
 }
 
+async function discardUnpaidAccountForReregister(existing) {
+  if (!existing) return;
+  try {
+    await cancelUnpaidSignup(existing._id);
+  } catch (error) {
+    if (
+      error instanceof AppError &&
+      (error.code === "SUBSCRIPTION_ALREADY_PAID" ||
+        error.code === "ADMIN_ACCOUNT")
+    ) {
+      throw new AppError("Email already registered", 409, "EMAIL_IN_USE");
+    }
+    throw error;
+  }
+}
+
 async function registerUser(input, jwtSecret, jwtExpiresIn, env) {
   const existing = await User.findOne({ email: input.email });
   if (existing) {
-    throw new AppError("Email already registered", 409, "EMAIL_IN_USE");
+    await discardUnpaidAccountForReregister(existing);
   }
 
   const role = input.role ?? "material_provider";
@@ -223,12 +242,17 @@ async function previewGoogleCredential({ credential }, env) {
     (await User.findOne({ email }));
 
   if (existing) {
-    throw new AppError(
-      "An account already exists for this Google email. Sign in instead.",
-      409,
-      "GOOGLE_ACCOUNT_EXISTS",
-      { email }
-    );
+    const paid =
+      existing.role === "admin" ||
+      (await userHasPaidMembership(existing._id));
+    if (paid) {
+      throw new AppError(
+        "An account already exists for this Google email. Sign in instead.",
+        409,
+        "GOOGLE_ACCOUNT_EXISTS",
+        { email }
+      );
+    }
   }
 
   return { email, name };
@@ -245,11 +269,7 @@ async function registerWithGoogle(input, env, jwtSecret, jwtExpiresIn) {
     (await User.findOne({ email }));
 
   if (existing) {
-    throw new AppError(
-      "An account already exists for this Google email. Sign in instead.",
-      409,
-      "EMAIL_IN_USE"
-    );
+    await discardUnpaidAccountForReregister(existing);
   }
 
   const role = input.role ?? "material_provider";
@@ -495,8 +515,8 @@ async function resendVerificationEmail(userId, env) {
 async function cancelUnpaidSignup(userId) {
   const { Subscription } = require("../subscriptions/subscription.model");
   const {
-    PAID_STATUSES,
-  } = require("../subscriptions/subscription-access.service");
+    findPaidSubscription,
+  } = require("../subscriptions/paid-participants");
 
   const user = await User.findById(userId);
   if (!user) {
@@ -510,13 +530,7 @@ async function cancelUnpaidSignup(userId) {
     );
   }
 
-  const paidSubscription = await Subscription.findOne({
-    user: user._id,
-    $or: [
-      { status: { $in: PAID_STATUSES } },
-      { latestPaymentId: { $ne: null } },
-    ],
-  }).lean();
+  const paidSubscription = await findPaidSubscription(user._id);
 
   if (paidSubscription) {
     throw new AppError(

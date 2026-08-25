@@ -31,6 +31,18 @@ const envSchema = z.object({
   RAZORPAY_WEBHOOK_SECRET: z.string().optional(),
   RAZORPAY_PLAN_ID_ANNUAL_ACCESS: z.string().optional(),
   RAZORPAY_PLAN_MAP: z.string().optional(),
+  // Billing / GST (Quanta Loop owns invoices; Razorpay collects payment only)
+  BILLING_SUPPLIER_STATE_CODE: z.string().optional().default("TN"),
+  BILLING_SUPPLIER_STATE: z.string().optional().default("Tamil Nadu"),
+  BILLING_SUPPLIER_GSTIN: z.string().optional(),
+  BILLING_SAC_CODE: z.string().optional(),
+  BILLING_EXPORT_TREATMENT: z
+    .enum(["zero_rated_lut", "manual_review", "disabled"])
+    .optional()
+    .default("zero_rated_lut"),
+  BILLING_INVOICE_PREFIX: z.string().optional().default("QL"),
+  BILLING_SELLER_LEGAL_NAME: z.string().optional().default("Quanta Loop"),
+  BILLING_SELLER_ADDRESS: z.string().optional(),
 });
 
 function loadEnv() {

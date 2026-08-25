@@ -61,7 +61,7 @@ export function GeographySelection({ value, onChange }: GeographySelectionProps)
           id="geo-state"
           value={value.stateCode}
           onChange={(e) => handleStateChange(e.target.value)}
-          className="border-zinc-200 bg-white"
+          className="h-12 border-zinc-200 bg-white text-base sm:h-10 sm:text-small"
         >
           <option value="">{t("selectState")}</option>
           {INDIAN_LOCATIONS_SORTED.map((state) => (

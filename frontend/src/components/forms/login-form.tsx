@@ -197,8 +197,8 @@ export function LoginForm({ googleClientId }: LoginFormProps) {
           ) : null}
         </div>
 
-        <div className="flex items-center justify-between gap-3 pt-0.5">
-          <label className="flex items-center gap-2.5 text-sm text-[#0F172A]">
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pt-0.5">
+          <label className="flex min-h-10 items-center gap-2.5 text-sm text-[#0F172A]">
             <input
               type="checkbox"
               disabled={isBusy}

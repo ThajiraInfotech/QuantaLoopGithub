@@ -30,7 +30,6 @@ const OPEN_STATUSES = [
   "paused",
 ];
 const CONFIRMED_PAYMENT_STATUSES = new Set(["authorized", "captured"]);
-const CONFIRMED_SUBSCRIPTION_STATUSES = new Set(["authenticated", "active"]);
 const TERMINAL_STATUSES = new Set(["cancelled", "completed", "expired"]);
 // Razorpay activates a subscription moments after the first charge. Webhooks
 // deliver that transition in production, but reads must be able to catch up on
@@ -89,6 +88,21 @@ function verifyCheckoutSignature(secret, paymentId, subscriptionId, signature) {
   );
 }
 
+/** Razorpay Orders checkout signature: order_id|payment_id */
+function calculateOrderCheckoutSignature(secret, orderId, paymentId) {
+  return crypto
+    .createHmac("sha256", secret)
+    .update(`${orderId}|${paymentId}`, "utf8")
+    .digest("hex");
+}
+
+function verifyOrderCheckoutSignature(secret, orderId, paymentId, signature) {
+  return secureCompareHex(
+    calculateOrderCheckoutSignature(secret, orderId, paymentId),
+    signature
+  );
+}
+
 function calculateWebhookSignature(secret, rawBody) {
   return crypto.createHmac("sha256", secret).update(rawBody).digest("hex");
 }
@@ -99,6 +113,32 @@ function verifyWebhookSignature(secret, rawBody, signature) {
 
 function mapEventToStatus(eventType) {
   return EVENT_STATUS_MAP[eventType] || null;
+}
+
+function isFullyRefundedPayment(payment) {
+  if (!payment) return false;
+  return payment.status === "refunded" || payment.refund_status === "full";
+}
+
+function paymentUnlocksMembership(payment, plan) {
+  if (!payment || !plan) return false;
+  if (payment.status !== "captured") return false;
+  if (isFullyRefundedPayment(payment)) return false;
+  if (Number(payment.amount) !== Number(plan.amountMinor)) return false;
+  const paymentCurrency = String(payment.currency || "").toUpperCase();
+  const planCurrency = String(plan.currency || "").toUpperCase();
+  return paymentCurrency === planCurrency;
+}
+
+function keepPaidStatus(localStatus, remoteStatus) {
+  if (
+    PAID_STATUSES.has(localStatus) &&
+    remoteStatus &&
+    AWAITING_ACTIVATION_STATUSES.has(remoteStatus)
+  ) {
+    return localStatus;
+  }
+  return remoteStatus || localStatus;
 }
 
 function unixDate(value) {
@@ -119,6 +159,18 @@ function remoteFields(entity, eventId) {
     lastWebhookEventId: eventId || null,
     lastReconciledAt: new Date(),
   };
+}
+
+function assignRemoteFields(local, remote, eventId) {
+  const next = remoteFields(remote, eventId);
+  next.status = keepPaidStatus(local.status, next.status);
+  if (local.currentEndAt && !next.currentEndAt) {
+    next.currentEndAt = local.currentEndAt;
+  }
+  if (local.currentStartAt && !next.currentStartAt) {
+    next.currentStartAt = local.currentStartAt;
+  }
+  Object.assign(local, next);
 }
 
 function relevantPayload(eventType, body) {
@@ -179,7 +231,7 @@ function assertRemoteOwnership(local, remote, userId) {
   }
 }
 
-function createSubscriptionService({ client, catalog, keySecret }) {
+function createSubscriptionService({ client, catalog, keySecret, billingService }) {
   /**
    * Access is granted through the paid-through date, so a paid subscription
    * must always carry one. Razorpay omits the period on some single-cycle
@@ -200,6 +252,33 @@ function createSubscriptionService({ client, catalog, keySecret }) {
     );
   }
 
+  function activateFromSettledCharge(local, remote, payment) {
+    let plan;
+    try {
+      plan = catalog.getPlan(local.catalogPlanId);
+    } catch {
+      return;
+    }
+    const capturedOk = paymentUnlocksMembership(payment, plan);
+    const remoteCharged =
+      Boolean(remote) &&
+      (PAID_STATUSES.has(remote.status) || Number(remote.paid_count) >= 1);
+    if (!capturedOk && !remoteCharged) return;
+    if (isFullyRefundedPayment(payment)) return;
+
+    if (AWAITING_ACTIVATION_STATUSES.has(local.status)) {
+      local.status =
+        remote && PAID_STATUSES.has(remote.status) ? remote.status : "active";
+    }
+    if (!local.currentStartAt) {
+      local.currentStartAt =
+        unixDate(remote?.current_start) ||
+        unixDate(payment?.created_at) ||
+        new Date();
+    }
+    ensurePaidThrough(local);
+  }
+
   async function findOpenForUser(userId, planId) {
     const query = {
       user: userId,
@@ -209,46 +288,50 @@ function createSubscriptionService({ client, catalog, keySecret }) {
     return Subscription.findOne(query).sort({ createdAt: -1 });
   }
 
-  async function createCheckout({ userId, planId, idempotencyKey }) {
-    const plan = catalog.getPlan(planId);
-    const razorpayPlanId =
-      plan.razorpayPlanId ||
-      (await client.resolvePlanId(plan, plan.razorpayPlanId || null));
-    if (!razorpayPlanId) {
-      throw new AppError("Plan is not available", 404, "PLAN_NOT_AVAILABLE");
+  async function issueInvoiceSafely({ userId, subscription, paymentId, payment }) {
+    if (!billingService?.issueInvoiceForPayment || !paymentId) return;
+    try {
+      await billingService.issueInvoiceForPayment({
+        userId,
+        subscription,
+        paymentId,
+        payment,
+      });
+    } catch (error) {
+      process.stderr.write(
+        `[billing] invoice issue skipped for payment ${paymentId}: ${error.message}\n`
+      );
     }
+  }
+
+  async function createCheckout({ userId, planId, idempotencyKey }) {
+    if (billingService?.requireCheckoutReady) {
+      await billingService.requireCheckoutReady(userId, planId);
+    }
+    const plan = catalog.getPlan(planId);
 
     let existingOpen = await findOpenForUser(userId, planId);
-    if (existingOpen?.razorpaySubscriptionId) {
-      try {
-        const remote = await client.fetchSubscription(
-          existingOpen.razorpaySubscriptionId
-        );
-        Object.assign(existingOpen, remoteFields(remote), {
-          checkoutState: "ready",
-        });
-        await existingOpen.save();
-      } catch {
-        /* keep local record if remote fetch fails */
-      }
-      if (!TERMINAL_STATUSES.has(existingOpen.status)) {
-        return toPublicSubscription(existingOpen);
-      }
-      existingOpen = null;
+    if (
+      existingOpen?.razorpayOrderId &&
+      !PAID_STATUSES.has(existingOpen.status) &&
+      !TERMINAL_STATUSES.has(existingOpen.status)
+    ) {
+      existingOpen.checkoutState = "ready";
+      await existingOpen.save();
+      return toPublicSubscription(existingOpen);
     }
 
     const key =
-      idempotencyKey ||
-      `open:${userId}:${planId}:${Date.now()}`;
+      idempotencyKey || `open:${userId}:${planId}:${Date.now()}`;
 
     let local = existingOpen;
     let ownsAttempt = false;
-    if (!local) {
+    if (!local || PAID_STATUSES.has(local.status) || TERMINAL_STATUSES.has(local.status)) {
       try {
         local = await Subscription.create({
           user: userId,
           catalogPlanId: planId,
-          razorpayPlanId,
+          razorpayPlanId: "order_checkout",
           idempotencyKey: key,
           checkoutState: "creating",
         });
@@ -257,6 +340,9 @@ function createSubscriptionService({ client, catalog, keySecret }) {
         if (error?.code !== 11000) throw error;
         local = await Subscription.findOne({ user: userId, idempotencyKey: key });
       }
+    } else if (!local.razorpayOrderId) {
+      ownsAttempt = true;
+      local.checkoutState = "creating";
     }
 
     if (!local) {
@@ -269,7 +355,7 @@ function createSubscriptionService({ client, catalog, keySecret }) {
         "IDEMPOTENCY_KEY_REUSED"
       );
     }
-    if (local.checkoutState === "ready" && local.razorpaySubscriptionId) {
+    if (local.checkoutState === "ready" && local.razorpayOrderId) {
       return toPublicSubscription(local);
     }
 
@@ -284,7 +370,7 @@ function createSubscriptionService({ client, catalog, keySecret }) {
         ownsAttempt = true;
       }
     }
-    if (!ownsAttempt && local.razorpaySubscriptionId) {
+    if (!ownsAttempt && local.razorpayOrderId) {
       return toPublicSubscription(local);
     }
     if (!ownsAttempt) {
@@ -296,24 +382,20 @@ function createSubscriptionService({ client, catalog, keySecret }) {
     }
 
     try {
-      const expireBy = Math.floor(Date.now() / 1000) + 24 * 60 * 60;
-      const remote = await client.createSubscription({
-        plan_id: razorpayPlanId,
-        total_count: plan.totalCount,
-        quantity: 1,
-        customer_notify: 1,
-        expire_by: expireBy,
+      const remote = await client.createOrder({
+        amount: plan.amountMinor,
+        currency: plan.currency,
+        receipt: `ql_${String(local._id).slice(-12)}`,
         notes: {
           user_id: String(userId),
           local_subscription_id: String(local._id),
           catalog_plan_id: plan.id,
         },
       });
-      local.razorpayPlanId = razorpayPlanId;
-      local.razorpaySubscriptionId = remote.id;
-      local.status = remote.status || "created";
-      local.shortUrl = remote.short_url || null;
-      local.remoteCreatedAt = unixDate(remote.created_at);
+      local.razorpayPlanId = "order_checkout";
+      local.razorpayOrderId = remote.id;
+      local.status = "created";
+      local.remoteCreatedAt = unixDate(remote.created_at) || new Date();
       local.checkoutState = "ready";
       local.lastReconciledAt = new Date();
       await local.save();
@@ -336,25 +418,29 @@ function createSubscriptionService({ client, catalog, keySecret }) {
   }
 
   async function reconcilePending(userId) {
-    const local = await Subscription.findOne({ user: userId })
-      .sort({ createdAt: -1 });
-    if (
-      !local?.razorpaySubscriptionId ||
-      !AWAITING_ACTIVATION_STATUSES.has(local.status)
-    ) {
+    const local = await Subscription.findOne({ user: userId }).sort({
+      createdAt: -1,
+    });
+    if (!local || !AWAITING_ACTIVATION_STATUSES.has(local.status)) {
       return null;
     }
+    if (!local.latestPaymentId && !local.razorpayOrderId) return null;
+
     const lastReconciled = local.lastReconciledAt
       ? new Date(local.lastReconciledAt).getTime()
       : 0;
     if (Date.now() - lastReconciled < RECONCILE_MIN_INTERVAL_MS) return null;
 
-    const remote = await client.fetchSubscription(local.razorpaySubscriptionId);
-    Object.assign(local, remoteFields(remote), { checkoutState: "ready" });
-    ensurePaidThrough(local);
-    if (TERMINAL_STATUSES.has(local.status)) {
-      local.idempotencyKey = `closed:${local._id}:${Date.now()}`;
+    let payment = null;
+    if (local.latestPaymentId) {
+      payment = await client.fetchPayment(local.latestPaymentId).catch(() => null);
     }
+    if (payment) {
+      activateFromSettledCharge(local, null, payment);
+      ensurePaidThrough(local);
+    }
+    local.lastReconciledAt = new Date();
+    local.checkoutState = "ready";
     await local.save();
     return toPublicSubscription(local);
   }
@@ -369,6 +455,7 @@ function createSubscriptionService({ client, catalog, keySecret }) {
   async function verifyAndReconcile({
     userId,
     paymentId,
+    orderId,
     subscriptionId,
     signature,
   }) {
@@ -379,31 +466,85 @@ function createSubscriptionService({ client, catalog, keySecret }) {
         "PAYMENTS_NOT_CONFIGURED"
       );
     }
-    if (
-      !verifyCheckoutSignature(
-        keySecret,
-        paymentId,
-        subscriptionId,
-        signature
-      )
-    ) {
-      throw new AppError("Invalid checkout signature", 400, "INVALID_SIGNATURE");
+
+    const isOrderCheckout = Boolean(orderId);
+    if (isOrderCheckout) {
+      if (
+        !verifyOrderCheckoutSignature(keySecret, orderId, paymentId, signature)
+      ) {
+        throw new AppError("Invalid checkout signature", 400, "INVALID_SIGNATURE");
+      }
+    } else if (subscriptionId) {
+      if (
+        !verifyCheckoutSignature(
+          keySecret,
+          paymentId,
+          subscriptionId,
+          signature
+        )
+      ) {
+        throw new AppError("Invalid checkout signature", 400, "INVALID_SIGNATURE");
+      }
+    } else {
+      throw new AppError(
+        "Order or subscription id is required",
+        400,
+        "VALIDATION_ERROR"
+      );
     }
-    const local = await Subscription.findOne({
-      user: userId,
-      razorpaySubscriptionId: subscriptionId,
-    });
+
+    const local = isOrderCheckout
+      ? await Subscription.findOne({ user: userId, razorpayOrderId: orderId })
+      : await Subscription.findOne({
+          user: userId,
+          razorpaySubscriptionId: subscriptionId,
+        });
     if (!local) {
       throw new AppError("Subscription not found", 404, "SUBSCRIPTION_NOT_FOUND");
     }
-    const [remote, payment] = await Promise.all([
-      client.fetchSubscription(subscriptionId),
-      client.fetchPayment(paymentId),
-    ]);
-    assertRemoteOwnership(local, remote, userId);
-    if (payment.subscription_id && payment.subscription_id !== subscriptionId) {
+
+    const payment = await client.fetchPayment(paymentId);
+    if (isOrderCheckout) {
+      if (payment.order_id && payment.order_id !== orderId) {
+        throw new AppError(
+          "Payment does not match this order",
+          409,
+          "PAYMENT_ORDER_MISMATCH"
+        );
+      }
+      const notesUser = String(payment.notes?.user_id || "");
+      const notesLocal = String(payment.notes?.local_subscription_id || "");
+      // Notes may be missing on some test captures; order ownership is enough.
+      if (notesUser && notesUser !== String(userId)) {
+        throw new AppError(
+          "Payment ownership verification failed",
+          403,
+          "PAYMENT_OWNERSHIP_MISMATCH"
+        );
+      }
+      if (notesLocal && notesLocal !== String(local._id)) {
+        throw new AppError(
+          "Payment ownership verification failed",
+          403,
+          "PAYMENT_OWNERSHIP_MISMATCH"
+        );
+      }
+    } else {
+      const remote = await client.fetchSubscription(subscriptionId);
+      assertRemoteOwnership(local, remote, userId);
+      if (payment.subscription_id && payment.subscription_id !== subscriptionId) {
+        throw new AppError(
+          "Razorpay has not confirmed this subscription",
+          409,
+          "SUBSCRIPTION_NOT_CONFIRMED"
+        );
+      }
+      assignRemoteFields(local, remote, null);
+    }
+
+    if (isFullyRefundedPayment(payment) || payment.status === "failed") {
       throw new AppError(
-        "Razorpay has not confirmed this subscription",
+        "Razorpay has not confirmed this payment",
         409,
         "SUBSCRIPTION_NOT_CONFIRMED"
       );
@@ -415,52 +556,130 @@ function createSubscriptionService({ client, catalog, keySecret }) {
         "SUBSCRIPTION_NOT_CONFIRMED"
       );
     }
-    Object.assign(local, remoteFields(remote), {
-      latestPaymentId: payment.id,
-      checkoutState: "ready",
-    });
+    const plan = catalog.getPlan(local.catalogPlanId);
+    if (
+      payment.status === "captured" &&
+      !paymentUnlocksMembership(payment, plan)
+    ) {
+      throw new AppError(
+        "Payment does not match the purchased membership",
+        409,
+        "PAYMENT_AMOUNT_MISMATCH"
+      );
+    }
+
+    local.latestPaymentId = payment.id;
+    if (isOrderCheckout) local.razorpayOrderId = orderId;
+    local.checkoutState = "ready";
+    activateFromSettledCharge(local, null, payment);
     ensurePaidThrough(local);
     await local.save();
+    await issueInvoiceSafely({
+      userId,
+      subscription: local,
+      paymentId: payment.id,
+      payment,
+    });
     return toPublicSubscription(local);
   }
 
   async function cancel({ userId, subscriptionId, cancelAtCycleEnd }) {
-    const local = subscriptionId
-      ? await Subscription.findOne({
-          user: userId,
-          razorpaySubscriptionId: subscriptionId,
-        })
-      : await findOpenForUser(userId);
-    if (!local?.razorpaySubscriptionId) {
+    let local = null;
+    if (subscriptionId) {
+      const mongoose = require("mongoose");
+      const filters = [
+        { user: userId, razorpaySubscriptionId: subscriptionId },
+        { user: userId, razorpayOrderId: subscriptionId },
+      ];
+      if (mongoose.Types.ObjectId.isValid(subscriptionId)) {
+        filters.push({ user: userId, _id: subscriptionId });
+      }
+      local = await Subscription.findOne({ $or: filters });
+    } else {
+      local = await findOpenForUser(userId);
+    }
+    if (!local) {
       throw new AppError("Subscription not found", 404, "SUBSCRIPTION_NOT_FOUND");
     }
     if (TERMINAL_STATUSES.has(local.status)) return toPublicSubscription(local);
+
+    // One-time order memberships: mark cancel-at-cycle-end locally (no Razorpay sub).
+    if (!local.razorpaySubscriptionId) {
+      local.cancelAtCycleEnd = cancelAtCycleEnd !== false;
+      if (!cancelAtCycleEnd) {
+        local.status = "cancelled";
+        local.cancelledAt = new Date();
+        local.endedAt = new Date();
+        local.idempotencyKey = `closed:${local._id}:${Date.now()}`;
+      }
+      local.checkoutState = "ready";
+      await local.save();
+      return toPublicSubscription(local);
+    }
+
     const existing = await client.fetchSubscription(local.razorpaySubscriptionId);
     assertRemoteOwnership(local, existing, userId);
     const remote = await client.cancelSubscription(
       local.razorpaySubscriptionId,
       cancelAtCycleEnd
     );
-    Object.assign(local, remoteFields(remote), { checkoutState: "ready" });
+    assignRemoteFields(local, remote, null);
+    local.checkoutState = "ready";
     local.idempotencyKey = `closed:${local._id}:${Date.now()}`;
     await local.save();
     return toPublicSubscription(local);
   }
 
-  async function applyRemoteSubscription(remote, eventId) {
+  async function applyCapturedOrderPayment(payment, eventId) {
+    if (!payment?.id || payment.status !== "captured") return;
+    const orderId = payment.order_id || null;
+    const localId = payment.notes?.local_subscription_id || null;
+    const local = orderId
+      ? await Subscription.findOne({ razorpayOrderId: orderId })
+      : localId
+        ? await Subscription.findById(localId)
+        : null;
+    if (!local) return;
+
+    local.latestPaymentId = payment.id;
+    if (orderId) local.razorpayOrderId = orderId;
+    local.checkoutState = "ready";
+    local.lastWebhookEventId = eventId || null;
+    local.lastReconciledAt = new Date();
+    activateFromSettledCharge(local, null, payment);
+    ensurePaidThrough(local);
+    await local.save();
+    await issueInvoiceSafely({
+      userId: local.user,
+      subscription: local,
+      paymentId: payment.id,
+      payment,
+    });
+  }
+
+  async function applyRemoteSubscription(remote, eventId, payment) {
     if (!remote?.id) return;
     const local = await Subscription.findOne({
       razorpaySubscriptionId: remote.id,
     });
     if (!local) return;
-    Object.assign(local, remoteFields(remote, eventId), {
-      checkoutState: "ready",
-    });
+    assignRemoteFields(local, remote, eventId);
+    local.checkoutState = "ready";
+    if (payment?.id) local.latestPaymentId = payment.id;
+    activateFromSettledCharge(local, remote, payment);
     ensurePaidThrough(local);
     if (TERMINAL_STATUSES.has(local.status)) {
       local.idempotencyKey = `closed:${local._id}:${Date.now()}`;
     }
     await local.save();
+    if (payment?.id && payment.status === "captured") {
+      await issueInvoiceSafely({
+        userId: local.user,
+        subscription: local,
+        paymentId: payment.id,
+        payment,
+      });
+    }
   }
 
   async function processWebhook({ eventId, eventType, body }) {
@@ -504,13 +723,24 @@ function createSubscriptionService({ client, catalog, keySecret }) {
       }
 
       if (remote?.id) {
-        await applyRemoteSubscription(remote, eventId);
+        await applyRemoteSubscription(remote, eventId, payment);
       }
 
-      if (eventType === "payment.failed" && payment?.subscription_id) {
-        await Subscription.updateOne(
-          { razorpaySubscriptionId: payment.subscription_id },
-          {
+      if (
+        (eventType === "payment.captured" || eventType === "order.paid") &&
+        payment?.id
+      ) {
+        await applyCapturedOrderPayment(payment, eventId);
+      }
+
+      if (eventType === "payment.failed" && payment) {
+        const filter = payment.subscription_id
+          ? { razorpaySubscriptionId: payment.subscription_id }
+          : payment.order_id
+            ? { razorpayOrderId: payment.order_id }
+            : null;
+        if (filter) {
+          await Subscription.updateOne(filter, {
             $set: {
               lastPaymentFailure: {
                 paymentId: payment.id || null,
@@ -525,8 +755,8 @@ function createSubscriptionService({ client, catalog, keySecret }) {
               lastReconciledAt: new Date(),
             },
             $inc: { paymentFailureCount: 1 },
-          }
-        );
+          });
+        }
       }
 
       event.status = "processed";
@@ -557,7 +787,11 @@ module.exports = {
   mapEventToStatus,
   calculateCheckoutSignature,
   verifyCheckoutSignature,
+  calculateOrderCheckoutSignature,
+  verifyOrderCheckoutSignature,
   calculateWebhookSignature,
   verifyWebhookSignature,
+  paymentUnlocksMembership,
+  keepPaidStatus,
   createSubscriptionService,
 };

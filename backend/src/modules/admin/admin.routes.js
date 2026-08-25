@@ -14,6 +14,8 @@ const {
   postMaterialsBulk,
   getInterests,
   getInterest,
+  getInvoices,
+  getInvoiceHtml,
 } = require("./admin.controller");
 
 function createAdminRouter(env) {
@@ -43,6 +45,13 @@ function createAdminRouter(env) {
   router.patch("/materials/:materialId", requireAuth, adminOnly, patchMaterial);
   router.get("/interests", requireAuth, adminOnly, getInterests);
   router.get("/interests/:interestId", requireAuth, adminOnly, getInterest);
+  router.get("/invoices", requireAuth, adminOnly, getInvoices);
+  router.get(
+    "/invoices/:invoiceId/html",
+    requireAuth,
+    adminOnly,
+    getInvoiceHtml
+  );
 
   return router;
 }

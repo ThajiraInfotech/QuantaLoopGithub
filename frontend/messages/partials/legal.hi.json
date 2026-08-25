@@ -2,6 +2,7 @@
   "common": {
     "operatedBy": "{operator} द्वारा संचालित",
     "lastUpdated": "अंतिम अपडेट: {date}",
+    "back": "वापस जाएँ",
     "backToHome": "होम पर वापस जाएँ"
   },
   "consent": {

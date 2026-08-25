@@ -10,8 +10,10 @@ import {
   MATERIAL_PHOTO_ACCEPT,
   MAX_MATERIAL_PHOTO_BYTES,
   MAX_MATERIAL_PHOTOS,
+  isAllowedMaterialPhotoFile,
 } from "@/constants/material-photos";
 import { uploadMaterialImage } from "@/services/materials/material.service";
+import { toBrowserMediaUrl } from "@/lib/media-url";
 import { cn } from "@/lib/utils";
 
 type MaterialPhotoFieldProps = {
@@ -44,7 +46,7 @@ export function MaterialPhotoField({
     try {
       const uploaded: string[] = [];
       for (const file of selected) {
-        if (!MATERIAL_PHOTO_ACCEPT.split(",").includes(file.type)) {
+        if (!isAllowedMaterialPhotoFile(file)) {
           toast.error(t("invalidType"));
           continue;
         }
@@ -87,7 +89,7 @@ export function MaterialPhotoField({
               className="group relative aspect-[4/3] overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50"
             >
               <img
-                src={url}
+                src={toBrowserMediaUrl(url)}
                 alt={t("previewAlt")}
                 className="h-full w-full object-cover"
               />
@@ -95,7 +97,7 @@ export function MaterialPhotoField({
                 type="button"
                 disabled={disabled || uploading}
                 onClick={() => removePhoto(url)}
-                className="absolute right-2 top-2 rounded-md bg-black/60 px-2 py-1 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 focus:opacity-100"
+                className="absolute right-2 top-2 min-h-11 min-w-11 rounded-md bg-black/60 px-2 py-1 text-xs font-medium text-white opacity-100 transition-opacity sm:min-h-0 sm:min-w-0 sm:opacity-0 sm:group-hover:opacity-100 focus:opacity-100"
               >
                 {t("remove")}
               </button>
@@ -119,7 +121,10 @@ export function MaterialPhotoField({
           variant="outline"
           disabled={disabled || uploading || value.length >= MAX_MATERIAL_PHOTOS}
           onClick={() => inputRef.current?.click()}
-          className={cn(uploading && "opacity-70")}
+          className={cn(
+            "h-12 w-full sm:h-10 sm:w-auto",
+            uploading && "opacity-70"
+          )}
         >
           {uploading ? t("uploading") : t("addPhotos")}
         </Button>

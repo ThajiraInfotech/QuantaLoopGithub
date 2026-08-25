@@ -1,19 +1,24 @@
+import { ROUTES } from "@/constants/routes";
 import { getNotificationContext } from "@/lib/notification-context";
-import { getEventHeadline } from "@/lib/notification-display";
+import { getEventHeadline, getCategoryMeta, isActionableNotification } from "@/lib/notification-display";
+import type { NotificationCategory } from "@/lib/notification-display";
 import type { Notification } from "@/types/notification";
 
 export type BellPreviewItem = {
   id: string;
   title: string;
   subtitle: string;
+  message: string;
   href: string | null;
   updatedAt: string;
+  isRead: boolean;
+  isActionable: boolean;
+  category: NotificationCategory;
+  categoryLabel: string;
+  dotClass: string;
 };
 
-export function getBellPreviewItem(
-  notification: Notification,
-  interestsOpen: (id: string) => string
-): BellPreviewItem {
+export function getBellPreviewItem(notification: Notification): BellPreviewItem {
   const ctx = getNotificationContext(notification);
   const title = getEventHeadline(notification);
 
@@ -29,14 +34,24 @@ export function getBellPreviewItem(
   }
 
   const href = notification.relatedInterestId
-    ? interestsOpen(notification.relatedInterestId)
-    : null;
+    ? ROUTES.interestsOpen(notification.relatedInterestId)
+    : notification.relatedMaterialId
+      ? ROUTES.materialDetail(notification.relatedMaterialId)
+      : null;
+
+  const meta = getCategoryMeta(notification);
 
   return {
     id: notification.id,
     title,
     subtitle,
+    message: notification.message,
     href,
     updatedAt: notification.updatedAt,
+    isRead: notification.isRead,
+    isActionable: isActionableNotification(notification),
+    category: meta.id,
+    categoryLabel: meta.label,
+    dotClass: meta.dotClass,
   };
 }

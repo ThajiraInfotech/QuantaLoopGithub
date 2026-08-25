@@ -2,6 +2,7 @@
   "common": {
     "operatedBy": "Operated by {operator}",
     "lastUpdated": "Last Updated: {date}",
+    "back": "Back",
     "backToHome": "Back to home"
   },
   "consent": {

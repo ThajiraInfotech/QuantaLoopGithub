@@ -8,7 +8,10 @@ import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { LegalConsentCheckbox } from "@/components/legal/legal-consent-checkbox";
-import { onboardingPrimaryButtonClass } from "@/components/onboarding/onboarding-accent";
+import {
+  onboardingFieldClass,
+  onboardingPrimaryButtonClass,
+} from "@/components/onboarding/onboarding-accent";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { getPostAuthRedirect } from "@/lib/auth-routing";
@@ -19,6 +22,7 @@ import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/ui/password-input";
 import { PasswordStrengthMeter } from "@/components/ui/password-strength-meter";
 import { ROUTES } from "@/constants/routes";
+import { useAccountSetupDraftPersistence } from "@/hooks/use-account-setup-draft";
 import { registerWithGoogleRequest } from "@/services/auth/auth.service";
 import { useAuthStore } from "@/store/auth-store";
 import { useOnboardingStore } from "@/store/onboarding-store";
@@ -90,8 +94,14 @@ export function GoogleSignupForm({ context }: GoogleSignupFormProps) {
 
   const passwordValue = form.watch("password");
 
+  useAccountSetupDraftPersistence(form, legalConsent, setLegalConsent, {
+    includeEmail: false,
+    fallbackName: pendingSignupName,
+    fallbackEmail: pendingSignupEmail,
+  });
+
   useEffect(() => {
-    if (pendingSignupName) {
+    if (pendingSignupName && !form.getValues("name")) {
       form.setValue("name", pendingSignupName);
     }
   }, [form, pendingSignupName]);
@@ -170,6 +180,7 @@ export function GoogleSignupForm({ context }: GoogleSignupFormProps) {
           <Input
             id="google-signup-name"
             autoComplete="name"
+            className={onboardingFieldClass}
             {...form.register("name")}
           />
           {form.formState.errors.name?.message ? (
@@ -184,6 +195,7 @@ export function GoogleSignupForm({ context }: GoogleSignupFormProps) {
           <Input
             id="google-signup-company"
             autoComplete="organization"
+            className={onboardingFieldClass}
             {...form.register("companyName")}
           />
           {form.formState.errors.companyName?.message ? (
@@ -206,6 +218,7 @@ export function GoogleSignupForm({ context }: GoogleSignupFormProps) {
             <PasswordInput
               id="google-signup-password"
               autoComplete="new-password"
+              inputClassName={onboardingFieldClass}
               {...form.register("password")}
             />
             <PasswordStrengthMeter password={passwordValue} />
@@ -221,6 +234,7 @@ export function GoogleSignupForm({ context }: GoogleSignupFormProps) {
             <PasswordInput
               id="google-signup-confirm"
               autoComplete="new-password"
+              inputClassName={onboardingFieldClass}
               {...form.register("confirmPassword")}
             />
             {form.formState.errors.confirmPassword?.message ? (
@@ -253,7 +267,10 @@ export function GoogleSignupForm({ context }: GoogleSignupFormProps) {
       <Button
         type="submit"
         variant="accent"
-        className={cn("w-full", onboardingPrimaryButtonClass)}
+        className={cn(
+          "h-auto min-h-11 w-full whitespace-normal py-2.5 sm:h-10 sm:py-2",
+          onboardingPrimaryButtonClass
+        )}
         disabled={
           form.formState.isSubmitting || (requiresLegalConsent && !legalConsent)
         }

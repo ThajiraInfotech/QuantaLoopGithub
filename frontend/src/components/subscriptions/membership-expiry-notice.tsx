@@ -1,9 +1,7 @@
 "use client";
 
 import { CalendarClock } from "lucide-react";
-import Link from "next/link";
 
-import { ROUTES } from "@/constants/routes";
 import { useSubscriptionAccess } from "@/components/subscriptions/subscription-access-context";
 
 function formatDate(value: string): string {
@@ -36,20 +34,14 @@ export function MembershipExpiryNotice() {
   return (
     <div
       role="status"
-      className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950"
+      className="mb-5 flex flex-col gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-relaxed text-pretty text-amber-950 sm:mb-6 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3 sm:gap-y-2"
     >
       <CalendarClock className="h-4 w-4 shrink-0 text-amber-700" aria-hidden />
       <p className="flex-1">
         Your annual membership ends {remaining}
-        {endsOn ? ` (${formatDate(endsOn)})` : ""}. Renew to keep your network
-        access without a break.
+        {endsOn ? ` (${formatDate(endsOn)})` : ""}. When it ends, you will pay
+        again to stay on the network.
       </p>
-      <Link
-        href={ROUTES.access}
-        className="rounded-md bg-amber-900 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-amber-950"
-      >
-        Renew membership
-      </Link>
     </div>
   );
 }

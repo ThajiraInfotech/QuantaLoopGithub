@@ -10,13 +10,17 @@ import { RemindersStrip } from "@/components/reminders/reminders-strip";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { primaryActionLinkClassName } from "@/components/ui/link-styles";
 import { RoleBadge } from "@/components/trust/role-badge";
 import { ROUTES } from "@/constants/routes";
-import { useLocalizedTime } from "@/hooks/use-localized-time";
+import {
+  useDashboardGreeting,
+  useLocalizedTime,
+} from "@/hooks/use-localized-time";
+import { cn } from "@/lib/utils";
 import { fetchMatchSuggestions } from "@/services/matches/match.service";
 import { fetchMyInterests } from "@/services/interests/interest.service";
 import { fetchNotifications } from "@/services/notifications/notification.service";
@@ -100,17 +104,19 @@ type KpiItem = {
 
 function OverviewKpiStrip({ items }: { items: KpiItem[] }) {
   return (
-    <div className="grid grid-cols-3 gap-3">
+    <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
       {items.map((item) => (
         <Link
           key={item.label}
           href={item.href}
-          className="rounded-lg border border-zinc-200/80 bg-white px-4 py-3 transition-colors hover:border-zinc-300 hover:bg-zinc-50/80"
+          className="block rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-sm shadow-zinc-950/[0.04] transition-all hover:border-zinc-300 hover:shadow-md hover:shadow-zinc-950/[0.06] sm:p-5"
         >
-          <p className="text-2xl font-semibold tabular-nums text-zinc-900">
+          <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+            {item.label}
+          </p>
+          <p className="mt-2 text-[1.75rem] font-semibold tabular-nums text-zinc-900 sm:text-3xl">
             {item.value}
           </p>
-          <p className="mt-0.5 text-xs font-medium text-zinc-500">{item.label}</p>
         </Link>
       ))}
     </div>
@@ -123,6 +129,8 @@ export function BuyerDashboardHome() {
   const user = useAuthStore((s) => s.user);
   const setUnreadCount = useNotificationStore((s) => s.setUnreadCount);
   const { formatRelativeTime } = useLocalizedTime();
+  const displayName = user?.companyName?.trim() || user?.name?.trim() || "";
+  const greeting = useDashboardGreeting(displayName);
 
   const [interests, setInterests] = useState<Interest[]>([]);
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -187,54 +195,101 @@ export function BuyerDashboardHome() {
 
   if (loading) {
     return (
-      <div className="mx-auto max-w-4xl space-y-4 py-4">
-        <div className="h-10 w-48 animate-pulse rounded-md bg-zinc-100" />
-        <div className="h-24 animate-pulse rounded-xl border border-zinc-200/80 bg-zinc-50" />
-        <div className="h-48 animate-pulse rounded-xl border border-zinc-200/80 bg-zinc-50" />
+      <div className="mx-auto max-w-5xl space-y-5 py-1 sm:space-y-8 sm:py-4">
+        <div className="space-y-2">
+          <div className="h-8 w-56 max-w-full animate-pulse rounded-lg bg-zinc-100 sm:h-9 sm:w-72" />
+          <div className="h-4 w-full max-w-md animate-pulse rounded-md bg-zinc-50 sm:w-96" />
+        </div>
+        <div className="h-36 animate-pulse rounded-xl border border-zinc-200/80 bg-zinc-50 sm:h-24" />
+        <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
+          {[0, 1, 2].map((k) => (
+            <div
+              key={k}
+              className="h-20 animate-pulse rounded-xl border border-zinc-200/80 bg-zinc-50 sm:h-24"
+            />
+          ))}
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="mx-auto max-w-2xl rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+      <div className="mx-auto max-w-2xl rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm leading-relaxed text-pretty text-red-800">
         {error}
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-4xl space-y-8">
-      <div className="space-y-4">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
-            {t("title")}
-          </h1>
-          <p className="mt-2 text-sm text-zinc-600">{t("subtitle")}</p>
+    <div className="mx-auto max-w-5xl space-y-5 sm:space-y-8">
+      <header className="space-y-1.5 sm:space-y-2">
+        <h1 className="text-[1.5rem] font-semibold tracking-tight text-balance text-zinc-900 sm:text-3xl">
+          {greeting}
+        </h1>
+        <p className="max-w-2xl text-sm leading-relaxed text-pretty text-zinc-500">
+          {t("subtitle")}
+        </p>
+      </header>
+
+      <section className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-sm shadow-zinc-950/[0.04] sm:p-6">
+        <h2 className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-400">
+          {t("quickActions")}
+        </h2>
+        <div className="mt-4 space-y-3">
+          <Link
+            href={ROUTES.materials}
+            className={cn(
+              primaryActionLinkClassName(),
+              "h-12 w-full text-base font-semibold sm:h-14 sm:text-lg"
+            )}
+          >
+            {t("browseAll")}
+          </Link>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Link
+              href={ROUTES.interests}
+              className="inline-flex min-h-11 items-center justify-center rounded-md border border-zinc-200 bg-zinc-50 px-4 py-2.5 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100 sm:h-11 sm:py-0"
+            >
+              {t("viewInterests")}
+              {activeInterests.length > 0 ? (
+                <span className="ml-2 rounded-full bg-zinc-900 px-2 py-0.5 text-[10px] font-semibold text-white">
+                  {activeInterests.length}
+                </span>
+              ) : null}
+            </Link>
+            <Link
+              href={ROUTES.saved}
+              className="inline-flex min-h-11 items-center justify-center rounded-md border border-zinc-200 bg-zinc-50 px-4 py-2.5 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100 sm:h-11 sm:py-0"
+            >
+              {t("viewSaved")}
+            </Link>
+          </div>
         </div>
-        <OverviewKpiStrip
-          items={[
-            {
-              label: t("activeInterests"),
-              value: activeInterests.length,
-              href: ROUTES.interests,
-            },
-            {
-              label: t("savedMaterials"),
-              value: savedCount,
-              href: ROUTES.saved,
-            },
-            {
-              label: t("followUpsPending"),
-              value: followUpCount,
-              href: "#follow-ups",
-            },
-          ]}
-        />
-      </div>
+      </section>
+
+      <OverviewKpiStrip
+        items={[
+          {
+            label: t("activeInterests"),
+            value: activeInterests.length,
+            href: ROUTES.interests,
+          },
+          {
+            label: t("savedMaterials"),
+            value: savedCount,
+            href: ROUTES.saved,
+          },
+          {
+            label: t("followUpsPending"),
+            value: followUpCount,
+            href: "#follow-ups",
+          },
+        ]}
+      />
 
       <Card className="border-zinc-200/80">
-        <CardContent className="flex flex-wrap items-center justify-between gap-4 pt-6">
+        <CardContent className="flex flex-col gap-4 p-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:p-6">
           <div className="space-y-1">
             <p className="text-sm font-medium text-zinc-700">
               {t("profileCompletion")}
@@ -243,12 +298,12 @@ export function BuyerDashboardHome() {
               {profileCompletion}%
             </p>
           </div>
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
             {user ? <RoleBadge role={user.role} /> : null}
             {profileCompletion < 100 ? (
               <Link
                 href={ROUTES.profile}
-                className="text-sm font-medium text-zinc-700 underline-offset-4 hover:underline"
+                className="inline-flex min-h-11 items-center justify-center rounded-md border border-zinc-200 bg-zinc-50 px-4 text-sm font-medium text-zinc-900 hover:bg-zinc-100 sm:min-h-0 sm:border-0 sm:bg-transparent sm:px-0 sm:underline-offset-4 sm:hover:bg-transparent sm:hover:underline"
               >
                 {t("completeProfile")} →
               </Link>
@@ -262,22 +317,24 @@ export function BuyerDashboardHome() {
       </div>
 
       <Card className="border-zinc-200/80">
-        <CardHeader>
+        <CardHeader className="p-4 sm:p-6">
           <CardTitle className="text-base">{t("recommended")}</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="space-y-3 p-4 pt-0 sm:p-6 sm:pt-0">
           {recommendedMaterials.slice(0, 6).map((row) => {
             const fit = materialFitScore(row);
             return (
               <Link
                 key={row.materialId}
                 href={ROUTES.materialDetail(row.materialId)}
-                className="flex cursor-pointer items-start justify-between gap-3 rounded-lg border border-zinc-100 bg-zinc-50/60 px-3 py-3 transition-all duration-200 hover:border-zinc-300 hover:shadow-md hover:shadow-zinc-950/5"
+                className="flex min-h-11 cursor-pointer flex-col gap-3 rounded-lg border border-zinc-100 bg-zinc-50/60 px-3 py-3 transition-all duration-200 hover:border-zinc-300 hover:shadow-md hover:shadow-zinc-950/5 sm:flex-row sm:items-start sm:justify-between"
               >
                 <div className="min-w-0 space-y-1">
                   <p className="text-sm font-medium text-zinc-900">{row.title}</p>
-                  <p className="text-xs text-zinc-500">{row.location}</p>
-                  <p className="text-xs text-zinc-500">
+                  <p className="text-xs leading-relaxed text-zinc-500">
+                    {row.location}
+                  </p>
+                  <p className="text-xs leading-relaxed text-zinc-500">
                     {row.materialType}
                     {row.providerCompany ? ` · ${row.providerCompany}` : ""}
                   </p>
@@ -285,13 +342,13 @@ export function BuyerDashboardHome() {
                     <p className="text-xs text-zinc-400">{row.headline}</p>
                   ) : null}
                 </div>
-                <div className="flex shrink-0 flex-col items-end gap-1.5">
+                <div className="flex flex-wrap items-start gap-1.5 sm:shrink-0 sm:flex-col sm:items-end">
                   {fit != null ? <MaterialFitBadge score={fit} /> : null}
                   {isMaterialFeedItem(row) ? (
                     <MatchLocationNote
                       locationScope={row.locationScope}
                       locationNote={row.locationNote}
-                      className="text-right"
+                      className="sm:text-right"
                     />
                   ) : null}
                   {isMaterialFeedItem(row) && row.priority === "high" ? (
@@ -304,11 +361,13 @@ export function BuyerDashboardHome() {
             );
           })}
           {recommendedMaterials.length === 0 ? (
-            <p className="text-sm text-zinc-500">{t("recommendedEmpty")}</p>
+            <p className="text-sm leading-relaxed text-zinc-500">
+              {t("recommendedEmpty")}
+            </p>
           ) : null}
           <Link
             href={ROUTES.materials}
-            className="inline-block pt-1 text-xs font-medium text-zinc-700 underline-offset-4 hover:underline"
+            className="inline-flex min-h-11 items-center text-sm font-medium text-zinc-700 underline-offset-4 hover:underline sm:min-h-0 sm:text-xs"
           >
             {t("browseAll")} →
           </Link>
@@ -316,15 +375,15 @@ export function BuyerDashboardHome() {
       </Card>
 
       <Card className="border-zinc-200/80">
-        <CardHeader>
+        <CardHeader className="p-4 sm:p-6">
           <CardTitle className="text-base">{t("myActiveInterests")}</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-2">
+        <CardContent className="space-y-2 p-4 pt-0 sm:p-6 sm:pt-0">
           {activeInterests.slice(0, 5).map((i) => (
             <Link
               key={i.id}
               href={ROUTES.interests}
-              className="block rounded-lg border border-zinc-100 bg-white px-3 py-2 transition-colors hover:border-zinc-200"
+              className="block min-h-11 rounded-lg border border-zinc-100 bg-white px-3 py-3 transition-colors hover:border-zinc-200 sm:py-2"
             >
               <p className="truncate text-sm font-medium text-zinc-900">
                 {i.materialTitle}
@@ -333,11 +392,13 @@ export function BuyerDashboardHome() {
             </Link>
           ))}
           {activeInterests.length === 0 ? (
-            <p className="text-sm text-zinc-500">{t("recommendedEmpty")}</p>
+            <p className="text-sm leading-relaxed text-zinc-500">
+              {t("recommendedEmpty")}
+            </p>
           ) : null}
           <Link
             href={ROUTES.interests}
-            className="inline-block pt-2 text-xs font-medium text-zinc-700 underline-offset-4 hover:underline"
+            className="inline-flex min-h-11 items-center text-sm font-medium text-zinc-700 underline-offset-4 hover:underline sm:min-h-0 sm:text-xs"
           >
             {tNav("interests")} →
           </Link>
@@ -345,26 +406,18 @@ export function BuyerDashboardHome() {
       </Card>
 
       <Card className="border-zinc-200/80">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <div>
-            <CardTitle className="text-base">{t("notifications")}</CardTitle>
-          </div>
-          <Link
-            href={ROUTES.notifications}
-            className="text-xs font-medium text-zinc-700 underline-offset-4 hover:underline"
-          >
-            {tNav("notifications")} →
-          </Link>
+        <CardHeader className="p-4 pb-2 sm:p-6 sm:pb-2">
+          <CardTitle className="text-base">{t("notifications")}</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="space-y-3 p-4 pt-4 sm:p-6 sm:pt-6">
           {notifications.map((n) => (
             <div
               key={n.id}
-              className="flex flex-wrap items-start justify-between gap-2 rounded-lg border border-zinc-100 bg-zinc-50/50 px-3 py-2"
+              className="flex flex-col gap-1 rounded-lg border border-zinc-100 bg-zinc-50/50 px-3 py-3 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between sm:gap-2 sm:py-2"
             >
               <div className="min-w-0">
                 <p className="text-sm font-medium text-zinc-900">{n.title}</p>
-                <p className="mt-0.5 line-clamp-2 text-xs text-zinc-600">
+                <p className="mt-0.5 line-clamp-2 text-xs leading-relaxed text-zinc-600">
                   {n.message}
                 </p>
               </div>
@@ -374,7 +427,9 @@ export function BuyerDashboardHome() {
             </div>
           ))}
           {notifications.length === 0 ? (
-            <p className="text-sm text-zinc-500">{t("notificationsEmpty")}</p>
+            <p className="text-sm leading-relaxed text-zinc-500">
+              {t("notificationsEmpty")}
+            </p>
           ) : null}
         </CardContent>
       </Card>

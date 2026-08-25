@@ -26,16 +26,19 @@ export function MarketingHeader({ variant = "marketing" }: MarketingHeaderProps)
   const tCommon = useTranslations("common");
 
   return (
-    <header className="border-b border-zinc-200/80 bg-white/80 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Logo />
-        <nav className="flex items-center gap-2 sm:gap-3">
+    <header className="border-b border-zinc-200/80 bg-white/80 pt-[env(safe-area-inset-top)] backdrop-blur">
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4 sm:h-16 sm:px-6 lg:px-8">
+        <Logo className="h-8 sm:h-9" />
+        <nav className="flex min-w-0 shrink-0 items-center gap-1 sm:gap-3">
           <LanguageSwitcher compact />
           <Link href={ROUTES.login} className={cn(ghostLink)}>
             {tCommon("signIn")}
           </Link>
           {variant === "onboarding" ? (
-            <a href={SUPPORT_MAIL} className={cn(ghostLink)}>
+            <a
+              href={SUPPORT_MAIL}
+              className={cn(ghostLink, "hidden sm:inline-flex")}
+            >
               {t("contactTeam")}
             </a>
           ) : (

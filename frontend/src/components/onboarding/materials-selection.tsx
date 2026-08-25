@@ -14,6 +14,8 @@ type MaterialsSelectionProps = {
   onChange: (materials: string[]) => void;
   label: string;
   description: string;
+  /** Inside a card or form — skip the onboarding sticky search bar. */
+  embedded?: boolean;
 };
 
 export function MaterialsSelection({
@@ -21,6 +23,7 @@ export function MaterialsSelection({
   onChange,
   label,
   description,
+  embedded = false,
 }: MaterialsSelectionProps) {
   const t = useTranslations("onboarding.materials");
   const [query, setQuery] = useState("");
@@ -46,7 +49,13 @@ export function MaterialsSelection({
 
   return (
     <div className="space-y-5">
-      <div className="space-y-3">
+      <div
+        className={cn(
+          "space-y-3",
+          !embedded &&
+            "sticky top-[calc(3.5rem+env(safe-area-inset-top))] z-10 -mx-4 border-b border-zinc-200/80 bg-zinc-50 px-4 py-3 sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:p-0"
+        )}
+      >
         <Label htmlFor="material-search">{label}</Label>
         <div className="relative">
           <Search
@@ -58,7 +67,11 @@ export function MaterialsSelection({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t("searchPlaceholder")}
-            className="border-zinc-200 bg-white pl-9"
+            className="h-12 border-zinc-200 bg-white pl-9 text-base sm:h-10 sm:text-small"
+            autoComplete="off"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") e.preventDefault();
+            }}
           />
         </div>
         <p className="text-sm text-zinc-500">{description}</p>
@@ -73,7 +86,7 @@ export function MaterialsSelection({
         <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500">
           {t("categoriesHeading")}
         </p>
-        <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-1 gap-2 sm:flex sm:flex-wrap">
           {filtered.map((material) => {
             const isActive = selected.some(
               (s) => s.toLowerCase() === material.toLowerCase()
@@ -84,16 +97,16 @@ export function MaterialsSelection({
                 type="button"
                 onClick={() => toggleMaterial(material)}
                 className={cn(
-                  "inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition-all duration-[200ms] ease-[ease]",
+                  "inline-flex min-h-11 w-full cursor-pointer items-center gap-1.5 rounded-xl border px-3.5 py-2.5 text-left text-sm font-medium transition-all duration-[200ms] ease-[ease] sm:min-h-0 sm:w-auto sm:rounded-full sm:py-1.5 sm:text-center",
                   isActive
                     ? "border-[#33B573] bg-[#F7FCF9] text-[#33B573]"
                     : "border-zinc-200 bg-white text-zinc-700 hover:border-[#33B573] hover:bg-[#F7FCF9]"
                 )}
               >
                 {isActive ? (
-                  <Check className="h-3.5 w-3.5" strokeWidth={2.5} aria-hidden />
+                  <Check className="h-3.5 w-3.5 shrink-0" strokeWidth={2.5} aria-hidden />
                 ) : null}
-                {material}
+                <span className="min-w-0 text-pretty">{material}</span>
               </button>
             );
           })}

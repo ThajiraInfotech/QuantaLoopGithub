@@ -1,35 +1,28 @@
 # Razorpay subscriptions
 
-1. In Razorpay, create a yearly INR plan for INR 6,999, or run
-   `npm run billing:bootstrap-plan` with backend Razorpay credentials set.
-2. Set `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, and
-   `RAZORPAY_WEBHOOK_SECRET` in the backend deployment environment.
-3. Set `RAZORPAY_PLAN_MAP` to a JSON object, for example:
-   `{"annual_access":"plan_..."}`.
-4. Configure Razorpay's webhook URL as
-   `https://<api-host>/api/v1/subscriptions/webhook`.
-5. Subscribe it to `subscription.authenticated`, `subscription.activated`,
-   `subscription.pending`, `subscription.halted`, `subscription.paused`,
-   `subscription.resumed`, `subscription.cancelled`, `subscription.completed`,
-   `subscription.expired`, and `payment.failed`.
+Checkout uses **Razorpay Orders** (one-time payment). You only need:
 
-The `annual_access` catalog entry currently creates a fixed one-cycle yearly
-subscription (`total_count: 1`) for test mode. Recurring annual billing can be
-restored later by increasing the catalog's `totalCount`; access checks remain
-based on the provider-confirmed current period rather than that billing count.
+1. `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET` (same test or live pair).
+2. Optional: `RAZORPAY_WEBHOOK_SECRET` and webhook URL
+   `POST {API_PUBLIC_URL}/api/v1/subscriptions/webhook` for
+   `payment.captured`, `payment.failed`, `order.paid`.
 
-Never expose the key secret or webhook secret to a client. The authenticated
+No Razorpay Subscription **plan** is required. Quanta Loop still grants
+**1 year of access** after a successful ₹6,999 payment, and GST invoices are
+created from the billing profile.
+
+`RAZORPAY_PLAN_MAP` is legacy and unused for Orders checkout.
+
+The authenticated
 `GET /api/v1/subscriptions/config` response includes only the public key ID and
 purchasable catalog metadata.
 
 Use a unique `Idempotency-Key` header for each logical
 `POST /api/v1/subscriptions/checkout` attempt. Reusing it with a different plan
 returns a conflict. Checkout completion must be sent to
-`POST /api/v1/subscriptions/verify`; the backend verifies the checkout HMAC and
-then reconciles both the subscription and payment directly with Razorpay.
-Verification does not itself make an `authenticated` subscription entitled.
-Access starts only after Razorpay reports `active` with a future `current_end`.
-Webhooks are the ongoing source of truth for status and period changes.
+`POST /api/v1/subscriptions/verify` with `razorpay_order_id`,
+`razorpay_payment_id`, and `razorpay_signature`
+(`HMAC-SHA256(order_id|payment_id)`).
 
 ## Server-side paid access
 

@@ -15,6 +15,11 @@ import { MaterialMarketScopeField } from "@/components/materials/material-market
 import { MaterialPhotoField } from "@/components/materials/material-photo-field";
 import { MaterialSubtypeField } from "@/components/materials/material-subtype-field";
 import { MaterialUnitField } from "@/components/materials/material-unit-field";
+import {
+  materialFieldClass,
+  materialPrimaryButtonClass,
+  materialTextareaClass,
+} from "@/components/materials/material-form-styles";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -34,7 +39,6 @@ import {
 import { normalizeMaterialCategory } from "@/constants/material-categories";
 import {
   isValidSubtypeForCategory,
-  resolveSubtypeForCategory,
 } from "@/constants/material-taxonomy";
 import {
   locationDraftToMaterialLocation,
@@ -43,7 +47,6 @@ import {
 import { ROUTES } from "@/constants/routes";
 import {
   createMaterial,
-  fetchMaterialById,
 } from "@/services/materials/material.service";
 import { useAuthStore } from "@/store/auth-store";
 import { useMaterialStore } from "@/store/material-store";
@@ -80,21 +83,15 @@ function generateListingTitle(
   return `${label} – Lot ${listingIndex}`;
 }
 
-type MaterialCreateFormProps = {
-  duplicateFromId?: string;
-};
-
-export function MaterialCreateForm({ duplicateFromId }: MaterialCreateFormProps) {
+export function MaterialCreateForm() {
   const t = useTranslations("materials.form");
   const tf = useTranslations("materials.form.fields");
-  const ts = useTranslations("materials.form.sidebar");
   const tv = useTranslations("validation.material");
   const router = useRouter();
   const user = useAuthStore((s) => s.user);
   const materialCount = useMaterialStore((s) => s.items.length);
   const upsert = useMaterialStore((s) => s.upsert);
   const [formError, setFormError] = useState<string | null>(null);
-  const [prefillLoading, setPrefillLoading] = useState(Boolean(duplicateFromId));
   const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   const companyLocation = userToLocationDraft(user);
@@ -143,7 +140,7 @@ export function MaterialCreateForm({ duplicateFromId }: MaterialCreateFormProps)
   });
 
   useEffect(() => {
-    if (duplicateFromId || !user) return;
+    if (!user) return;
     const companyLoc = isIndianSeller
       ? companyMaterialLocation(user)
       : countryNameFromCode(userCountry);
@@ -158,51 +155,7 @@ export function MaterialCreateForm({ duplicateFromId }: MaterialCreateFormProps)
     if (category && !form.getValues("materialType")) {
       form.setValue("materialType", category);
     }
-  }, [duplicateFromId, user, form, isIndianSeller, userCountry]);
-
-  useEffect(() => {
-    if (!duplicateFromId) return;
-    let cancelled = false;
-    (async () => {
-      try {
-        const m = await fetchMaterialById(duplicateFromId);
-        if (cancelled) return;
-        form.reset({
-          title: m.title,
-          materialType: normalizeMaterialCategory(m.materialType),
-          materialSubtype: resolveSubtypeForCategory(
-            normalizeMaterialCategory(m.materialType),
-            m.materialSubtype || m.materialType
-          ),
-          materialForm: m.materialForm ?? "",
-          cleanliness: m.cleanliness ?? "",
-          description: m.description ?? "",
-          quantity: m.quantity,
-          unit: m.unit,
-          location: m.location,
-          country: normalizeCountryCode(m.country || user?.country),
-          marketScope: m.marketScope === "global" ? "global" : "india",
-          availabilityFrequency: m.availabilityFrequency,
-          pickupAvailable: m.pickupAvailable,
-          estimatedValueRange: m.estimatedValueRange ?? "",
-          industryType: m.industryType ?? "",
-          visibility: m.visibility,
-          status: "available",
-        });
-      } catch (e) {
-        if (!cancelled) {
-          toast.error(
-            e instanceof Error ? e.message : "Could not load material to duplicate"
-          );
-        }
-      } finally {
-        if (!cancelled) setPrefillLoading(false);
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [duplicateFromId, form]);
+  }, [user, form, isIndianSeller, userCountry]);
 
   async function onSubmit(raw: MaterialFormInput) {
     const values = materialSchema.parse(raw) as CreateMaterialFormValues;
@@ -243,12 +196,6 @@ export function MaterialCreateForm({ duplicateFromId }: MaterialCreateFormProps)
 
   const selectedCategory = form.watch("materialType");
 
-  if (prefillLoading) {
-    return (
-      <div className="py-12 text-sm text-zinc-500">{t("duplicateLoading")}</div>
-    );
-  }
-
   return (
     <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_260px] lg:items-start lg:gap-8">
       <form
@@ -257,20 +204,32 @@ export function MaterialCreateForm({ duplicateFromId }: MaterialCreateFormProps)
         noValidate
       >
         <div className="space-y-2">
-          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
-            {duplicateFromId ? t("duplicateTitle") : t("createTitle")}
+          <h1 className="text-[1.5rem] font-semibold tracking-tight text-balance text-zinc-900 sm:text-3xl">
+            {t("createTitle")}
           </h1>
-          <p className="max-w-xl text-sm leading-relaxed text-zinc-600">
-            {duplicateFromId ? t("duplicateDescription") : t("createDescription")}
+          <p className="max-w-xl text-sm leading-relaxed text-pretty text-zinc-600">
+            {t("createDescription")}
           </p>
-          {!duplicateFromId ? (
-            <p className="text-sm font-medium text-emerald-800">
-              ✓ {t("quickNote")}
-            </p>
-          ) : null}
+          <p className="text-sm font-medium text-emerald-800">
+            ✓ {t("quickNote")}
+          </p>
         </div>
 
-        <div className="rounded-2xl border border-zinc-200/80 bg-white p-6 shadow-sm shadow-zinc-950/[0.04] sm:p-8">
+        <div className="lg:hidden">
+          <ListingContextCard
+            companyName={user?.companyName}
+            categories={
+              user?.preferredMaterialCategories?.length
+                ? user.preferredMaterialCategories
+                : user?.materialTypes ?? []
+            }
+            location={companyMaterialLocation(user)}
+            responseTime={user?.averageResponseTime}
+            profileCompletion={user?.profileCompletion ?? 0}
+          />
+        </div>
+
+        <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-sm shadow-zinc-950/[0.04] sm:p-8">
           <div className="grid max-w-2xl gap-6">
             <Controller
               name="materialType"
@@ -336,6 +295,7 @@ export function MaterialCreateForm({ duplicateFromId }: MaterialCreateFormProps)
               <Input
                 id="title"
                 placeholder={tf("titlePlaceholder")}
+                className={materialFieldClass}
                 {...form.register("title")}
               />
               <p className="text-xs text-zinc-500">{t("titleOptionalHint")}</p>
@@ -347,6 +307,7 @@ export function MaterialCreateForm({ duplicateFromId }: MaterialCreateFormProps)
                 id="description"
                 rows={4}
                 placeholder={tf("descriptionPlaceholder")}
+                className={materialTextareaClass}
                 {...form.register("description")}
               />
             </div>
@@ -363,6 +324,7 @@ export function MaterialCreateForm({ duplicateFromId }: MaterialCreateFormProps)
                   step="any"
                   placeholder={tf("quantityPlaceholder")}
                   inputMode="decimal"
+                  className={materialFieldClass}
                   {...form.register("quantity")}
                 />
                 {form.formState.errors.quantity?.message ? (
@@ -431,75 +393,105 @@ export function MaterialCreateForm({ duplicateFromId }: MaterialCreateFormProps)
           </p>
         ) : null}
 
-        <div className="flex flex-wrap items-center gap-3 pb-4">
-          <Button type="submit" disabled={form.formState.isSubmitting}>
-            {form.formState.isSubmitting ? t("publishing") : t("publish")}
-          </Button>
-          <Button
-            type="button"
-            variant="ghost"
-            onClick={() => router.push(ROUTES.materials)}
-          >
-            {t("cancel")}
-          </Button>
+        <div className="sticky bottom-0 z-20 -mx-4 border-t border-zinc-200 bg-white/95 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur sm:-mx-6 sm:px-6 lg:static lg:mx-0 lg:border-0 lg:bg-transparent lg:px-0 lg:py-0 lg:pb-4">
+          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
+            <Button
+              type="submit"
+              disabled={form.formState.isSubmitting}
+              className={materialPrimaryButtonClass}
+            >
+              {form.formState.isSubmitting ? t("publishing") : t("publish")}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              className={materialPrimaryButtonClass}
+              onClick={() => router.push(ROUTES.materials)}
+            >
+              {t("cancel")}
+            </Button>
+          </div>
         </div>
       </form>
 
-      <aside className="hidden lg:block">
-        <Card className="sticky top-8 border-zinc-200/80">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base">{ts("title")}</CardTitle>
-            <CardDescription>{ts("description")}</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-3 text-sm text-zinc-700">
-            <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
-                {ts("company")}
-              </p>
-              <p className="mt-0.5 font-medium text-zinc-900">
-                {user?.companyName ?? "—"}
-              </p>
-            </div>
-            <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
-                {ts("profileCategories")}
-              </p>
-              <p className="mt-0.5">
-                {(user?.preferredMaterialCategories?.length
-                  ? user.preferredMaterialCategories
-                  : user?.materialTypes ?? []
-                ).join(", ") || "—"}
-              </p>
-            </div>
-            <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
-                {ts("location")}
-              </p>
-              <p className="mt-0.5">
-                {companyMaterialLocation(user) || "—"}
-              </p>
-            </div>
-            <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
-                {ts("listingVisibility")}
-              </p>
-              <p className="mt-0.5">{ts("networkVisibility")}</p>
-            </div>
-            <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
-                {ts("responseTime")}
-              </p>
-              <p className="mt-0.5">
-                {user?.averageResponseTime?.trim()
-                  ? user.averageResponseTime
-                  : ts("profileCompletion", {
-                      percent: user?.profileCompletion ?? 0,
-                    })}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+      <aside className="mt-6 hidden lg:mt-0 lg:block">
+        <div className="lg:sticky lg:top-8">
+          <ListingContextCard
+            companyName={user?.companyName}
+            categories={
+              user?.preferredMaterialCategories?.length
+                ? user.preferredMaterialCategories
+                : user?.materialTypes ?? []
+            }
+            location={companyMaterialLocation(user)}
+            responseTime={user?.averageResponseTime}
+            profileCompletion={user?.profileCompletion ?? 0}
+          />
+        </div>
       </aside>
     </div>
+  );
+}
+
+function ListingContextCard({
+  companyName,
+  categories,
+  location,
+  responseTime,
+  profileCompletion,
+}: {
+  companyName?: string;
+  categories: string[];
+  location: string;
+  responseTime?: string;
+  profileCompletion: number;
+}) {
+  const ts = useTranslations("materials.form.sidebar");
+
+  return (
+    <Card className="border-zinc-200/80">
+      <CardHeader className="p-4 pb-3 sm:p-6 sm:pb-3">
+        <CardTitle className="text-base">{ts("title")}</CardTitle>
+        <CardDescription>{ts("description")}</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-3 p-4 pt-0 text-sm text-zinc-700 sm:p-6 sm:pt-0">
+        <div>
+          <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+            {ts("company")}
+          </p>
+          <p className="mt-0.5 font-medium text-zinc-900">
+            {companyName ?? "—"}
+          </p>
+        </div>
+        <div>
+          <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+            {ts("profileCategories")}
+          </p>
+          <p className="mt-0.5">{categories.join(", ") || "—"}</p>
+        </div>
+        <div>
+          <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+            {ts("location")}
+          </p>
+          <p className="mt-0.5">{location || "—"}</p>
+        </div>
+        <div>
+          <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+            {ts("listingVisibility")}
+          </p>
+          <p className="mt-0.5">{ts("networkVisibility")}</p>
+        </div>
+        <div>
+          <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+            {ts("responseTime")}
+          </p>
+          <p className="mt-0.5">
+            {responseTime?.trim()
+              ? responseTime
+              : ts("profileCompletion", { percent: profileCompletion })}
+          </p>
+        </div>
+      </CardContent>
+    </Card>
   );
 }

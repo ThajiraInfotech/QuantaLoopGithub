@@ -11,6 +11,10 @@ export const ONBOARDING_ACCENT = {
 export const onboardingPrimaryButtonClass =
   "bg-[#33B573] text-white hover:bg-[#2e9f66] active:bg-[#2a9660]";
 
+/** 16px on phones so iOS does not zoom the field on focus */
+export const onboardingFieldClass =
+  "h-12 border-zinc-200 bg-white text-base sm:h-10 sm:text-small";
+
 export const onboardingCardMinHeightClass = "min-h-[340px]";
 
 export const onboardingCardSelectedClass =

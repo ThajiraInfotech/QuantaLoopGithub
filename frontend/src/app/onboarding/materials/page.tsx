@@ -54,7 +54,7 @@ function MaterialsOnboardingContent() {
       maxWidth="xl"
     >
       {roleLabel ? (
-        <p className="inline-flex rounded-full border border-[#CFEFDF] bg-[#F7FCF9] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#33B573]">
+        <p className="inline-flex w-fit rounded-full border border-[#CFEFDF] bg-[#F7FCF9] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#33B573]">
           {roleLabel}
         </p>
       ) : null}

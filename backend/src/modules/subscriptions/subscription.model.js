@@ -21,8 +21,10 @@ const subscriptionSchema = new mongoose.Schema(
       index: true,
     },
     catalogPlanId: { type: String, required: true, index: true },
-    razorpayPlanId: { type: String, required: true },
+    // Legacy Razorpay Subscriptions field. Order checkout uses a placeholder.
+    razorpayPlanId: { type: String, default: "order_checkout" },
     razorpaySubscriptionId: { type: String, unique: true, sparse: true },
+    razorpayOrderId: { type: String, unique: true, sparse: true },
     latestPaymentId: { type: String, default: null },
     idempotencyKey: { type: String, required: true },
     checkoutState: {
@@ -71,6 +73,7 @@ function toPublicSubscription(value) {
   const id = o._id.toString();
   const planId = o.catalogPlanId;
   const razorpaySubscriptionId = o.razorpaySubscriptionId || null;
+  const razorpayOrderId = o.razorpayOrderId || null;
   const currentEndAt = o.currentEndAt || null;
   return {
     id,
@@ -78,6 +81,8 @@ function toPublicSubscription(value) {
     planCode: planId,
     subscriptionId: razorpaySubscriptionId,
     razorpaySubscriptionId,
+    orderId: razorpayOrderId,
+    razorpayOrderId,
     status: o.status,
     shortUrl: o.shortUrl || null,
     currentStartAt: o.currentStartAt || null,
