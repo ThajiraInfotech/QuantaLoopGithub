@@ -67,11 +67,7 @@ export async function LandingFooter() {
   ];
 
   const companyLinks: FooterLink[] = [
-    {
-      label: t("contact"),
-      href: "mailto:access@quantaloop.com?subject=Quanta%20Loop%20Inquiry",
-      external: true,
-    },
+    { label: t("contact"), href: ROUTES.contact },
     { label: t("terms"), href: ROUTES.legalTerms },
     { label: t("privacy"), href: ROUTES.legalPrivacy },
   ];

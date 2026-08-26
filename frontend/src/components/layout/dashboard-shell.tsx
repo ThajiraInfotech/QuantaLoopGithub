@@ -10,6 +10,7 @@ import { NotificationBell } from "@/components/notifications/notification-bell";
 import { NotificationRealtimeProvider } from "@/components/notifications/notification-realtime-provider";
 import { LanguageSwitcher } from "@/components/shared/language-switcher";
 import { Logo } from "@/components/shared/logo";
+import { ContactSupportModal } from "@/components/support/contact-support-modal";
 import { MembershipExpiryNotice } from "@/components/subscriptions/membership-expiry-notice";
 import { RoleBadge } from "@/components/trust/role-badge";
 import { Button } from "@/components/ui/button";
@@ -137,6 +138,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const user = useAuthStore((s) => s.user);
   const clearSession = useAuthStore((s) => s.clearSession);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [supportOpen, setSupportOpen] = useState(false);
 
   const isProvider = user?.role === "material_provider";
   const isBuyer = user?.role === "verified_buyer";
@@ -254,6 +256,15 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 compact
                 className="hidden sm:inline-flex [&_select]:h-10 [&_select]:min-h-10 sm:[&_select]:h-8 sm:[&_select]:min-h-8"
               />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="h-10 shrink-0 whitespace-nowrap px-2.5 text-xs sm:h-9 sm:px-3 sm:text-small"
+                onClick={() => setSupportOpen(true)}
+              >
+                {tNav("support")}
+              </Button>
               <NotificationBell />
               <Button
                 variant="outline"
@@ -327,6 +338,18 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           </nav>
           <div className="border-t border-zinc-100 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
             <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="mb-2 h-11 w-full"
+              onClick={() => {
+                closeMobileNav();
+                setSupportOpen(true);
+              }}
+            >
+              {tNav("support")}
+            </Button>
+            <Button
               variant="outline"
               size="sm"
               className="h-11 w-full"
@@ -345,6 +368,15 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           {children}
         </main>
       </div>
+
+      <ContactSupportModal
+        open={supportOpen}
+        onClose={() => setSupportOpen(false)}
+        source="dashboard"
+        defaultName={user?.name}
+        defaultEmail={user?.email}
+        defaultCompanyName={user?.companyName}
+      />
     </div>
     </NotificationRealtimeProvider>
   );

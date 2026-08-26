@@ -10,6 +10,8 @@ import { cn } from "@/lib/utils";
 type LanguageSwitcherProps = {
   className?: string;
   compact?: boolean;
+  /** `nav` matches landing action-row height and removes heavy chrome */
+  variant?: "default" | "nav";
 };
 
 function setLocaleCookie(locale: AppLocale) {
@@ -19,6 +21,7 @@ function setLocaleCookie(locale: AppLocale) {
 export function LanguageSwitcher({
   className,
   compact = false,
+  variant = "default",
 }: LanguageSwitcherProps) {
   const t = useTranslations("common");
   const locale = useLocale() as AppLocale;
@@ -35,11 +38,13 @@ export function LanguageSwitcher({
     });
   }
 
+  const nav = variant === "nav";
+
   return (
     <label
       className={cn(
-        "inline-flex items-center gap-2",
-        compact ? "text-xs" : "text-sm",
+        "inline-flex items-center",
+        compact && !nav ? "text-xs" : "text-sm",
         className
       )}
     >
@@ -50,11 +55,12 @@ export function LanguageSwitcher({
         disabled={isPending}
         onChange={(event) => onChange(event.target.value as AppLocale)}
         className={cn(
-          "cursor-pointer rounded-lg border border-border bg-background font-medium text-foreground transition-colors",
+          "cursor-pointer font-medium transition-colors",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/30",
-          compact
-            ? "h-8 px-2 py-1 text-xs"
-            : "h-9 px-2.5 py-1.5 text-sm"
+          nav
+            ? "h-9 rounded-full border-transparent bg-transparent px-3.5 text-[13px] tracking-[-0.01em] text-muted-foreground hover:bg-foreground/[0.04] hover:text-foreground"
+            : "rounded-lg border border-border bg-background text-foreground",
+          !nav && (compact ? "h-8 px-2 py-1 text-xs" : "h-9 px-2.5 py-1.5 text-sm")
         )}
       >
         {locales.map((code) => (

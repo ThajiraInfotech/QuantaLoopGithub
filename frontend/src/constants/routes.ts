@@ -78,6 +78,7 @@ export const ROUTES = {
     `/admin/discussions?material=${encodeURIComponent(id)}`,
   legalTerms: "/legal/terms-and-conditions",
   legalPrivacy: "/legal/privacy-policy",
+  contact: "/contact",
   forgotPassword: "/forgot-password",
   resetPassword: "/reset-password",
   verifyEmail: "/verify-email",

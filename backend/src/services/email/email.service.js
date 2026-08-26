@@ -4,6 +4,7 @@ const { buildEmailVerificationEmail } = require("./templates/email-verification-
 const { buildGoogleAccountEmail } = require("./templates/google-account-email");
 const { buildNotificationEmail } = require("./templates/notification-email");
 const { buildPasswordResetEmail } = require("./templates/password-reset-email");
+const { buildSupportContactEmail } = require("./templates/support-contact-email");
 
 function isEmailConfigured(env) {
   return Boolean(env.SMTP_HOST && env.EMAIL_FROM);
@@ -27,7 +28,7 @@ function logoUrl(env) {
   return `${env.CLIENT_ORIGIN}/quantaloop%20logo.png`;
 }
 
-async function deliverEmail(env, { to, subject, html, text, devLabel }) {
+async function deliverEmail(env, { to, subject, html, text, devLabel, replyTo }) {
   const transport = createTransport(env);
 
   if (!transport) {
@@ -44,6 +45,7 @@ async function deliverEmail(env, { to, subject, html, text, devLabel }) {
     subject,
     html,
     text,
+    ...(replyTo ? { replyTo } : {}),
   });
 }
 
@@ -130,11 +132,47 @@ async function sendInvoiceEmail(env, { to, invoiceNumber, html, text }) {
   });
 }
 
+async function sendSupportContactEmail(
+  env,
+  {
+    name,
+    email,
+    category,
+    description,
+    companyName,
+    source,
+    pageUrl,
+    userId,
+  }
+) {
+  const { subject, html, text } = buildSupportContactEmail({
+    name,
+    email,
+    category,
+    description,
+    companyName,
+    source,
+    pageUrl,
+    userId,
+    logoUrl: logoUrl(env),
+  });
+
+  await deliverEmail(env, {
+    to: env.SUPPORT_EMAIL,
+    subject,
+    html,
+    text,
+    replyTo: email,
+    devLabel: `Support contact from ${email}`,
+  });
+}
+
 module.exports = {
   sendPasswordResetEmail,
   sendGoogleAccountEmail,
   sendEmailVerificationEmail,
   sendNotificationEmail,
   sendInvoiceEmail,
+  sendSupportContactEmail,
   isEmailConfigured,
 };

@@ -34,7 +34,8 @@
       "howItWorks": "How It Works",
       "whoItsFor": "Who It's For",
       "whyQuantaLoop": "Why Quanta Loop",
-      "pricing": "Pricing"
+      "pricing": "Pricing",
+      "contact": "Contact"
     },
     "hero": {
       "eyebrow": "Recoverable Material Network",
@@ -595,7 +596,8 @@
       "administration": "Administration",
       "participants": "Participants",
       "reports": "Reports",
-      "invoices": "Invoices"
+      "invoices": "Invoices",
+      "support": "Support"
     },
     "home": {
       "greeting": {
@@ -3599,5 +3601,41 @@
         }
       ]
     }
+  },
+  "support": {
+    "metaTitle": "Contact support",
+    "metaDescription": "Reach the Quanta Loop team for onboarding, matching, billing, or technical help.",
+    "eyebrow": "Support",
+    "title": "Contact the team",
+    "description": "Tell us what you need help with. We typically respond within one business day.",
+    "pageDescription": "Share a short description of your issue. Our team receives it directly and can reply to your email.",
+    "fields": {
+      "name": "Full name",
+      "category": "Topic",
+      "description": "How can we help?",
+      "descriptionPlaceholder": "Describe the problem, what you expected, and any material or company details that help us assist you."
+    },
+    "categories": {
+      "onboarding": "Onboarding & access",
+      "matching": "Materials & matching",
+      "billing": "Billing & membership",
+      "technical": "Technical issue",
+      "other": "Other"
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "nameTooLong": "Name is too long",
+      "emailInvalid": "Enter a valid email",
+      "descriptionMin": "Please add a bit more detail (at least 20 characters)",
+      "descriptionMax": "Description is too long"
+    },
+    "submit": "Send message",
+    "sending": "Sending…",
+    "successToast": "Message sent to the Quanta Loop team",
+    "successTitle": "Message sent",
+    "successDescription": "Thanks — our team has received your request and will reply by email.",
+    "sendAnother": "Send another message",
+    "errorGeneric": "Unable to send your message. Please try again.",
+    "dismiss": "Close support form"
   }
 }
