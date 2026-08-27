@@ -341,7 +341,12 @@ function createBillingService({ env, catalog, emailService }) {
     if (!invoice) {
       throw new AppError("Invoice not found", 404, "INVOICE_NOT_FOUND");
     }
-    return invoice.htmlBody || buildInvoiceHtml(toPublicInvoice(invoice));
+    return (
+      invoice.htmlBody ||
+      buildInvoiceHtml(toPublicInvoice(invoice), {
+        logoUrl: `${String(env.CLIENT_ORIGIN || "").replace(/\/$/, "")}/quantaloop%20logo.png`,
+      })
+    );
   }
 
   async function getInvoiceForUser(userId, invoiceId) {
@@ -357,7 +362,12 @@ function createBillingService({ env, catalog, emailService }) {
     if (!invoice) {
       throw new AppError("Invoice not found", 404, "INVOICE_NOT_FOUND");
     }
-    return invoice.htmlBody || buildInvoiceHtml(toPublicInvoice(invoice));
+    return (
+      invoice.htmlBody ||
+      buildInvoiceHtml(toPublicInvoice(invoice), {
+        logoUrl: `${String(env.CLIENT_ORIGIN || "").replace(/\/$/, "")}/quantaloop%20logo.png`,
+      })
+    );
   }
 
   /**
@@ -476,7 +486,9 @@ function createBillingService({ env, catalog, emailService }) {
       razorpayPaymentId: paymentId,
     };
 
-    const htmlBody = buildInvoiceHtml(publicShape);
+    const htmlBody = buildInvoiceHtml(publicShape, {
+      logoUrl: `${String(env.CLIENT_ORIGIN || "").replace(/\/$/, "")}/quantaloop%20logo.png`,
+    });
 
     let invoice;
     try {
@@ -525,6 +537,7 @@ function createBillingService({ env, catalog, emailService }) {
           invoiceNumber,
           html: htmlBody,
           text: buildInvoiceEmailText(publicShape),
+          invoice: publicShape,
         });
       } catch (mailError) {
         process.stderr.write(

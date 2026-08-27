@@ -403,13 +403,11 @@ const patchInterestWorkflow = asyncHandler(async (req, res, next) => {
 
   const typeMap = {
     discussion: "workflow_discussion",
-    pickup_scheduled: "workflow_pickup_scheduled",
     completed: "workflow_completed",
     closed: "workflow_closed",
   };
   const summaryMap = {
     discussion: "Opportunity moved into active operational discussion.",
-    pickup_scheduled: "Pickup or handoff timing is being coordinated.",
     completed: "Opportunity marked complete from an operations standpoint.",
     closed: "Opportunity thread closed.",
   };

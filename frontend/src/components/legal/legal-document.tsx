@@ -2,7 +2,6 @@ import { getTranslations } from "next-intl/server";
 
 import {
   LEGAL_LAST_UPDATED,
-  LEGAL_OPERATOR,
   legalEmailLinkClass,
   LEGAL_SUPPORT_EMAIL,
 } from "@/constants/legal";
@@ -23,22 +22,13 @@ export async function LegalDocumentHeader({
       <p className="text-small font-medium text-foreground">{title}</p>
       {metadata ? (
         <>
-          <p className="text-small text-muted-foreground">{metadata.operatedBy}</p>
-          <p className="text-small text-muted-foreground">
-            {metadata.registeredBusinessAddress}
-          </p>
           <p className="text-small text-muted-foreground">{metadata.effectiveDate}</p>
           <p className="text-small text-muted-foreground">{metadata.lastUpdated}</p>
         </>
       ) : (
-        <>
-          <p className="text-small text-muted-foreground">
-            {t("operatedBy", { operator: LEGAL_OPERATOR })}
-          </p>
-          <p className="text-small text-muted-foreground">
-            {t("lastUpdated", { date: LEGAL_LAST_UPDATED })}
-          </p>
-        </>
+        <p className="text-small text-muted-foreground">
+          {t("lastUpdated", { date: LEGAL_LAST_UPDATED })}
+        </p>
       )}
     </div>
   );

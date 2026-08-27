@@ -78,7 +78,6 @@ export async function updateInterestStatusRequest(
 
 export type InterestWorkflowAction =
   | "discussion"
-  | "pickup_scheduled"
   | "completed"
   | "closed";
 

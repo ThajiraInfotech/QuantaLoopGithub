@@ -265,17 +265,23 @@ export function InterestInboxCard({
           className="border-t border-zinc-100 pt-3"
           buttonClassName="inline-flex min-h-11 items-center text-sm font-medium text-zinc-600 underline-offset-4 hover:text-zinc-800 hover:underline sm:min-h-0 sm:text-xs sm:text-zinc-500"
           items={[
-            {
-              label: tReport("actions.material"),
-              targetType: "material",
-              targetMaterialId: i.materialId,
-              subjectLabel: i.materialTitle,
-              contextNote: interestContextNote,
-            },
+            ...(!isProvider
+              ? [
+                  {
+                    label: tReport("actions.material"),
+                    targetType: "material" as const,
+                    targetMaterialId: i.materialId,
+                    subjectLabel: i.materialTitle,
+                    contextNote: interestContextNote,
+                  },
+                ]
+              : []),
             ...(counterpartyId
               ? [
                   {
-                    label: tReport("actions.counterparty"),
+                    label: isProvider
+                      ? tReport("actions.buyer")
+                      : tReport("actions.provider"),
                     targetType: "participant" as const,
                     targetUserId: counterpartyId,
                     subjectLabel: counterpartyLabel,
@@ -290,9 +296,6 @@ export function InterestInboxCard({
           <>
             <InterestInlineMessages
               conversationId={i.conversationId}
-              counterpartyId={counterpartyId}
-              counterpartyLabel={counterpartyLabel}
-              materialTitle={i.materialTitle}
               onMessageSent={onRefresh}
             />
 

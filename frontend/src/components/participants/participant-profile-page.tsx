@@ -30,6 +30,7 @@ type ParticipantProfilePageProps = {
 export function ParticipantProfilePage({ participantId }: ParticipantProfilePageProps) {
   const t = useTranslations("dashboard.participants");
   const tRoles = useTranslations("common.roles");
+  const tReport = useTranslations("reports");
   const viewer = useAuthStore((s) => s.user);
   const [profile, setProfile] = useState<User | null>(null);
   const [labels, setLabels] = useState<string[]>([]);
@@ -212,7 +213,10 @@ export function ParticipantProfilePage({ participantId }: ParticipantProfilePage
         <ReportActions
           items={[
             {
-              label: t("reportParticipant"),
+              label:
+                profile.role === "verified_buyer"
+                  ? tReport("actions.buyer")
+                  : tReport("actions.provider"),
               targetType: "participant",
               targetUserId: profile.id,
               subjectLabel: profile.companyName,

@@ -8,9 +8,20 @@ import { LegalBackLink } from "@/components/legal/legal-back-link";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("support");
+  const title = t("metaTitle");
+  const description = t("metaDescription");
   return {
-    title: t("metaTitle"),
-    description: t("metaDescription"),
+    title,
+    description,
+    alternates: {
+      canonical: "/contact",
+    },
+    openGraph: {
+      title,
+      description,
+      url: "/contact",
+      type: "website",
+    },
   };
 }
 

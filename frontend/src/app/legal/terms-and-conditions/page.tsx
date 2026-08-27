@@ -6,7 +6,11 @@ import { TermsAndConditionsContent } from "@/components/legal/terms-and-conditio
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("legal.terms");
-  return { title: t("title") };
+  return {
+    title: t("title"),
+    alternates: { canonical: "/legal/terms-and-conditions" },
+    robots: { index: true, follow: true },
+  };
 }
 
 export default async function TermsAndConditionsPage() {

@@ -32,9 +32,13 @@ const createReport = asyncHandler(async (req, res, next) => {
       return;
     }
   } else {
-    const m = await Material.findById(data.targetMaterialId).select("_id");
+    const m = await Material.findById(data.targetMaterialId).select("_id provider");
     if (!m) {
       next(new AppError("Material not found", 404, "NOT_FOUND"));
+      return;
+    }
+    if (String(m.provider) === String(req.user.id)) {
+      next(new AppError("You cannot report your own material", 400, "INVALID_TARGET"));
       return;
     }
   }

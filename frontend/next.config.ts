@@ -16,6 +16,37 @@ const nextConfig: NextConfig = {
     "localhost",
     "127.0.0.1",
   ],
+  async headers() {
+    return [
+      {
+        source: "/dashboard/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow, noarchive, nosnippet",
+          },
+        ],
+      },
+      {
+        source: "/admin/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow, noarchive, nosnippet",
+          },
+        ],
+      },
+      {
+        source: "/api/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow, noarchive, nosnippet",
+          },
+        ],
+      },
+    ];
+  },
   async rewrites() {
     if (process.env.NODE_ENV === "production") {
       return [];

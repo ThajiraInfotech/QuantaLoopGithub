@@ -6,8 +6,6 @@ export type LegalContentBlock =
   | { kind: "email"; label: string };
 
 export type LegalDocumentMetadata = {
-  operatedBy: string;
-  registeredBusinessAddress: string;
   effectiveDate: string;
   lastUpdated: string;
 };

@@ -474,6 +474,15 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
                     title: material.title,
                   }),
                 },
+                {
+                  label: tReport("actions.provider"),
+                  targetType: "participant",
+                  targetUserId: material.provider.id,
+                  subjectLabel: material.provider.companyName,
+                  contextNote: tReport("context.fromMaterialDetailProvider", {
+                    title: material.title,
+                  }),
+                },
               ]}
             />
           ) : null}

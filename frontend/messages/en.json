@@ -1509,6 +1509,7 @@
     "actions": {
       "material": "Report material",
       "provider": "Report provider",
+      "buyer": "Report buyer",
       "counterparty": "Report counterparty"
     },
     "context": {
@@ -1564,10 +1565,8 @@
     "terms": {
       "title": "QUANTA LOOP – TERMS & CONDITIONS",
       "metadata": {
-        "operatedBy": "Operated by ASM Holdings",
-        "registeredBusinessAddress": "Registered Business Address: New No. 100, Old No. 86, Raghavan Street, Perambur, Chennai – 600011, Tamil Nadu, India",
-        "effectiveDate": "Effective Date: [Insert Date]",
-        "lastUpdated": "Last Updated: [Insert Date]"
+        "effectiveDate": "Effective Date: 31 August 2026",
+        "lastUpdated": "Last Updated: 31 August 2026"
       },
       "intro": [
         {
@@ -2794,15 +2793,13 @@
     "privacy": {
       "title": "QUANTA LOOP – PRIVACY POLICY",
       "metadata": {
-        "operatedBy": "Operated by ASM Holdings",
-        "registeredBusinessAddress": "Registered Business Address: New No. 100, Old No. 86, Raghavan Street, Perambur, Chennai – 600011, Tamil Nadu, India",
-        "effectiveDate": "Effective Date: [Insert Date]",
-        "lastUpdated": "Last Updated: [Insert Date]"
+        "effectiveDate": "Effective Date: 31 August 2026",
+        "lastUpdated": "Last Updated: 31 August 2026"
       },
       "intro": [
         {
           "kind": "paragraph",
-          "text": "ASM Holdings (“Quanta Loop”, “we”, “our” or “us”) respects your privacy and is committed to handling personal information responsibly."
+          "text": "Quanta Loop is operated by ASM Holdings (“Quanta Loop”, “we”, “our” or “us”) and respects your privacy and is committed to handling personal information responsibly."
         },
         {
           "kind": "paragraph",

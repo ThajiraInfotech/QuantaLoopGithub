@@ -1,6 +1,4 @@
-export const LEGAL_LAST_UPDATED = "[Insert Date]";
-
-export const LEGAL_OPERATOR = "ASM Holdings";
+export const LEGAL_LAST_UPDATED = "31 August 2026";
 
 export const LEGAL_SUPPORT_EMAIL = "access@quantaloop.com";
 

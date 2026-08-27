@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
-import { ReportActions } from "@/components/reports/report-actions";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useLocalizedTime } from "@/hooks/use-localized-time";
@@ -19,18 +18,12 @@ import type { ThreadMessage } from "@/types/conversation";
 type InterestInlineMessagesProps = {
   conversationId: string;
   threadClosed?: boolean;
-  counterpartyId?: string | null;
-  counterpartyLabel?: string;
-  materialTitle?: string;
   onMessageSent?: () => void;
 };
 
 export function InterestInlineMessages({
   conversationId,
   threadClosed = false,
-  counterpartyId,
-  counterpartyLabel,
-  materialTitle,
   onMessageSent,
 }: InterestInlineMessagesProps) {
   const t = useTranslations("conversations.messages");
@@ -41,7 +34,6 @@ export function InterestInlineMessages({
   const [loading, setLoading] = useState(true);
   const [draft, setDraft] = useState("");
   const [sending, setSending] = useState(false);
-  const participantFallback = counterpartyLabel ?? t("participant");
 
   const loadMessages = useCallback(async () => {
     setLoading(true);
@@ -143,23 +135,6 @@ export function InterestInlineMessages({
         </div>
       ) : threadClosed ? (
         <p className="text-xs text-zinc-500">{t("threadClosed")}</p>
-      ) : null}
-
-      {counterpartyId ? (
-        <ReportActions
-          className="border-t border-zinc-200/80 pt-3"
-          items={[
-            {
-              label: t("reportParticipant"),
-              targetType: "participant",
-              targetUserId: counterpartyId,
-              subjectLabel: participantFallback,
-              contextNote: materialTitle
-                ? `Reported from interest message thread (${materialTitle}).`
-                : "Reported from interest message thread.",
-            },
-          ]}
-        />
       ) : null}
     </div>
   );

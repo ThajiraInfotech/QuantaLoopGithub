@@ -24,6 +24,7 @@ export function ConversationRoomPage({
   conversationId: string;
 }) {
   const t = useTranslations("dashboard.conversations");
+  const tReport = useTranslations("reports");
   const { formatRelativeTime } = useLocalizedTime();
   const user = useAuthStore((s) => s.user);
   const [conv, setConv] = useState<Conversation | null>(null);
@@ -98,6 +99,7 @@ export function ConversationRoomPage({
       : user?.id === conv.providerId
         ? conv.buyerId
         : null;
+  const reportingBuyer = user?.id === conv.providerId;
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-6 pb-8">
@@ -120,7 +122,9 @@ export function ConversationRoomPage({
             className="mt-3"
             items={[
               {
-                label: t("reportParticipant"),
+                label: reportingBuyer
+                  ? tReport("actions.buyer")
+                  : tReport("actions.provider"),
                 targetType: "participant",
                 targetUserId: counterpartyId,
                 subjectLabel: t("reportSubject"),

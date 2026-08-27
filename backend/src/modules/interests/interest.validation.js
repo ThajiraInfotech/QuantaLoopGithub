@@ -16,7 +16,7 @@ const updateInterestStatusSchema = z.object({
 });
 
 const updateInterestWorkflowSchema = z.object({
-  status: z.enum(["discussion", "pickup_scheduled", "completed", "closed"]),
+  status: z.enum(["discussion", "completed", "closed"]),
 });
 
 function safeParseCreate(body) {

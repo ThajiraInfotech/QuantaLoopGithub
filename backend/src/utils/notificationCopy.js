@@ -31,13 +31,6 @@ function interestDeclined({ providerCompany, materialTitle }) {
   };
 }
 
-function pickupArranged({ materialTitle }) {
-  return {
-    title: "Pickup arranged",
-    message: `Pickup has been arranged for ${materialLabel(materialTitle)}.`,
-  };
-}
-
 function dealCompleted({ materialTitle }) {
   return {
     title: "Deal completed",
@@ -66,8 +59,6 @@ function workflowNotification(nextStatus, { materialTitle, providerCompany }) {
         title: "Discussion started",
         message: `${companyLabel(providerCompany)} moved coordination into active discussion for ${materialLabel(materialTitle)}.`,
       };
-    case "pickup_scheduled":
-      return pickupArranged({ materialTitle });
     case "completed":
       return dealCompleted({ materialTitle });
     case "closed":
@@ -115,7 +106,6 @@ module.exports = {
   interestReceived,
   discussionStarted,
   interestDeclined,
-  pickupArranged,
   dealCompleted,
   opportunityClosed,
   newDiscussionMessage,

@@ -89,6 +89,11 @@ function createApp(env) {
       crossOriginResourcePolicy: { policy: "cross-origin" },
     })
   );
+  // Keep API / backend responses out of search indexes
+  app.use((req, res, next) => {
+    res.setHeader("X-Robots-Tag", "noindex, nofollow, noarchive, nosnippet");
+    next();
+  });
   if (env.NODE_ENV !== "test") {
     app.use(morgan("combined"));
   }

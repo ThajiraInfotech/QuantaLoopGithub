@@ -92,6 +92,7 @@ async function main() {
       invoiceNumber: latest.invoiceNumber,
       html,
       text: buildInvoiceEmailText(publicInvoice),
+      invoice: publicInvoice,
     });
     process.stdout.write(
       JSON.stringify(

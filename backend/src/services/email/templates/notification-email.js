@@ -11,7 +11,6 @@ function buildNotificationEmail({
   title,
   message,
   actionUrl,
-  supportEmail,
   logoUrl,
   matchScore,
   matchLabel,
@@ -21,54 +20,132 @@ function buildNotificationEmail({
   const safeMessage = escapeHtml(message);
   const safeName = escapeHtml(recipientName || "there");
   const safeUrl = escapeHtml(actionUrl);
-  const matchBadge =
-    typeof matchScore === "number" && matchScore >= 75
-      ? `<p style="margin:0 0 20px;text-align:center;">
-          <span style="display:inline-block;background:#ECFDF5;border:1px solid #A7F3D0;border-radius:999px;padding:8px 16px;font-size:13px;font-weight:600;color:#047857;">
-            ${escapeHtml(matchLabel || "Strong match")} · ${matchScore}% fit
-          </span>
-        </p>`
-      : "";
+  const safeLogoUrl = escapeHtml(logoUrl);
+
+  const hasMatch =
+    typeof matchScore === "number" && Number.isFinite(matchScore) && matchScore >= 75;
+
+  const matchBadge = hasMatch
+    ? `
+                <tr>
+                  <td align="center" style="padding:0 40px 24px;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:0 auto;background:#E8F7EF;border:1px solid #C6EBD7;border-radius:999px;">
+                      <tr>
+                        <td style="padding:8px 16px;font-size:13px;font-weight:600;color:#1F7A4D;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+                          ${escapeHtml(matchLabel || "Strong match")} · ${escapeHtml(String(matchScore))}% fit
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>`
+    : "";
 
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="color-scheme" content="light" />
+  <meta name="supported-color-schemes" content="light" />
   <title>${safeTitle}</title>
+  <!--[if mso]>
+  <style type="text/css">
+    body, table, td { font-family: Arial, sans-serif !important; }
+  </style>
+  <![endif]-->
+  <style type="text/css">
+    :root { color-scheme: light; supported-color-schemes: light; }
+  </style>
 </head>
-<body style="margin:0;padding:0;background:#F1F5F9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#0F172A;">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#F1F5F9;padding:32px 16px;">
+<body style="margin:0;padding:0;background:#EEF1F3;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
+  <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;">
+    ${safeTitle} — ${safeMessage}
+  </div>
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#EEF1F3;padding:40px 16px;">
     <tr>
       <td align="center">
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background:#FFFFFF;border:1px solid #E2E8F0;border-radius:16px;overflow:hidden;">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:560px;">
+          <!-- Brand bar -->
           <tr>
-            <td style="padding:32px 32px 24px;text-align:center;border-bottom:1px solid #E2E8F0;">
-              <img src="${escapeHtml(logoUrl)}" alt="Quanta Loop" width="160" style="height:auto;max-width:160px;" />
+            <td style="height:4px;background:#2BAA6B;font-size:0;line-height:0;">&nbsp;</td>
+          </tr>
+          <!-- Card -->
+          <tr>
+            <td style="background:#FFFFFF;border-left:1px solid #E2E7EB;border-right:1px solid #E2E7EB;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                <!-- Logo -->
+                <tr>
+                  <td bgcolor="#FFFFFF" style="padding:28px 40px 24px;text-align:left;background-color:#FFFFFF;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" bgcolor="#FFFFFF" style="background-color:#FFFFFF;border-collapse:collapse;">
+                      <tr>
+                        <td bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:4px 0;">
+                          <img src="${safeLogoUrl}" alt="Quanta Loop" width="160" height="66" style="display:block;width:160px;height:auto;max-width:160px;border:0;outline:none;text-decoration:none;background-color:#FFFFFF;" />
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <!-- Divider -->
+                <tr>
+                  <td style="padding:0 40px;">
+                    <div style="height:1px;background:#E2E7EB;font-size:0;line-height:0;">&nbsp;</div>
+                  </td>
+                </tr>
+                <!-- Body -->
+                <tr>
+                  <td style="padding:32px 40px 8px;">
+                    <p style="margin:0 0 8px;font-size:12px;line-height:1.4;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#2BAA6B;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+                      Notification
+                    </p>
+                    <p style="margin:0 0 12px;font-size:14px;line-height:1.5;color:#5C6670;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+                      Hi ${safeName},
+                    </p>
+                    <h1 style="margin:0 0 16px;font-size:26px;line-height:1.25;font-weight:700;color:#0F1416;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+                      ${safeTitle}
+                    </h1>
+                    <p style="margin:0 0 28px;font-size:15px;line-height:1.65;color:#5C6670;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+                      ${safeMessage}
+                    </p>
+                  </td>
+                </tr>
+                ${matchBadge}
+                <!-- CTA -->
+                <tr>
+                  <td align="center" style="padding:0 40px 24px;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:0 auto;">
+                      <tr>
+                        <td align="center" bgcolor="#2BAA6B" style="background-color:#2BAA6B;border-radius:10px;">
+                          <a href="${safeUrl}" style="display:inline-block;padding:14px 32px;font-size:15px;font-weight:600;line-height:1.4;color:#FFFFFF;text-decoration:none;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+                            View in Quanta Loop
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <!-- Fallback URL -->
+                <tr>
+                  <td style="padding:0 40px 36px;">
+                    <p style="margin:0 0 8px;font-size:12px;line-height:1.5;color:#8A939C;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+                      If the button does not work, copy and paste this link into your browser:
+                    </p>
+                    <p style="margin:0;font-size:12px;line-height:1.6;word-break:break-all;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+                      <a href="${safeUrl}" style="color:#2BAA6B;text-decoration:none;">${safeUrl}</a>
+                    </p>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
+          <!-- Footer -->
           <tr>
-            <td style="padding:32px;">
-              <p style="margin:0 0 8px;font-size:13px;line-height:1.5;color:#64748B;">Hi ${safeName},</p>
-              <h1 style="margin:0 0 12px;font-size:22px;line-height:1.3;font-weight:700;color:#0F172A;">${safeTitle}</h1>
-              <p style="margin:0 0 20px;font-size:15px;line-height:1.6;color:#64748B;">${safeMessage}</p>
-              ${matchBadge}
-              <p style="margin:0 0 8px;text-align:center;">
-                <a href="${safeUrl}" style="display:inline-block;background:#22B573;color:#FFFFFF;text-decoration:none;font-size:15px;font-weight:600;padding:14px 24px;border-radius:12px;">
-                  View in Quanta Loop
-                </a>
+            <td style="background:#F4F6F7;border:1px solid #E2E7EB;border-top:none;padding:24px 40px;">
+              <p style="margin:0 0 6px;font-size:12px;line-height:1.5;color:#5C6670;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+                Quanta Loop — Recoverable Material Network
               </p>
-              <p style="margin:16px 0 0;font-size:12px;line-height:1.6;color:#94A3B8;text-align:center;word-break:break-all;">
-                Or open: <a href="${safeUrl}" style="color:#22B573;text-decoration:none;">${safeUrl}</a>
-              </p>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:20px 32px 28px;background:#F8FAFC;border-top:1px solid #E2E8F0;">
-              <p style="margin:0;font-size:12px;line-height:1.6;color:#64748B;text-align:center;">
-                You received this because activity on Quanta Loop affects your account.<br />
-                Need help? Contact <a href="mailto:${escapeHtml(supportEmail)}" style="color:#22B573;text-decoration:none;">${escapeHtml(supportEmail)}</a><br />
-                © ${year} Quanta Loop
+              <p style="margin:0;font-size:12px;line-height:1.5;color:#8A939C;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+                © ${year} Quanta Loop. All rights reserved.
               </p>
             </td>
           </tr>
@@ -79,12 +156,13 @@ function buildNotificationEmail({
 </body>
 </html>`;
 
-  const matchLine =
-    typeof matchScore === "number" && matchScore >= 75
-      ? `\nMatch: ${matchLabel || "Strong match"} (${matchScore}% fit)\n`
-      : "";
+  const matchLine = hasMatch
+    ? `\nMatch: ${matchLabel || "Strong match"} (${matchScore}% fit)\n`
+    : "";
 
-  const text = `Hi ${recipientName || "there"},
+  const text = `Quanta Loop — Notification
+
+Hi ${recipientName || "there"},
 
 ${title}
 
@@ -92,7 +170,7 @@ ${message}
 ${matchLine}
 View in Quanta Loop: ${actionUrl}
 
-Support: ${supportEmail}`;
+© ${year} Quanta Loop`;
 
   return {
     subject: title,

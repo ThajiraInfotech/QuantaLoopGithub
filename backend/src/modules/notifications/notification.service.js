@@ -37,6 +37,9 @@ function recipientCanReceiveEmail(user) {
 async function dispatchNotificationEmail(doc, emailExtras = {}) {
   if (!runtimeEnv) return;
 
+  // In-app only — no email automation for introduction requests
+  if (doc.type === "introduction_request") return;
+
   const recipientId = doc.recipient?.toString?.() ?? String(doc.recipient);
   const user = await User.findById(recipientId)
     .select(

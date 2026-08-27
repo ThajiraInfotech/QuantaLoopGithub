@@ -6,7 +6,11 @@ import { PrivacyPolicyContent } from "@/components/legal/privacy-policy-content"
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("legal.privacy");
-  return { title: t("title") };
+  return {
+    title: t("title"),
+    alternates: { canonical: "/legal/privacy-policy" },
+    robots: { index: true, follow: true },
+  };
 }
 
 export default async function PrivacyPolicyPage() {

@@ -1,8 +1,18 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Noto_Sans_Devanagari, Noto_Sans_Tamil, Sora } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { Toaster } from "react-hot-toast";
+
+import {
+  DEFAULT_DESCRIPTION,
+  DEFAULT_TITLE,
+  INDEX_ROBOTS,
+  OG_DESCRIPTION,
+  OG_TITLE,
+  SITE_NAME,
+  SITE_URL,
+} from "@/lib/seo";
 
 import "./globals.css";
 
@@ -30,16 +40,41 @@ const notoSansTamil = Noto_Sans_Tamil({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Quanta Loop",
-    template: "%s · Quanta Loop",
+    default: DEFAULT_TITLE,
+    template: `%s · ${SITE_NAME}`,
   },
-  description:
-    "Premium industrial byproduct recovery network — intelligent matching and operational coordination for providers and buyers.",
+  description: DEFAULT_DESCRIPTION,
+  applicationName: SITE_NAME,
+  robots: INDEX_ROBOTS,
   icons: {
     icon: [{ url: "/icon.png", type: "image/png" }],
     apple: [{ url: "/icon.png", type: "image/png" }],
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: OG_TITLE,
+    description: OG_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: OG_TITLE,
+    description: OG_DESCRIPTION,
+  },
+  other: {
+    "geo.region": "IN",
+    "geo.placename": "India",
   },
 };
 
