@@ -31,6 +31,8 @@ const envSchema = z.object({
   RAZORPAY_WEBHOOK_SECRET: z.string().optional(),
   RAZORPAY_PLAN_ID_ANNUAL_ACCESS: z.string().optional(),
   RAZORPAY_PLAN_MAP: z.string().optional(),
+  // Optional temporary smoke-test amount in paise (100 = ₹1). Empty = ₹6,999.
+  ANNUAL_ACCESS_AMOUNT_PAISE: z.string().optional(),
   // Billing / GST (Quanta Loop owns invoices; Razorpay collects payment only)
   BILLING_SUPPLIER_STATE_CODE: z.string().optional().default("TN"),
   BILLING_SUPPLIER_STATE: z.string().optional().default("Tamil Nadu"),
