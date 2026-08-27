@@ -8,6 +8,7 @@
     "seed": "node src/scripts/seed.js",
     "clear": "node src/scripts/clear.js",
     "clear:participants": "node src/scripts/clear-participants.js",
+    "clear:live-participants": "node src/scripts/clear-live-participants.js",
     "test": "node src/scripts/verify-recommendation-e2e.js",
     "test:recommendations": "node src/scripts/verify-recommendation-e2e.js",
     "test:auth": "node src/scripts/verify-auth-onboarding-e2e.js",
