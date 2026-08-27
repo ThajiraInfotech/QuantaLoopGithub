@@ -109,7 +109,13 @@ async function main() {
     const { port } = server.address();
     const baseUrl = `http://127.0.0.1:${port}/api/v1`;
 
-    const unpaid = await createTestUser();
+    const unpaid = await createTestUser({
+      // Simulate trial already used so this case isolates the paid gate.
+      trialConsumed: true,
+      trialStartedAt: new Date(Date.now() - 40 * 24 * 60 * 60 * 1000),
+      trialEndsAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
+    });
+    const trialUser = await createTestUser();
     const unverified = await createTestUser({ emailVerified: false });
     const incomplete = await createTestUser({
       materialTypes: [],
@@ -117,10 +123,18 @@ async function main() {
       state: "",
       location: "",
     });
-    const paid = await createTestUser();
-    const expired = await createTestUser();
+    const paid = await createTestUser({ trialConsumed: true });
+    const expired = await createTestUser({ trialConsumed: true });
     const admin = await createTestUser({ role: "admin" });
-    users.push(unpaid, unverified, incomplete, paid, expired, admin);
+    users.push(
+      unpaid,
+      trialUser,
+      unverified,
+      incomplete,
+      paid,
+      expired,
+      admin
+    );
 
     const now = new Date();
     await Subscription.create([
@@ -166,6 +180,22 @@ async function main() {
           errorCode(denied) === "SUBSCRIPTION_REQUIRED",
         `unpaid /${root} expected SUBSCRIPTION_REQUIRED, got ${denied.status} ${errorCode(
           denied
+        )}`
+      );
+    }
+
+    // Fresh onboarded users receive a free trial and pass the product gate.
+    for (const root of PROTECTED_ROOTS) {
+      const trialAllowed = await request(
+        baseUrl,
+        `/${root}/__payment_gate_probe__`,
+        tokenFor(trialUser, env)
+      );
+      assert(
+        trialAllowed.status !== 401 &&
+          errorCode(trialAllowed) !== "SUBSCRIPTION_REQUIRED",
+        `trial /${root} should pass payment gate, got ${trialAllowed.status} ${errorCode(
+          trialAllowed
         )}`
       );
     }

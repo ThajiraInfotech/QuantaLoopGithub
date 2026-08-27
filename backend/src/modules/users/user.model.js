@@ -74,6 +74,10 @@ const userSchema = new mongoose.Schema(
     jobTitle: { type: String, default: "", trim: true, maxlength: 120 },
     loginCount: { type: Number, default: 0, min: 0 },
     lastLoginAt: { type: Date, default: null },
+    /** 30-day free trial — started once after onboarding; never restarts. */
+    trialStartedAt: { type: Date, default: null },
+    trialEndsAt: { type: Date, default: null, index: true },
+    trialConsumed: { type: Boolean, default: false, index: true },
   },
   { timestamps: true }
 );

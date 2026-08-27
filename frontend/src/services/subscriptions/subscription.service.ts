@@ -220,6 +220,8 @@ function normalizeAccessState(value: unknown): SubscriptionAccessState | null {
     daysRemaining:
       firstNumber(payload, "daysRemaining", "days_remaining") ?? null,
     expiringSoon: payload.expiringSoon === true,
+    accessSource: firstString(payload, "accessSource", "access_source"),
+    isTrial: payload.isTrial === true,
     subscription: normalizeSubscription(payload.subscription),
   };
 }

@@ -80,6 +80,8 @@ function createSubscriptionController({ service, catalog, env }) {
     const accessState = await getSubscriptionAccessState({
       userId: req.user.id,
       role: req.user.role,
+      trialDays: env.MEMBERSHIP_TRIAL_DAYS,
+      account: req.account,
     });
     sendSuccess(res, accessState, "Subscription access state retrieved");
   });
@@ -129,6 +131,8 @@ function createSubscriptionController({ service, catalog, env }) {
     const accessState = await getSubscriptionAccessState({
       userId: req.user.id,
       role: req.user.role,
+      trialDays: env.MEMBERSHIP_TRIAL_DAYS,
+      account: req.account,
     });
     sendSuccess(res, { subscription, accessState }, "Subscription verified");
   });

@@ -10,7 +10,7 @@ const errorHandler = require("./middleware/errorHandler");
 const notFound = require("./middleware/notFound");
 const { authenticate } = require("./middleware/auth");
 const {
-  requireActiveSubscription,
+  createRequireActiveSubscription,
 } = require("./middleware/requireActiveSubscription");
 const {
   requireCompletedOnboarding,
@@ -73,6 +73,9 @@ function isAllowedCorsOrigin(origin, env) {
 function createApp(env) {
   const app = express();
   configureNotificationEmails(env);
+  const requireActiveSubscription = createRequireActiveSubscription({
+    trialDays: env.MEMBERSHIP_TRIAL_DAYS,
+  });
   const requirePaidAccess = [
     authenticate({ jwtSecret: env.JWT_SECRET }),
     requireCompletedOnboarding,

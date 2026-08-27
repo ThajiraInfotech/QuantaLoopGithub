@@ -40,10 +40,14 @@ export type SubscriptionAccessState = {
   reason?: string;
   expiresAt?: string;
   currentEndAt?: string;
-  /** Whole days left in the paid year; null once it has lapsed. */
+  /** Whole days left in the paid year or trial; null once it has lapsed. */
   daysRemaining: number | null;
-  /** True inside the renewal notice window before the year ends. */
+  /** True inside the renewal notice window before the year ends, or during trial. */
   expiringSoon: boolean;
+  /** paid | trial | admin when entitled */
+  accessSource?: string | null;
+  /** True while the 30-day free trial is active. */
+  isTrial?: boolean;
   subscription: CurrentSubscription | null;
 };
 

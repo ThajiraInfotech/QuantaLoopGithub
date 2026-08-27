@@ -4,7 +4,7 @@ const { AppError } = require("../../utils/AppError");
 const { Interest } = require("../interests/interest.model");
 const { Material } = require("../materials/material.model");
 const { User } = require("../users/user.model");
-const { paidParticipantFilter } = require("../subscriptions/paid-participants");
+const { networkParticipantFilter } = require("../subscriptions/paid-participants");
 const { createNotification } = require("../notifications/notification.service");
 const { introductionRequest } = require("../../utils/notificationCopy");
 const { IntroductionRequest } = require("./introduction.model");
@@ -13,7 +13,7 @@ const INTRO_COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
 
 async function getNetworkOverview() {
   const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-  const participantFilter = await paidParticipantFilter();
+  const participantFilter = await networkParticipantFilter();
   const [registeredUsers, activeMaterials, recentInterests, sample] =
     await Promise.all([
       User.countDocuments(participantFilter),

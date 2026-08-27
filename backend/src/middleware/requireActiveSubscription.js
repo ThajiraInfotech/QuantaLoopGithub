@@ -5,6 +5,7 @@ const {
 
 function createRequireActiveSubscription({
   resolveAccessState = getSubscriptionAccessState,
+  trialDays,
 } = {}) {
   return async function requireActiveSubscription(req, res, next) {
     if (!req.user) {
@@ -16,12 +17,14 @@ function createRequireActiveSubscription({
       const accessState = await resolveAccessState({
         userId: req.user.id,
         role: req.user.role,
+        trialDays,
+        account: req.account,
       });
       req.subscriptionAccess = accessState;
       if (!accessState.entitled) {
         next(
           new AppError(
-            "An active subscription is required",
+            "An active membership or trial is required",
             403,
             "SUBSCRIPTION_REQUIRED",
             { accessState }

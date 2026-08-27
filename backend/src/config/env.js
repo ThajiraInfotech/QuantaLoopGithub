@@ -33,6 +33,8 @@ const envSchema = z.object({
   RAZORPAY_PLAN_MAP: z.string().optional(),
   // Optional temporary smoke-test amount in paise (100 = ₹1). Empty = ₹6,999.
   ANNUAL_ACCESS_AMOUNT_PAISE: z.string().optional(),
+  // Free trial length in days after onboarding (default 30). Set 0 to disable.
+  MEMBERSHIP_TRIAL_DAYS: z.coerce.number().int().min(0).max(365).optional().default(30),
   // Billing / GST (Quanta Loop owns invoices; Razorpay collects payment only)
   BILLING_SUPPLIER_STATE_CODE: z.string().optional().default("TN"),
   BILLING_SUPPLIER_STATE: z.string().optional().default("Tamil Nadu"),

@@ -6,6 +6,7 @@ const {
   toPublicSubscription,
 } = require("./subscription.model");
 const { WebhookEvent } = require("./webhook-event.model");
+const { markTrialConsumed } = require("./subscription-access.service");
 
 const EVENT_STATUS_MAP = Object.freeze({
   "subscription.authenticated": "authenticated",
@@ -277,6 +278,9 @@ function createSubscriptionService({ client, catalog, keySecret, billingService 
         new Date();
     }
     ensurePaidThrough(local);
+    if (local.user) {
+      void markTrialConsumed(local.user).catch(() => {});
+    }
   }
 
   async function findOpenForUser(userId, planId) {

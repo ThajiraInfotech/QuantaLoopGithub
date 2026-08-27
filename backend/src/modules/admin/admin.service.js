@@ -10,8 +10,8 @@ const { Message } = require("../messages/message.model");
 const { Report } = require("../reports/report.model");
 const { User, toPublicJSON } = require("../users/user.model");
 const {
-  paidParticipantFilter,
-  userHasPaidMembership,
+  networkParticipantFilter,
+  userHasNetworkAccess,
 } = require("../subscriptions/paid-participants");
 const MS_48H = 48 * 60 * 60 * 1000;
 const MS_7D = 7 * 24 * 60 * 60 * 1000;
@@ -151,7 +151,7 @@ async function enrichOpenReports(limit = 5) {
 }
 
 async function getParticipantSummary() {
-  const participantFilter = await paidParticipantFilter();
+  const participantFilter = await networkParticipantFilter();
   const [total, providers, buyers, suspended] = await Promise.all([
     User.countDocuments(participantFilter),
     User.countDocuments({ ...participantFilter, role: "material_provider" }),
@@ -166,7 +166,7 @@ async function getDashboardStats() {
   const weekStart = weekAgo();
   const stale48h = hours48Ago();
   const { thisMonthStart, lastMonthStart } = monthRangeBounds();
-  const participantFilter = await paidParticipantFilter();
+  const participantFilter = await networkParticipantFilter();
 
   const [
     participants,
@@ -370,7 +370,7 @@ async function listParticipants({
   page = 1,
   limit = 20,
 }) {
-  const filter = { ...(await paidParticipantFilter()) };
+  const filter = { ...(await networkParticipantFilter()) };
   const safePage = Math.max(1, Number(page) || 1);
   const safeLimit = Math.min(100, Math.max(1, Number(limit) || 20));
 
@@ -534,7 +534,7 @@ async function getParticipantDetail(userId) {
   if (!user || user.role === "admin") {
     return null;
   }
-  if (!(await userHasPaidMembership(user._id))) {
+  if (!(await userHasNetworkAccess(user._id))) {
     return null;
   }
 
@@ -614,7 +614,7 @@ async function patchParticipantAccount(userId, accountStatus) {
   if (!user || user.role === "admin") {
     return null;
   }
-  if (!(await userHasPaidMembership(user._id))) {
+  if (!(await userHasNetworkAccess(user._id))) {
     return null;
   }
   user.accountStatus = accountStatus;
