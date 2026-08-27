@@ -310,15 +310,40 @@ function createSubscriptionService({ client, catalog, keySecret, billingService 
     }
     const plan = catalog.getPlan(planId);
 
+    async function unpaidOrderMatchesPlan(orderId) {
+      try {
+        const remote = await client.fetchOrder(orderId);
+        const status = String(remote.status || "").toLowerCase();
+        if (status === "paid") return true;
+        return Number(remote.amount) === Number(plan.amountMinor);
+      } catch {
+        return false;
+      }
+    }
+
+    async function abandonUnpaidCheckout(doc) {
+      doc.status = "cancelled";
+      doc.cancelledAt = new Date();
+      doc.checkoutState = "failed";
+      doc.set("razorpayOrderId", undefined);
+      await doc.save();
+    }
+
     let existingOpen = await findOpenForUser(userId, planId);
     if (
       existingOpen?.razorpayOrderId &&
       !PAID_STATUSES.has(existingOpen.status) &&
       !TERMINAL_STATUSES.has(existingOpen.status)
     ) {
-      existingOpen.checkoutState = "ready";
-      await existingOpen.save();
-      return toPublicSubscription(existingOpen);
+      const matches = await unpaidOrderMatchesPlan(existingOpen.razorpayOrderId);
+      if (matches) {
+        existingOpen.checkoutState = "ready";
+        await existingOpen.save();
+        return toPublicSubscription(existingOpen);
+      }
+      // Price override / catalog change — drop stale unpaid order and create fresh.
+      await abandonUnpaidCheckout(existingOpen);
+      existingOpen = null;
     }
 
     const key =
@@ -356,7 +381,17 @@ function createSubscriptionService({ client, catalog, keySecret, billingService 
       );
     }
     if (local.checkoutState === "ready" && local.razorpayOrderId) {
-      return toPublicSubscription(local);
+      const matches = await unpaidOrderMatchesPlan(local.razorpayOrderId);
+      if (matches) return toPublicSubscription(local);
+      await abandonUnpaidCheckout(local);
+      local = await Subscription.create({
+        user: userId,
+        catalogPlanId: planId,
+        razorpayPlanId: "order_checkout",
+        idempotencyKey: `open:${userId}:${planId}:${Date.now()}`,
+        checkoutState: "creating",
+      });
+      ownsAttempt = true;
     }
 
     if (!ownsAttempt && local.checkoutState === "failed") {
@@ -371,7 +406,17 @@ function createSubscriptionService({ client, catalog, keySecret, billingService 
       }
     }
     if (!ownsAttempt && local.razorpayOrderId) {
-      return toPublicSubscription(local);
+      const matches = await unpaidOrderMatchesPlan(local.razorpayOrderId);
+      if (matches) return toPublicSubscription(local);
+      await abandonUnpaidCheckout(local);
+      local = await Subscription.create({
+        user: userId,
+        catalogPlanId: planId,
+        razorpayPlanId: "order_checkout",
+        idempotencyKey: `open:${userId}:${planId}:${Date.now()}`,
+        checkoutState: "creating",
+      });
+      ownsAttempt = true;
     }
     if (!ownsAttempt) {
       throw new AppError(
