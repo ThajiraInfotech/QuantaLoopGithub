@@ -146,8 +146,9 @@ function accessStateFromTrial({ trialEndsAt, now = new Date() }) {
     reason: "TRIAL_ACTIVE",
     expiresAt,
     daysRemaining,
-    // Always surface trial status in the dashboard; paid uses RENEWAL_NOTICE_DAYS.
-    expiringSoon: true,
+    // Same notice window as paid renewal — avoid a full-trial banner.
+    expiringSoon:
+      daysRemaining !== null && daysRemaining <= RENEWAL_NOTICE_DAYS,
     accessSource: "trial",
     isTrial: true,
   });

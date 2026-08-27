@@ -1,10 +1,8 @@
 "use client";
 
 import { CalendarClock } from "lucide-react";
-import Link from "next/link";
 
 import { useSubscriptionAccess } from "@/components/subscriptions/subscription-access-context";
-import { ROUTES } from "@/constants/routes";
 
 function formatDate(value: string): string {
   const date = new Date(value);
@@ -17,7 +15,7 @@ function formatDate(value: string): string {
       });
 }
 
-/** Renewal / trial reminder shown in the dashboard shell. */
+/** Compact renewal / trial reminder in the dashboard shell. */
 export function MembershipExpiryNotice() {
   const access = useSubscriptionAccess();
   if (!access?.expiringSoon) return null;
@@ -33,41 +31,37 @@ export function MembershipExpiryNotice() {
           ? "in 1 day"
           : `in ${days} days`;
 
-  if (access.isTrial || access.accessSource === "trial") {
-    return (
-      <div
-        role="status"
-        className="mb-5 flex flex-col gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm leading-relaxed text-pretty text-emerald-950 sm:mb-6 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3 sm:gap-y-2"
-      >
-        <CalendarClock
-          className="h-4 w-4 shrink-0 text-emerald-700"
-          aria-hidden
-        />
-        <p className="flex-1">
-          Your free trial ends {remaining}
-          {endsOn ? ` (${formatDate(endsOn)})` : ""}. After that, continue with
-          annual membership to stay on the network.
-        </p>
-        <Link
-          href={ROUTES.onboardingMembership}
-          className="shrink-0 font-medium text-emerald-900 underline-offset-2 hover:underline"
-        >
-          View membership
-        </Link>
-      </div>
-    );
-  }
+  const isTrial = access.isTrial || access.accessSource === "trial";
 
   return (
     <div
       role="status"
-      className="mb-5 flex flex-col gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-relaxed text-pretty text-amber-950 sm:mb-6 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3 sm:gap-y-2"
+      className={
+        isTrial
+          ? "mb-3 flex items-center gap-2 rounded-lg border border-emerald-200/80 bg-emerald-50/80 px-3 py-2 text-xs text-emerald-900 sm:mb-4"
+          : "mb-3 flex items-center gap-2 rounded-lg border border-amber-200/80 bg-amber-50/80 px-3 py-2 text-xs text-amber-950 sm:mb-4"
+      }
     >
-      <CalendarClock className="h-4 w-4 shrink-0 text-amber-700" aria-hidden />
-      <p className="flex-1">
-        Your annual membership ends {remaining}
-        {endsOn ? ` (${formatDate(endsOn)})` : ""}. When it ends, you will pay
-        again to stay on the network.
+      <CalendarClock
+        className={
+          isTrial
+            ? "h-3.5 w-3.5 shrink-0 text-emerald-700"
+            : "h-3.5 w-3.5 shrink-0 text-amber-700"
+        }
+        aria-hidden
+      />
+      <p className="min-w-0 leading-snug text-pretty">
+        {isTrial ? (
+          <>
+            Free trial ends {remaining}
+            {endsOn ? ` (${formatDate(endsOn)})` : ""}.
+          </>
+        ) : (
+          <>
+            Membership ends {remaining}
+            {endsOn ? ` (${formatDate(endsOn)})` : ""}.
+          </>
+        )}
       </p>
     </div>
   );

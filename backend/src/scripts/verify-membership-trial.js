@@ -69,8 +69,16 @@ async function main() {
   assert.equal(activeTrial.reason, "TRIAL_ACTIVE");
   assert.equal(activeTrial.isTrial, true);
   assert.equal(activeTrial.accessSource, "trial");
-  assert.equal(activeTrial.expiringSoon, true);
+  assert.equal(activeTrial.expiringSoon, false);
   assert.equal(activeTrial.daysRemaining, 30);
+
+  const trialEndingSoon = accessStateFromTrial({
+    trialEndsAt: new Date("2026-08-20T00:00:00.000Z"),
+    now,
+  });
+  assert.equal(trialEndingSoon.entitled, true);
+  assert.equal(trialEndingSoon.daysRemaining, 6);
+  assert.equal(trialEndingSoon.expiringSoon, true);
 
   const expiredTrial = accessStateFromTrial({ trialEndsAt: past, now });
   assert.equal(expiredTrial.entitled, false);
