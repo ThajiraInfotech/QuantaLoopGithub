@@ -48,19 +48,44 @@ function configuredPlanMap(env) {
   return fromJson;
 }
 
+function resolveAnnualAmountOverridePaise(env) {
+  const raw = env?.ANNUAL_ACCESS_AMOUNT_PAISE;
+  if (raw == null || String(raw).trim() === "") return null;
+  const paise = Number(raw);
+  if (!Number.isInteger(paise) || paise < 100) {
+    throw new Error(
+      "ANNUAL_ACCESS_AMOUNT_PAISE must be an integer >= 100 (₹1.00)"
+    );
+  }
+  return paise;
+}
+
+function withAnnualAmountOverride(plan, overridePaise) {
+  if (!overridePaise || plan.id !== "annual_access") return plan;
+  return {
+    ...plan,
+    amountMinor: overridePaise,
+    amount: overridePaise / 100,
+  };
+}
+
 function createSubscriptionCatalog(env) {
   const planMap = configuredPlanMap(env || {});
   const paymentsConfigured = Boolean(
     env?.RAZORPAY_KEY_ID && env?.RAZORPAY_KEY_SECRET
   );
+  const annualOverridePaise = resolveAnnualAmountOverridePaise(env || {});
 
   function listCatalogPlans() {
-    return Object.values(CATALOG).map((plan) => ({
-      ...plan,
-      razorpayPlanId: planMap[plan.id] || null,
-      // One-time Orders checkout only needs API keys — no Razorpay plan.
-      purchasable: paymentsConfigured,
-    }));
+    return Object.values(CATALOG).map((plan) => {
+      const resolved = withAnnualAmountOverride(plan, annualOverridePaise);
+      return {
+        ...resolved,
+        razorpayPlanId: planMap[plan.id] || null,
+        // One-time Orders checkout only needs API keys — no Razorpay plan.
+        purchasable: paymentsConfigured,
+      };
+    });
   }
 
   function listPurchasablePlans() {
@@ -74,8 +99,9 @@ function createSubscriptionCatalog(env) {
     if (!plan) {
       throw new AppError("Plan is not available", 404, "PLAN_NOT_AVAILABLE");
     }
+    const resolved = withAnnualAmountOverride(plan, annualOverridePaise);
     return {
-      ...plan,
+      ...resolved,
       razorpayPlanId: planMap[catalogPlanId] || null,
     };
   }
