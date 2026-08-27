@@ -104,7 +104,7 @@ function buildEmailVerificationEmail({ otp, logoUrl }) {
                       </tr>
                     </table>
                     <p style="margin:16px 0 0;font-size:13px;line-height:1.5;color:#5C6670;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
-                      Or enter this code: <strong style="color:#0F1416;letter-spacing:0.12em;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;">${safeOtp}</strong>
+                      Or copy this code: <strong style="color:#0F1416;letter-spacing:0.12em;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;">${safeOtp}</strong>
                     </p>
                   </td>
                 </tr>
