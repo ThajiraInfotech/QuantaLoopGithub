@@ -424,6 +424,10 @@ export const MATERIAL_CATEGORY_TAXONOMY: readonly MaterialCategoryTaxonomy[] = [
       },
     ],
   },
+  {
+    category: "Others",
+    sections: [],
+  },
 ] as const;
 
 const TAXONOMY_BY_CATEGORY = new Map(

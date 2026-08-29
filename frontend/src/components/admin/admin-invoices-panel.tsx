@@ -30,7 +30,14 @@ function currentMonthValue() {
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
 }
 
-function money(amount: number) {
+function money(amount: number, currency = "INR") {
+  const code = String(currency || "INR").toUpperCase();
+  if (code === "USD") {
+    return `$${Number(amount || 0).toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  }
   return `₹${Number(amount || 0).toLocaleString("en-IN", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
@@ -395,11 +402,11 @@ export function AdminInvoicesPanel() {
                     <td className="px-2 py-3">
                       <div>{taxLabel(row.taxType)}</div>
                       <div className="text-xs text-zinc-500">
-                        Taxable {money(row.taxableAmount)}
+                        Taxable {money(row.taxableAmount, row.currency)}
                       </div>
                     </td>
                     <td className="px-2 py-3 text-right tabular-nums font-medium">
-                      {money(row.amountInclusive)}
+                      {money(row.amountInclusive, row.currency)}
                     </td>
                     <td className="px-2 py-3">
                       <Button

@@ -58,15 +58,25 @@ function normalizePlan(value: unknown): SubscriptionPlan | null {
 
   const code = firstString(plan, "code", "planCode", "plan_code", "id");
   const name = firstString(plan, "name", "title") ?? "Annual membership";
+  const currency =
+    (firstString(plan, "currency") ?? "INR").toUpperCase();
+  const amount =
+    firstNumber(plan, "amount", "amountMajor", "amount_major") ??
+    ((firstNumber(
+      plan,
+      "amountMinor",
+      "amount_minor",
+      "amountPaise",
+      "amount_paise"
+    ) ?? 0) / 100);
   const amountInr =
     firstNumber(
       plan,
       "amountInr",
       "amount_inr",
       "annualInr",
-      "priceInr",
-      "amount"
-    ) ?? ((firstNumber(plan, "amountPaise", "amount_paise") ?? 0) / 100);
+      "priceInr"
+    ) ?? (currency === "INR" ? amount : 6999);
 
   if (!code) return null;
 
@@ -74,6 +84,8 @@ function normalizePlan(value: unknown): SubscriptionPlan | null {
     code,
     name,
     description: firstString(plan, "description", "highlight"),
+    amount,
+    currency,
     amountInr,
     interval:
       firstString(plan, "interval", "billingInterval", "billing_interval") ??
@@ -258,13 +270,20 @@ export async function createSubscriptionCheckout(
         )
       : undefined;
     const amount =
-      (nested && firstNumber(nested, "amount", "amountMinor", "amount_paise")) ??
-      699900;
-    const currency =
-      (nested && firstString(nested, "currency")) ?? "INR";
+      nested &&
+      firstNumber(nested, "amount", "amountMinor", "amount_paise", "amount_minor");
+    const currency = nested
+      ? firstString(nested, "currency")?.toUpperCase()
+      : undefined;
 
     if (!orderId) {
       throw new Error("Checkout did not return an order ID");
+    }
+    if (!amount || amount <= 0) {
+      throw new Error("Checkout did not return a valid amount");
+    }
+    if (!currency) {
+      throw new Error("Checkout did not return a currency");
     }
     return { orderId, amount, currency };
   });

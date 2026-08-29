@@ -18,7 +18,14 @@ import {
 import type { BillingInvoice } from "@/types/billing";
 import { formatMediumDate } from "@/utils/format-relative-time";
 
-function money(amount: number) {
+function money(amount: number, currency = "INR") {
+  const code = String(currency || "INR").toUpperCase();
+  if (code === "USD") {
+    return `$${Number(amount || 0).toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  }
   return `₹${Number(amount || 0).toLocaleString("en-IN", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
@@ -89,7 +96,7 @@ export function ProfilePaymentsSection() {
                     {taxLabel(invoice.taxType, t)}
                   </p>
                   <p className="mt-1 text-sm tabular-nums text-zinc-700">
-                    {money(invoice.amountInclusive)}
+                    {money(invoice.amountInclusive, invoice.currency)}
                   </p>
                 </div>
                 <Button

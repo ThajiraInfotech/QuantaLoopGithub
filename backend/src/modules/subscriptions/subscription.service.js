@@ -131,6 +131,27 @@ function paymentUnlocksMembership(payment, plan) {
   return paymentCurrency === planCurrency;
 }
 
+function resolvePlanForPayment(catalog, local, payment) {
+  if (
+    local?.checkoutAmountMinor != null &&
+    local?.checkoutCurrency &&
+    Number.isFinite(Number(local.checkoutAmountMinor))
+  ) {
+    const base = catalog.getPlan(local.catalogPlanId);
+    return {
+      ...base,
+      amountMinor: Number(local.checkoutAmountMinor),
+      amount: Number(local.checkoutAmountMinor) / 100,
+      currency: String(local.checkoutCurrency).toUpperCase(),
+    };
+  }
+  const currency = payment?.currency || "INR";
+  if (typeof catalog.getPlanForCurrency === "function") {
+    return catalog.getPlanForCurrency(local.catalogPlanId, currency);
+  }
+  return catalog.getPlan(local.catalogPlanId);
+}
+
 function keepPaidStatus(localStatus, remoteStatus) {
   if (
     PAID_STATUSES.has(localStatus) &&
@@ -256,7 +277,7 @@ function createSubscriptionService({ client, catalog, keySecret, billingService 
   function activateFromSettledCharge(local, remote, payment) {
     let plan;
     try {
-      plan = catalog.getPlan(local.catalogPlanId);
+      plan = resolvePlanForPayment(catalog, local, payment);
     } catch {
       return;
     }
@@ -309,17 +330,26 @@ function createSubscriptionService({ client, catalog, keySecret, billingService 
   }
 
   async function createCheckout({ userId, planId, idempotencyKey }) {
+    let plan;
     if (billingService?.requireCheckoutReady) {
-      await billingService.requireCheckoutReady(userId, planId);
+      const ready = await billingService.requireCheckoutReady(userId, planId);
+      plan = ready.plan;
+    } else if (typeof catalog.getPlanForCountry === "function") {
+      plan = catalog.getPlanForCountry(planId, "IN");
+    } else {
+      plan = catalog.getPlan(planId);
     }
-    const plan = catalog.getPlan(planId);
 
     async function unpaidOrderMatchesPlan(orderId) {
       try {
         const remote = await client.fetchOrder(orderId);
         const status = String(remote.status || "").toLowerCase();
         if (status === "paid") return true;
-        return Number(remote.amount) === Number(plan.amountMinor);
+        const amountOk = Number(remote.amount) === Number(plan.amountMinor);
+        const currencyOk =
+          String(remote.currency || "").toUpperCase() ===
+          String(plan.currency || "").toUpperCase();
+        return amountOk && currencyOk;
       } catch {
         return false;
       }
@@ -330,7 +360,17 @@ function createSubscriptionService({ client, catalog, keySecret, billingService 
       doc.cancelledAt = new Date();
       doc.checkoutState = "failed";
       doc.set("razorpayOrderId", undefined);
+      doc.checkoutAmountMinor = null;
+      doc.checkoutCurrency = null;
       await doc.save();
+    }
+
+    async function returnReadyCheckout(doc) {
+      doc.checkoutState = "ready";
+      doc.checkoutAmountMinor = plan.amountMinor;
+      doc.checkoutCurrency = plan.currency;
+      await doc.save();
+      return toPublicSubscription(doc);
     }
 
     let existingOpen = await findOpenForUser(userId, planId);
@@ -341,9 +381,7 @@ function createSubscriptionService({ client, catalog, keySecret, billingService 
     ) {
       const matches = await unpaidOrderMatchesPlan(existingOpen.razorpayOrderId);
       if (matches) {
-        existingOpen.checkoutState = "ready";
-        await existingOpen.save();
-        return toPublicSubscription(existingOpen);
+        return returnReadyCheckout(existingOpen);
       }
       // Price override / catalog change — drop stale unpaid order and create fresh.
       await abandonUnpaidCheckout(existingOpen);
@@ -386,7 +424,7 @@ function createSubscriptionService({ client, catalog, keySecret, billingService 
     }
     if (local.checkoutState === "ready" && local.razorpayOrderId) {
       const matches = await unpaidOrderMatchesPlan(local.razorpayOrderId);
-      if (matches) return toPublicSubscription(local);
+      if (matches) return returnReadyCheckout(local);
       await abandonUnpaidCheckout(local);
       local = await Subscription.create({
         user: userId,
@@ -411,7 +449,7 @@ function createSubscriptionService({ client, catalog, keySecret, billingService 
     }
     if (!ownsAttempt && local.razorpayOrderId) {
       const matches = await unpaidOrderMatchesPlan(local.razorpayOrderId);
-      if (matches) return toPublicSubscription(local);
+      if (matches) return returnReadyCheckout(local);
       await abandonUnpaidCheckout(local);
       local = await Subscription.create({
         user: userId,
@@ -439,10 +477,24 @@ function createSubscriptionService({ client, catalog, keySecret, billingService 
           user_id: String(userId),
           local_subscription_id: String(local._id),
           catalog_plan_id: plan.id,
+          checkout_currency: plan.currency,
         },
       });
+      const remoteCurrency = String(remote.currency || "").toUpperCase();
+      if (
+        Number(remote.amount) !== Number(plan.amountMinor) ||
+        remoteCurrency !== String(plan.currency).toUpperCase()
+      ) {
+        throw new AppError(
+          "Razorpay order currency/amount does not match membership price",
+          502,
+          "RAZORPAY_ORDER_MISMATCH"
+        );
+      }
       local.razorpayPlanId = "order_checkout";
       local.razorpayOrderId = remote.id;
+      local.checkoutAmountMinor = plan.amountMinor;
+      local.checkoutCurrency = plan.currency;
       local.status = "created";
       local.remoteCreatedAt = unixDate(remote.created_at) || new Date();
       local.checkoutState = "ready";
@@ -605,7 +657,7 @@ function createSubscriptionService({ client, catalog, keySecret, billingService 
         "SUBSCRIPTION_NOT_CONFIRMED"
       );
     }
-    const plan = catalog.getPlan(local.catalogPlanId);
+    const plan = resolvePlanForPayment(catalog, local, payment);
     if (
       payment.status === "captured" &&
       !paymentUnlocksMembership(payment, plan)

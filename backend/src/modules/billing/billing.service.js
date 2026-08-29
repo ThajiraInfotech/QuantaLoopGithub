@@ -15,8 +15,12 @@ const {
 function createBillingService({ env, catalog, emailService }) {
   const config = createBillingConfig(env);
 
-  function resolvePlan(planId) {
-    return catalog.getPlan(planId || "annual_access");
+  function resolvePlan(planId, country) {
+    const id = planId || "annual_access";
+    if (typeof catalog.getPlanForCountry === "function") {
+      return catalog.getPlanForCountry(id, country || "IN");
+    }
+    return catalog.getPlan(id);
   }
 
   function assertProfileComplete(profile) {
@@ -138,7 +142,7 @@ function createBillingService({ env, catalog, emailService }) {
         stateCode: String(input.address.stateCode || "").toUpperCase(),
       },
     };
-    const plan = resolvePlan("annual_access");
+    const plan = resolvePlan("annual_access", country);
     const breakdown = buildBreakdownFromProfile(draftProfile, plan);
 
     const update = {
@@ -183,7 +187,8 @@ function createBillingService({ env, catalog, emailService }) {
         "BILLING_PROFILE_REQUIRED"
       );
     }
-    const plan = resolvePlan(planId);
+    const country = String(profile.address?.country || "IN").toUpperCase();
+    const plan = resolvePlan(planId, country);
     const breakdown = buildBreakdownFromProfile(profile, plan);
     profile.pendingTaxQuote = quoteFromBreakdown(plan, breakdown);
     await profile.save();
@@ -193,7 +198,8 @@ function createBillingService({ env, catalog, emailService }) {
   async function requireCheckoutReady(userId, planId) {
     const profile = await BillingProfile.findOne({ user: userId });
     assertProfileComplete(profile);
-    const plan = resolvePlan(planId);
+    const country = String(profile.address?.country || "IN").toUpperCase();
+    const plan = resolvePlan(planId, country);
     const breakdown = buildBreakdownFromProfile(profile, plan);
     profile.pendingTaxQuote = quoteFromBreakdown(plan, breakdown);
     await profile.save();
@@ -336,17 +342,37 @@ function createBillingService({ env, catalog, emailService }) {
     };
   }
 
+  function logoUrl() {
+    return `${String(env.CLIENT_ORIGIN || "").replace(/\/$/, "")}/quantaloop%20logo.png`;
+  }
+
+  function enrichInvoiceForRender(invoice) {
+    const pub = toPublicInvoice(invoice);
+    return {
+      ...pub,
+      description: pub.description || config.invoiceDescription,
+      sacCode: pub.sacCode || config.sacCode,
+      seller: {
+        ...(pub.seller || {}),
+        legalName: pub.seller?.legalName || config.sellerLegalName,
+        operatedBy: pub.seller?.operatedBy || config.sellerOperatedBy,
+        gstin: pub.seller?.gstin || config.supplierGstin,
+        address: pub.seller?.address || config.sellerAddress,
+        stateCode: pub.seller?.stateCode || config.supplierStateCode,
+        stateName: pub.seller?.stateName || config.supplierStateName,
+      },
+    };
+  }
+
   async function getAdminInvoiceHtml(invoiceId) {
     const invoice = await Invoice.findById(invoiceId);
     if (!invoice) {
       throw new AppError("Invoice not found", 404, "INVOICE_NOT_FOUND");
     }
-    return (
-      invoice.htmlBody ||
-      buildInvoiceHtml(toPublicInvoice(invoice), {
-        logoUrl: `${String(env.CLIENT_ORIGIN || "").replace(/\/$/, "")}/quantaloop%20logo.png`,
-      })
-    );
+    // Always render from stored fields so currency / seller / SAC stay correct.
+    return buildInvoiceHtml(enrichInvoiceForRender(invoice), {
+      logoUrl: logoUrl(),
+    });
   }
 
   async function getInvoiceForUser(userId, invoiceId) {
@@ -362,12 +388,9 @@ function createBillingService({ env, catalog, emailService }) {
     if (!invoice) {
       throw new AppError("Invoice not found", 404, "INVOICE_NOT_FOUND");
     }
-    return (
-      invoice.htmlBody ||
-      buildInvoiceHtml(toPublicInvoice(invoice), {
-        logoUrl: `${String(env.CLIENT_ORIGIN || "").replace(/\/$/, "")}/quantaloop%20logo.png`,
-      })
-    );
+    return buildInvoiceHtml(enrichInvoiceForRender(invoice), {
+      logoUrl: logoUrl(),
+    });
   }
 
   /**
@@ -395,11 +418,20 @@ function createBillingService({ env, catalog, emailService }) {
       );
     }
 
-    const plan = resolvePlan(subscription?.catalogPlanId || "annual_access");
+    const country = String(profile.address?.country || "IN").toUpperCase();
+    const plan = resolvePlan(subscription?.catalogPlanId || "annual_access", country);
     const paidAmount = Number(payment?.amount);
+    const paidCurrency = String(payment?.currency || plan.currency).toUpperCase();
     if (Number.isFinite(paidAmount) && paidAmount !== plan.amountMinor) {
       throw new AppError(
         "Payment amount does not match plan for invoicing",
+        409,
+        "PAYMENT_AMOUNT_MISMATCH"
+      );
+    }
+    if (paidCurrency !== String(plan.currency).toUpperCase()) {
+      throw new AppError(
+        "Payment currency does not match plan for invoicing",
         409,
         "PAYMENT_AMOUNT_MISMATCH"
       );
@@ -413,7 +445,9 @@ function createBillingService({ env, catalog, emailService }) {
       Number(quote.amountInclusivePaise) === plan.amountMinor
     ) {
       breakdown = {
-        currency: quote.currency || plan.currency,
+        currency: String(
+          payment?.currency || quote.currency || plan.currency || "INR"
+        ).toUpperCase(),
         amountInclusivePaise: quote.amountInclusivePaise,
         amountInclusive: Number((quote.amountInclusivePaise / 100).toFixed(2)),
         taxablePaise: quote.taxablePaise,
@@ -443,12 +477,18 @@ function createBillingService({ env, catalog, emailService }) {
       ? new Date(Number(payment.created_at) * 1000)
       : new Date();
     const invoiceNumber = await nextInvoiceNumber(config.invoicePrefix, invoiceDate);
+    const paymentCurrency = String(
+      payment?.currency || breakdown.currency || plan.currency || "INR"
+    ).toUpperCase();
+    const orderId =
+      payment?.order_id || subscription?.razorpayOrderId || null;
 
     const publicShape = {
       invoiceNumber,
       invoiceDate,
-      description: plan.name || "Annual network access",
-      sacCode: breakdown.sacCode,
+      currency: paymentCurrency,
+      description: config.invoiceDescription || "Annual platform access",
+      sacCode: breakdown.sacCode || config.sacCode,
       placeOfSupply: breakdown.placeOfSupply,
       taxType: breakdown.taxType,
       taxTreatment: breakdown.taxTreatment,
@@ -478,12 +518,14 @@ function createBillingService({ env, catalog, emailService }) {
       },
       seller: {
         legalName: config.sellerLegalName,
+        operatedBy: config.sellerOperatedBy,
         gstin: config.supplierGstin,
         address: config.sellerAddress,
         stateCode: config.supplierStateCode,
         stateName: config.supplierStateName,
       },
       razorpayPaymentId: paymentId,
+      razorpayOrderId: orderId,
     };
 
     const htmlBody = buildInvoiceHtml(publicShape, {
@@ -501,10 +543,11 @@ function createBillingService({ env, catalog, emailService }) {
         razorpayPaymentId: paymentId,
         razorpaySubscriptionId:
           subscription?.razorpaySubscriptionId || payment?.subscription_id || null,
+        razorpayOrderId: orderId,
         status: "issued",
-        currency: breakdown.currency || "INR",
+        currency: paymentCurrency,
         description: publicShape.description,
-        sacCode: breakdown.sacCode,
+        sacCode: publicShape.sacCode,
         placeOfSupply: breakdown.placeOfSupply,
         placeOfSupplyGstCode: breakdown.placeOfSupplyGstCode,
         taxType: breakdown.taxType,

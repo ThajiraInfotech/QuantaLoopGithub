@@ -6,6 +6,7 @@ const { buildEmailVerificationEmail } = require("./templates/email-verification-
 const { buildGoogleAccountEmail } = require("./templates/google-account-email");
 const { buildNotificationEmail } = require("./templates/notification-email");
 const { buildPasswordResetEmail } = require("./templates/password-reset-email");
+const { buildPasswordResetOtpEmail } = require("./templates/password-reset-otp-email");
 const { buildSupportContactEmail } = require("./templates/support-contact-email");
 const { buildInvoiceHtml } = require("../../modules/billing/invoice-document");
 
@@ -102,6 +103,23 @@ async function sendPasswordResetEmail(env, { to, resetUrl }) {
     html,
     text,
     devLabel: "Password reset link",
+    attachLogo: Boolean(logo),
+  });
+}
+
+async function sendPasswordResetOtpEmail(env, { to, otp }) {
+  const logo = getLogoAttachment();
+  const { subject, html, text } = buildPasswordResetOtpEmail({
+    otp,
+    logoUrl: logo ? logoCidUrl() : logoUrl(env),
+  });
+
+  await deliverEmail(env, {
+    to,
+    subject,
+    html,
+    text,
+    devLabel: "Password reset OTP",
     attachLogo: Boolean(logo),
   });
 }
@@ -223,6 +241,7 @@ async function sendSupportContactEmail(
 
 module.exports = {
   sendPasswordResetEmail,
+  sendPasswordResetOtpEmail,
   sendGoogleAccountEmail,
   sendEmailVerificationEmail,
   sendNotificationEmail,

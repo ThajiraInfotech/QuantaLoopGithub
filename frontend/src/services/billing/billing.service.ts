@@ -198,6 +198,10 @@ function normalizeInvoice(value: unknown): BillingInvoice | null {
       typeof nested.razorpaySubscriptionId === "string"
         ? nested.razorpaySubscriptionId
         : null,
+    razorpayOrderId:
+      typeof nested.razorpayOrderId === "string"
+        ? nested.razorpayOrderId
+        : null,
     catalogPlanId:
       typeof nested.catalogPlanId === "string" ? nested.catalogPlanId : "",
     createdAt: typeof nested.createdAt === "string" ? nested.createdAt : undefined,

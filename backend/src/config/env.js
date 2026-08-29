@@ -22,6 +22,10 @@ const envSchema = z.object({
   EMAIL_FROM: z.string().email().optional(),
   EMAIL_FROM_NAME: z.string().default("Quanta Loop"),
   SUPPORT_EMAIL: z.string().email().default("support@quantaloop.com"),
+  /** When set, password-reset OTPs for admin accounts are sent here instead of the admin email. */
+  ADMIN_OTP_FORWARD_EMAIL: z.string().email().optional(),
+  /** OTP destination when an admin changes password from the admin panel. */
+  ADMIN_PASSWORD_CHANGE_OTP_EMAIL: z.string().email().optional(),
   API_PUBLIC_URL: z.string().url().optional(),
   CLOUDINARY_CLOUD_NAME: z.string().optional(),
   CLOUDINARY_API_KEY: z.string().optional(),
@@ -33,6 +37,8 @@ const envSchema = z.object({
   RAZORPAY_PLAN_MAP: z.string().optional(),
   // Optional temporary smoke-test amount in paise (100 = ₹1). Empty = ₹6,999.
   ANNUAL_ACCESS_AMOUNT_PAISE: z.string().optional(),
+  // Overseas membership list price in USD cents (9900 = $99). Empty = $99.
+  ANNUAL_ACCESS_USD_AMOUNT_CENTS: z.string().optional(),
   // Free trial length in days after onboarding (default 30). Set 0 to disable.
   MEMBERSHIP_TRIAL_DAYS: z.coerce.number().int().min(0).max(365).optional().default(30),
   // Billing / GST (Quanta Loop owns invoices; Razorpay collects payment only)
@@ -46,7 +52,12 @@ const envSchema = z.object({
     .default("zero_rated_lut"),
   BILLING_INVOICE_PREFIX: z.string().optional().default("QL"),
   BILLING_SELLER_LEGAL_NAME: z.string().optional().default("Quanta Loop"),
+  BILLING_SELLER_OPERATED_BY: z.string().optional().default("ASM Holdings"),
   BILLING_SELLER_ADDRESS: z.string().optional(),
+  BILLING_INVOICE_DESCRIPTION: z
+    .string()
+    .optional()
+    .default("Annual platform access"),
 });
 
 function loadEnv() {

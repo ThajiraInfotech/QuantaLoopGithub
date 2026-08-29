@@ -36,6 +36,8 @@ export const ROUTES = {
   adminParticipantDetail: (id: string) => `/admin/participants/${id}`,
   adminReports: "/admin/reports",
   adminReportDetail: (id: string) => `/admin/reports/${id}`,
+  adminSupport: "/admin/support",
+  adminSupportDetail: (id: string) => `/admin/support/${id}`,
   adminMaterials: "/admin/materials",
   adminMaterialDetail: (id: string) => `/admin/materials/${id}`,
   adminInterests: "/admin/interests",
@@ -45,6 +47,7 @@ export const ROUTES = {
   adminInterestsReported: "/admin/interests?reportedOnly=true",
   adminDiscussions: "/admin/discussions",
   adminInvoices: "/admin/invoices",
+  adminSecurity: "/admin/security",
   adminMaterialsForParticipant: (id: string) =>
     `/admin/materials?participant=${encodeURIComponent(id)}`,
   adminInterestsForParticipant: (

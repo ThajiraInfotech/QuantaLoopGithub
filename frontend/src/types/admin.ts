@@ -13,6 +13,7 @@ export type AdminKpis = {
 
 export type AdminActionRequired = {
   openReports: number;
+  openSupportRequests: number;
   interestsWaiting48h: number;
   inactiveDiscussions7d: number;
   recentlySuspended: number;
@@ -140,6 +141,65 @@ export type AdminReportDetail = {
   }>;
 };
 
+export type AdminSupportRequestIssue = {
+  id: string;
+  supportRefId?: string;
+  name: string;
+  email: string;
+  category: string;
+  description: string;
+  companyName: string;
+  source: string;
+  pageUrl: string;
+  userId: string | null;
+  status: "open" | "resolved";
+  resolvedAt?: string | null;
+  resolvedById?: string | null;
+  resolvedByName?: string | null;
+  createdAt: string;
+  updatedAt?: string;
+};
+
+export type AdminSupportRequestSummary = {
+  total: number;
+  open: number;
+  resolved: number;
+};
+
+export type AdminSupportRequestsResult = {
+  items: AdminSupportRequestIssue[];
+  total: number;
+  page: number;
+  limit: number;
+  summary: AdminSupportRequestSummary;
+};
+
+export type AdminSupportRequestDetail = {
+  request: AdminSupportRequestIssue;
+  linkedUser: {
+    id: string;
+    name: string;
+    companyName: string;
+    email: string;
+    role: UserRole;
+    accountStatus: AccountStatus;
+    createdAt: string;
+  } | null;
+  resolution: {
+    status: "open" | "resolved";
+    resolvedAt: string | null;
+    resolvedById: string | null;
+    resolvedByName: string | null;
+    resolvedByCompany: string | null;
+  };
+  history: Array<{
+    type: string;
+    label: string;
+    occurredAt: string;
+    actorName?: string;
+  }>;
+};
+
 export type AdminInactiveDiscussion = {
   id: string;
   materialTitle: string;
@@ -223,6 +283,9 @@ export type AdminParticipantNavigation = {
 export type AdminParticipantProfile = User & {
   phone: string;
   jobTitle: string;
+  /** Admin-only legal consent proof */
+  termsAcceptedAt?: string | null;
+  termsVersion?: string | null;
 };
 
 export type AdminParticipantDetail = {

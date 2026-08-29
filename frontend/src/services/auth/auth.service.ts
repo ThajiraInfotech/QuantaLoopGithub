@@ -155,10 +155,10 @@ export async function registerRequest(
 
 export async function forgotPasswordRequest(
   body: ForgotPasswordFormValues
-): Promise<{ message: string }> {
+): Promise<{ message: string; otpSentTo?: string }> {
   try {
     const { data } = await apiClient.post<
-      ApiSuccess<{ message: string }> | ApiErrorBody
+      ApiSuccess<{ message: string; otpSentTo?: string }> | ApiErrorBody
     >("/auth/forgot-password", body);
     if (isApiError(data)) {
       throw new Error(data.error.message);
@@ -170,7 +170,7 @@ export async function forgotPasswordRequest(
 }
 
 export async function resetPasswordRequest(
-  body: ResetPasswordFormValues & { token: string }
+  body: ResetPasswordFormValues & { email: string }
 ): Promise<{ message: string }> {
   try {
     const { data } = await apiClient.post<

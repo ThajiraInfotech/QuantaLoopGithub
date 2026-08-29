@@ -392,8 +392,9 @@
       "membershipDescription": "Try free for 30 days. List materials and connect with registered buyers across the network.",
       "price": "₹6,999",
       "perYear": "/year",
+      "priceAbroad": "or $99/year if your business is outside India",
       "trialBadge": "30-Day Free Trial Included",
-      "dailyCost": "Less than ₹20 per day after your trial.",
+      "dailyCost": "Less than ₹20/day in India · about $0.30/day outside India after your trial.",
       "roiNote": "One successful deal can easily recover your annual membership fee.",
       "features": [
         "List unlimited materials",
@@ -492,22 +493,34 @@
     },
     "forgotPassword": {
       "title": "Reset your password",
-      "description": "Enter the email associated with your Quanta Loop account and we will send you a secure reset link.",
-      "sendResetLink": "Send Reset Link",
-      "sendingResetLink": "Sending reset link…",
+      "description": "Enter the email associated with your Quanta Loop account and we will send a one-time code to verify it’s you.",
+      "sendCode": "Send verification code",
+      "sendingCode": "Sending code…",
+      "sendResetLink": "Send verification code",
+      "sendingResetLink": "Sending code…",
       "requestFailed": "Unable to process your request. Please try again."
     },
     "resetPassword": {
       "title": "Choose a new password",
-      "description": "Your reset link expires in 30 minutes. Choose a strong password to secure your account.",
+      "description": "Enter the 6-digit code from your email, then set a new password. The code expires in 10 minutes.",
       "loading": "Loading reset form…",
+      "otpLabel": "Verification code",
+      "otpInvalid": "Enter the 6-digit code from your email",
+      "codeSentTo": "We sent a one-time code to",
+      "autofillHint": "Type your new password carefully. If your browser suggests an old password, dismiss it and enter the new one in both fields.",
+      "useDifferentEmail": "Use a different email",
       "newPassword": "New Password",
       "confirmPassword": "Confirm Password",
       "resetPassword": "Reset Password",
       "resetting": "Resetting…",
       "updatePassword": "Update Password",
       "updatingPassword": "Updating password…",
-      "invalidLink": "This reset link is invalid. Request a new password reset.",
+      "resendCode": "Resend code",
+      "resendingCode": "Resending…",
+      "codeResent": "Code resent",
+      "startFromForgot": "Request a one-time code first to reset your password.",
+      "requestCode": "Request reset code",
+      "invalidLink": "This reset request is invalid. Request a new password reset.",
       "resetFailed": "Unable to reset your password. Please try again.",
       "backToSignIn": "Back to Sign In"
     },
@@ -597,7 +610,8 @@
       "participants": "Participants",
       "reports": "Reports",
       "invoices": "Invoices",
-      "support": "Support"
+      "support": "Support",
+      "security": "Security"
     },
     "home": {
       "greeting": {
@@ -881,8 +895,6 @@
       "sellerSummary": "List recoverable materials and connect with registered buyers.",
       "buyerTitle": "Registered buyer",
       "buyerSummary": "Discover materials and express interest with registered suppliers.",
-      "selected": "Selected",
-      "continueArrow": "Continue →",
       "alreadyOnboarded": "Already onboarded?",
       "signIn": "Sign in"
     },
@@ -931,8 +943,7 @@
     "actions": {
       "continue": "Continue",
       "skipForNow": "Skip for now",
-      "saving": "Saving…",
-      "finishLaterInProfile": "You can finish this later in your profile."
+      "saving": "Saving…"
     },
     "trust": {
       "item1": "Private network for registered businesses only",
@@ -986,7 +997,7 @@
       "billing": {
         "loading": "Loading billing details…",
         "title": "Billing details for invoice",
-        "description": "We use these details to calculate GST and issue your tax invoice. The membership price stays ₹6,999.",
+        "description": "We use these details to calculate GST and issue your tax invoice. Price is ₹6,999 for India, or $99 if your business is outside India.",
         "legalName": "Legal / billing name",
         "customerType": "Purchasing as",
         "business": "Business",
@@ -2772,11 +2783,11 @@
             },
             {
               "kind": "paragraph",
-              "text": "General Support Email: [Insert Support Email]"
+              "text": "General Support Email: contact@quantaloop.in"
             },
             {
               "kind": "paragraph",
-              "text": "Website: [Insert Website URL]"
+              "text": "Website: quantaloop.in"
             },
             {
               "kind": "paragraph",
@@ -3580,11 +3591,19 @@
             },
             {
               "kind": "paragraph",
+              "text": "General Support Email: contact@quantaloop.in"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Website: quantaloop.in"
+            },
+            {
+              "kind": "paragraph",
               "text": "Grievance Officer: Mr. Avinash"
             },
             {
               "kind": "paragraph",
-              "text": "Email: grievance@quantaloop.in"
+              "text": "Grievance Email: grievance@quantaloop.in"
             },
             {
               "kind": "paragraph",
@@ -3605,12 +3624,12 @@
     "eyebrow": "Support",
     "title": "Contact the team",
     "description": "Tell us what you need help with. We typically respond within one business day.",
-    "pageDescription": "Share a short description of your issue. Our team receives it directly and can reply to your email.",
+    "pageDescription": "Share a short description of your issue. Our team will review it in the admin dashboard.",
     "fields": {
       "name": "Full name",
       "category": "Topic",
-      "description": "How can we help?",
-      "descriptionPlaceholder": "Describe the problem, what you expected, and any material or company details that help us assist you."
+      "categoryPlaceholder": "Select a topic",
+      "description": "How can we help?"
     },
     "categories": {
       "onboarding": "Onboarding & access",
@@ -3623,14 +3642,15 @@
       "nameRequired": "Name is required",
       "nameTooLong": "Name is too long",
       "emailInvalid": "Enter a valid email",
-      "descriptionMin": "Please add a bit more detail (at least 20 characters)",
+      "categoryRequired": "Please select a topic",
+      "descriptionMin": "Please describe how we can help",
       "descriptionMax": "Description is too long"
     },
     "submit": "Send message",
     "sending": "Sending…",
     "successToast": "Message sent to the Quanta Loop team",
     "successTitle": "Message sent",
-    "successDescription": "Thanks — our team has received your request and will reply by email.",
+    "successDescription": "Thanks — our team has received your request and will follow up soon.",
     "sendAnother": "Send another message",
     "errorGeneric": "Unable to send your message. Please try again.",
     "dismiss": "Close support form"

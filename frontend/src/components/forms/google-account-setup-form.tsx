@@ -19,6 +19,7 @@ import { PasswordStrengthMeter } from "@/components/ui/password-strength-meter";
 import { getPostAuthRedirect } from "@/lib/auth-routing";
 import { cn } from "@/lib/utils";
 import { useAccountSetupDraftPersistence } from "@/hooks/use-account-setup-draft";
+import { LEGAL_LAST_UPDATED } from "@/constants/legal";
 import { completeAccountSetupRequest } from "@/services/auth/auth.service";
 import { useAuthStore } from "@/store/auth-store";
 import { useOnboardingStore } from "@/store/onboarding-store";
@@ -105,6 +106,8 @@ export function GoogleAccountSetupForm() {
       const data = await completeAccountSetupRequest({
         ...values,
         role: pendingRole ?? values.role,
+        acceptedTerms: true,
+        termsVersion: LEGAL_LAST_UPDATED,
       });
       setSession({ user: data.user, accessToken: data.accessToken });
       clearOnboardingDraft();

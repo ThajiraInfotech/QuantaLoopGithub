@@ -13,6 +13,9 @@ import type {
   AdminReportDetail,
   AdminReportIssue,
   AdminReportsResult,
+  AdminSupportRequestDetail,
+  AdminSupportRequestIssue,
+  AdminSupportRequestsResult,
   AccountStatus,
 } from "@/types/admin";
 import type {
@@ -380,6 +383,69 @@ export async function fetchAdminReportDetail(
   }
 }
 
+export type AdminSupportRequestListParams = {
+  search?: string;
+  status?: "all" | "open" | "resolved";
+  category?: "all" | "onboarding" | "matching" | "billing" | "technical" | "other";
+  source?: "all" | "public" | "onboarding" | "dashboard";
+  dateFrom?: string;
+  dateTo?: string;
+  sort?: "newest" | "oldest";
+  page?: number;
+  limit?: number;
+};
+
+export async function fetchAdminSupportRequests(
+  params: AdminSupportRequestListParams = {}
+): Promise<AdminSupportRequestsResult> {
+  try {
+    const { data } = await apiClient.get<unknown>("/admin/support-requests", {
+      params,
+    });
+    if (isApiError(data)) {
+      throw new Error(data.error.message);
+    }
+    if (!isApiSuccess<AdminSupportRequestsResult>(data)) {
+      throw new Error("Unexpected response");
+    }
+    return data.data;
+  } catch (e) {
+    throw new Error(getAxiosErrorMessage(e));
+  }
+}
+
+export async function fetchAdminSupportRequestDetail(
+  requestId: string
+): Promise<AdminSupportRequestDetail> {
+  try {
+    const { data } = await apiClient.get<unknown>(
+      `/admin/support-requests/${requestId}`
+    );
+    if (isApiError(data)) {
+      throw new Error(data.error.message);
+    }
+    if (!isApiSuccess<AdminSupportRequestDetail>(data)) {
+      throw new Error("Unexpected response");
+    }
+    return data.data;
+  } catch (e) {
+    throw new Error(getAxiosErrorMessage(e));
+  }
+}
+
+export async function resolveAdminSupportRequest(requestId: string): Promise<void> {
+  try {
+    const { data } = await apiClient.patch<unknown>(
+      `/admin/support-requests/${requestId}/resolve`
+    );
+    if (isApiError(data)) {
+      throw new Error(data.error.message);
+    }
+  } catch (e) {
+    throw new Error(getAxiosErrorMessage(e));
+  }
+}
+
 export type AdminInvoiceListParams = {
   search?: string;
   month?: string;
@@ -435,4 +501,45 @@ export async function openAdminInvoiceHtml(invoiceId: string): Promise<void> {
   const url = URL.createObjectURL(blob);
   window.open(url, "_blank", "noopener,noreferrer");
   window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
+}
+
+export async function requestAdminPasswordChangeOtp(body: {
+  password: string;
+  confirmPassword: string;
+}): Promise<{ message: string; otpSentTo: string }> {
+  try {
+    const { data } = await apiClient.post<unknown>(
+      "/admin/password/request-otp",
+      body
+    );
+    if (isApiError(data)) {
+      throw new Error(data.error.message);
+    }
+    if (!isApiSuccess<{ message: string; otpSentTo: string }>(data)) {
+      throw new Error("Unexpected response");
+    }
+    return data.data;
+  } catch (e) {
+    throw new Error(getAxiosErrorMessage(e));
+  }
+}
+
+export async function confirmAdminPasswordChange(body: {
+  code: string;
+}): Promise<{ message: string }> {
+  try {
+    const { data } = await apiClient.post<unknown>(
+      "/admin/password/confirm",
+      body
+    );
+    if (isApiError(data)) {
+      throw new Error(data.error.message);
+    }
+    if (!isApiSuccess<{ message: string }>(data)) {
+      throw new Error("Unexpected response");
+    }
+    return data.data;
+  } catch (e) {
+    throw new Error(getAxiosErrorMessage(e));
+  }
 }

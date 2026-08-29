@@ -35,7 +35,9 @@ type NavLabelKey =
   | "administration"
   | "participants"
   | "reports"
-  | "invoices";
+  | "support"
+  | "invoices"
+  | "security";
 
 type NavItem = {
   href: string;
@@ -77,7 +79,9 @@ const adminPrimaryNav: NavItem[] = [
   { href: ROUTES.adminMaterials, labelKey: "materials" },
   { href: ROUTES.adminInterests, labelKey: "interests" },
   { href: ROUTES.adminReports, labelKey: "reports" },
+  { href: ROUTES.adminSupport, labelKey: "support" },
   { href: ROUTES.adminInvoices, labelKey: "invoices" },
+  { href: ROUTES.adminSecurity, labelKey: "security" },
 ];
 
 function isNavActive(pathname: string, href: string) {

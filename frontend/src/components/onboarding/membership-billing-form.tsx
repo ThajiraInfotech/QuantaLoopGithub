@@ -47,7 +47,14 @@ type MembershipBillingFormProps = {
   onTaxRelevantChange?: (values: BillingFormValues) => void;
 };
 
-function formatMoney(amount: number): string {
+function formatMoney(amount: number, currency = "INR"): string {
+  const code = currency.toUpperCase();
+  if (code === "USD") {
+    return `$${amount.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  }
   return `₹${amount.toLocaleString("en-IN", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
@@ -91,6 +98,36 @@ export function profileToForm(profile: BillingProfile): BillingFormValues {
   };
 }
 
+/** Prefer a complete saved billing country; otherwise onboarding/account country. */
+export function billingFormFromProfileOrDefaults(
+  profile: BillingProfile | null | undefined,
+  defaults: MembershipBillingFormProps["defaults"]
+): BillingFormValues {
+  if (!profile) return emptyBillingForm(defaults);
+  const form = profileToForm(profile);
+  const profileComplete = Boolean(
+    profile.legalName?.trim() && profile.address?.line1?.trim()
+  );
+  if (profileComplete) return form;
+  const accountCountry = (defaults.country || INDIA_COUNTRY_CODE).toUpperCase();
+  const next = {
+    ...form,
+    legalName: form.legalName || defaults.legalName || "",
+    city: form.city || defaults.city || "",
+    country: accountCountry,
+  };
+  if (accountCountry !== INDIA_COUNTRY_CODE) {
+    next.state = "";
+    next.stateCode = "";
+    next.gstRegistered = false;
+    next.gstin = "";
+  } else {
+    next.state = form.state || defaults.state || "";
+    next.stateCode = form.stateCode || defaults.stateCode || "";
+  }
+  return next;
+}
+
 export function MembershipBillingForm({
   initialProfile,
   defaults,
@@ -102,14 +139,19 @@ export function MembershipBillingForm({
 }: MembershipBillingFormProps) {
   const t = useTranslations("onboarding.membership.billing");
   const [values, setValues] = useState<BillingFormValues>(() =>
-    initialProfile ? profileToForm(initialProfile) : emptyBillingForm(defaults)
+    billingFormFromProfileOrDefaults(initialProfile, defaults)
   );
 
   useEffect(() => {
-    if (initialProfile) {
-      setValues(profileToForm(initialProfile));
-    }
-  }, [initialProfile]);
+    setValues(billingFormFromProfileOrDefaults(initialProfile, defaults));
+  }, [
+    initialProfile,
+    defaults.city,
+    defaults.country,
+    defaults.legalName,
+    defaults.state,
+    defaults.stateCode,
+  ]);
 
   useEffect(() => {
     onChange(values);
@@ -119,22 +161,24 @@ export function MembershipBillingForm({
 
   const breakdownRows = useMemo(() => {
     if (!taxPreview) return [];
+    const money = (value: number) =>
+      formatMoney(value, taxPreview.currency || "INR");
     if (taxPreview.isExport) {
       return [
-        { label: t("serviceValue"), value: formatMoney(taxPreview.amountInclusive) },
-        { label: t("gst"), value: formatMoney(0) },
+        { label: t("serviceValue"), value: money(taxPreview.amountInclusive) },
+        { label: t("gst"), value: money(0) },
       ];
     }
     if (taxPreview.taxType === "cgst_sgst") {
       return [
-        { label: t("taxable"), value: formatMoney(taxPreview.taxableAmount) },
-        { label: t("cgst"), value: formatMoney(taxPreview.cgstAmount) },
-        { label: t("sgst"), value: formatMoney(taxPreview.sgstAmount) },
+        { label: t("taxable"), value: money(taxPreview.taxableAmount) },
+        { label: t("cgst"), value: money(taxPreview.cgstAmount) },
+        { label: t("sgst"), value: money(taxPreview.sgstAmount) },
       ];
     }
     return [
-      { label: t("taxable"), value: formatMoney(taxPreview.taxableAmount) },
-      { label: t("igst"), value: formatMoney(taxPreview.igstAmount) },
+      { label: t("taxable"), value: money(taxPreview.taxableAmount) },
+      { label: t("igst"), value: money(taxPreview.igstAmount) },
     ];
   }, [t, taxPreview]);
 
@@ -368,7 +412,10 @@ export function MembershipBillingForm({
             <li className="flex justify-between gap-3 border-t border-zinc-100 pt-2 font-semibold text-zinc-900">
               <span>{t("total")}</span>
               <span className="tabular-nums">
-                {formatMoney(taxPreview.amountInclusive)}
+                {formatMoney(
+                  taxPreview.amountInclusive,
+                  taxPreview.currency || "INR"
+                )}
               </span>
             </li>
           </ul>

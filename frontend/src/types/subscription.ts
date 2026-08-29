@@ -14,6 +14,10 @@ export type SubscriptionPlan = {
   code: string;
   name: string;
   description?: string;
+  /** Major units in plan.currency (e.g. 6999 INR or 99 USD). */
+  amount: number;
+  currency: string;
+  /** @deprecated Prefer amount + currency; kept for INR-era callers. */
   amountInr: number;
   interval: string;
   intervalCount: number;

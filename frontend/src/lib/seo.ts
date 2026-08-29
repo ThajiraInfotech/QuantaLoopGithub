@@ -116,19 +116,35 @@ export function buildHomeJsonLd() {
             },
           ],
         },
-        offers: {
-          "@type": "Offer",
-          price: "6999.00",
-          priceCurrency: "INR",
-          description:
-            "Annual network membership including unlimited listings, matching, and buyer connections. GST inclusive. 30-day free trial available.",
-          priceSpecification: {
-            "@type": "PriceSpecification",
+        offers: [
+          {
+            "@type": "Offer",
+            name: "Network Membership — India",
             price: "6999.00",
             priceCurrency: "INR",
-            valueAddedTaxIncluded: true,
+            description:
+              "Annual network membership for businesses billing in India. Unlimited listings, matching, and buyer connections. GST inclusive. 30-day free trial available.",
+            priceSpecification: {
+              "@type": "PriceSpecification",
+              price: "6999.00",
+              priceCurrency: "INR",
+              valueAddedTaxIncluded: true,
+            },
           },
-        },
+          {
+            "@type": "Offer",
+            name: "Network Membership — Outside India",
+            price: "99.00",
+            priceCurrency: "USD",
+            description:
+              "Same annual network membership for businesses billing outside India. Unlimited listings, matching, and buyer connections. 30-day free trial available.",
+            priceSpecification: {
+              "@type": "PriceSpecification",
+              price: "99.00",
+              priceCurrency: "USD",
+            },
+          },
+        ],
       },
     ],
   };

@@ -33,6 +33,31 @@ import { getSubscriptionAccessState } from "@/services/subscriptions/subscriptio
 import { useAuthStore } from "@/store/auth-store";
 import { useOnboardingStore } from "@/store/onboarding-store";
 import type { BillingProfile, TaxPreview } from "@/types/billing";
+import {
+  formatMembershipPrice,
+  membershipPriceForCountry,
+} from "@/lib/membership-pricing";
+import { INDIA_COUNTRY_CODE } from "@/constants/countries";
+
+function accountCountryCode(userCountry?: string | null): string {
+  return String(userCountry || INDIA_COUNTRY_CODE)
+    .trim()
+    .toUpperCase() || INDIA_COUNTRY_CODE;
+}
+
+/** Prefer complete billing profile country; otherwise onboarding/account country. */
+function resolveBillingCountry(
+  profile: BillingProfile | null | undefined,
+  userCountry?: string | null
+): string {
+  const account = accountCountryCode(userCountry);
+  const fromProfile = profile?.address?.country?.trim().toUpperCase();
+  const profileLooksSaved = Boolean(
+    profile?.legalName?.trim() && profile?.address?.line1?.trim()
+  );
+  if (profileLooksSaved && fromProfile) return fromProfile;
+  return account;
+}
 
 function validateBillingForm(values: BillingFormValues): string | null {
   if (!values.legalName.trim()) return "Enter the billing / legal name.";
@@ -78,9 +103,25 @@ export function MembershipPaymentPage() {
   const [taxPreview, setTaxPreview] = useState<TaxPreview | null>(null);
   const [billingError, setBillingError] = useState<string | null>(null);
   const [billingLoading, setBillingLoading] = useState(true);
+  const [billingCountry, setBillingCountry] = useState(() =>
+    accountCountryCode(user?.country)
+  );
   const billingValuesRef = useRef<BillingFormValues | null>(null);
   const isAdmin = user?.role === "admin";
   const sessionReady = authHydrated && Boolean(accessToken && user);
+
+  // Onboarding already captured India vs abroad — keep paywall in sync.
+  useEffect(() => {
+    if (!user?.country) return;
+    setBillingCountry((prev) => {
+      const account = accountCountryCode(user.country);
+      // Don't override a country the user just picked in the billing form.
+      if (billingValuesRef.current?.country) {
+        return accountCountryCode(billingValuesRef.current.country);
+      }
+      return prev === account ? prev : account;
+    });
+  }, [user?.country]);
 
   const enterNetwork = useCallback(() => {
     router.replace(ROUTES.dashboard);
@@ -90,7 +131,7 @@ export function MembershipPaymentPage() {
   const billingDefaults = {
     legalName: user?.companyName || user?.name || "",
     email: user?.email || "",
-    country: user?.country || "IN",
+    country: resolveBillingCountry(billingProfile, user?.country),
     stateCode: user?.stateCode || "",
     state: user?.state || "",
     city: user?.city || user?.location || "",
@@ -98,12 +139,16 @@ export function MembershipPaymentPage() {
 
   const handleBillingChange = useCallback((values: BillingFormValues) => {
     billingValuesRef.current = values;
+    const nextCountry = (values.country || "IN").toUpperCase();
+    setBillingCountry((prev) => (prev === nextCountry ? prev : nextCountry));
   }, []);
 
   const refreshTaxPreview = useCallback(
     async (values: BillingFormValues) => {
+      setBillingCountry((values.country || "IN").toUpperCase());
       const localError = validateBillingForm(values);
       if (localError) {
+        // Incomplete address: still show country currency, don't keep a stale INR quote.
         setTaxPreview(null);
         return;
       }
@@ -169,6 +214,9 @@ export function MembershipPaymentPage() {
     });
     setBillingProfile(saved.profile);
     setTaxPreview(saved.taxPreview);
+    setBillingCountry(
+      (saved.profile.address?.country || values.country || "IN").toUpperCase()
+    );
   }, [
     billingDefaults.city,
     billingDefaults.country,
@@ -178,11 +226,18 @@ export function MembershipPaymentPage() {
     user?.email,
   ]);
 
+  const getExpectedCurrency = useCallback(() => {
+    const formCountry =
+      billingValuesRef.current?.country || billingCountry || user?.country;
+    return membershipPriceForCountry(formCountry).currency;
+  }, [billingCountry, user?.country]);
+
   // Loaded alongside the access check so the pay button is live immediately.
   const checkout = useMembershipCheckout({
     enabled: sessionReady && !isAdmin,
     onEntitled: enterNetwork,
     beforePay: saveBillingBeforePay,
+    getExpectedCurrency,
   });
 
   const runAccessCheck = useCallback(() => {
@@ -221,10 +276,25 @@ export function MembershipPaymentPage() {
       .then(async (profile) => {
         if (cancelled) return;
         setBillingProfile(profile);
+        setBillingCountry(resolveBillingCountry(profile, user?.country));
         if (profile) {
           try {
             const preview = await getTaxPreview("annual_access");
-            if (!cancelled) setTaxPreview(preview);
+            if (!cancelled) {
+              const expected = membershipPriceForCountry(
+                resolveBillingCountry(profile, user?.country)
+              );
+              // Ignore a stale INR quote when the account is abroad (and vice versa).
+              if (
+                preview &&
+                String(preview.currency || "").toUpperCase() ===
+                  expected.currency
+              ) {
+                setTaxPreview(preview);
+              } else {
+                setTaxPreview(null);
+              }
+            }
           } catch {
             /* incomplete profile is fine */
           }
@@ -239,7 +309,7 @@ export function MembershipPaymentPage() {
     return () => {
       cancelled = true;
     };
-  }, [isAdmin, sessionReady]);
+  }, [isAdmin, sessionReady, user?.country]);
 
   // Anyone who already paid (or renewed elsewhere) skips this step entirely.
   useEffect(() => {
@@ -308,9 +378,21 @@ export function MembershipPaymentPage() {
   }
 
   const busyPaying = checkout.busy === "pay" || checkout.busy === "recheck";
-  const price = checkout.plan
-    ? `₹${checkout.plan.amountInr.toLocaleString("en-IN")}`
-    : "₹6,999";
+  const price = (() => {
+    const expected = membershipPriceForCountry(
+      billingCountry || user?.country
+    );
+    if (
+      taxPreview &&
+      String(taxPreview.currency || "").toUpperCase() === expected.currency
+    ) {
+      return formatMembershipPrice(
+        taxPreview.amountInclusive,
+        taxPreview.currency
+      );
+    }
+    return formatMembershipPrice(expected.amount, expected.currency);
+  })();
   const canStartOver =
     sessionReady &&
     !isAdmin &&

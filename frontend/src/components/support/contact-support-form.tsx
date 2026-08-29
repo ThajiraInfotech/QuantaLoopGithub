@@ -51,6 +51,7 @@ export function ContactSupportForm({
         nameRequired: t("validation.nameRequired"),
         nameTooLong: t("validation.nameTooLong"),
         emailInvalid: t("validation.emailInvalid"),
+        categoryRequired: t("validation.categoryRequired"),
         descriptionMin: t("validation.descriptionMin"),
         descriptionMax: t("validation.descriptionMax"),
       }),
@@ -63,7 +64,7 @@ export function ContactSupportForm({
     defaultValues: {
       name: defaultName,
       email: defaultEmail,
-      category: "other",
+      category: "",
       description: "",
       companyName: defaultCompanyName,
       website: "",
@@ -74,7 +75,7 @@ export function ContactSupportForm({
     form.reset({
       name: defaultName,
       email: defaultEmail,
-      category: "other",
+      category: "",
       description: "",
       companyName: defaultCompanyName,
       website: "",
@@ -94,11 +95,15 @@ export function ContactSupportForm({
 
   async function onSubmit(values: ContactSupportFormValues) {
     setFormError(null);
+    if (!values.category) return;
     try {
       const pageUrl =
         typeof window !== "undefined" ? window.location.href : undefined;
       await submitContactSupportRequest({
-        ...values,
+        name: values.name,
+        email: values.email,
+        category: values.category,
+        description: values.description,
         companyName: values.companyName || defaultCompanyName || undefined,
         source,
         pageUrl,
@@ -138,7 +143,7 @@ export function ContactSupportForm({
             form.reset({
               name: defaultName,
               email: defaultEmail,
-              category: "other",
+              category: "",
               description: "",
               companyName: defaultCompanyName,
               website: "",
@@ -197,12 +202,20 @@ export function ContactSupportForm({
           className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-small text-foreground shadow-subtle transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50"
           {...form.register("category")}
         >
+          <option value="" disabled>
+            {t("fields.categoryPlaceholder")}
+          </option>
           {SUPPORT_CATEGORIES.map((value) => (
             <option key={value} value={value}>
               {t(`categories.${value}`)}
             </option>
           ))}
         </select>
+        {fieldError("category", touchedFields.category) ? (
+          <p className="text-sm text-red-600" role="alert">
+            {errors.category?.message}
+          </p>
+        ) : null}
       </div>
 
       <div className="space-y-1.5">
@@ -212,7 +225,6 @@ export function ContactSupportForm({
           rows={compact ? 4 : 6}
           maxLength={4000}
           disabled={isSubmitting}
-          placeholder={t("fields.descriptionPlaceholder")}
           className="resize-y"
           {...form.register("description")}
         />

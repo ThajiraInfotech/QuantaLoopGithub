@@ -24,6 +24,7 @@ import type { AdminParticipantDetail } from "@/types/admin";
 import type { AccountStatus } from "@/types/admin";
 import {
   formatMediumDate,
+  formatMediumDateTime,
   formatRelativeTime,
   formatRelativeWhen,
 } from "@/utils/format-relative-time";
@@ -292,6 +293,18 @@ export function AdminParticipantDetailView({
               <ProfileField
                 label="Total logins"
                 value={String(accountHealth.loginCount)}
+              />
+              <ProfileField
+                label="Terms accepted"
+                value={
+                  profile.termsAcceptedAt
+                    ? `${formatMediumDateTime(profile.termsAcceptedAt)}${
+                        profile.termsVersion
+                          ? ` · version ${profile.termsVersion}`
+                          : ""
+                      }`
+                    : "Not recorded"
+                }
               />
               <ProfileField
                 label="Profile completion"

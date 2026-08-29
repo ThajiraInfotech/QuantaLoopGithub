@@ -31,10 +31,14 @@ export function createResetPasswordSchema(
   messages: Pick<
     AuthValidationMessages,
     "passwordMin" | "passwordMax" | "confirmPassword" | "passwordsMismatch"
-  >
+  > & { otpRequired?: string; otpInvalid?: string }
 ) {
   return z
     .object({
+      code: z
+        .string()
+        .trim()
+        .regex(/^\d{6}$/, messages.otpInvalid ?? "Enter the 6-digit code"),
       password: z
         .string()
         .min(8, messages.passwordMin)
@@ -101,12 +105,19 @@ export type RegisterRequestBody = Omit<RegisterFormValues, "confirmPassword"> & 
   materialTypes?: string[];
   preferredMaterialCategories?: string[];
   requiredMaterialCategories?: string[];
+  acceptedTerms: true;
+  termsVersion?: string;
 };
 export type GoogleAccountSetupFormValues = z.infer<
   ReturnType<typeof createGoogleAccountSetupSchema>
 >;
-export type GoogleAccountSetupRequestBody = GoogleAccountSetupFormValues;
+export type GoogleAccountSetupRequestBody = GoogleAccountSetupFormValues & {
+  acceptedTerms: true;
+  termsVersion?: string;
+};
 
 export type GoogleRegisterRequestBody = GoogleAccountSetupFormValues & {
   credential: string;
+  acceptedTerms: true;
+  termsVersion?: string;
 };

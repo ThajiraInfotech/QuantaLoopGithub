@@ -17,6 +17,8 @@ const {
   bulkModerateAdminMaterials,
   listAdminInterests,
   getAdminInterestDetail,
+  requestAdminPasswordChange,
+  confirmAdminPasswordChange,
 } = require("./admin.service");
 const {
   safeParseListParticipants,
@@ -26,10 +28,19 @@ const {
   safeParseBulkModerateMaterials,
   safeParseListAdminInterests,
   safeParseListAdminReports,
+  safeParseListAdminSupportRequests,
   safeParseListAdminInvoices,
+  safeParseAdminChangePasswordRequest,
+  safeParseAdminChangePasswordConfirm,
 } = require("./admin.validation");
 const { createSubscriptionCatalog } = require("../../config/subscriptionCatalog");
 const { createBillingService } = require("../billing/billing.service");
+
+const {
+  listAdminSupportRequests,
+  getAdminSupportRequestDetail,
+  resolveSupportRequest,
+} = require("../support/support.service");
 
 function validationError(next, flatten) {
   next(new AppError("Validation failed", 400, "VALIDATION_ERROR", flatten));
@@ -122,6 +133,55 @@ const getReport = asyncHandler(async (req, res, next) => {
   }
 
   sendSuccess(res, detail, "Report detail");
+});
+
+const getSupportRequests = asyncHandler(async (req, res, next) => {
+  const parsed = safeParseListAdminSupportRequests(req.query);
+  if (!parsed.success) {
+    validationError(next, parsed.error.flatten());
+    return;
+  }
+
+  const result = await listAdminSupportRequests(parsed.data);
+  sendSuccess(res, result, "Support requests retrieved");
+});
+
+const getSupportRequest = asyncHandler(async (req, res, next) => {
+  const { requestId } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(requestId)) {
+    next(new AppError("Invalid support request id", 400, "INVALID_ID"));
+    return;
+  }
+
+  const detail = await getAdminSupportRequestDetail(requestId);
+  if (!detail) {
+    next(new AppError("Support request not found", 404, "NOT_FOUND"));
+    return;
+  }
+
+  sendSuccess(res, detail, "Support request detail");
+});
+
+const patchSupportRequestResolve = asyncHandler(async (req, res, next) => {
+  const { requestId } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(requestId)) {
+    next(new AppError("Invalid support request id", 400, "INVALID_ID"));
+    return;
+  }
+
+  const updated = await resolveSupportRequest(requestId, req.user.id);
+  if (!updated) {
+    next(
+      new AppError(
+        "Support request not found or already resolved",
+        404,
+        "NOT_FOUND"
+      )
+    );
+    return;
+  }
+
+  sendSuccess(res, { request: updated }, "Support request resolved");
 });
 
 const getMaterials = asyncHandler(async (req, res, next) => {
@@ -237,6 +297,32 @@ const getInvoiceHtml = asyncHandler(async (req, res, next) => {
   res.status(200).type("html").send(html);
 });
 
+const postPasswordChangeRequest = asyncHandler(async (req, res, next) => {
+  const parsed = safeParseAdminChangePasswordRequest(req.body);
+  if (!parsed.success) {
+    validationError(next, parsed.error.flatten());
+    return;
+  }
+
+  const result = await requestAdminPasswordChange(
+    req.user.id,
+    parsed.data,
+    req.app.locals.env
+  );
+  sendSuccess(res, result, "Confirmation code sent");
+});
+
+const postPasswordChangeConfirm = asyncHandler(async (req, res, next) => {
+  const parsed = safeParseAdminChangePasswordConfirm(req.body);
+  if (!parsed.success) {
+    validationError(next, parsed.error.flatten());
+    return;
+  }
+
+  const result = await confirmAdminPasswordChange(req.user.id, parsed.data);
+  sendSuccess(res, result, "Password updated");
+});
+
 module.exports = {
   getDashboard,
   getParticipants,
@@ -244,6 +330,9 @@ module.exports = {
   patchParticipant,
   getReports,
   getReport,
+  getSupportRequests,
+  getSupportRequest,
+  patchSupportRequestResolve,
   getMaterials,
   getMaterial,
   patchMaterial,
@@ -252,4 +341,6 @@ module.exports = {
   getInterest,
   getInvoices,
   getInvoiceHtml,
+  postPasswordChangeRequest,
+  postPasswordChangeConfirm,
 };

@@ -98,7 +98,20 @@ function createSubscriptionController({ service, catalog, env }) {
       planId: result.data.planId,
       idempotencyKey: result.data.idempotencyKey,
     });
-    const plan = catalog.getPlan(result.data.planId);
+    const amount =
+      typeof subscription.checkoutAmountMinor === "number"
+        ? subscription.checkoutAmountMinor
+        : null;
+    const currency = subscription.checkoutCurrency
+      ? String(subscription.checkoutCurrency).toUpperCase()
+      : null;
+    if (!amount || !currency) {
+      throw new AppError(
+        "Checkout order is missing amount or currency",
+        500,
+        "CHECKOUT_AMOUNT_MISSING"
+      );
+    }
     sendSuccess(
       res,
       {
@@ -107,8 +120,8 @@ function createSubscriptionController({ service, catalog, env }) {
           keyId: env.RAZORPAY_KEY_ID || null,
           orderId: subscription.razorpayOrderId,
           razorpayOrderId: subscription.razorpayOrderId,
-          amount: plan.amountMinor,
-          currency: plan.currency,
+          amount,
+          currency,
           // Legacy fields kept empty for older clients.
           subscriptionId: subscription.razorpaySubscriptionId,
           razorpaySubscriptionId: subscription.razorpaySubscriptionId,

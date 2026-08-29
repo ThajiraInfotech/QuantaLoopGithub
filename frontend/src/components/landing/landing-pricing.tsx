@@ -92,6 +92,9 @@ export async function LandingPricing() {
                     {t("trialBadge")}
                   </Badge>
                 </div>
+                <p className="mt-3 text-body font-medium leading-snug text-foreground/90">
+                  {t("priceAbroad")}
+                </p>
                 <p className="mt-3 text-small text-muted-foreground">
                   {t("dailyCost")}
                 </p>

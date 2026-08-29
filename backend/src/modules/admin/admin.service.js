@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const crypto = require("crypto");
+const bcrypt = require("bcryptjs");
 
 const { Conversation } = require("../conversations/conversation.model");
 const { Interest } = require("../interests/interest.model");
@@ -8,13 +10,28 @@ const {
 } = require("../materials/material-status.helper");
 const { Message } = require("../messages/message.model");
 const { Report } = require("../reports/report.model");
+const { countOpenSupportRequests } = require("../support/support.service");
 const { User, toPublicJSON } = require("../users/user.model");
+const { AppError } = require("../../utils/AppError");
+const {
+  sendPasswordResetOtpEmail,
+} = require("../../services/email/email.service");
 const {
   networkParticipantFilter,
   userHasNetworkAccess,
 } = require("../subscriptions/paid-participants");
 const MS_48H = 48 * 60 * 60 * 1000;
 const MS_7D = 7 * 24 * 60 * 60 * 1000;
+const SALT_ROUNDS = 12;
+const PASSWORD_CHANGE_OTP_TTL_MS = 10 * 60 * 1000;
+
+function hashToken(rawToken) {
+  return crypto.createHash("sha256").update(String(rawToken)).digest("hex");
+}
+
+function generatePasswordChangeOtp() {
+  return String(crypto.randomInt(0, 1_000_000)).padStart(6, "0");
+}
 
 function weekAgo() {
   return new Date(Date.now() - MS_7D);
@@ -178,6 +195,7 @@ async function getDashboardStats() {
     materialsThisMonth,
     materialsLastMonth,
     openReports,
+    openSupportRequests,
     interestsWaiting48h,
     inactiveDiscussions7d,
     recentlySuspended,
@@ -212,6 +230,7 @@ async function getDashboardStats() {
       createdAt: { $gte: lastMonthStart, $lt: thisMonthStart },
     }),
     Report.countDocuments({ status: "open" }),
+    countOpenSupportRequests(),
     Interest.countDocuments({
       status: "pending",
       createdAt: { $lte: stale48h },
@@ -256,6 +275,7 @@ async function getDashboardStats() {
     },
     actionRequired: {
       openReports,
+      openSupportRequests,
       interestsWaiting48h,
       inactiveDiscussions7d,
       recentlySuspended,
@@ -584,6 +604,11 @@ async function getParticipantDetail(userId) {
     ...toPublicJSON(user, { includeEmail: true }),
     phone: user.phone ?? "",
     jobTitle: user.jobTitle ?? "",
+    // Admin-only legal proof — not included in member-facing toPublicJSON.
+    termsAcceptedAt: user.termsAcceptedAt
+      ? new Date(user.termsAcceptedAt).toISOString()
+      : null,
+    termsVersion: user.termsVersion ?? null,
   };
 
   return {
@@ -2081,6 +2106,74 @@ async function getAdminInterestDetail(interestId) {
   };
 }
 
+async function requestAdminPasswordChange(adminUserId, { password }, env) {
+  const otpDestination = env.ADMIN_PASSWORD_CHANGE_OTP_EMAIL;
+  if (!otpDestination) {
+    throw new AppError(
+      "Admin password change is not configured",
+      503,
+      "PASSWORD_CHANGE_NOT_CONFIGURED"
+    );
+  }
+
+  const user = await User.findById(adminUserId).select(
+    "+pendingPasswordHash +passwordChangeToken +passwordChangeExpiresAt"
+  );
+  if (!user || user.role !== "admin") {
+    throw new AppError("Admin account not found", 404, "NOT_FOUND");
+  }
+
+  const otp = generatePasswordChangeOtp();
+  user.pendingPasswordHash = await bcrypt.hash(password, SALT_ROUNDS);
+  user.passwordChangeToken = hashToken(otp);
+  user.passwordChangeExpiresAt = new Date(
+    Date.now() + PASSWORD_CHANGE_OTP_TTL_MS
+  );
+  await user.save();
+
+  await sendPasswordResetOtpEmail(env, {
+    to: otpDestination,
+    otp,
+  });
+
+  return {
+    message: "Confirmation code sent.",
+    otpSentTo: otpDestination,
+  };
+}
+
+async function confirmAdminPasswordChange(adminUserId, { code }) {
+  const hashedOtp = hashToken(String(code).trim());
+
+  const user = await User.findOne({
+    _id: adminUserId,
+    role: "admin",
+    passwordChangeToken: hashedOtp,
+    passwordChangeExpiresAt: { $gt: new Date() },
+  }).select(
+    "+password +pendingPasswordHash +passwordChangeToken +passwordChangeExpiresAt"
+  );
+
+  if (!user || !user.pendingPasswordHash) {
+    throw new AppError(
+      "Invalid or expired confirmation code",
+      400,
+      "INVALID_PASSWORD_CHANGE_CODE"
+    );
+  }
+
+  user.password = user.pendingPasswordHash;
+  user.hasLocalPassword = true;
+  user.pendingPasswordHash = null;
+  user.passwordChangeToken = null;
+  user.passwordChangeExpiresAt = null;
+  await user.save();
+
+  return {
+    message: "Your password has been updated successfully.",
+  };
+}
+
 module.exports = {
   getDashboardStats,
   listParticipants,
@@ -2095,4 +2188,6 @@ module.exports = {
   bulkModerateAdminMaterials,
   listAdminInterests,
   getAdminInterestDetail,
+  requestAdminPasswordChange,
+  confirmAdminPasswordChange,
 };

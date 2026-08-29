@@ -141,6 +141,50 @@ function safeParseListAdminReports(query) {
   return listAdminReportsQuerySchema.safeParse(query);
 }
 
+const listAdminSupportRequestsQuerySchema = z.object({
+  search: z.string().optional().default(""),
+  status: z.enum(["all", "open", "resolved"]).optional().default("open"),
+  category: z
+    .enum(["all", "onboarding", "matching", "billing", "technical", "other"])
+    .optional()
+    .default("all"),
+  source: z.enum(["all", "public", "onboarding", "dashboard"]).optional().default("all"),
+  dateFrom: z.string().optional().default(""),
+  dateTo: z.string().optional().default(""),
+  sort: z.enum(["newest", "oldest"]).optional().default("newest"),
+  page: z.coerce.number().int().min(1).optional().default(1),
+  limit: z.coerce.number().int().min(1).max(100).optional().default(20),
+});
+
+function safeParseListAdminSupportRequests(query) {
+  return listAdminSupportRequestsQuerySchema.safeParse(query);
+}
+
+const adminChangePasswordRequestSchema = z
+  .object({
+    password: z.string().min(8).max(128),
+    confirmPassword: z.string().min(8).max(128),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+const adminChangePasswordConfirmSchema = z.object({
+  code: z
+    .string()
+    .trim()
+    .regex(/^\d{6}$/, "Confirmation code must be 6 digits"),
+});
+
+function safeParseAdminChangePasswordRequest(body) {
+  return adminChangePasswordRequestSchema.safeParse(body);
+}
+
+function safeParseAdminChangePasswordConfirm(body) {
+  return adminChangePasswordConfirmSchema.safeParse(body);
+}
+
 module.exports = {
   safeParseListParticipants,
   safeParseAccountStatus,
@@ -149,5 +193,8 @@ module.exports = {
   safeParseBulkModerateMaterials,
   safeParseListAdminInterests,
   safeParseListAdminReports,
+  safeParseListAdminSupportRequests,
   safeParseListAdminInvoices,
+  safeParseAdminChangePasswordRequest,
+  safeParseAdminChangePasswordConfirm,
 };

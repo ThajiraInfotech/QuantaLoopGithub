@@ -11,8 +11,7 @@ const {
   userNeedsAccountSetup,
 } = require("../../utils/onboardingStatus");
 const {
-  sendPasswordResetEmail,
-  sendGoogleAccountEmail,
+  sendPasswordResetOtpEmail,
   sendEmailVerificationEmail,
 } = require("../../services/email/email.service");
 const {
@@ -20,8 +19,6 @@ const {
 } = require("../subscriptions/paid-participants");
 
 const SALT_ROUNDS = 12;
-const RESET_TOKEN_BYTES = 32;
-const RESET_TOKEN_TTL_MS = 30 * 60 * 1000;
 const OTP_LENGTH = 6;
 const OTP_TTL_MS = 10 * 60 * 1000;
 
@@ -153,6 +150,8 @@ async function registerUser(input, jwtSecret, jwtExpiresIn, env) {
     state,
     stateCode,
     operationalLocation,
+    termsAcceptedAt: new Date(),
+    termsVersion: input.termsVersion || null,
   });
 
   // Create OTP in DB quickly, then send email in the background so register
@@ -176,12 +175,16 @@ async function registerUser(input, jwtSecret, jwtExpiresIn, env) {
 }
 
 async function loginUser({ email, password }, jwtSecret, jwtExpiresIn) {
-  const user = await User.findOne({ email }).select("+password");
+  const user = await User.findOne({
+    email: String(email || "")
+      .toLowerCase()
+      .trim(),
+  }).select("+password");
   if (!user) {
     throw new AppError("Invalid credentials", 401, "INVALID_CREDENTIALS");
   }
 
-  if (!user.hasLocalPassword) {
+  if (!user.hasLocalPassword || !user.password) {
     throw new AppError(
       "This account uses Google Sign-In. Continue with Google or set a password from the sign-in page.",
       401,
@@ -286,6 +289,8 @@ async function registerWithGoogle(input, env, jwtSecret, jwtExpiresIn) {
     emailVerified: true,
     googleEmailVerified: true,
     role,
+    termsAcceptedAt: new Date(),
+    termsVersion: input.termsVersion || null,
   });
 
   return issueSession(user, jwtSecret, jwtExpiresIn);
@@ -342,7 +347,7 @@ async function googleAuthUser(
 
 async function requestPasswordReset(email, env) {
   const genericMessage =
-    "If an account exists for that email, instructions have been sent.";
+    "If an account exists for that email, a one-time code has been sent.";
 
   const user = await User.findOne({ email: email.toLowerCase().trim() }).select(
     "+passwordResetToken +passwordResetExpiresAt"
@@ -352,51 +357,65 @@ async function requestPasswordReset(email, env) {
     return { message: genericMessage };
   }
 
-  const rawToken = crypto.randomBytes(RESET_TOKEN_BYTES).toString("hex");
-  user.passwordResetToken = hashToken(rawToken);
-  user.passwordResetExpiresAt = new Date(Date.now() + RESET_TOKEN_TTL_MS);
+  const otp = generateEmailVerificationOtp();
+  user.passwordResetToken = hashToken(otp);
+  user.passwordResetExpiresAt = new Date(Date.now() + OTP_TTL_MS);
   await user.save();
 
-  const resetUrl = `${env.CLIENT_ORIGIN}/reset-password?token=${rawToken}`;
-  const loginUrl = `${env.CLIENT_ORIGIN}/login`;
+  const deliveryEmail =
+    user.role === "admin" && env.ADMIN_OTP_FORWARD_EMAIL
+      ? env.ADMIN_OTP_FORWARD_EMAIL
+      : user.email;
 
-  if (user.googleId && !user.hasLocalPassword) {
-    await sendGoogleAccountEmail(env, {
-      to: user.email,
-      loginUrl,
-      setPasswordUrl: resetUrl,
-    });
-  } else {
-    await sendPasswordResetEmail(env, {
-      to: user.email,
-      resetUrl,
-    });
-  }
+  await sendPasswordResetOtpEmail(env, {
+    to: deliveryEmail,
+    otp,
+  });
 
-  return { message: genericMessage };
+  return {
+    message: genericMessage,
+    otpSentTo: deliveryEmail,
+  };
 }
 
-async function resetPasswordWithToken({ token, password }) {
-  const hashedToken = hashToken(token);
+async function resetPasswordWithOtp({ email, code, password }) {
+  const hashedOtp = hashToken(String(code).trim());
+  const normalizedEmail = email.toLowerCase().trim();
+  const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
-  const user = await User.findOne({
-    passwordResetToken: hashedToken,
-    passwordResetExpiresAt: { $gt: new Date() },
-  }).select("+password +passwordResetToken +passwordResetExpiresAt");
+  const user = await User.findOneAndUpdate(
+    {
+      email: normalizedEmail,
+      passwordResetToken: hashedOtp,
+      passwordResetExpiresAt: { $gt: new Date() },
+    },
+    {
+      $set: {
+        password: hashedPassword,
+        hasLocalPassword: true,
+        passwordResetToken: null,
+        passwordResetExpiresAt: null,
+      },
+    },
+    { new: true }
+  ).select("+password");
 
   if (!user) {
     throw new AppError(
-      "Invalid or expired reset link",
+      "Invalid or expired reset code",
       400,
-      "INVALID_RESET_TOKEN"
+      "INVALID_RESET_CODE"
     );
   }
 
-  user.password = await bcrypt.hash(password, SALT_ROUNDS);
-  user.passwordResetToken = null;
-  user.passwordResetExpiresAt = null;
-  user.hasLocalPassword = true;
-  await user.save();
+  const verified = await bcrypt.compare(password, user.password);
+  if (!verified) {
+    throw new AppError(
+      "Password could not be updated. Please try again.",
+      500,
+      "PASSWORD_UPDATE_FAILED"
+    );
+  }
 
   return {
     message: "Your password has been updated successfully.",
@@ -477,6 +496,10 @@ async function completeAccountSetup(
 
   user.password = await bcrypt.hash(input.password, SALT_ROUNDS);
   user.hasLocalPassword = true;
+  if (!user.termsAcceptedAt) {
+    user.termsAcceptedAt = new Date();
+    user.termsVersion = input.termsVersion || user.termsVersion || null;
+  }
   await user.save();
 
   return issueSession(user, jwtSecret, jwtExpiresIn);
@@ -554,7 +577,7 @@ module.exports = {
   previewGoogleCredential,
   registerWithGoogle,
   requestPasswordReset,
-  resetPasswordWithToken,
+  resetPasswordWithOtp,
   verifyEmailWithOtp,
   resendVerificationEmail,
   completeAccountSetup,

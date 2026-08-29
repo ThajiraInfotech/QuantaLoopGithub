@@ -182,6 +182,11 @@ type UseMembershipCheckoutOptions = {
    * Must resolve successfully for checkout to continue.
    */
   beforePay?: () => Promise<void>;
+  /**
+   * Expected Razorpay currency after billing is saved (INR or USD).
+   * Used to refuse opening checkout if the order currency does not match.
+   */
+  getExpectedCurrency?: () => string;
 };
 
 /**
@@ -193,6 +198,7 @@ export function useMembershipCheckout({
   onEntitled,
   enabled = true,
   beforePay,
+  getExpectedCurrency,
 }: UseMembershipCheckoutOptions = {}): MembershipCheckout {
   const user = useAuthStore((state) => state.user);
   const [plan, setPlan] = useState<SubscriptionPlan | null>(null);
@@ -304,18 +310,35 @@ export function useMembershipCheckout({
         throw new Error("Secure checkout is unavailable");
       }
 
+      const orderCurrency = String(session.currency || "").toUpperCase();
+      const expectedCurrency = getExpectedCurrency?.()?.trim().toUpperCase();
+      if (expectedCurrency && orderCurrency !== expectedCurrency) {
+        throw new Error(
+          `Checkout currency mismatch (expected ${expectedCurrency}, got ${orderCurrency}). Please refresh and try again.`
+        );
+      }
+      if (!session.amount || session.amount <= 0 || !orderCurrency) {
+        throw new Error("Checkout returned an invalid amount or currency");
+      }
+
+      const amountLabel =
+        orderCurrency === "USD"
+          ? `$${(session.amount / 100).toFixed(session.amount % 100 === 0 ? 0 : 2)}`
+          : `₹${(session.amount / 100).toLocaleString("en-IN")}`;
+
       const checkout = new window.Razorpay({
         key: publicKey,
         order_id: session.orderId,
         amount: session.amount,
-        currency: session.currency,
+        currency: orderCurrency,
         name: "Quanta Loop",
-        description: `${plan.name} membership`,
+        description: `${plan.name} — ${amountLabel}/year`,
         prefill: { name: user?.name, email: user?.email },
         notes: {
           plan_code: plan.code,
           user_id: user?.id ?? "",
           company_name: user?.companyName ?? "",
+          checkout_currency: orderCurrency,
         },
         theme: { color: "#33B573" },
         handler: async (response) => {
@@ -353,7 +376,7 @@ export function useMembershipCheckout({
       setError(errorMessage(checkoutError));
       release();
     }
-  }, [beforePay, plan, publicKey, settle, user]);
+  }, [beforePay, getExpectedCurrency, plan, publicKey, settle, user]);
 
   const recheck = useCallback(async () => {
     if (!claim("recheck")) return;

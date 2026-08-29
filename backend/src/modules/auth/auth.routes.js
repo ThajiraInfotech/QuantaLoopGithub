@@ -13,6 +13,7 @@ function createAuthRouter(env) {
     max: 5,
     standardHeaders: true,
     legacyHeaders: false,
+    validate: { xForwardedForHeader: false },
     message: {
       success: false,
       message: "Too many reset attempts. Please try again later.",

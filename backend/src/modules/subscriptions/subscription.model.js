@@ -25,6 +25,9 @@ const subscriptionSchema = new mongoose.Schema(
     razorpayPlanId: { type: String, default: "order_checkout" },
     razorpaySubscriptionId: { type: String, unique: true, sparse: true },
     razorpayOrderId: { type: String, unique: true, sparse: true },
+    /** Snapshot of what was charged (INR or USD) so verify stays correct. */
+    checkoutAmountMinor: { type: Number, default: null },
+    checkoutCurrency: { type: String, trim: true, uppercase: true, default: null },
     latestPaymentId: { type: String, default: null },
     idempotencyKey: { type: String, required: true },
     checkoutState: {
@@ -83,6 +86,9 @@ function toPublicSubscription(value) {
     razorpaySubscriptionId,
     orderId: razorpayOrderId,
     razorpayOrderId,
+    checkoutAmountMinor:
+      typeof o.checkoutAmountMinor === "number" ? o.checkoutAmountMinor : null,
+    checkoutCurrency: o.checkoutCurrency || null,
     status: o.status,
     shortUrl: o.shortUrl || null,
     currentStartAt: o.currentStartAt || null,

@@ -24,6 +24,7 @@ const buyerSnapshotSchema = new mongoose.Schema(
 const sellerSnapshotSchema = new mongoose.Schema(
   {
     legalName: { type: String, trim: true, default: "" },
+    operatedBy: { type: String, trim: true, default: null },
     gstin: { type: String, trim: true, default: null },
     address: { type: String, trim: true, default: null },
     stateCode: { type: String, trim: true, default: "" },
@@ -56,6 +57,7 @@ const invoiceSchema = new mongoose.Schema(
       index: true,
     },
     razorpaySubscriptionId: { type: String, trim: true, default: null },
+    razorpayOrderId: { type: String, trim: true, default: null },
     status: {
       type: String,
       enum: ["issued", "cancelled"],
@@ -63,7 +65,7 @@ const invoiceSchema = new mongoose.Schema(
       index: true,
     },
     currency: { type: String, default: "INR" },
-    description: { type: String, trim: true, default: "Annual network access" },
+    description: { type: String, trim: true, default: "Annual platform access" },
     sacCode: { type: String, trim: true, default: null },
     placeOfSupply: { type: String, trim: true, default: "" },
     placeOfSupplyGstCode: { type: String, trim: true, default: null },
@@ -118,6 +120,10 @@ function toPublicInvoice(doc) {
     catalogPlanId: o.catalogPlanId,
     razorpayPaymentId: o.razorpayPaymentId,
     razorpaySubscriptionId: o.razorpaySubscriptionId,
+    razorpayOrderId:
+      o.razorpayOrderId ||
+      (o.subscription && o.subscription.razorpayOrderId) ||
+      null,
     subscriptionId: o.subscription ? String(o.subscription) : null,
     createdAt: o.createdAt,
   };

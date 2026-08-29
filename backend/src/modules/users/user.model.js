@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema(
     emailVerificationExpiresAt: { type: Date, select: false, default: null },
     passwordResetToken: { type: String, select: false, default: null },
     passwordResetExpiresAt: { type: Date, select: false, default: null },
+    /** Pending admin password change (OTP-confirmed). */
+    pendingPasswordHash: { type: String, select: false, default: null },
+    passwordChangeToken: { type: String, select: false, default: null },
+    passwordChangeExpiresAt: { type: Date, select: false, default: null },
     role: {
       type: String,
       enum: USER_ROLES,
@@ -78,6 +82,9 @@ const userSchema = new mongoose.Schema(
     trialStartedAt: { type: Date, default: null },
     trialEndsAt: { type: Date, default: null, index: true },
     trialConsumed: { type: Boolean, default: false, index: true },
+    /** Legal consent at registration — admin proof only (not exposed to members). */
+    termsAcceptedAt: { type: Date, default: null },
+    termsVersion: { type: String, trim: true, default: null, maxlength: 40 },
   },
   { timestamps: true }
 );

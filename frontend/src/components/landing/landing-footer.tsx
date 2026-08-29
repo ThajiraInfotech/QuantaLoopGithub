@@ -6,6 +6,7 @@ import { landingPad } from "@/components/landing/landing-styles";
 import { EarthGlobeIcon } from "@/components/shared/earth-globe-icon";
 import { IndiaMapIcon } from "@/components/shared/india-map-icon";
 import { Logo } from "@/components/shared/logo";
+import { ContactSupportTrigger } from "@/components/support/contact-support-trigger";
 import { ROUTES } from "@/constants/routes";
 import { cn } from "@/lib/utils";
 
@@ -67,7 +68,6 @@ export async function LandingFooter() {
   ];
 
   const companyLinks: FooterLink[] = [
-    { label: t("contact"), href: ROUTES.contact },
     { label: t("terms"), href: ROUTES.legalTerms },
     { label: t("privacy"), href: ROUTES.legalPrivacy },
   ];
@@ -102,6 +102,7 @@ export async function LandingFooter() {
               aria-label="Footer company"
             >
               <p className="text-eyebrow">{t("company")}</p>
+              <ContactSupportTrigger label={t("contact")} source="public" />
               {companyLinks.map((item) =>
                 item.external ? (
                   <a

@@ -253,11 +253,16 @@ export function AdminDashboardHome() {
         <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-700">
           Action required
         </h2>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           <ActionCard
             label="Open reports"
             count={actionRequired.openReports}
             href={ROUTES.adminReports}
+          />
+          <ActionCard
+            label="Open support"
+            count={actionRequired.openSupportRequests}
+            href={ROUTES.adminSupport}
           />
           <ActionCard
             label="Interests waiting &gt;48h"

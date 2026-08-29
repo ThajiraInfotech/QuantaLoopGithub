@@ -18,7 +18,13 @@ function createBillingConfig(env = {}) {
   const sellerLegalName = String(
     env.BILLING_SELLER_LEGAL_NAME || "Quanta Loop"
   ).trim();
+  const sellerOperatedBy = String(
+    env.BILLING_SELLER_OPERATED_BY || "ASM Holdings"
+  ).trim();
   const sellerAddress = String(env.BILLING_SELLER_ADDRESS || "").trim();
+  const invoiceDescription = String(
+    env.BILLING_INVOICE_DESCRIPTION || "Annual platform access"
+  ).trim();
 
   return Object.freeze({
     supplierStateCode,
@@ -28,7 +34,9 @@ function createBillingConfig(env = {}) {
     exportTreatment,
     invoicePrefix,
     sellerLegalName,
+    sellerOperatedBy: sellerOperatedBy || null,
     sellerAddress: sellerAddress || null,
+    invoiceDescription: invoiceDescription || "Annual platform access",
   });
 }
 

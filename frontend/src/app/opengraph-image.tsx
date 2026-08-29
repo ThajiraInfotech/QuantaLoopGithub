@@ -96,7 +96,7 @@ export default function OpenGraphImage() {
           <span>·</span>
           <span>Registered businesses</span>
           <span>·</span>
-          <span>₹6,999 / year · GST incl.</span>
+          <span>₹6,999 / $99 · same membership</span>
         </div>
       </div>
     ),

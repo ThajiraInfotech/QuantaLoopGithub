@@ -21,9 +21,17 @@ export const MATERIAL_CATEGORY_GROUPS = [
   "Mining & Mineral Waste",
   "Wastewater & Sludge",
   "Gas & Emission Control Waste",
+  "Others",
 ] as const;
 
 export type MaterialCategoryGroup = (typeof MATERIAL_CATEGORY_GROUPS)[number];
+
+/** Catch-all category: listings type a free-text material name; onboarding only selects the chip. */
+export const OTHERS_MATERIAL_CATEGORY = "Others" satisfies MaterialCategoryGroup;
+
+export function isOthersMaterialCategory(value: string): boolean {
+  return value.trim().toLowerCase() === OTHERS_MATERIAL_CATEGORY.toLowerCase();
+}
 
 const CATEGORY_LOOKUP = new Map(
   MATERIAL_CATEGORY_GROUPS.map((category) => [
@@ -48,6 +56,7 @@ const LEGACY_STREAM_TO_CATEGORY: Record<string, MaterialCategoryGroup> = {
   "e-waste": "E-Waste",
   ewaste: "E-Waste",
   "spent solvents": "Chemical Waste",
+  other: "Others",
 };
 
 export function isMaterialCategoryGroup(

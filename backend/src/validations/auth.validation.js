@@ -19,6 +19,10 @@ const registerBodySchema = z.object({
   city: z.string().max(300).optional(),
   stateCode: z.string().max(8).optional(),
   country: z.string().max(8).optional(),
+  acceptedTerms: z.literal(true, {
+    errorMap: () => ({ message: "You must accept the Terms and Privacy Policy" }),
+  }),
+  termsVersion: z.string().trim().max(40).optional(),
 });
 
 const loginBodySchema = z.object({
@@ -46,6 +50,12 @@ const googleRegisterBodySchema = z
     password: z.string().min(8).max(128),
     confirmPassword: z.string().min(1),
     role: publicRegistrationRoleSchema,
+    acceptedTerms: z.literal(true, {
+      errorMap: () => ({
+        message: "You must accept the Terms and Privacy Policy",
+      }),
+    }),
+    termsVersion: z.string().trim().max(40).optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
@@ -57,7 +67,11 @@ const forgotPasswordBodySchema = z.object({
 });
 
 const resetPasswordBodySchema = z.object({
-  token: z.string().min(1),
+  email: z.string().email().max(254),
+  code: z
+    .string()
+    .trim()
+    .regex(/^\d{6}$/, "Reset code must be 6 digits"),
   password: z.string().min(8).max(128),
   confirmPassword: z.string().min(8).max(128),
 }).refine((data) => data.password === data.confirmPassword, {
@@ -83,6 +97,12 @@ const completeAccountSetupBodySchema = z
     password: z.string().min(8).max(128),
     confirmPassword: z.string().min(8).max(128),
     role: publicRegistrationRoleSchema,
+    acceptedTerms: z.literal(true, {
+      errorMap: () => ({
+        message: "You must accept the Terms and Privacy Policy",
+      }),
+    }),
+    termsVersion: z.string().trim().max(40).optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",

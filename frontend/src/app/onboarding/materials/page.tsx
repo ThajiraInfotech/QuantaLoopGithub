@@ -77,7 +77,6 @@ function MaterialsOnboardingContent() {
         continueDisabled={selected.length === 0}
         onContinue={() => void saveAndContinue(selected)}
         continueLabel={t("continueToLocation")}
-        profileLink={ROUTES.profile}
       />
     </OnboardingShell>
   );

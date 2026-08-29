@@ -6,7 +6,14 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;");
 }
 
-function formatInr(amount) {
+function formatMoney(amount, currency = "INR") {
+  const code = String(currency || "INR").toUpperCase();
+  if (code === "USD") {
+    return `$${Number(amount).toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  }
   return `₹${Number(amount).toLocaleString("en-IN", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
@@ -22,27 +29,28 @@ function formatInvoiceDate(value) {
 }
 
 function buildAmountRows(invoice) {
+  const money = (value) => formatMoney(value, invoice.currency);
   const rows = [];
   if (!invoice.isExport) {
     rows.push({
       label: "Taxable value",
-      value: formatInr(invoice.taxableAmount),
+      value: money(invoice.taxableAmount),
     });
     if (invoice.taxType === "cgst_sgst") {
       rows.push(
-        { label: "CGST @ 9%", value: formatInr(invoice.cgstAmount) },
-        { label: "SGST @ 9%", value: formatInr(invoice.sgstAmount) }
+        { label: "CGST @ 9%", value: money(invoice.cgstAmount) },
+        { label: "SGST @ 9%", value: money(invoice.sgstAmount) }
       );
     } else if (invoice.taxType === "igst") {
-      rows.push({ label: "IGST @ 18%", value: formatInr(invoice.igstAmount) });
+      rows.push({ label: "IGST @ 18%", value: money(invoice.igstAmount) });
     }
   } else {
     rows.push(
       {
         label: "Service value (export)",
-        value: formatInr(invoice.amountInclusive),
+        value: money(invoice.amountInclusive),
       },
-      { label: "GST", value: formatInr(0) }
+      { label: "GST", value: money(0) }
     );
   }
   return rows;
@@ -101,7 +109,7 @@ function buildInvoiceHtml(invoice, { logoUrl } = {}) {
 </head>
 <body style="margin:0;padding:0;background:#EEF1F3;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
   <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;">
-    Tax invoice ${safeInvoiceNumber} from Quanta Loop — total ${escapeHtml(formatInr(invoice.amountInclusive))}.
+    Tax invoice ${safeInvoiceNumber} from Quanta Loop — total ${escapeHtml(formatMoney(invoice.amountInclusive, invoice.currency))}.
   </div>
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#EEF1F3;padding:40px 16px;">
     <tr>
@@ -156,6 +164,11 @@ function buildInvoiceHtml(invoice, { logoUrl } = {}) {
                           <p style="margin:0 0 8px;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#8A939C;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">Seller</p>
                           <p style="margin:0;font-size:14px;line-height:1.6;color:#0F1416;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
                             <strong>${escapeHtml(seller.legalName)}</strong><br />
+                            ${
+                              seller.operatedBy
+                                ? `<span style="color:#5C6670;">Operated by ${escapeHtml(seller.operatedBy)}</span><br />`
+                                : ""
+                            }
                             ${seller.gstin ? `GSTIN: ${escapeHtml(seller.gstin)}<br />` : ""}
                             ${seller.address ? `${escapeHtml(seller.address)}<br />` : ""}
                             ${escapeHtml(seller.stateName || seller.stateCode || "")}
@@ -186,7 +199,7 @@ function buildInvoiceHtml(invoice, { logoUrl } = {}) {
                             <strong>Place of supply:</strong> ${escapeHtml(invoice.placeOfSupply || "—")}
                           </p>
                           <p style="margin:0;font-size:14px;line-height:1.55;color:#0F1416;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
-                            <strong>SAC:</strong> ${escapeHtml(invoice.sacCode || "Pending CA confirmation")}
+                            <strong>SAC:</strong> ${escapeHtml(invoice.sacCode || "—")}
                             ${
                               invoice.isExport
                                 ? `<br /><strong>Tax treatment:</strong> Export of services`
@@ -205,7 +218,7 @@ function buildInvoiceHtml(invoice, { logoUrl } = {}) {
                       ${amountRowsHtml}
                       <tr>
                         <td style="padding:14px 0 0;font-size:15px;font-weight:700;color:#0F1416;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">Total</td>
-                        <td style="padding:14px 0 0;font-size:15px;font-weight:700;color:#0F1416;text-align:right;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">${formatInr(invoice.amountInclusive)}</td>
+                        <td style="padding:14px 0 0;font-size:15px;font-weight:700;color:#0F1416;text-align:right;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">${formatMoney(invoice.amountInclusive, invoice.currency)}</td>
                       </tr>
                     </table>
                   </td>
@@ -218,6 +231,11 @@ function buildInvoiceHtml(invoice, { logoUrl } = {}) {
                         <td style="padding:14px 18px;">
                           <p style="margin:0;font-size:13px;line-height:1.55;color:#0F1416;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
                             Payment reference: <strong>${escapeHtml(invoice.razorpayPaymentId || "—")}</strong>
+                            ${
+                              invoice.razorpayOrderId
+                                ? `<br />Order ID: <strong>${escapeHtml(invoice.razorpayOrderId)}</strong>`
+                                : ""
+                            }
                           </p>
                         </td>
                       </tr>
@@ -232,6 +250,11 @@ function buildInvoiceHtml(invoice, { logoUrl } = {}) {
             <td style="background:#F4F6F7;border:1px solid #E2E7EB;border-top:none;padding:24px 40px;">
               <p style="margin:0 0 6px;font-size:12px;line-height:1.5;color:#5C6670;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
                 Quanta Loop — Recoverable Material Network
+                ${
+                  seller.operatedBy
+                    ? `<br />Operated by ${escapeHtml(seller.operatedBy)}`
+                    : ""
+                }
               </p>
               <p style="margin:0;font-size:12px;line-height:1.5;color:#8A939C;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
                 © ${year} Quanta Loop. All rights reserved.
@@ -254,9 +277,10 @@ function buildInvoiceEmailText(invoice) {
     `Date: ${formatInvoiceDate(invoice.invoiceDate)}`,
     `Bill to: ${invoice.buyer?.legalName || ""}`,
     `Place of supply: ${invoice.placeOfSupply || "—"}`,
-    `Total: ${formatInr(invoice.amountInclusive)}`,
+    `Total: ${formatMoney(invoice.amountInclusive, invoice.currency)}`,
     `Payment ID: ${invoice.razorpayPaymentId || "—"}`,
-  ];
+    invoice.razorpayOrderId ? `Order ID: ${invoice.razorpayOrderId}` : null,
+  ].filter(Boolean);
   return parts.join("\n");
 }
 

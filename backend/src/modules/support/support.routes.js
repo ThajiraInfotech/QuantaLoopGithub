@@ -28,7 +28,7 @@ function optionalAuthenticate(env) {
 
 function createSupportRouter(env) {
   const router = express.Router();
-  const controller = createSupportController(env);
+  const controller = createSupportController();
 
   const contactLimiter = rateLimit({
     windowMs: 60 * 60 * 1000,

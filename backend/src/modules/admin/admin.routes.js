@@ -8,6 +8,9 @@ const {
   patchParticipant,
   getReports,
   getReport,
+  getSupportRequests,
+  getSupportRequest,
+  patchSupportRequestResolve,
   getMaterials,
   getMaterial,
   patchMaterial,
@@ -16,6 +19,8 @@ const {
   getInterest,
   getInvoices,
   getInvoiceHtml,
+  postPasswordChangeRequest,
+  postPasswordChangeConfirm,
 } = require("./admin.controller");
 
 function createAdminRouter(env) {
@@ -24,6 +29,18 @@ function createAdminRouter(env) {
   const adminOnly = authorize("admin");
 
   router.get("/dashboard", requireAuth, adminOnly, getDashboard);
+  router.post(
+    "/password/request-otp",
+    requireAuth,
+    adminOnly,
+    postPasswordChangeRequest
+  );
+  router.post(
+    "/password/confirm",
+    requireAuth,
+    adminOnly,
+    postPasswordChangeConfirm
+  );
   router.get("/participants", requireAuth, adminOnly, getParticipants);
   router.get(
     "/participants/:userId",
@@ -39,6 +56,19 @@ function createAdminRouter(env) {
   );
   router.get("/reports", requireAuth, adminOnly, getReports);
   router.get("/reports/:reportId", requireAuth, adminOnly, getReport);
+  router.get("/support-requests", requireAuth, adminOnly, getSupportRequests);
+  router.get(
+    "/support-requests/:requestId",
+    requireAuth,
+    adminOnly,
+    getSupportRequest
+  );
+  router.patch(
+    "/support-requests/:requestId/resolve",
+    requireAuth,
+    adminOnly,
+    patchSupportRequestResolve
+  );
   router.get("/materials", requireAuth, adminOnly, getMaterials);
   router.post("/materials/bulk", requireAuth, adminOnly, postMaterialsBulk);
   router.get("/materials/:materialId", requireAuth, adminOnly, getMaterial);

@@ -5,13 +5,13 @@ import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { ForgotPasswordSuccessCard } from "@/components/auth/forgot-password-success-card";
 import {
   loginButtonClass,
   loginErrorClass,
   loginInputClass,
   loginLabelClass,
 } from "@/components/auth/login-theme";
+import { ResetPasswordWithOtpForm } from "@/components/forms/reset-password-with-otp-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { forgotPasswordRequest } from "@/services/auth/auth.service";
@@ -26,7 +26,7 @@ export function ForgotPasswordForm() {
   const tValidation = useTranslations("validation");
   const [formError, setFormError] = useState<string | null>(null);
   const [submittedEmail, setSubmittedEmail] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [otpSentTo, setOtpSentTo] = useState<string | null>(null);
 
   const forgotPasswordSchema = useMemo(
     () =>
@@ -50,20 +50,25 @@ export function ForgotPasswordForm() {
     setFormError(null);
     try {
       const result = await forgotPasswordRequest(values);
-      setSubmittedEmail(values.email);
-      setSuccessMessage(result.message);
+      const accountEmail = values.email.trim().toLowerCase();
+      setSubmittedEmail(accountEmail);
+      setOtpSentTo(result.otpSentTo || accountEmail);
     } catch (e) {
-      setFormError(
-        e instanceof Error ? e.message : t("requestFailed")
-      );
+      setFormError(e instanceof Error ? e.message : t("requestFailed"));
     }
   }
 
-  if (submittedEmail && successMessage) {
+  if (submittedEmail) {
     return (
-      <ForgotPasswordSuccessCard
+      <ResetPasswordWithOtpForm
         email={submittedEmail}
-        message={successMessage}
+        otpSentTo={otpSentTo || undefined}
+        onChangeEmail={() => {
+          setSubmittedEmail(null);
+          setOtpSentTo(null);
+          setFormError(null);
+          form.reset({ email: submittedEmail });
+        }}
       />
     );
   }
@@ -101,7 +106,7 @@ export function ForgotPasswordForm() {
         disabled={isSubmitting}
         aria-busy={isSubmitting}
       >
-        {isSubmitting ? t("sendingResetLink") : t("sendResetLink")}
+        {isSubmitting ? t("sendingCode") : t("sendCode")}
       </button>
     </form>
   );

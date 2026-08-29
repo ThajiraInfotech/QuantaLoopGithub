@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { MarketingContactSupportLink } from "@/components/support/marketing-contact-support-link";
 import { ROUTES } from "@/constants/routes";
 
 const footerLinkClass =
@@ -11,9 +12,7 @@ export function MarketingFooter() {
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-10 text-sm text-zinc-600 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
         <p>© {new Date().getFullYear()} Quanta Loop. All rights reserved.</p>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-          <Link href={ROUTES.contact} className={footerLinkClass}>
-            Contact
-          </Link>
+          <MarketingContactSupportLink className={footerLinkClass} />
           <Link href={ROUTES.legalTerms} className={footerLinkClass}>
             Terms &amp; Conditions
           </Link>

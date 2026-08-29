@@ -55,6 +55,20 @@ assert.strictEqual(exportInvoice.taxType, "export_zero_rated");
 assert.strictEqual(exportInvoice.taxablePaise, AMOUNT);
 assert.strictEqual(exportInvoice.totalGstPaise, 0);
 
+const usdExport = calculateTaxBreakdown({
+  amountInclusivePaise: 9900,
+  buyerCountry: "US",
+  buyerStateCode: "",
+  supplierStateCode: "TN",
+  gstRegistered: false,
+  exportTreatment: "zero_rated_lut",
+  currency: "USD",
+});
+assert.strictEqual(usdExport.currency, "USD");
+assert.strictEqual(usdExport.taxType, "export_zero_rated");
+assert.strictEqual(usdExport.amountInclusivePaise, 9900);
+assert.strictEqual(usdExport.totalGstPaise, 0);
+
 let blocked = false;
 try {
   calculateTaxBreakdown({

@@ -1,17 +1,14 @@
 const { sendSuccess } = require("../../utils/apiResponse");
 const { AppError } = require("../../utils/AppError");
 const { asyncHandler } = require("../../utils/asyncHandler");
-const {
-  isEmailConfigured,
-  sendSupportContactEmail,
-} = require("../../services/email/email.service");
 const { safeParseContact } = require("./support.validation");
+const { createSupportRequest } = require("./support.service");
 
 function validationError(next, flatten) {
   next(new AppError("Validation failed", 400, "VALIDATION_ERROR", flatten));
 }
 
-function createSupportController(env) {
+function createSupportController() {
   const submitContact = asyncHandler(async (req, res, next) => {
     const parsed = safeParseContact(req.body);
     if (!parsed.success) {
@@ -27,40 +24,18 @@ function createSupportController(env) {
       return;
     }
 
-    if (!isEmailConfigured(env) && env.NODE_ENV === "production") {
-      next(
-        new AppError(
-          "Support messaging is temporarily unavailable",
-          503,
-          "EMAIL_UNAVAILABLE"
-        )
-      );
-      return;
-    }
-
     try {
-      await sendSupportContactEmail(env, {
-        name: data.name,
-        email: data.email,
-        category: data.category,
-        description: data.description,
-        companyName: data.companyName || undefined,
-        source: data.source,
-        pageUrl: data.pageUrl || undefined,
-        userId: req.user?.id,
-      });
+      const request = await createSupportRequest(data, req.user?.id);
+      sendSuccess(res, { submitted: true, id: request.id }, "Message sent", 201);
     } catch (err) {
       next(
         new AppError(
-          "Unable to send your message right now. Please try again shortly.",
-          502,
-          "EMAIL_DELIVERY_FAILED"
+          "Unable to save your message right now. Please try again shortly.",
+          500,
+          "SUPPORT_SAVE_FAILED"
         )
       );
-      return;
     }
-
-    sendSuccess(res, { submitted: true }, "Message sent", 201);
   });
 
   return { submitContact };

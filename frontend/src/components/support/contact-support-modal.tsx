@@ -72,6 +72,7 @@ export function ContactSupportModal({
             defaultCompanyName={defaultCompanyName}
             lockIdentity={Boolean(defaultEmail)}
             compact
+            onSuccess={onClose}
           />
         </div>
       </div>

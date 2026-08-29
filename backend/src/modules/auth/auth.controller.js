@@ -20,7 +20,7 @@ const {
   previewGoogleCredential,
   registerWithGoogle,
   requestPasswordReset,
-  resetPasswordWithToken,
+  resetPasswordWithOtp,
   verifyEmailWithOtp,
   resendVerificationEmail,
   completeAccountSetup,
@@ -255,7 +255,7 @@ function createAuthController(env) {
       return;
     }
 
-    const result = await resetPasswordWithToken(parsed.data);
+    const result = await resetPasswordWithOtp(parsed.data);
     res.json({ success: true, data: result });
   });
 

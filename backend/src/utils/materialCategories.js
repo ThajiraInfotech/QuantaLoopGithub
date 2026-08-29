@@ -21,6 +21,7 @@ const MATERIAL_CATEGORY_GROUPS = [
   "Mining & Mineral Waste",
   "Wastewater & Sludge",
   "Gas & Emission Control Waste",
+  "Others",
 ];
 
 const CATEGORY_LOOKUP = new Map(
@@ -44,6 +45,7 @@ const LEGACY_STREAM_TO_CATEGORY = {
   "e-waste": "E-Waste",
   ewaste: "E-Waste",
   "spent solvents": "Chemical Waste",
+  other: "Others",
 };
 
 function normKey(s) {

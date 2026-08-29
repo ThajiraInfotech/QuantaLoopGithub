@@ -22,6 +22,7 @@ import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/ui/password-input";
 import { PasswordStrengthMeter } from "@/components/ui/password-strength-meter";
 import { ROUTES } from "@/constants/routes";
+import { LEGAL_LAST_UPDATED } from "@/constants/legal";
 import { useAccountSetupDraftPersistence } from "@/hooks/use-account-setup-draft";
 import { registerWithGoogleRequest } from "@/services/auth/auth.service";
 import { useAuthStore } from "@/store/auth-store";
@@ -131,6 +132,8 @@ export function GoogleSignupForm({ context }: GoogleSignupFormProps) {
         credential: pendingGoogleCredential,
         ...values,
         role: pendingRole,
+        acceptedTerms: true,
+        termsVersion: LEGAL_LAST_UPDATED,
       });
       setSession({ user: data.user, accessToken: data.accessToken });
 

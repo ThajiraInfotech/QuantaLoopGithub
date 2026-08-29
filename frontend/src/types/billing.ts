@@ -77,6 +77,7 @@ export type BillingInvoice = {
   catalogPlanId?: string;
   razorpayPaymentId: string;
   razorpaySubscriptionId?: string | null;
+  razorpayOrderId?: string | null;
   createdAt?: string;
 };
 

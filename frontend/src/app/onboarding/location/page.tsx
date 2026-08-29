@@ -117,7 +117,6 @@ function LocationOnboardingContent() {
         continueDisabled={!isLocationDraftComplete(locationDraft)}
         onContinue={() => void handleContinue()}
         continueLabel={t("continue")}
-        profileLink={ROUTES.profile}
       />
     </OnboardingShell>
   );
