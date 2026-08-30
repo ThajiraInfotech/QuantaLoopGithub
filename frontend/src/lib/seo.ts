@@ -7,17 +7,16 @@ export const SITE_URL = "https://quantaloop.in";
 export const SITE_NAME = "Quanta Loop";
 
 export const DEFAULT_TITLE =
-  "Quanta Loop | B2B Industrial Materials & Scrap Recycling Marketplace India";
+  "Quanta Loop | Buy & Sell Recyclable & Industrial Materials India";
 
 export const DEFAULT_DESCRIPTION =
-  "B2B marketplace connecting Indian businesses with registered buyers and suppliers for industrial waste, scrap, recyclables, and byproducts. Smart proximity matching for material providers and buyers.";
+  "Sell recyclable materials or find materials for your business. Connect with registered buyers and suppliers for paper, plastic, metal, e-waste, scrap, and industrial byproducts across India.";
 
 export const OG_TITLE =
-  "Quanta Loop — Industrial Materials, Scrap & Recycling Matching";
+  "Quanta Loop — Buy & Sell Recyclable & Industrial Materials";
 
 export const OG_DESCRIPTION =
-  "List surplus materials or find what your business needs. Connect with registered buyers and suppliers across India through intelligent matching.";
-
+  "Sell recyclable materials or find materials for your business. Connect with registered buyers and suppliers in one trusted network.";
 /** Absolute asset URLs used in Open Graph / JSON-LD (no spaces in paths). */
 export const LOGO_URL = `${SITE_URL}/icon.png`;
 

@@ -1,10 +1,12 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Quanta Loop — B2B industrial materials & scrap recycling marketplace";
+export const alt =
+  "Quanta Loop — Buy and sell recyclable and industrial materials";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+/** Share preview aligned to the current light landing hero (not the old dark card). */
 export default function OpenGraphImage() {
   return new ImageResponse(
     (
@@ -15,71 +17,99 @@ export default function OpenGraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "linear-gradient(145deg, #0f1416 0%, #163028 55%, #1a3d2e 100%)",
-          padding: "64px 72px",
+          background: "#ffffff",
+          padding: "56px 64px",
           fontFamily: "sans-serif",
+          position: "relative",
         }}
       >
+        {/* Soft brand wash */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            width: 520,
+            height: 520,
+            background:
+              "radial-gradient(circle at 70% 20%, rgba(43,170,107,0.14) 0%, rgba(255,255,255,0) 65%)",
+            display: "flex",
+          }}
+        />
+
         <div
           style={{
             display: "flex",
             alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            <div
+              style={{
+                width: 52,
+                height: 52,
+                borderRadius: 12,
+                background: "#2baa6b",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#ffffff",
+                fontSize: 26,
+                fontWeight: 700,
+              }}
+            >
+              Q
+            </div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <span
+                style={{ color: "#0f1416", fontSize: 32, fontWeight: 700 }}
+              >
+                Quanta Loop
+              </span>
+              <span style={{ color: "#5c6670", fontSize: 18, marginTop: 2 }}>
+                Recoverable Material Network
+              </span>
+            </div>
+          </div>
+          <span style={{ color: "#2baa6b", fontSize: 20, fontWeight: 600 }}>
+            quantaloop.in
+          </span>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
             gap: 16,
+            maxWidth: 980,
           }}
         >
           <div
             style={{
-              width: 56,
-              height: 56,
-              borderRadius: 14,
-              background: "#2baa6b",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#ffffff",
-              fontSize: 28,
+              color: "#0f1416",
+              fontSize: 54,
               fontWeight: 700,
-            }}
-          >
-            Q
-          </div>
-          <div
-            style={{
+              lineHeight: 1.1,
+              letterSpacing: "-0.03em",
               display: "flex",
               flexDirection: "column",
             }}
           >
-            <span style={{ color: "#ffffff", fontSize: 36, fontWeight: 700 }}>
-              Quanta Loop
-            </span>
-            <span style={{ color: "#9ad4b5", fontSize: 20, marginTop: 4 }}>
-              quantaloop.in
-            </span>
-          </div>
-        </div>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-          <div
-            style={{
-              color: "#ffffff",
-              fontSize: 52,
-              fontWeight: 700,
-              lineHeight: 1.15,
-              maxWidth: 960,
-            }}
-          >
-            B2B industrial materials & scrap recycling marketplace
+            <span>Buy and Sell</span>
+            <span>Recyclable & Industrial Materials</span>
           </div>
           <div
             style={{
-              color: "#c5e6d4",
+              color: "#5c6670",
               fontSize: 26,
-              lineHeight: 1.35,
+              lineHeight: 1.4,
               maxWidth: 900,
             }}
           >
-            Smart matching for Indian businesses buying and selling recyclable
-            and industrial materials.
+            Connect with registered buyers and suppliers. Paper, Plastic, Metal,
+            E-Waste and more — any quantity.
           </div>
         </div>
 
@@ -87,16 +117,61 @@ export default function OpenGraphImage() {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 24,
-            color: "#8fbfa6",
-            fontSize: 20,
+            gap: 12,
           }}
         >
-          <span>Unlimited listings</span>
-          <span>·</span>
-          <span>Registered businesses</span>
-          <span>·</span>
-          <span>₹6,999 / $99 · same membership</span>
+          <div
+            style={{
+              display: "flex",
+              padding: "10px 18px",
+              borderRadius: 999,
+              background: "#e8f7ef",
+              color: "#0f1416",
+              fontSize: 18,
+              fontWeight: 600,
+            }}
+          >
+            Smart matching
+          </div>
+          <div
+            style={{
+              display: "flex",
+              padding: "10px 18px",
+              borderRadius: 999,
+              background: "#e8f7ef",
+              color: "#0f1416",
+              fontSize: 18,
+              fontWeight: 600,
+            }}
+          >
+            Registered businesses
+          </div>
+          <div
+            style={{
+              display: "flex",
+              padding: "10px 18px",
+              borderRadius: 999,
+              background: "#e8f7ef",
+              color: "#0f1416",
+              fontSize: 18,
+              fontWeight: 600,
+            }}
+          >
+            Direct connections
+          </div>
+          <div
+            style={{
+              display: "flex",
+              padding: "10px 18px",
+              borderRadius: 999,
+              background: "#e8f7ef",
+              color: "#0f1416",
+              fontSize: 18,
+              fontWeight: 600,
+            }}
+          >
+            ₹6,999 / $99 · year
+          </div>
         </div>
       </div>
     ),
