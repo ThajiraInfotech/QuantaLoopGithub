@@ -66,11 +66,20 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: OG_TITLE,
     description: OG_DESCRIPTION,
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: OG_TITLE,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: OG_TITLE,
     description: OG_DESCRIPTION,
+    images: ["/og-image.png"],
   },
   other: {
     "geo.region": "IN",
