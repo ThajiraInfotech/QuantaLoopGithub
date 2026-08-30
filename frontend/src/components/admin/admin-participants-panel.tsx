@@ -44,7 +44,7 @@ import {
 
 } from "@/services/admin/admin.service";
 
-import type { AdminParticipantRow, AdminParticipantSummary } from "@/types/admin";
+import type { AdminParticipantRow, AdminParticipantSummary, AdminMembershipStatus } from "@/types/admin";
 
 import type { AccountStatus } from "@/types/admin";
 
@@ -61,6 +61,20 @@ const ROLE_LABELS: Record<UserRole, string> = {
   verified_buyer: "Buyer",
 
   admin: "Admin",
+
+};
+
+
+
+const MEMBERSHIP_LABELS: Record<AdminMembershipStatus, string> = {
+
+  paid: "Paid",
+
+  trial_active: "Trial active",
+
+  trial_ended: "Trial ended",
+
+  no_trial: "No trial",
 
 };
 
@@ -106,13 +120,51 @@ function AccountStatusBadge({ status }: { status: AccountStatus }) {
 
 
 
+function MembershipStatusBadge({
+  status,
+}: {
+  status?: AdminMembershipStatus;
+}) {
+  if (!status || status === "no_trial") {
+    return (
+      <Badge variant="outline" className="gap-1">
+        No trial
+      </Badge>
+    );
+  }
+  if (status === "paid") {
+    return (
+      <Badge variant="success" className="gap-1">
+        Paid
+      </Badge>
+    );
+  }
+  if (status === "trial_active") {
+    return (
+      <Badge variant="outline" className="gap-1 border-sky-200 bg-sky-50 text-sky-800">
+        Trial active
+      </Badge>
+    );
+  }
+  return (
+    <Badge variant="outline" className="gap-1 border-amber-200 bg-amber-50 text-amber-900">
+      Trial ended
+    </Badge>
+  );
+}
+
 function participantSubtitle(row: AdminParticipantRow) {
 
   const role = ROLE_LABELS[row.role];
 
   const account = row.accountStatus === "suspended" ? "Suspended" : "Active";
+  const membership = row.membershipStatus
+    ? MEMBERSHIP_LABELS[row.membershipStatus]
+    : null;
 
-  return `${role} • ${account}`;
+  return membership
+    ? `${role} • ${account} • ${membership}`
+    : `${role} • ${account}`;
 
 }
 
@@ -146,6 +198,10 @@ function downloadParticipantsCsv(rows: AdminParticipantRow[]) {
 
     "Account Status",
 
+    "Membership",
+
+    "Trial ends",
+
     "Joined",
 
     "Last Activity",
@@ -171,6 +227,12 @@ function downloadParticipantsCsv(rows: AdminParticipantRow[]) {
         ROLE_LABELS[row.role],
 
         row.accountStatus,
+
+        row.membershipStatus
+          ? MEMBERSHIP_LABELS[row.membershipStatus]
+          : "",
+
+        row.trialEndsAt ? formatMediumDate(row.trialEndsAt) : "",
 
         formatMediumDate(row.createdAt),
 
@@ -486,7 +548,7 @@ export function AdminParticipantsPanel() {
 
       {summary ? (
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
 
           <SummaryKpiCard
 
@@ -521,6 +583,30 @@ export function AdminParticipantsPanel() {
             active={kpiBuyersActive}
 
             onClick={() => applyKpiFilter("verified_buyer", "all")}
+
+          />
+
+          <SummaryKpiCard
+
+            label="With access"
+
+            value={summary.withAccess ?? 0}
+
+            active={false}
+
+            onClick={() => applyKpiFilter("all", "all")}
+
+          />
+
+          <SummaryKpiCard
+
+            label="Trial ended"
+
+            value={summary.trialEnded ?? 0}
+
+            active={false}
+
+            onClick={() => applyKpiFilter("all", "all")}
 
           />
 
@@ -734,6 +820,8 @@ export function AdminParticipantsPanel() {
 
                     <th className="px-3 py-2.5">Account</th>
 
+                    <th className="px-3 py-2.5">Membership</th>
+
                     <th className="px-3 py-2.5">Joined</th>
 
                     <th className="px-3 py-2.5">Last Activity</th>
@@ -775,6 +863,12 @@ export function AdminParticipantsPanel() {
                       <td className="px-3 py-3">
 
                         <AccountStatusBadge status={row.accountStatus} />
+
+                      </td>
+
+                      <td className="px-3 py-3">
+
+                        <MembershipStatusBadge status={row.membershipStatus} />
 
                       </td>
 

@@ -59,10 +59,29 @@ async function networkParticipantFilter(now = new Date()) {
   return { role: { $ne: "admin" }, _id: { $in: ids } };
 }
 
+/**
+ * Admin CRM: every registered provider/buyer, including expired-trial and
+ * unpaid accounts. Product network access stays on networkParticipantFilter.
+ */
+function adminParticipantFilter() {
+  return { role: { $in: ["material_provider", "verified_buyer"] } };
+}
+
 async function userHasNetworkAccess(userId, now = new Date()) {
   if (await userHasPaidMembership(userId)) return true;
   const user = await User.findById(userId).select("trialEndsAt").lean();
   return Boolean(user?.trialEndsAt && new Date(user.trialEndsAt) > now);
+}
+
+/**
+ * @returns {"paid"|"trial_active"|"trial_ended"|"no_trial"}
+ */
+function membershipStatusForUser(user, { paid = false, now = new Date() } = {}) {
+  if (paid) return "paid";
+  const endsAt = user?.trialEndsAt ? new Date(user.trialEndsAt) : null;
+  if (endsAt && endsAt > now) return "trial_active";
+  if (user?.trialConsumed || endsAt) return "trial_ended";
+  return "no_trial";
 }
 
 module.exports = {
@@ -73,5 +92,7 @@ module.exports = {
   paidParticipantFilter,
   networkParticipantIds,
   networkParticipantFilter,
+  adminParticipantFilter,
   userHasNetworkAccess,
+  membershipStatusForUser,
 };

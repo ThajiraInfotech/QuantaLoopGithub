@@ -17,8 +17,10 @@ const {
   sendPasswordResetOtpEmail,
 } = require("../../services/email/email.service");
 const {
-  networkParticipantFilter,
-  userHasNetworkAccess,
+  adminParticipantFilter,
+  paidParticipantIds,
+  membershipStatusForUser,
+  userHasPaidMembership,
 } = require("../subscriptions/paid-participants");
 const MS_48H = 48 * 60 * 60 * 1000;
 const MS_7D = 7 * 24 * 60 * 60 * 1000;
@@ -168,22 +170,49 @@ async function enrichOpenReports(limit = 5) {
 }
 
 async function getParticipantSummary() {
-  const participantFilter = await networkParticipantFilter();
-  const [total, providers, buyers, suspended] = await Promise.all([
-    User.countDocuments(participantFilter),
-    User.countDocuments({ ...participantFilter, role: "material_provider" }),
-    User.countDocuments({ ...participantFilter, role: "verified_buyer" }),
-    User.countDocuments({ ...participantFilter, accountStatus: "suspended" }),
-  ]);
+  const participantFilter = adminParticipantFilter();
+  const now = new Date();
+  const paidIds = await paidParticipantIds();
+  const paidIdSet = new Set(paidIds.map((id) => String(id)));
 
-  return { total, providers, buyers, suspended };
+  const [total, providers, buyers, suspended, trialActive, trialEnded] =
+    await Promise.all([
+      User.countDocuments(participantFilter),
+      User.countDocuments({ ...participantFilter, role: "material_provider" }),
+      User.countDocuments({ ...participantFilter, role: "verified_buyer" }),
+      User.countDocuments({ ...participantFilter, accountStatus: "suspended" }),
+      User.countDocuments({
+        ...participantFilter,
+        _id: { $nin: paidIds },
+        trialEndsAt: { $gt: now },
+      }),
+      User.countDocuments({
+        ...participantFilter,
+        _id: { $nin: paidIds },
+        $and: [
+          { trialEndsAt: { $ne: null } },
+          { trialEndsAt: { $lte: now } },
+        ],
+      }),
+    ]);
+
+  return {
+    total,
+    providers,
+    buyers,
+    suspended,
+    paid: paidIdSet.size,
+    trialActive,
+    trialEnded,
+    withAccess: paidIdSet.size + trialActive,
+  };
 }
 
 async function getDashboardStats() {
   const weekStart = weekAgo();
   const stale48h = hours48Ago();
   const { thisMonthStart, lastMonthStart } = monthRangeBounds();
-  const participantFilter = await networkParticipantFilter();
+  const participantFilter = adminParticipantFilter();
 
   const [
     participants,
@@ -390,9 +419,10 @@ async function listParticipants({
   page = 1,
   limit = 20,
 }) {
-  const filter = { ...(await networkParticipantFilter()) };
+  const filter = { ...adminParticipantFilter() };
   const safePage = Math.max(1, Number(page) || 1);
   const safeLimit = Math.min(100, Math.max(1, Number(limit) || 20));
+  const now = new Date();
 
   if (role && role !== "all") {
     filter.role = role;
@@ -411,17 +441,21 @@ async function listParticipants({
 
   const skip = (safePage - 1) * safeLimit;
 
-  const [items, total, summary] = await Promise.all([
+  const [items, total, summary, paidIds] = await Promise.all([
     User.find(filter)
-      .select("name companyName email role accountStatus createdAt updatedAt")
+      .select(
+        "name companyName email role accountStatus createdAt updatedAt trialEndsAt trialConsumed"
+      )
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(safeLimit)
       .lean(),
     User.countDocuments(filter),
     getParticipantSummary(),
+    paidParticipantIds(),
   ]);
 
+  const paidSet = new Set(paidIds.map((id) => String(id)));
   const activityMap = await getLastActivityMap(
     items.map((u) => u._id.toString())
   );
@@ -431,6 +465,10 @@ async function listParticipants({
       const id = u._id.toString();
       const lastActivityAt =
         activityMap.get(id) ?? u.updatedAt ?? u.createdAt;
+      const membershipStatus = membershipStatusForUser(u, {
+        paid: paidSet.has(id),
+        now,
+      });
 
       return {
         id,
@@ -439,6 +477,10 @@ async function listParticipants({
         email: u.email,
         role: u.role,
         accountStatus: u.accountStatus ?? "active",
+        membershipStatus,
+        trialEndsAt: u.trialEndsAt
+          ? new Date(u.trialEndsAt).toISOString()
+          : null,
         createdAt: u.createdAt,
         lastActivityAt,
       };
@@ -554,12 +596,11 @@ async function getParticipantDetail(userId) {
   if (!user || user.role === "admin") {
     return null;
   }
-  if (!(await userHasNetworkAccess(user._id))) {
-    return null;
-  }
 
   const uid = user._id;
   const participantFilter = { $or: [{ buyer: uid }, { provider: uid }] };
+  const paid = await userHasPaidMembership(uid);
+  const membershipStatus = membershipStatusForUser(user, { paid });
 
   const [
     materialsPublished,
@@ -613,6 +654,16 @@ async function getParticipantDetail(userId) {
 
   return {
     profile,
+    membership: {
+      status: membershipStatus,
+      trialStartedAt: user.trialStartedAt
+        ? new Date(user.trialStartedAt).toISOString()
+        : null,
+      trialEndsAt: user.trialEndsAt
+        ? new Date(user.trialEndsAt).toISOString()
+        : null,
+      trialConsumed: Boolean(user.trialConsumed),
+    },
     accountHealth: {
       lastActivityAt,
       lastLoginAt: user.lastLoginAt ?? null,
@@ -637,9 +688,6 @@ async function getParticipantDetail(userId) {
 async function patchParticipantAccount(userId, accountStatus) {
   const user = await User.findById(userId);
   if (!user || user.role === "admin") {
-    return null;
-  }
-  if (!(await userHasNetworkAccess(user._id))) {
     return null;
   }
   user.accountStatus = accountStatus;

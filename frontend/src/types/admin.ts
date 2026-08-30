@@ -224,7 +224,17 @@ export type AdminParticipantSummary = {
   providers: number;
   buyers: number;
   suspended: number;
+  paid?: number;
+  trialActive?: number;
+  trialEnded?: number;
+  withAccess?: number;
 };
+
+export type AdminMembershipStatus =
+  | "paid"
+  | "trial_active"
+  | "trial_ended"
+  | "no_trial";
 
 export type AdminParticipantRow = {
   id: string;
@@ -233,6 +243,8 @@ export type AdminParticipantRow = {
   email: string;
   role: UserRole;
   accountStatus: AccountStatus;
+  membershipStatus?: AdminMembershipStatus;
+  trialEndsAt?: string | null;
   createdAt: string;
   lastActivityAt: string;
 };
@@ -290,6 +302,12 @@ export type AdminParticipantProfile = User & {
 
 export type AdminParticipantDetail = {
   profile: AdminParticipantProfile;
+  membership?: {
+    status: AdminMembershipStatus;
+    trialStartedAt: string | null;
+    trialEndsAt: string | null;
+    trialConsumed: boolean;
+  };
   accountHealth: AdminParticipantAccountHealth;
   activity: AdminParticipantActivity;
   recentActivity: AdminParticipantRecentActivity[];

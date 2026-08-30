@@ -20,7 +20,7 @@ import {
   fetchAdminParticipantDetail,
   patchParticipantAccountStatus,
 } from "@/services/admin/admin.service";
-import type { AdminParticipantDetail } from "@/types/admin";
+import type { AdminMembershipStatus, AdminParticipantDetail } from "@/types/admin";
 import type { AccountStatus } from "@/types/admin";
 import {
   formatMediumDate,
@@ -31,6 +31,13 @@ import {
 
 type AdminParticipantDetailViewProps = {
   participantId: string;
+};
+
+const MEMBERSHIP_LABELS: Record<AdminMembershipStatus, string> = {
+  paid: "Paid membership",
+  trial_active: "Trial active",
+  trial_ended: "Trial ended — awaiting payment",
+  no_trial: "No trial started",
 };
 
 function AccountStatusBadge({ status }: { status: AccountStatus }) {
@@ -49,6 +56,27 @@ function AccountStatusBadge({ status }: { status: AccountStatus }) {
       Active
     </Badge>
   );
+}
+
+function MembershipStatusBadge({ status }: { status: AdminMembershipStatus }) {
+  if (status === "paid") {
+    return <Badge variant="success">Paid</Badge>;
+  }
+  if (status === "trial_active") {
+    return (
+      <Badge variant="outline" className="border-sky-200 bg-sky-50 text-sky-800">
+        Trial active
+      </Badge>
+    );
+  }
+  if (status === "trial_ended") {
+    return (
+      <Badge variant="outline" className="border-amber-200 bg-amber-50 text-amber-900">
+        Trial ended
+      </Badge>
+    );
+  }
+  return <Badge variant="outline">No trial</Badge>;
 }
 
 function ProfileField({
@@ -202,7 +230,7 @@ export function AdminParticipantDetailView({
     );
   }
 
-  const { profile, accountHealth, activity, recentActivity } = data;
+  const { profile, accountHealth, activity, recentActivity, membership } = data;
   const isSuspended = profile.accountStatus === "suspended";
   const website = profile.website?.trim();
   const websiteHref =
@@ -247,6 +275,9 @@ export function AdminParticipantDetailView({
               <AccountStatusBadge
                 status={profile.accountStatus ?? "active"}
               />
+              {membership ? (
+                <MembershipStatusBadge status={membership.status} />
+              ) : null}
             </div>
             <p className="text-sm text-zinc-700">{profile.name}</p>
             {profile.jobTitle ? (
@@ -286,6 +317,22 @@ export function AdminParticipantDetailView({
               ) : (
                 <ProfileField label="Website" value="—" />
               )}
+              <ProfileField
+                label="Membership"
+                value={
+                  membership
+                    ? MEMBERSHIP_LABELS[membership.status]
+                    : "—"
+                }
+              />
+              <ProfileField
+                label="Trial ends"
+                value={
+                  membership?.trialEndsAt
+                    ? `${formatMediumDate(membership.trialEndsAt)} · ${formatRelativeWhen(membership.trialEndsAt)}`
+                    : "—"
+                }
+              />
               <ProfileField
                 label="Last activity"
                 value={formatRelativeWhen(accountHealth.lastActivityAt)}
