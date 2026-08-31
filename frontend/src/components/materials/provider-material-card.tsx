@@ -145,7 +145,7 @@ export function ProviderMaterialCard({
 
         <div className="flex shrink-0 flex-col items-start gap-1.5 sm:items-end sm:text-right">
           <MaterialStatusBadge status={material.status} />
-          {interestCount > 0 ? (
+          {!completed && interestCount > 0 ? (
             <span className="rounded-md border border-amber-200 bg-amber-50 px-2 py-0.5 text-xs font-semibold text-amber-900">
               {t("interestCount", { count: interestCount })}
             </span>

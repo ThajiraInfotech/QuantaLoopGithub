@@ -13,6 +13,7 @@ import {
 import { InterestStatusBadge } from "@/components/interests/interest-status-badge";
 import {
   canMessageInline,
+  canViewConversationHistory,
   historyStatusLabel,
 } from "@/components/interests/interests-inventory-utils";
 import { Button } from "@/components/ui/button";
@@ -95,6 +96,11 @@ export function InterestInboxCard({
   const historyLabel = historyStatusLabel(i.status);
   const workflowStep = workflowStepFor(i.status, t);
   const showInlineMessages = canMessageInline(i.status, i.conversationId);
+  const showConversationHistory = canViewConversationHistory(
+    i.status,
+    i.conversationId
+  );
+  const canExpandConversation = showInlineMessages || showConversationHistory;
   const showWorkflow =
     isProvider && !isPending && !isHistoryReadOnly && workflowStep !== null;
 
@@ -143,7 +149,7 @@ export function InterestInboxCard({
         variant === "pending" &&
           isProvider &&
           "border-amber-300/90 bg-amber-50/30 shadow-sm shadow-amber-950/5",
-        expanded && showInlineMessages && "ring-1 ring-zinc-200"
+        expanded && canExpandConversation && "ring-1 ring-zinc-200"
       )}
     >
       <CardHeader className="p-4 pb-3 sm:p-6 sm:pb-3">
@@ -202,13 +208,17 @@ export function InterestInboxCard({
           <div className="flex shrink-0 flex-col items-end gap-1">
             <div className="flex items-center gap-2">
               {isProvider ? <InterestStatusBadge status={i.status} /> : null}
-              {showInlineMessages && onToggleExpand ? (
+              {canExpandConversation && onToggleExpand ? (
                 <button
                   type="button"
                   onClick={onToggleExpand}
                   className="inline-flex min-h-11 items-center text-sm font-medium text-zinc-600 underline-offset-4 hover:text-zinc-900 hover:underline sm:min-h-0 sm:text-xs"
                 >
-                  {expanded ? t("collapse") : t("expand")}
+                  {expanded
+                    ? t("collapse")
+                    : showConversationHistory
+                      ? t("viewHistory")
+                      : t("expand")}
                 </button>
               ) : null}
             </div>
@@ -292,10 +302,11 @@ export function InterestInboxCard({
           ]}
         />
 
-        {expanded && showInlineMessages && i.conversationId ? (
+        {expanded && canExpandConversation && i.conversationId ? (
           <>
             <InterestInlineMessages
               conversationId={i.conversationId}
+              readOnly={showConversationHistory}
               onMessageSent={onRefresh}
             />
 
@@ -329,13 +340,13 @@ export function InterestInboxCard({
           </>
         ) : null}
 
-        {!expanded && showInlineMessages ? (
+        {!expanded && canExpandConversation ? (
           <button
             type="button"
             onClick={onToggleExpand}
             className="inline-flex min-h-11 items-center text-sm font-medium text-zinc-800 underline-offset-4 hover:underline"
           >
-            {t("openMessages")} →
+            {showConversationHistory ? t("viewHistory") : t("openMessages")} →
           </button>
         ) : null}
 

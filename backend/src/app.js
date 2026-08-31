@@ -46,6 +46,9 @@ const { LOCAL_UPLOAD_DIR } = require("./services/storage/material-image.service"
 const {
   configureNotificationEmails,
 } = require("./modules/notifications/notification.service");
+const {
+  configureWebPush,
+} = require("./modules/notifications/push-notification.service");
 const { sendInvoiceEmail } = require("./services/email/email.service");
 
 function isPrivateLanHostname(hostname) {
@@ -73,6 +76,7 @@ function isAllowedCorsOrigin(origin, env) {
 function createApp(env) {
   const app = express();
   configureNotificationEmails(env);
+  configureWebPush(env);
   const requireActiveSubscription = createRequireActiveSubscription({
     trialDays: env.MEMBERSHIP_TRIAL_DAYS,
   });

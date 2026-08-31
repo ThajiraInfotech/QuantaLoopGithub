@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
+import { PushNotificationPrompt } from "@/components/notifications/push-notification-prompt";
 import { useLocalizedTime } from "@/hooks/use-localized-time";
 import { getBellPreviewItem } from "@/lib/notification-bell-preview";
 import { cn } from "@/lib/utils";
@@ -270,6 +271,8 @@ export function NotificationBell() {
               </ul>
             )}
           </div>
+
+          <PushNotificationPrompt variant="compact" />
 
           {unreadCount > 0 ? (
             <div className="border-t border-zinc-100 bg-zinc-50/80 px-4 py-3">

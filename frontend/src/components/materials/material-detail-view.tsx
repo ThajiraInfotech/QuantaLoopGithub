@@ -11,7 +11,10 @@ import { ActivityTimeline } from "@/components/activity/activity-timeline";
 import { ExpressInterestModal } from "@/components/interests/express-interest-modal";
 import { ReportActions } from "@/components/reports/report-actions";
 import { MaterialStatusBadge } from "@/components/materials/material-status-badge";
-import { isCompletedMaterial } from "@/components/materials/materials-inventory-utils";
+import {
+  isActionableInterest,
+  isCompletedMaterial,
+} from "@/components/materials/materials-inventory-utils";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants/routes";
 import { useLocalizedTime } from "@/hooks/use-localized-time";
@@ -248,6 +251,8 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
 
   const isOwner =
     user?.id === material.provider.id && user?.role === "material_provider";
+  const materialCompleted = isCompletedMaterial(material.status);
+  const actionableInterests = materialInterests.filter(isActionableInterest);
   const isBuyer = user?.role === "verified_buyer";
   const canExpress =
     isBuyer &&
@@ -318,7 +323,7 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
         </Link>
         {isOwner ? (
           <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
-            {!isCompletedMaterial(material.status) ? (
+            {!materialCompleted ? (
               <Link
                 href={ROUTES.materialEdit(materialId)}
                 className={cn(headerActionClass, "w-full sm:w-auto")}
@@ -489,20 +494,20 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
         </section>
       ) : null}
 
-      {isOwner ? (
+      {isOwner && !materialCompleted ? (
         <section
           className={cn(
             "rounded-2xl border p-4 sm:p-6",
-            materialInterests.length > 0
+            actionableInterests.length > 0
               ? "border-emerald-200 bg-emerald-50/70"
               : "border-zinc-200/80 bg-zinc-50/80"
           )}
         >
-          {materialInterests.length > 0 ? (
+          {actionableInterests.length > 0 ? (
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div className="min-w-0">
                 <p className="text-base font-semibold text-pretty text-emerald-900">
-                  {t("buyersInterested", { count: materialInterests.length })}
+                  {t("buyersInterested", { count: actionableInterests.length })}
                 </p>
                 <p className="mt-1 text-sm leading-relaxed text-emerald-800/90">
                   {t("reviewInbox")}
@@ -526,7 +531,7 @@ export function MaterialDetailView({ materialId }: MaterialDetailViewProps) {
         </section>
       ) : null}
 
-      {isOwner && providerTimeline.length > 0 ? (
+      {isOwner && !materialCompleted && providerTimeline.length > 0 ? (
         <section className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-sm shadow-zinc-950/[0.04] sm:p-8">
           <h2 className="text-xs font-semibold uppercase tracking-wide text-zinc-500 sm:text-sm">
             {t("recentActivity")}

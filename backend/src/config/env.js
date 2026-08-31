@@ -58,6 +58,10 @@ const envSchema = z.object({
     .string()
     .optional()
     .default("Annual platform access"),
+  // Web Push (browser notifications). Generate with: npx web-push generate-vapid-keys
+  VAPID_PUBLIC_KEY: z.string().optional(),
+  VAPID_PRIVATE_KEY: z.string().optional(),
+  VAPID_SUBJECT: z.string().default("mailto:support@quantaloop.com"),
 });
 
 function loadEnv() {

@@ -8,6 +8,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { NotificationBell } from "@/components/notifications/notification-bell";
 import { NotificationRealtimeProvider } from "@/components/notifications/notification-realtime-provider";
+import { PushNotificationProvider } from "@/components/notifications/push-notification-provider";
 import { LanguageSwitcher } from "@/components/shared/language-switcher";
 import { Logo } from "@/components/shared/logo";
 import { ContactSupportModal } from "@/components/support/contact-support-modal";
@@ -198,6 +199,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
   return (
     <NotificationRealtimeProvider>
+    <PushNotificationProvider>
     <div className="flex min-h-svh bg-zinc-50">
       <aside className="sticky top-0 hidden h-svh w-64 shrink-0 flex-col border-r border-zinc-200/80 bg-white lg:flex">
         <div className="flex h-16 shrink-0 items-center border-b border-zinc-200/80 px-5">
@@ -382,6 +384,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         defaultCompanyName={user?.companyName}
       />
     </div>
+    </PushNotificationProvider>
     </NotificationRealtimeProvider>
   );
 }

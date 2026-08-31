@@ -7,6 +7,7 @@ const { getNotificationFeedForUser } = require("./notification-feed");
 const {
   publishNotificationSync,
 } = require("./notification-stream.service");
+const { dispatchWebPush } = require("./push-notification.service");
 
 /** @type {import("../../config/env").loadEnv extends () => infer E ? E : never | null} */
 let runtimeEnv = null;
@@ -88,6 +89,7 @@ async function createNotification(payload) {
   });
 
   void dispatchNotificationEmail(doc, payload.emailExtras ?? {});
+  void dispatchWebPush(doc);
   void emitRecipientSync(payload.recipient);
   return doc;
 }
@@ -118,6 +120,7 @@ async function upsertMessageNotification({
     existing.createdAt = new Date();
     await existing.save();
     void dispatchNotificationEmail(existing);
+    void dispatchWebPush(existing);
     void emitRecipientSync(recipient);
     return existing;
   }

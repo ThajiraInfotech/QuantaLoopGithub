@@ -26,6 +26,9 @@ const { Subscription } = require("../modules/subscriptions/subscription.model");
 const {
   WebhookEvent,
 } = require("../modules/subscriptions/webhook-event.model");
+const {
+  PushSubscription,
+} = require("../modules/notifications/push-subscription.model");
 
 const PARTICIPANT_ROLES = ["material_provider", "verified_buyer"];
 
@@ -127,6 +130,11 @@ async function clearParticipants() {
             { relatedInterest: { $in: interestIds } },
           ],
         }),
+    },
+    {
+      name: "push subscriptions",
+      run: () =>
+        PushSubscription.deleteMany({ user: { $in: participantIds } }),
     },
     {
       name: "reports",

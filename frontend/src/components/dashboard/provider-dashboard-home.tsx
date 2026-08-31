@@ -6,6 +6,10 @@ import { useCallback, useEffect, useState } from "react";
 
 import { MaterialStatusBadge } from "@/components/materials/material-status-badge";
 import {
+  actionableInterestCountByMaterial,
+  isCompletedMaterial,
+} from "@/components/materials/materials-inventory-utils";
+import {
   Card,
   CardContent,
   CardDescription,
@@ -63,13 +67,7 @@ export function ProviderDashboardHome() {
   const displayName = user?.companyName?.trim() || user?.name?.trim() || "";
   const greeting = useDashboardGreeting(displayName);
 
-  const interestCountByMaterial = new Map<string, number>();
-  for (const i of interests) {
-    interestCountByMaterial.set(
-      i.materialId,
-      (interestCountByMaterial.get(i.materialId) ?? 0) + 1
-    );
-  }
+  const interestCountByMaterial = actionableInterestCountByMaterial(interests);
   const sortedMaterials = [...materials].sort(
     (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
   );
@@ -250,7 +248,9 @@ export function ProviderDashboardHome() {
           </CardHeader>
           <CardContent className="space-y-2 p-4 pt-4 sm:p-6 sm:pt-6">
             {sortedMaterials.slice(0, 5).map((m) => {
-              const interestCount = interestCountByMaterial.get(m.id) ?? 0;
+              const interestCount = isCompletedMaterial(m.status)
+                ? 0
+                : interestCountByMaterial.get(m.id) ?? 0;
               return (
                 <Link
                   key={m.id}

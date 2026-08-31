@@ -45,6 +45,14 @@ export function canMessageInline(
   return ["accepted", "discussion", "pickup_scheduled"].includes(status);
 }
 
+export function canViewConversationHistory(
+  status: InterestStatus,
+  conversationId: string | null
+): boolean {
+  if (!conversationId) return false;
+  return HISTORY_STATUSES.includes(status);
+}
+
 export function canOpenDiscussionThread(status: InterestStatus): boolean {
   return status === "discussion" || status === "pickup_scheduled";
 }

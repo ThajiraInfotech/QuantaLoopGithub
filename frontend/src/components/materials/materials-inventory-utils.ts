@@ -1,4 +1,4 @@
-import type { Interest } from "@/types/interest";
+import type { Interest, InterestStatus } from "@/types/interest";
 import type { Material, MaterialStatus } from "@/types/material";
 import { isIndiaCountry, normalizeCountryCode } from "@/constants/countries";
 
@@ -8,8 +8,19 @@ const COMPLETED_STATUSES: MaterialStatus[] = [
   "inactive",
 ];
 
+const ACTIONABLE_INTEREST_STATUSES: InterestStatus[] = [
+  "pending",
+  "accepted",
+  "discussion",
+  "pickup_scheduled",
+];
+
 export function isCompletedMaterial(status: MaterialStatus): boolean {
   return COMPLETED_STATUSES.includes(status);
+}
+
+export function isActionableInterest(interest: Interest): boolean {
+  return ACTIONABLE_INTEREST_STATUSES.includes(interest.status);
 }
 
 export type MaterialStatusFilter =
@@ -24,6 +35,24 @@ export function interestCountByMaterial(interests: Interest[]): Map<string, numb
     map.set(i.materialId, (map.get(i.materialId) ?? 0) + 1);
   }
   return map;
+}
+
+export function actionableInterestCountByMaterial(
+  interests: Interest[]
+): Map<string, number> {
+  const map = new Map<string, number>();
+  for (const interest of interests) {
+    if (!isActionableInterest(interest)) continue;
+    map.set(
+      interest.materialId,
+      (map.get(interest.materialId) ?? 0) + 1
+    );
+  }
+  return map;
+}
+
+export function countActionableInterests(interests: Interest[]): number {
+  return interests.filter(isActionableInterest).length;
 }
 
 export function matchesStatusFilter(

@@ -70,3 +70,55 @@ export async function markAllNotificationsReadRequest(): Promise<void> {
     throw new Error(getAxiosErrorMessage(e));
   }
 }
+
+export type PushConfig = {
+  enabled: boolean;
+  publicKey: string | null;
+  subscribed: boolean;
+};
+
+export async function fetchPushConfig(): Promise<PushConfig> {
+  try {
+    const { data } = await apiClient.get<unknown>("/notifications/push/config");
+    if (isApiError(data)) {
+      throw new Error(data.error.message);
+    }
+    if (!isApiSuccess<PushConfig>(data)) {
+      throw new Error("Unexpected response");
+    }
+    return data.data;
+  } catch (e) {
+    throw new Error(getAxiosErrorMessage(e));
+  }
+}
+
+export async function subscribePushRequest(payload: {
+  endpoint: string;
+  keys: { p256dh: string; auth: string };
+}): Promise<void> {
+  try {
+    const { data } = await apiClient.post<unknown>(
+      "/notifications/push/subscribe",
+      payload
+    );
+    if (isApiError(data)) {
+      throw new Error(data.error.message);
+    }
+  } catch (e) {
+    throw new Error(getAxiosErrorMessage(e));
+  }
+}
+
+export async function unsubscribePushRequest(endpoint: string): Promise<void> {
+  try {
+    const { data } = await apiClient.delete<unknown>(
+      "/notifications/push/unsubscribe",
+      { data: { endpoint } }
+    );
+    if (isApiError(data)) {
+      throw new Error(data.error.message);
+    }
+  } catch (e) {
+    throw new Error(getAxiosErrorMessage(e));
+  }
+}

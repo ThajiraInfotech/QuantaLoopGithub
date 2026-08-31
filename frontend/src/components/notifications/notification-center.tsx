@@ -20,6 +20,7 @@ import {
 } from "@/lib/notification-grouping";
 import { partitionNotifications } from "@/lib/notification-display";
 import { cn } from "@/lib/utils";
+import { PushNotificationPrompt } from "@/components/notifications/push-notification-prompt";
 import {
   fetchNotifications,
   fetchUnreadNotificationCount,
@@ -283,6 +284,8 @@ export function NotificationCenter() {
           </Button>
         ) : null}
       </div>
+
+      <PushNotificationPrompt />
 
       {isEmpty ? (
         <div className="rounded-xl border border-dashed border-zinc-200 bg-zinc-50/80 px-6 py-12 text-center">

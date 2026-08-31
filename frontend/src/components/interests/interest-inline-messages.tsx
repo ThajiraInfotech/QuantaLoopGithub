@@ -18,12 +18,14 @@ import type { ThreadMessage } from "@/types/conversation";
 type InterestInlineMessagesProps = {
   conversationId: string;
   threadClosed?: boolean;
+  readOnly?: boolean;
   onMessageSent?: () => void;
 };
 
 export function InterestInlineMessages({
   conversationId,
   threadClosed = false,
+  readOnly = false,
   onMessageSent,
 }: InterestInlineMessagesProps) {
   const t = useTranslations("conversations.messages");
@@ -71,12 +73,14 @@ export function InterestInlineMessages({
     }
   }
 
-  const canWrite = Boolean(user && user.role !== "admin" && !threadClosed);
+  const canWrite = Boolean(
+    user && user.role !== "admin" && !threadClosed && !readOnly
+  );
 
   return (
     <div className="space-y-3 rounded-lg border border-zinc-200/80 bg-zinc-50/50 p-3">
       <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
-        {t("heading")}
+        {readOnly ? t("historyHeading") : t("heading")}
       </p>
 
       {loading ? (
@@ -133,6 +137,8 @@ export function InterestInlineMessages({
             {sending ? t("sending") : t("send")}
           </Button>
         </div>
+      ) : readOnly ? (
+        <p className="text-xs text-zinc-500">{t("readOnlyNote")}</p>
       ) : threadClosed ? (
         <p className="text-xs text-zinc-500">{t("threadClosed")}</p>
       ) : null}

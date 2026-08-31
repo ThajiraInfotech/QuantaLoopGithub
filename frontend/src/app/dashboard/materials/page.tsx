@@ -14,7 +14,8 @@ import {
   filterBuyerMaterialsList,
   filterMaterialsByMarketTab,
   filterMaterialsList,
-  interestCountByMaterial,
+  actionableInterestCountByMaterial,
+  countActionableInterests,
   MATERIALS_PAGE_SIZE,
   paginateList,
   pickRecommendedMaterials,
@@ -223,7 +224,7 @@ export default function MaterialsPage() {
   }, [matchMeta]);
 
   const interestMap = useMemo(
-    () => interestCountByMaterial(interests),
+    () => actionableInterestCountByMaterial(interests),
     [interests]
   );
   const buckets = useMemo(() => countByInventoryBucket(items), [items]);
@@ -336,7 +337,7 @@ export default function MaterialsPage() {
     [filteredItems, page]
   );
 
-  const totalInterests = interests.length;
+  const totalInterests = countActionableInterests(interests);
   const materialTypes = useMemo(
     () => uniqueMaterialFieldValues(items, "materialType"),
     [items]

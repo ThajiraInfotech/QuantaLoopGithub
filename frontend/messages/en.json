@@ -1321,6 +1321,7 @@
       "providerLabel": "Provider",
       "requestedLabel": "Requested",
       "openMessages": "Open messages",
+      "viewHistory": "View conversation history",
       "viewMaterial": "View material",
       "expand": "Expand",
       "collapse": "Collapse",
@@ -1514,6 +1515,35 @@
         "material": "Material",
         "status": "Status"
       }
+    },
+    "push": {
+      "title": "Get alerts even when Quanta Loop is closed",
+      "description": "Enable browser notifications to receive interests, messages, and matches instantly — no need to keep the site open.",
+      "modalTitle": "Enable push notifications?",
+      "modalDescription": "Get Quanta Loop alerts on your device — even when the website is closed. We'll ask again on your next login until you enable or block notifications in your browser.",
+      "modalBenefitsTitle": "You will be notified for",
+      "modalBenefit1": "New buyer interests on your materials",
+      "modalBenefit2": "Messages and discussion updates",
+      "modalBenefit3": "Matches and reminders — without keeping the tab open",
+      "modalEnable": "Yes, enable notifications",
+      "notNow": "Not now",
+      "enable": "Enable notifications",
+      "enabling": "Enabling…",
+      "enableSuccess": "Browser notifications enabled",
+      "enableError": "Could not enable notifications",
+      "deniedHint": "Notifications are blocked in your browser settings",
+      "deniedStillBlocked": "Still blocked — allow notifications in site settings first",
+      "deniedModalTitle": "Notifications are blocked",
+      "deniedModalDescription": "You clicked Block in the browser. Quanta Loop cannot enable push until you allow notifications for this site.",
+      "deniedStepsTitle": "How to fix it",
+      "deniedStep1": "Click the lock or sliders icon beside the address bar (left of localhost:3000)",
+      "deniedStep2": "Open Site settings, then set Notifications to Allow",
+      "deniedStep3": "Reload this page and click Try again",
+      "deniedIncognitoNote": "In Incognito, this applies only to this window. If you close Incognito, you will need to allow notifications again.",
+      "tryAgain": "Try again",
+      "reloadPage": "Reload page",
+      "dismiss": "Dismiss",
+      "compactHint": "Get alerts when the site is closed"
     }
   },
   "reports": {
@@ -1556,6 +1586,8 @@
       "sending": "Sending…",
       "send": "Send",
       "threadClosed": "This thread is closed to new messages.",
+      "historyHeading": "Conversation history (read-only)",
+      "readOnlyNote": "This deal is closed. Messages are shown for reference only.",
       "reportParticipant": "Report participant"
     }
   },
