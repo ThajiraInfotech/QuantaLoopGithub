@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -14,7 +15,10 @@ import {
 import { ResetPasswordWithOtpForm } from "@/components/forms/reset-password-with-otp-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { forgotPasswordRequest } from "@/services/auth/auth.service";
+import {
+  forgotPasswordRequest,
+  type AuthRequestError,
+} from "@/services/auth/auth.service";
 import {
   createForgotPasswordSchema,
   type ForgotPasswordFormValues,
@@ -27,6 +31,7 @@ export function ForgotPasswordForm() {
   const [formError, setFormError] = useState<string | null>(null);
   const [submittedEmail, setSubmittedEmail] = useState<string | null>(null);
   const [otpSentTo, setOtpSentTo] = useState<string | null>(null);
+  const [sending, setSending] = useState(false);
 
   const forgotPasswordSchema = useMemo(
     () =>
@@ -47,6 +52,7 @@ export function ForgotPasswordForm() {
     Boolean(errors.email?.message) && (touchedFields.email || isSubmitted);
 
   async function onSubmit(values: ForgotPasswordFormValues) {
+    setSending(true);
     setFormError(null);
     try {
       const result = await forgotPasswordRequest(values);
@@ -54,9 +60,20 @@ export function ForgotPasswordForm() {
       setSubmittedEmail(accountEmail);
       setOtpSentTo(result.otpSentTo || accountEmail);
     } catch (e) {
-      setFormError(e instanceof Error ? e.message : t("requestFailed"));
+      const err = e as AuthRequestError;
+      setFormError(
+        err.code === "USER_NOT_FOUND"
+          ? t("accountNotFound")
+          : err instanceof Error
+            ? err.message
+            : t("requestFailed")
+      );
+    } finally {
+      setSending(false);
     }
   }
+
+  const isBusy = sending || isSubmitting;
 
   if (submittedEmail) {
     return (
@@ -83,7 +100,7 @@ export function ForgotPasswordForm() {
           id="email"
           type="email"
           autoComplete="email"
-          disabled={isSubmitting}
+          disabled={isBusy}
           className={loginInputClass}
           {...form.register("email")}
         />
@@ -102,11 +119,18 @@ export function ForgotPasswordForm() {
 
       <button
         type="submit"
-        className={loginButtonClass}
-        disabled={isSubmitting}
-        aria-busy={isSubmitting}
+        className={`${loginButtonClass} gap-2`}
+        disabled={isBusy}
+        aria-busy={isBusy}
       >
-        {isSubmitting ? t("sendingCode") : t("sendCode")}
+        {isBusy ? (
+          <>
+            <Loader2 className="h-5 w-5 shrink-0 animate-spin" aria-hidden />
+            {t("sendingCode")}
+          </>
+        ) : (
+          t("sendCode")
+        )}
       </button>
     </form>
   );

@@ -346,15 +346,16 @@ async function googleAuthUser(
 }
 
 async function requestPasswordReset(email, env) {
-  const genericMessage =
-    "If an account exists for that email, a one-time code has been sent.";
-
   const user = await User.findOne({ email: email.toLowerCase().trim() }).select(
     "+passwordResetToken +passwordResetExpiresAt"
   );
 
   if (!user) {
-    return { message: genericMessage };
+    throw new AppError(
+      "No account exists for this email.",
+      404,
+      "USER_NOT_FOUND"
+    );
   }
 
   const otp = generateEmailVerificationOtp();
@@ -373,7 +374,7 @@ async function requestPasswordReset(email, env) {
   });
 
   return {
-    message: genericMessage,
+    message: "A one-time verification code has been sent to your email.",
     otpSentTo: deliveryEmail,
   };
 }

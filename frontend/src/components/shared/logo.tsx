@@ -1,8 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
-import { ROUTES } from "@/constants/routes";
+import { useAuthHydration } from "@/hooks/use-auth-hydration";
+import { getAppHomeHref } from "@/lib/auth-routing";
 import { cn } from "@/lib/utils";
+import { useAuthStore } from "@/store/auth-store";
 
 const LOGO_SRC = "/quantaloop logo.png";
 
@@ -12,6 +16,13 @@ type LogoProps = {
 };
 
 export function Logo({ className, withLink = true }: LogoProps) {
+  const hydrated = useAuthHydration();
+  const user = useAuthStore((s) => s.user);
+  const accessToken = useAuthStore((s) => s.accessToken);
+
+  const href =
+    hydrated && accessToken ? getAppHomeHref(user) : getAppHomeHref(null);
+
   const mark = (
     <Image
       src={LOGO_SRC}
@@ -26,7 +37,7 @@ export function Logo({ className, withLink = true }: LogoProps) {
   if (!withLink) return mark;
 
   return (
-    <Link href={ROUTES.home} className="inline-flex">
+    <Link href={href} className="inline-flex">
       {mark}
     </Link>
   );

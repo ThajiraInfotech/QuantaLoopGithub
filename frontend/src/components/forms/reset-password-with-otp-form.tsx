@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -229,13 +230,19 @@ export function ResetPasswordWithOtpForm({
           type="button"
           onClick={() => void handleResend()}
           disabled={resending || resent || Boolean(successMessage)}
-          className={loginLinkClass}
+          className={`${loginLinkClass} inline-flex items-center gap-1.5`}
+          aria-busy={resending}
         >
-          {resending
-            ? t("resendingCode")
-            : resent
-              ? t("codeResent")
-              : t("resendCode")}
+          {resending ? (
+            <>
+              <Loader2 className="h-4 w-4 shrink-0 animate-spin" aria-hidden />
+              {t("resendingCode")}
+            </>
+          ) : resent ? (
+            t("codeResent")
+          ) : (
+            t("resendCode")
+          )}
         </button>
         <Link href={ROUTES.login} className={loginLinkClass}>
           {t("backToSignIn")}

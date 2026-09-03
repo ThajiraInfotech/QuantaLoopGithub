@@ -241,6 +241,14 @@ export function LandingNavbar() {
                 {tCommon("getStarted")}
               </CtaLink>
             </div>
+            <CtaLink
+              href={ROUTES.login}
+              variant="ghost"
+              size="sm"
+              className="h-9 rounded-full px-3 text-[13px] font-medium shadow-none sm:hidden"
+            >
+              {tCommon("signIn")}
+            </CtaLink>
             <Button
               type="button"
               variant="outline"

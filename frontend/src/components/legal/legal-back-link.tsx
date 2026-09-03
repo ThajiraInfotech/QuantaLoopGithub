@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { ROUTES } from "@/constants/routes";
+import { useAuthHydration } from "@/hooks/use-auth-hydration";
+import { getAppHomeHref } from "@/lib/auth-routing";
+import { useAuthStore } from "@/store/auth-store";
 
 function canUseHistoryBack(): boolean {
   if (typeof window === "undefined") return false;
@@ -22,6 +25,11 @@ export function LegalBackLink() {
   const t = useTranslations("legal.common");
   const router = useRouter();
   const [useHistoryBack, setUseHistoryBack] = useState(false);
+  const authHydrated = useAuthHydration();
+  const user = useAuthStore((s) => s.user);
+  const accessToken = useAuthStore((s) => s.accessToken);
+  const fallbackHref =
+    authHydrated && accessToken ? getAppHomeHref(user) : ROUTES.home;
 
   useEffect(() => {
     setUseHistoryBack(canUseHistoryBack());
@@ -32,7 +40,7 @@ export function LegalBackLink() {
       router.back();
       return;
     }
-    router.push(ROUTES.home);
+    router.push(fallbackHref);
   }
 
   return (

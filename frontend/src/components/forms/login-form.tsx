@@ -110,12 +110,12 @@ export function LoginForm({ googleClientId }: LoginFormProps) {
     setSession({ user: data.user, accessToken: data.accessToken });
 
     if (userNeedsEmailOtp(data.user)) {
-      router.push(ROUTES.verifyEmail);
+      router.replace(ROUTES.verifyEmail);
       router.refresh();
       return;
     }
 
-    router.push(await getPostAuthRedirect(data.user));
+    router.replace(await getPostAuthRedirect(data.user));
     router.refresh();
   }
 

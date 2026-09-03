@@ -1,3 +1,4 @@
+import { AuthenticatedHomeRedirect } from "@/components/auth/authenticated-home-redirect";
 import { LandingAccessProcess } from "@/components/landing/landing-access-process";
 import { LandingAudience } from "@/components/landing/landing-audience";
 import { LandingFinalCta } from "@/components/landing/landing-final-cta";
@@ -13,6 +14,7 @@ import { LandingWhyQuantaLoop } from "@/components/landing/landing-why-quanta-lo
 export async function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
+      <AuthenticatedHomeRedirect />
       <LandingNavbar />
       <main className="min-w-0 flex-1 overflow-x-hidden">
         <LandingHero />

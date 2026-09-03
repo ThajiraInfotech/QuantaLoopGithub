@@ -24,18 +24,38 @@ function isEmailConfigured(env) {
   return Boolean(env.SMTP_HOST && env.EMAIL_FROM);
 }
 
-function createTransport(env) {
+let cachedTransport = null;
+let cachedTransportKey = "";
+
+function getTransport(env) {
   if (!isEmailConfigured(env)) return null;
 
-  return nodemailer.createTransport({
+  const key = [
+    env.SMTP_HOST,
+    env.SMTP_PORT ?? "",
+    env.SMTP_SECURE ?? "",
+    env.SMTP_USER ?? "",
+  ].join("|");
+
+  if (cachedTransport && cachedTransportKey === key) {
+    return cachedTransport;
+  }
+
+  cachedTransportKey = key;
+  cachedTransport = nodemailer.createTransport({
     host: env.SMTP_HOST,
     port: env.SMTP_PORT ?? (env.SMTP_SECURE ? 465 : 587),
     secure: env.SMTP_SECURE ?? false,
+    pool: true,
+    maxConnections: 3,
+    maxMessages: 100,
     auth:
       env.SMTP_USER && env.SMTP_PASS
         ? { user: env.SMTP_USER, pass: env.SMTP_PASS }
         : undefined,
   });
+
+  return cachedTransport;
 }
 
 /** Public URL fallback (works only when CLIENT_ORIGIN is reachable by mail clients). */
@@ -63,7 +83,7 @@ async function deliverEmail(
   env,
   { to, subject, html, text, devLabel, replyTo, attachLogo }
 ) {
-  const transport = createTransport(env);
+  const transport = getTransport(env);
 
   if (!transport) {
     if (env.NODE_ENV !== "production") {

@@ -25,6 +25,13 @@ export function userNeedsAccountSetup(user: User): boolean {
   return isGoogleOnlyAccount(user);
 }
 
+/** In-app home for a signed-in user (logo, back fallback). Guests stay on `/`. */
+export function getAppHomeHref(user: User | null | undefined): string {
+  if (!user) return ROUTES.home;
+  if (user.role === "admin") return ROUTES.admin;
+  return ROUTES.dashboard;
+}
+
 /**
  * The single rule for where a signed-in user belongs. Role, materials, and
  * location are collected before the account exists, so an account that exists

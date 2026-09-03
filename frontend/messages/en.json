@@ -47,7 +47,8 @@
       "trust1": "Smart match recommendations",
       "trust2": "Registered businesses",
       "trust3": "Any quantity accepted",
-      "trust4": "Direct Business connections"
+      "trust4": "Direct Business connections",
+      "alreadyHaveAccount": "Already have an account?"
     },
     "footer": {
       "description1": "Private industrial recovery network connecting material providers, buyers, processors, and recovery operators.",
@@ -498,6 +499,7 @@
       "sendingCode": "Sending code…",
       "sendResetLink": "Send verification code",
       "sendingResetLink": "Sending code…",
+      "accountNotFound": "No account exists for this email.",
       "requestFailed": "Unable to process your request. Please try again."
     },
     "resetPassword": {

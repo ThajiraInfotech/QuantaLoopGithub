@@ -165,7 +165,7 @@ export async function forgotPasswordRequest(
     }
     return data.data;
   } catch (e) {
-    throw new Error(getErrorMessage(e));
+    throw toAuthRequestError(e);
   }
 }
 

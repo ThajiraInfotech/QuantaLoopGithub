@@ -86,6 +86,16 @@ export async function LandingHero() {
               {tNav("howItWorks")}
             </CtaLink>
           </div>
+          <p className="mt-4 text-center text-small text-muted-foreground min-[480px]:text-left">
+            {t("alreadyHaveAccount")}{" "}
+            <CtaLink
+              href={ROUTES.login}
+              variant="link"
+              className="inline font-medium text-foreground"
+            >
+              {tCommon("signIn")}
+            </CtaLink>
+          </p>
         </div>
 
         <div className="flex min-w-0 w-full items-center lg:pl-2">

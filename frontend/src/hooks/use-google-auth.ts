@@ -39,7 +39,7 @@ export function useGoogleAuth() {
       setSession({ user: data.user, accessToken: data.accessToken });
 
       // Google accounts are email-verified by Google — skip OTP.
-      router.push(await getPostAuthRedirect(data.user));
+      router.replace(await getPostAuthRedirect(data.user));
       router.refresh();
     } catch (error) {
       const err = error as AuthRequestError;
