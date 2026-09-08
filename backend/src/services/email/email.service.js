@@ -35,17 +35,22 @@ function getTransport(env) {
     env.SMTP_PORT ?? "",
     env.SMTP_SECURE ?? "",
     env.SMTP_USER ?? "",
+    env.SMTP_PASS ?? "",
   ].join("|");
 
   if (cachedTransport && cachedTransportKey === key) {
     return cachedTransport;
   }
 
+  const secure = env.SMTP_SECURE ?? false;
+
   cachedTransportKey = key;
   cachedTransport = nodemailer.createTransport({
     host: env.SMTP_HOST,
-    port: env.SMTP_PORT ?? (env.SMTP_SECURE ? 465 : 587),
-    secure: env.SMTP_SECURE ?? false,
+    port: env.SMTP_PORT ?? (secure ? 465 : 587),
+    secure,
+    requireTLS: !secure,
+    tls: { minVersion: "TLSv1.2" },
     pool: true,
     maxConnections: 3,
     maxMessages: 100,

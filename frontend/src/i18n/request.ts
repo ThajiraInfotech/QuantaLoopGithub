@@ -1,6 +1,8 @@
 import { cookies } from "next/headers";
 import { getRequestConfig } from "next-intl/server";
 
+import { ENGLISH_TERMS_CONTENT } from "@/constants/english-terms";
+
 import { LOCALE_COOKIE, routing, type AppLocale } from "./routing";
 
 function resolveLocale(value: string | undefined): AppLocale {
@@ -17,9 +19,16 @@ export default getRequestConfig(async ({ requestLocale }) => {
   const requestedLocale = await requestLocale;
 
   const locale = resolveLocale(cookieLocale ?? requestedLocale ?? undefined);
+  const messages = (await import(`../../messages/${locale}.json`)).default;
 
   return {
     locale,
-    messages: (await import(`../../messages/${locale}.json`)).default,
+    messages: {
+      ...messages,
+      legal: {
+        ...messages.legal,
+        terms: ENGLISH_TERMS_CONTENT,
+      },
+    },
   };
 });

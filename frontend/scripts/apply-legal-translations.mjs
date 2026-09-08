@@ -38,6 +38,8 @@ const taMap = loadMap(path.join(__dirname, "legal-map.ta.json"));
 
 const hi = deepTranslate(en, hiMap, ADDR_HI);
 const ta = deepTranslate(en, taMap, ADDR_TA);
+hi.terms = structuredClone(en.terms);
+ta.terms = structuredClone(en.terms);
 
 fs.writeFileSync(path.join(outDir, "legal.hi.json"), JSON.stringify(hi, null, 2) + "\n");
 fs.writeFileSync(path.join(outDir, "legal.ta.json"), JSON.stringify(ta, null, 2) + "\n");

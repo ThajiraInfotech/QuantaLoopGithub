@@ -1,19 +1,9 @@
-import { getTranslations } from "next-intl/server";
-
-import type { LegalDocumentContent } from "@/components/legal/legal-content-types";
+import { ENGLISH_TERMS_CONTENT } from "@/constants/english-terms";
 import { LegalDocumentHeader } from "@/components/legal/legal-document";
 import { LegalStructuredDocument } from "@/components/legal/legal-structured-document";
 
 export async function TermsAndConditionsContent() {
-  const t = await getTranslations("legal.terms");
-  const content = {
-    title: t("title"),
-    metadata: t.has("metadata")
-      ? (t.raw("metadata") as LegalDocumentContent["metadata"])
-      : undefined,
-    intro: t.raw("intro") as LegalDocumentContent["intro"],
-    sections: t.raw("sections") as LegalDocumentContent["sections"],
-  } satisfies LegalDocumentContent;
+  const content = ENGLISH_TERMS_CONTENT;
 
   return (
     <>
