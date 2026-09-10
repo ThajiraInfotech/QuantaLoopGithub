@@ -36,3 +36,27 @@ export function getAxiosErrorMessage(error: unknown): string {
   if (error instanceof Error) return error.message;
   return "Request failed";
 }
+
+/** True when the session is dead (expired JWT, deleted user, missing auth). */
+export function isUnauthorizedError(error: unknown): boolean {
+  if (axios.isAxiosError(error)) {
+    if (error.response?.status === 401) return true;
+    const data = error.response?.data;
+    if (isApiError(data)) {
+      const code = data.error?.code;
+      if (code === "INVALID_TOKEN" || code === "UNAUTHORIZED") return true;
+    }
+  }
+
+  const message =
+    error instanceof Error
+      ? error.message
+      : typeof error === "string"
+        ? error
+        : "";
+  const normalized = message.toLowerCase();
+  return (
+    normalized.includes("invalid or expired token") ||
+    normalized.includes("authentication required")
+  );
+}

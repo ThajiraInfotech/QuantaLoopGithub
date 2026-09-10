@@ -34,6 +34,12 @@ const {
 } = require("../modules/billing/billing-profile.model");
 const { Invoice } = require("../modules/billing/invoice.model");
 const { InvoiceCounter } = require("../modules/billing/invoice-counter.model");
+const {
+  PushSubscription,
+} = require("../modules/notifications/push-subscription.model");
+const {
+  SupportRequest,
+} = require("../modules/support/support-request.model");
 
 const PARTICIPANT_ROLES = ["material_provider", "verified_buyer"];
 
@@ -153,6 +159,21 @@ async function main() {
     {
       name: "reports",
       run: () => Report.deleteMany({}),
+    },
+    {
+      name: "push subscriptions",
+      run: () =>
+        PushSubscription.deleteMany({ user: { $in: participantIds } }),
+    },
+    {
+      name: "support requests",
+      run: () =>
+        SupportRequest.deleteMany({
+          $or: [
+            { user: { $in: participantIds } },
+            { email: { $in: participants.map((p) => p.email) } },
+          ],
+        }),
     },
     {
       name: "saved materials",

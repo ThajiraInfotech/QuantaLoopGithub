@@ -6,9 +6,19 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { SubscriptionAccessProvider } from "@/components/subscriptions/subscription-access-context";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants/routes";
+import { isUnauthorizedError } from "@/lib/api-result";
+import { logoutRequest } from "@/services/auth/auth.service";
 import { getSubscriptionAccessState } from "@/services/subscriptions/subscription.service";
 import { useAuthStore } from "@/store/auth-store";
 import type { SubscriptionAccessState } from "@/types/subscription";
+
+function endDeadSession(router: ReturnType<typeof useRouter>) {
+  useAuthStore.getState().clearSession();
+  void logoutRequest().catch(() => {
+    /* cookie may already be invalid */
+  });
+  router.replace(ROUTES.home);
+}
 
 export function SubscriptionAccessGuard({
   children,
@@ -25,6 +35,7 @@ export function SubscriptionAccessGuard({
   } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const requestId = useRef(0);
+  const endingSession = useRef(false);
   const allowed =
     isAdmin ||
     Boolean(
@@ -51,6 +62,13 @@ export function SubscriptionAccessGuard({
         })
         .catch((accessError: unknown) => {
           if (requestId.current !== currentRequest) return;
+          if (isUnauthorizedError(accessError)) {
+            if (!endingSession.current) {
+              endingSession.current = true;
+              endDeadSession(router);
+            }
+            return;
+          }
           setError(
             accessError instanceof Error
               ? accessError.message
