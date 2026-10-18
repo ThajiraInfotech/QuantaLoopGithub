@@ -3658,6 +3658,7 @@
     "eyebrow": "Support",
     "title": "Contact the team",
     "description": "Tell us what you need help with. We typically respond within one business day.",
+    "directEmail": "Or send us a message directly at",
     "pageDescription": "Share a short description of your issue. Our team will review it in the admin dashboard.",
     "fields": {
       "name": "Full name",

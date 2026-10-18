@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { ContactSupportForm } from "@/components/support/contact-support-form";
+import { LEGAL_SUPPORT_EMAIL } from "@/constants/legal";
 import type { SupportSource } from "@/validations/support";
 
 type ContactSupportModalProps = {
@@ -52,6 +53,15 @@ export function ContactSupportModal({
                 {t("title")}
               </h2>
               <p className="mt-1 text-sm text-zinc-600">{t("description")}</p>
+              <p className="mt-2 text-sm text-zinc-600">
+                {t("directEmail")}{" "}
+                <a
+                  href={`mailto:${LEGAL_SUPPORT_EMAIL}`}
+                  className="font-medium text-zinc-900 underline underline-offset-2 hover:text-zinc-700"
+                >
+                  {LEGAL_SUPPORT_EMAIL}
+                </a>
+              </p>
             </div>
             <Button
               type="button"

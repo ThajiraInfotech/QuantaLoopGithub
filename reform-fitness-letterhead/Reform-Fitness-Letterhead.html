@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reform Fitness — Letterhead</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #000000;
+      --teal: #237171;
+      --teal-deep: #1b5c64;
+      --teal-line: #2b6f6e;
+      --gold: #e2ba88;
+      --peach: #e7b783;
+      --ink: #f6f3ee;
+      --muted: #8d8a84;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #141414;
+      color: var(--ink);
+      font-family: "Outfit", "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 14px;
+      padding: 12px 18px;
+      background: #111;
+      border-bottom: 1px solid #2a2a2a;
+      color: #ece8e1;
+    }
+
+    .toolbar h1 {
+      margin: 0;
+      font-family: "Montserrat", "Segoe UI", sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .toolbar h1 span { color: var(--gold); font-weight: 600; }
+
+    .toolbar p {
+      margin: 0;
+      flex: 1 1 280px;
+      font-size: 13px;
+      line-height: 1.4;
+      color: #c8c4bc;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: 1px solid #3a3a3a;
+      background: #1c1c1c;
+      color: #f3efe8;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+
+    button:hover { border-color: var(--gold); color: var(--gold); }
+
+    button.primary {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: #fff;
+      font-weight: 600;
+      padding: 8px 14px;
+    }
+
+    button.primary:hover { background: #1b6363; color: #fff; }
+
+    .format-group {
+      display: flex;
+      border: 1px solid #3a3a3a;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .format-group button {
+      border: 0;
+      border-radius: 0;
+      border-right: 1px solid #3a3a3a;
+      min-width: 36px;
+    }
+
+    .format-group button:last-child { border-right: 0; }
+
+    .warn {
+      display: none;
+      width: 100%;
+      margin: 0;
+      color: #e7b783;
+      font-size: 13px;
+    }
+
+    .warn.show { display: block; }
+
+    .stage {
+      display: flex;
+      justify-content: center;
+      padding: 28px 16px 48px;
+    }
+
+    .page {
+      width: 210mm;
+      height: 297mm;
+      background: var(--black);
+      color: var(--ink);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+    }
+
+    .header {
+      position: relative;
+      height: 34mm;
+      flex: 0 0 34mm;
+      display: flex;
+      align-items: center;
+      padding: 0 12mm 0 10mm;
+      z-index: 2;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 4.5mm;
+      position: relative;
+      z-index: 2;
+      max-width: 145mm;
+    }
+
+    .logo {
+      width: 24mm;
+      height: 27mm;
+      flex: 0 0 auto;
+    }
+
+    .logo svg, .watermark svg { width: 100%; height: 100%; display: block; }
+
+    .wordmark {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2mm;
+    }
+
+    .names {
+      margin: 0;
+      font-family: "Montserrat", "Segoe UI", Arial, sans-serif;
+      font-weight: 700;
+      font-size: 15.5pt;
+      letter-spacing: 0.045em;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .names .reform { color: #2f7278; }
+    .names .fitness { color: var(--gold); margin-left: 0.28em; }
+
+    .tagline {
+      margin: 0;
+      min-height: 1.1em;
+      font-size: 8pt;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #6f6d68;
+      font-weight: 400;
+      outline: none;
+    }
+
+    .tagline:empty::before {
+      content: attr(data-placeholder);
+      color: #3a3a3a;
+    }
+
+    .corner {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 78mm;
+      height: 26mm;
+      pointer-events: none;
+    }
+
+    .dots {
+      position: absolute;
+      right: 7mm;
+      bottom: 4.5mm;
+      display: grid;
+      grid-template-columns: repeat(3, 1.35mm);
+      gap: 1.15mm;
+      pointer-events: none;
+    }
+
+    .dots i {
+      width: 1.35mm;
+      height: 1.35mm;
+      border-radius: 50%;
+      background: #2c4544;
+      display: block;
+    }
+
+    .rule {
+      height: 1.6px;
+      display: flex;
+      flex: 0 0 1.6px;
+    }
+
+    .rule span:first-child { width: 68%; background: var(--teal-line); }
+    .rule span:last-child { width: 32%; background: var(--peach); }
+
+    .sheet-body {
+      position: relative;
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+
+    .watermark {
+      position: absolute;
+      right: 4mm;
+      bottom: 2mm;
+      width: 78mm;
+      height: 88mm;
+      opacity: 0.22;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #letter {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      overflow: auto;
+      padding: 12mm 18mm 10mm 16mm;
+      outline: none;
+      font-size: 11.5pt;
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+
+    #letter p { margin: 0 0 0.55em; }
+    #letter ul, #letter ol { margin: 0.2em 0 0.7em; padding-left: 1.2em; }
+    #letter:focus { outline: none; }
+
+    .footer {
+      height: 22mm;
+      flex: 0 0 22mm;
+      display: flex;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contacts {
+      flex: 1 1 auto;
+      background: var(--teal);
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      padding: 0 12mm 0 6mm;
+      clip-path: polygon(0 0, 100% 0, calc(100% - 10mm) 100%, 0 100%);
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact {
+      display: flex;
+      align-items: center;
+      gap: 2.4mm;
+      min-width: 0;
+      flex: 1 1 0;
+      justify-content: center;
+    }
+
+    .contact + .contact {
+      border-left: 1px solid rgba(255, 255, 255, 0.28);
+    }
+
+    .bubble {
+      width: 8.2mm;
+      height: 8.2mm;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--teal);
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+    }
+
+    .bubble svg { width: 4.2mm; height: 4.2mm; display: block; }
+
+    .contact-text {
+      outline: none;
+      color: #fff;
+      font-size: 8.4pt;
+      font-weight: 500;
+      line-height: 1.2;
+      min-width: 22mm;
+      max-width: 46mm;
+      word-break: break-word;
+    }
+
+    .contact-text:empty::before {
+      content: attr(data-placeholder);
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .social {
+      width: 62mm;
+      margin-left: -10mm;
+      background: var(--peach);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.6mm;
+      padding-left: 8mm;
+    }
+
+    .social-label {
+      margin: 0;
+      font-family: "Montserrat", "Segoe UI", sans-serif;
+      font-size: 7pt;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: #fff;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 3.2mm;
+      align-items: center;
+    }
+
+    .social-icons svg {
+      width: 4.4mm;
+      height: 4.4mm;
+      display: block;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    @media screen {
+      #letter:hover,
+      .tagline:hover,
+      .contact-text:hover,
+      #letter:focus,
+      .tagline:focus,
+      .contact-text:focus {
+        outline: 1px dashed rgba(226, 186, 136, 0.55);
+        outline-offset: 3px;
+      }
+    }
+
+    @media print {
+      html, body {
+        background: #000;
+        height: 297mm;
+        overflow: hidden;
+      }
+      .toolbar, .stage { display: block; }
+      .toolbar { display: none !important; }
+      .stage { padding: 0; }
+      .page {
+        box-shadow: none;
+        margin: 0;
+        width: 210mm;
+        height: 297mm;
+      }
+      #letter { overflow: visible; }
+      .tagline:empty::before,
+      .contact-text:empty::before { content: none; }
+      #letter:hover, .tagline:hover, .contact-text:hover,
+      #letter:focus, .tagline:focus, .contact-text:focus {
+        outline: none;
+      }
+    }
+
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <h1>Reform <span>Fitness</span></h1>
+    <p>Click the letter and type. Phone, email, address, and the tagline can be edited too. Then choose Print / Save as PDF. In the print window, turn on <strong>Background graphics</strong> so the black, teal, and gold print.</p>
+    <p class="warn" id="overflow-warn">This letter is longer than one page and the extra lines will be cut off when printing. Shorten the text until this note disappears.</p>
+    <div class="toolbar-actions">
+      <div class="format-group" aria-label="Formatting">
+        <button type="button" data-cmd="bold" title="Bold"><b>B</b></button>
+        <button type="button" data-cmd="italic" title="Italic"><i>I</i></button>
+        <button type="button" data-cmd="underline" title="Underline"><u>U</u></button>
+        <button type="button" data-cmd="insertUnorderedList" title="Bullet list">• List</button>
+      </div>
+      <button type="button" id="reset-btn">Reset letter</button>
+      <button type="button" class="primary" id="print-btn">Print / Save as PDF</button>
+    </div>
+  </div>
+
+  <div class="stage">
+    <article class="page" id="page">
+      <header class="header">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">
+            <svg viewBox="0 0 120 156" xmlns="http://www.w3.org/2000/svg">
+              <g fill="#E2BA88">
+                <rect x="12" y="2" width="18" height="26" rx="9"/>
+                <rect x="90" y="2" width="18" height="26" rx="9"/>
+                <rect x="22" y="9" width="76" height="12"/>
+                <path d="M34 22 L30 56 L14 70 L60 114 L106 70 L90 56 L86 22 L74 22 L76 52 L62 66 L60 74 L58 66 L44 52 L46 22 Z"/>
+              </g>
+              <circle cx="60" cy="44" r="8" fill="#1B5C64"/>
+              <path fill="#1B5C64" d="M36 106 h13 l18 26 v-26 h13 v34 H67 L49 114 v26 H36 z"/>
+            </svg>
+          </div>
+          <div class="wordmark">
+            <p class="names"><span class="reform">Reform</span><span class="fitness">Fitness</span></p>
+            <p class="tagline" id="tagline" contenteditable="true" spellcheck="true" data-placeholder="Add a tagline"></p>
+          </div>
+        </div>
+
+        <svg class="corner" viewBox="0 0 320 110" preserveAspectRatio="xMaxYMin slice" aria-hidden="true">
+          <polygon points="18,0 92,0 150,72 76,72" fill="#E7B783"/>
+          <path d="M78 0H320V58H168C128 58 96 34 70 0Z" fill="#2B6F6E"/>
+          <polygon points="148,64 320,64 320,80 124,80" fill="#E7B783"/>
+        </svg>
+        <div class="dots" aria-hidden="true">
+          <i></i><i></i><i></i>
+          <i></i><i></i><i></i>
+          <i></i><i></i><i></i>
+        </div>
+      </header>
+
+      <div class="rule" aria-hidden="true"><span></span><span></span></div>
+
+      <main class="sheet-body">
+        <div class="watermark" aria-hidden="true">
+          <svg viewBox="0 0 120 156" xmlns="http://www.w3.org/2000/svg">
+            <g fill="#8A7048">
+              <rect x="12" y="2" width="18" height="26" rx="9"/>
+              <rect x="90" y="2" width="18" height="26" rx="9"/>
+              <rect x="22" y="9" width="76" height="12"/>
+              <path d="M34 22 L30 56 L14 70 L60 114 L106 70 L90 56 L86 22 L74 22 L76 52 L62 66 L60 74 L58 66 L44 52 L46 22 Z"/>
+            </g>
+            <circle cx="60" cy="44" r="8" fill="#143E44"/>
+            <path fill="#143E44" d="M36 106 h13 l18 26 v-26 h13 v34 H67 L49 114 v26 H36 z"/>
+          </svg>
+        </div>
+        <div id="letter" contenteditable="true" spellcheck="true" aria-label="Letter content"></div>
+      </main>
+
+      <footer class="footer">
+        <div class="contacts">
+          <div class="contact">
+            <span class="bubble" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#237171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6.5 3.5h3l1.5 4-2 1.2a12 12 0 0 0 5.3 5.3l1.2-2 4 1.5v3A2 2 0 0 1 17.5 18 14.5 14.5 0 0 1 5 5.5 2 2 0 0 1 6.5 3.5z"/>
+              </svg>
+            </span>
+            <div class="contact-text" id="phone" contenteditable="true" spellcheck="false" data-placeholder="Add phone" aria-label="Phone number"></div>
+          </div>
+          <div class="contact">
+            <span class="bubble" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#237171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="5" width="18" height="14" rx="2"/>
+                <path d="m4 7 8 6 8-6"/>
+              </svg>
+            </span>
+            <div class="contact-text" id="email" contenteditable="true" spellcheck="false" data-placeholder="Add email" aria-label="Email address"></div>
+          </div>
+          <div class="contact">
+            <span class="bubble" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#237171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/>
+                <circle cx="12" cy="10" r="2.2"/>
+              </svg>
+            </span>
+            <div class="contact-text" id="location" contenteditable="true" spellcheck="true" data-placeholder="Add address" aria-label="Address"></div>
+          </div>
+        </div>
+        <div class="social">
+          <p class="social-label">Follow us</p>
+          <div class="social-icons" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.2" cy="6.8" r="0.8" fill="#fff" stroke="none"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M14 8h2V5h-2c-2.2 0-4 1.8-4 4v2H8v3h2v6h3v-6h2.2l.8-3H13V9c0-.6.4-1 1-1z" fill="#fff" stroke="none"/></svg>
+            <svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M20 7.5c-.6.3-1.2.4-1.9.5.7-.4 1.2-1 1.4-1.8-.6.4-1.3.7-2.1.8A3.1 3.1 0 0 0 12 9.8c0 .2 0 .5.1.7-2.6-.1-4.9-1.4-6.4-3.3-.3.5-.4 1-.4 1.6 0 1.1.6 2 1.4 2.6-.5 0-1-.2-1.5-.4 0 1.5 1.1 2.8 2.5 3.1-.3.1-.6.1-.9.1-.2 0-.4 0-.6-.1.4 1.3 1.6 2.2 3.1 2.2A6.3 6.3 0 0 1 4 17.6 8.8 8.8 0 0 0 8.8 19c5.8 0 9-4.8 9-9v-.4c.6-.4 1.2-1 1.6-1.6z" fill="#fff" stroke="none"/></svg>
+          </div>
+        </div>
+      </footer>
+    </article>
+  </div>
+
+  <script>
+    const STORAGE = "reform-fitness-letterhead-v1";
+    const letter = document.getElementById("letter");
+    const tagline = document.getElementById("tagline");
+    const phone = document.getElementById("phone");
+    const email = document.getElementById("email");
+    const locationField = document.getElementById("location");
+    const warn = document.getElementById("overflow-warn");
+
+    function sampleLetter() {
+      const date = new Date().toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+      return (
+        "<p>" + date + "</p>" +
+        "<p><br></p>" +
+        "<p>Recipient name<br>Company<br>Address</p>" +
+        "<p><br></p>" +
+        "<p><strong>Subject:</strong> Subject line</p>" +
+        "<p><br></p>" +
+        "<p>Dear [Name],</p>" +
+        "<p>Write the letter here. Select this text and replace it with your message.</p>" +
+        "<p>Kind regards,</p>" +
+        "<p><strong>Your name</strong><br>Title<br>Reform Fitness</p>"
+      );
+    }
+
+    function defaults() {
+      return {
+        letter: sampleLetter(),
+        tagline: "",
+        phone: "+00 000 000 000",
+        email: "hello@reformfitness.com",
+        location: "City, Country"
+      };
+    }
+
+    function readStore() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE) || "null");
+      } catch (err) {
+        return null;
+      }
+    }
+
+    function writeStore() {
+      const data = {
+        letter: letter.innerHTML,
+        tagline: tagline.innerText,
+        phone: phone.innerText,
+        email: email.innerText,
+        location: locationField.innerText
+      };
+      try {
+        localStorage.setItem(STORAGE, JSON.stringify(data));
+      } catch (err) {
+        /* The file can still be edited and printed if storage is blocked. */
+      }
+      checkFit();
+    }
+
+    function apply(data) {
+      letter.innerHTML = data.letter;
+      tagline.innerText = data.tagline || "";
+      phone.innerText = data.phone || "";
+      email.innerText = data.email || "";
+      locationField.innerText = data.location || "";
+      checkFit();
+    }
+
+    function checkFit() {
+      const overflow = letter.scrollHeight > letter.clientHeight + 6;
+      warn.classList.toggle("show", overflow);
+    }
+
+    apply(readStore() || defaults());
+
+    [letter, tagline, phone, email, locationField].forEach((el) => {
+      el.addEventListener("input", writeStore);
+    });
+
+    document.querySelectorAll("[data-cmd]").forEach((button) => {
+      button.addEventListener("mousedown", (event) => event.preventDefault());
+      button.addEventListener("click", () => {
+        letter.focus();
+        document.execCommand(button.getAttribute("data-cmd"), false, null);
+        writeStore();
+      });
+    });
+
+    document.getElementById("reset-btn").addEventListener("click", () => {
+      if (!confirm("Replace the current letter with the blank template?")) return;
+      localStorage.removeItem(STORAGE);
+      apply(defaults());
+    });
+
+    document.getElementById("print-btn").addEventListener("click", () => {
+      checkFit();
+      window.print();
+    });
+
+    window.addEventListener("beforeprint", checkFit);
+    window.addEventListener("resize", checkFit);
+  </script>
+</body>
+</html>
