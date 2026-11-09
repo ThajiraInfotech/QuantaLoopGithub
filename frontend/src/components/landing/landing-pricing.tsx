@@ -11,6 +11,7 @@ import {
   landingSectionY,
   landingStackGap,
 } from "@/components/landing/landing-styles";
+import { LandingOpenContactLink } from "@/components/landing/landing-open-contact-link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { ROUTES } from "@/constants/routes";
@@ -137,12 +138,10 @@ export async function LandingPricing() {
 
           <p className="text-center text-small leading-relaxed text-muted-foreground">
             {t("enterprisePrefix")}{" "}
-            <a
-              href="mailto:enterprise@quantaloop.com?subject=Enterprise%20Network%20Access"
-              className="font-medium text-foreground underline-offset-4 transition-colors hover:text-accent hover:underline"
-            >
-              {t("enterpriseContact")}
-            </a>{" "}
+            <LandingOpenContactLink
+              label={t("enterpriseContact")}
+              className="inline font-medium text-foreground underline-offset-4 transition-colors hover:text-accent hover:underline"
+            />{" "}
             {t("enterpriseSuffix")}
           </p>
         </div>

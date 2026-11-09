@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { CtaLink } from "@/components/landing/cta-link";
+import { LANDING_OPEN_CONTACT_EVENT } from "@/components/landing/landing-open-contact-link";
 import { LanguageSwitcher } from "@/components/shared/language-switcher";
 import { Logo } from "@/components/shared/logo";
 import { ContactSupportModal } from "@/components/support/contact-support-modal";
@@ -131,10 +132,17 @@ export function LandingNavbar() {
 
   const closeMobile = useCallback(() => setMobileOpen(false), []);
 
-  function openSupport() {
+  const openSupport = useCallback(() => {
     closeMobile();
     setSupportOpen(true);
-  }
+  }, [closeMobile]);
+
+  useEffect(() => {
+    const onOpenContact = () => openSupport();
+    window.addEventListener(LANDING_OPEN_CONTACT_EVENT, onOpenContact);
+    return () =>
+      window.removeEventListener(LANDING_OPEN_CONTACT_EVENT, onOpenContact);
+  }, [openSupport]);
 
   return (
     <>
