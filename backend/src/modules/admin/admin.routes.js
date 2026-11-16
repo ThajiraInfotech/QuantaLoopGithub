@@ -22,6 +22,13 @@ const {
   postPasswordChangeRequest,
   postPasswordChangeConfirm,
 } = require("./admin.controller");
+const {
+  getAdminInsights,
+  getAdminInsight,
+  postAdminInsight,
+  patchAdminInsight,
+  deleteAdminInsight,
+} = require("../content-insights/content-insight.controller");
 
 function createAdminRouter(env) {
   const router = express.Router();
@@ -81,6 +88,17 @@ function createAdminRouter(env) {
     requireAuth,
     adminOnly,
     getInvoiceHtml
+  );
+
+  router.get("/insights", requireAuth, adminOnly, getAdminInsights);
+  router.post("/insights", requireAuth, adminOnly, postAdminInsight);
+  router.get("/insights/:insightId", requireAuth, adminOnly, getAdminInsight);
+  router.patch("/insights/:insightId", requireAuth, adminOnly, patchAdminInsight);
+  router.delete(
+    "/insights/:insightId",
+    requireAuth,
+    adminOnly,
+    deleteAdminInsight
   );
 
   return router;

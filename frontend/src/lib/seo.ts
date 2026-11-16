@@ -20,6 +20,96 @@ export const OG_DESCRIPTION =
 /** Absolute asset URLs used in Open Graph / JSON-LD (no spaces in paths). */
 export const LOGO_URL = `${SITE_URL}/icon.png`;
 
+export type BreadcrumbItem = {
+  name: string;
+  path: string;
+};
+
+export type FaqItem = {
+  question: string;
+  answer: string;
+};
+
+/** Search Console + authority checklist (Phase C ops — not rendered on-site). */
+export const SEO_OPS_CHECKLIST = [
+  "Verify quantaloop.in in Google Search Console and submit /sitemap.xml",
+  "Monitor Coverage, brand query sitelinks, and Insights impressions weekly",
+  "Keep NAP/brand consistent on LinkedIn, directories, and partner pages",
+  "Earn editorial links from recycling associations, industry blogs, and PR",
+  "Encourage branded searches in sales outreach (search Quanta Loop)",
+  "Refresh Insights posts quarterly; avoid daily thin content",
+  "Never open /dashboard, /admin, /onboarding, or auth routes to indexing",
+] as const;
+
+export function absoluteUrl(path: string): string {
+  if (path.startsWith("http://") || path.startsWith("https://")) return path;
+  const normalized = path.startsWith("/") ? path : `/${path}`;
+  return `${SITE_URL}${normalized === "/" ? "" : normalized}`;
+}
+
+export function buildBreadcrumbJsonLd(items: BreadcrumbItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: absoluteUrl(item.path),
+    })),
+  };
+}
+
+export function buildFaqJsonLd(faqs: FaqItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
+export function buildArticleJsonLd(input: {
+  title: string;
+  description: string;
+  path: string;
+  datePublished: string;
+  dateModified?: string;
+  keywords?: string[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: input.title,
+    description: input.description,
+    mainEntityOfPage: absoluteUrl(input.path),
+    datePublished: input.datePublished,
+    dateModified: input.dateModified ?? input.datePublished,
+    author: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      logo: {
+        "@type": "ImageObject",
+        url: LOGO_URL,
+      },
+    },
+    image: [`${SITE_URL}/og-image.png`],
+    keywords: input.keywords?.join(", "),
+    inLanguage: "en-IN",
+  };
+}
+
 export const NOINDEX_ROBOTS = {
   index: false,
   follow: false,
@@ -72,6 +162,33 @@ export function buildHomeJsonLd() {
         description: DEFAULT_DESCRIPTION,
         publisher: { "@id": `${SITE_URL}/#organization` },
         inLanguage: "en-IN",
+        hasPart: [
+          {
+            "@type": "WebPage",
+            name: "How Quanta Loop Works",
+            url: `${SITE_URL}/how-it-works`,
+          },
+          {
+            "@type": "WebPage",
+            name: "Pricing & Network Membership",
+            url: `${SITE_URL}/pricing`,
+          },
+          {
+            "@type": "WebPage",
+            name: "Material Categories",
+            url: `${SITE_URL}/materials`,
+          },
+          {
+            "@type": "WebPage",
+            name: "Insights",
+            url: `${SITE_URL}/insights`,
+          },
+          {
+            "@type": "WebPage",
+            name: "Contact",
+            url: `${SITE_URL}/contact`,
+          },
+        ],
       },
       {
         "@type": "Service",

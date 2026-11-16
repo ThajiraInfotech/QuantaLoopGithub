@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
-import { LandingFooter } from "@/components/landing/landing-footer";
-import { Logo } from "@/components/shared/logo";
+import { JsonLd } from "@/components/marketing/json-ld";
+import { MarketingBreadcrumbs } from "@/components/marketing/marketing-breadcrumbs";
+import { MarketingShell } from "@/components/marketing/marketing-shell";
 import { ContactSupportForm } from "@/components/support/contact-support-form";
-import { LegalBackLink } from "@/components/legal/legal-back-link";
 import { LEGAL_SUPPORT_EMAIL } from "@/constants/legal";
+import { ROUTES } from "@/constants/routes";
+import { INDEX_ROBOTS, buildBreadcrumbJsonLd } from "@/lib/seo";
+
+const crumbs = [
+  { name: "Home", path: ROUTES.home },
+  { name: "Contact", path: ROUTES.contact },
+];
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("support");
@@ -15,12 +22,13 @@ export async function generateMetadata(): Promise<Metadata> {
     title,
     description,
     alternates: {
-      canonical: "/contact",
+      canonical: ROUTES.contact,
     },
+    robots: INDEX_ROBOTS,
     openGraph: {
       title,
       description,
-      url: "/contact",
+      url: ROUTES.contact,
       type: "website",
     },
   };
@@ -30,14 +38,10 @@ export default async function ContactPage() {
   const t = await getTranslations("support");
 
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
-      <header className="border-b border-border/80">
-        <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-4 sm:px-6">
-          <Logo />
-          <LegalBackLink />
-        </div>
-      </header>
-      <main className="flex-1 px-4 py-10 sm:px-6 sm:py-14">
+    <MarketingShell>
+      <JsonLd data={buildBreadcrumbJsonLd(crumbs)} />
+      <MarketingBreadcrumbs items={crumbs} />
+      <div className="flex-1 px-4 py-10 sm:px-6 sm:py-14">
         <div className="mx-auto w-full max-w-xl">
           <p className="text-eyebrow text-muted-foreground">{t("eyebrow")}</p>
           <h1 className="mt-2 font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
@@ -59,8 +63,7 @@ export default async function ContactPage() {
             <ContactSupportForm source="public" />
           </div>
         </div>
-      </main>
-      <LandingFooter />
-    </div>
+      </div>
+    </MarketingShell>
   );
 }

@@ -31,9 +31,12 @@
   "landing": {
     "nav": {
       "smartMatching": "Smart Matching",
+      "home": "Home",
       "howItWorks": "How It Works",
       "whoItsFor": "Who It's For",
       "whyQuantaLoop": "Why Quanta Loop",
+      "materials": "Materials",
+      "insights": "Insights",
       "pricing": "Pricing",
       "contact": "Contact"
     },
@@ -613,7 +616,8 @@
       "reports": "Reports",
       "invoices": "Invoices",
       "support": "Support",
-      "security": "Security"
+      "security": "Security",
+      "publicInsights": "Public Insights"
     },
     "home": {
       "greeting": {

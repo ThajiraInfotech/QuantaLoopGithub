@@ -45,7 +45,11 @@ function TrustIndicator({ children }: { children: string }) {
   );
 }
 
-export async function LandingPricing() {
+export async function LandingPricing({
+  omitHeader = false,
+}: {
+  omitHeader?: boolean;
+}) {
   const t = await getTranslations("landing.pricing");
   const membershipFeatures = t.raw("features") as string[];
   const trustIndicators = t.raw("trustIndicators") as string[];
@@ -59,11 +63,13 @@ export async function LandingPricing() {
       )}
     >
       <div className={landingContainerWide}>
-        <div className="mx-auto max-w-[900px] text-center">
-          <p className="text-eyebrow">{t("eyebrow")}</p>
-          <h2 className={cn("mt-3", landingHeading)}>{t("title")}</h2>
-          <p className={landingLeadCentered}>{t("description")}</p>
-        </div>
+        {!omitHeader ? (
+          <div className="mx-auto max-w-[900px] text-center">
+            <p className="text-eyebrow">{t("eyebrow")}</p>
+            <h2 className={cn("mt-3", landingHeading)}>{t("title")}</h2>
+            <p className={landingLeadCentered}>{t("description")}</p>
+          </div>
+        ) : null}
 
         <div className={cn("mx-auto max-w-[560px]", landingStackGap)}>
           <Card

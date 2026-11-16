@@ -31,9 +31,12 @@
   "landing": {
     "nav": {
       "smartMatching": "स्मार्ट मिलान",
+      "home": "होम",
       "howItWorks": "यह कैसे काम करता है",
       "whoItsFor": "यह किसके लिए है",
       "whyQuantaLoop": "क्वांटा लूप क्यों",
+      "materials": "सामग्री",
+      "insights": "इनसाइट्स",
       "pricing": "मूल्य निर्धारण",
       "contact": "संपर्क"
     },

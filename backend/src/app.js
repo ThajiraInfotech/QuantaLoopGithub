@@ -42,6 +42,9 @@ const {
 } = require("./modules/subscriptions/subscription.routes");
 const { createBillingRouter } = require("./modules/billing/billing.routes");
 const { createSupportRouter } = require("./modules/support/support.routes");
+const {
+  createContentInsightsRouter,
+} = require("./modules/content-insights/content-insight.routes");
 const { LOCAL_UPLOAD_DIR } = require("./services/storage/material-image.service");
 const {
   configureNotificationEmails,
@@ -189,6 +192,7 @@ function createApp(env) {
   app.use("/api/v1/matches", ...requirePaidAccess, createMatchesRouter(env));
   app.use("/api/v1/locations", createLocationsRouter(env));
   app.use("/api/v1/support", createSupportRouter(env));
+  app.use("/api/v1/content/insights", createContentInsightsRouter());
 
   app.use(notFound);
   app.use(errorHandler);

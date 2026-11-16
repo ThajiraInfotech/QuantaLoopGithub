@@ -60,10 +60,12 @@ export async function LandingFooter() {
   const fromToSuffix = t("fromToSuffix");
 
   const navigationLinks: FooterLink[] = [
-    { label: tNav("howItWorks"), href: "#how-it-works" },
-    { label: tNav("whoItsFor"), href: "#network" },
-    { label: tNav("whyQuantaLoop"), href: "#why-quanta-loop" },
-    { label: tNav("pricing"), href: "#access" },
+    { label: tNav("home"), href: ROUTES.home },
+    { label: tNav("howItWorks"), href: ROUTES.howItWorks },
+    { label: tNav("pricing"), href: ROUTES.pricing },
+    { label: tNav("materials"), href: ROUTES.publicMaterials },
+    { label: tNav("insights"), href: ROUTES.publicInsights },
+    { label: t("contact"), href: ROUTES.contact },
     { label: tCommon("signIn"), href: ROUTES.login },
   ];
 

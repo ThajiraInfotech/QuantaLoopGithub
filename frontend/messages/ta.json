@@ -31,9 +31,12 @@
   "landing": {
     "nav": {
       "smartMatching": "ஸ்மார்ட் பொருத்தம்",
+      "home": "முகப்பு",
       "howItWorks": "எப்படி செயல்படுகிறது",
       "whoItsFor": "யாருக்காக",
       "whyQuantaLoop": "ஏன் Quanta Loop",
+      "materials": "பொருட்கள்",
+      "insights": "நுண்ணறிவுகள்",
       "pricing": "விலை நிர்ணயம்",
       "contact": "தொடர்பு"
     },

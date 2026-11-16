@@ -32,11 +32,11 @@ type NavLabelKey =
   | "saved"
   | "activity"
   | "recommendations"
-  | "insights"
   | "administration"
   | "participants"
   | "reports"
   | "support"
+  | "insights"
   | "invoices"
   | "security";
 
@@ -55,7 +55,6 @@ const fullNavItems: NavItem[] = [
   { href: ROUTES.saved, labelKey: "saved", roles: ["verified_buyer"] },
   { href: ROUTES.activity, labelKey: "activity" },
   { href: ROUTES.recommendations, labelKey: "recommendations" },
-  { href: ROUTES.insights, labelKey: "insights" },
   { href: ROUTES.admin, labelKey: "administration", roles: ["admin"] },
 ];
 
@@ -79,6 +78,7 @@ const adminPrimaryNav: NavItem[] = [
   { href: ROUTES.adminParticipants, labelKey: "participants" },
   { href: ROUTES.adminMaterials, labelKey: "materials" },
   { href: ROUTES.adminInterests, labelKey: "interests" },
+  { href: ROUTES.adminInsights, labelKey: "insights" },
   { href: ROUTES.adminReports, labelKey: "reports" },
   { href: ROUTES.adminSupport, labelKey: "support" },
   { href: ROUTES.adminInvoices, labelKey: "invoices" },

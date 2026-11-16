@@ -4,14 +4,24 @@ import { SITE_URL } from "@/lib/seo";
 
 /**
  * Crawl budget barriers aligned to real public routes.
- * (There are no /features, /pricing, or /about pages — those live on /.)
+ * Marketing pages (/how-it-works, /pricing, /materials, /insights) are indexable.
+ * Private app surfaces stay disallowed.
  */
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
         userAgent: "*",
-        allow: ["/", "/contact", "/legal/"],
+        allow: [
+          "/",
+          "/how-it-works",
+          "/pricing",
+          "/materials",
+          "/insights",
+          "/insights/",
+          "/contact",
+          "/legal/",
+        ],
         disallow: [
           "/login",
           "/register",

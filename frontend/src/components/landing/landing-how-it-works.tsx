@@ -158,7 +158,11 @@ function withIcons(
   }));
 }
 
-export function LandingHowItWorks() {
+export function LandingHowItWorks({
+  omitHeader = false,
+}: {
+  omitHeader?: boolean;
+}) {
   const t = useTranslations("landing.howItWorks");
   const [audience, setAudience] = useState<"seller" | "buyer">("seller");
 
@@ -195,9 +199,18 @@ export function LandingHowItWorks() {
     >
       <div className={landingContainer}>
         <div className="mx-auto max-w-[900px] text-center">
-          <p className="text-eyebrow">{t("eyebrow")}</p>
-          <h2 className={cn("mt-3", landingHeadingXl)}>{t("title")}</h2>
-          <p className="mx-auto mt-4 max-w-[700px] text-body leading-relaxed text-muted-foreground sm:mt-5 md:mt-6">
+          {!omitHeader ? (
+            <>
+              <p className="text-eyebrow">{t("eyebrow")}</p>
+              <h2 className={cn("mt-3", landingHeadingXl)}>{t("title")}</h2>
+            </>
+          ) : null}
+          <p
+            className={cn(
+              "mx-auto max-w-[700px] text-body leading-relaxed text-muted-foreground",
+              omitHeader ? "" : "mt-4 sm:mt-5 md:mt-6"
+            )}
+          >
             {active.subtitle}
           </p>
 

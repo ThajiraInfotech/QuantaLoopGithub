@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -15,13 +16,11 @@ import { ROUTES } from "@/constants/routes";
 import { cn } from "@/lib/utils";
 
 const navLinkKeys = [
-  { key: "howItWorks", href: "#how-it-works" },
-  { key: "whoItsFor", href: "#network" },
-  { key: "whyQuantaLoop", href: "#why-quanta-loop" },
-  { key: "pricing", href: "#access" },
+  { key: "howItWorks", href: ROUTES.howItWorks },
+  { key: "materials", href: ROUTES.publicMaterials },
+  { key: "pricing", href: ROUTES.pricing },
+  { key: "insights", href: ROUTES.publicInsights },
 ] as const;
-
-const sectionIds = navLinkKeys.map((link) => link.href.slice(1));
 
 const actionText =
   "inline-flex h-9 items-center justify-center rounded-full px-3.5 text-[13px] font-medium tracking-[-0.01em] transition-colors duration-200";
@@ -43,7 +42,7 @@ function NavAnchor({
     <Link
       href={href}
       onClick={onClick}
-      aria-current={isActive ? "location" : undefined}
+      aria-current={isActive ? "page" : undefined}
       className={cn(
         "group relative inline-flex h-9 items-center px-3 text-[13px] font-medium tracking-[-0.01em] transition-colors duration-200",
         isActive
@@ -64,13 +63,18 @@ function NavAnchor({
   );
 }
 
+function isNavActive(pathname: string, href: string): boolean {
+  if (href === ROUTES.home) return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export function LandingNavbar() {
   const t = useTranslations("landing.nav");
   const tCommon = useTranslations("common");
+  const pathname = usePathname() || "/";
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [supportOpen, setSupportOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
 
   const navLinks = useMemo(
     () =>
@@ -86,33 +90,6 @@ export function LandingNavbar() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    const sections = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => Boolean(el));
-
-    if (!sections.length) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-
-        if (visible[0]?.target.id) {
-          setActiveSection(visible[0].target.id);
-        }
-      },
-      {
-        rootMargin: "-18% 0px -58% 0px",
-        threshold: [0, 0.2, 0.4, 0.6, 0.8, 1],
-      }
-    );
-
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -165,7 +142,7 @@ export function LandingNavbar() {
                 key={item.href}
                 href={item.href}
                 label={item.label}
-                isActive={activeSection === item.href.slice(1)}
+                isActive={isNavActive(pathname, item.href)}
               />
             ))}
           </nav>
@@ -210,7 +187,7 @@ export function LandingNavbar() {
           </div>
         </div>
 
-        {/* Mobile / tablet bar — unchanged pattern */}
+        {/* Mobile / tablet bar */}
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:hidden">
           <Logo className="h-8 shrink-0 sm:h-9" />
           <div className="flex items-center gap-2">
@@ -300,7 +277,7 @@ export function LandingNavbar() {
                   key={item.href}
                   href={item.href}
                   label={item.label}
-                  isActive={activeSection === item.href.slice(1)}
+                  isActive={isNavActive(pathname, item.href)}
                   onClick={closeMobile}
                   className="h-11 w-full justify-start px-4 text-base"
                 />
