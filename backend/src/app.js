@@ -65,9 +65,26 @@ function isPrivateLanHostname(hostname) {
   );
 }
 
+function wwwSiblingOrigin(origin) {
+  try {
+    const url = new URL(origin);
+    if (url.hostname.startsWith("www.")) {
+      url.hostname = url.hostname.slice(4);
+    } else {
+      url.hostname = `www.${url.hostname}`;
+    }
+    return url.origin;
+  } catch {
+    return null;
+  }
+}
+
 function isAllowedCorsOrigin(origin, env) {
   if (!origin) return true;
-  if (origin === env.CLIENT_ORIGIN) return true;
+  const allowed = new Set(
+    [env.CLIENT_ORIGIN, wwwSiblingOrigin(env.CLIENT_ORIGIN)].filter(Boolean)
+  );
+  if (allowed.has(origin)) return true;
   if (env.NODE_ENV === "production") return false;
   try {
     return isPrivateLanHostname(new URL(origin).hostname);
