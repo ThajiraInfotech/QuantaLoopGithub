@@ -3693,5 +3693,92 @@
     "sendAnother": "Send another message",
     "errorGeneric": "Unable to send your message. Please try again.",
     "dismiss": "Close support form"
+  },
+  "marketingPages": {
+    "common": {
+      "home": "Home",
+      "faqTitle": "Frequently asked questions"
+    },
+    "howItWorks": {
+      "crumb": "How It Works",
+      "eyebrow": "Process",
+      "title": "How Quanta Loop Works",
+      "description": "See how material providers and buyers connect on Quanta Loop — list surplus or scrap, get matched with registered businesses, and close deals across India.",
+      "faqs": [
+        {
+          "question": "Who can join Quanta Loop?",
+          "answer": "Registered businesses that generate, buy, process, or recover recyclable and industrial materials — manufacturers, traders, recyclers, and recovery operators."
+        },
+        {
+          "question": "How does matching work?",
+          "answer": "You list materials or interests. Quanta Loop surfaces relevant counterparts based on material type, location, and network activity so you can start a structured discussion."
+        },
+        {
+          "question": "Can I buy and sell any quantity?",
+          "answer": "Yes. Listings can range from small lots to multi-ton shipments. Quantity and logistics are agreed directly between registered businesses."
+        }
+      ]
+    },
+    "pricing": {
+      "crumb": "Pricing",
+      "eyebrow": "Membership",
+      "title": "Pricing & Network Membership",
+      "description": "Join Quanta Loop with a 30-day free trial. Annual membership is ₹6,999 in India or $99 abroad — unlimited listings and buyer connections.",
+      "faqs": [
+        {
+          "question": "What does membership include?",
+          "answer": "Unlimited material listings, access to registered buyers and suppliers, interest discovery, and direct business communication inside the network."
+        },
+        {
+          "question": "Is there a free trial?",
+          "answer": "Yes. New members get a 30-day free trial with no payment required to start. You can cancel during the trial."
+        },
+        {
+          "question": "What is the annual price?",
+          "answer": "₹6,999 per year for businesses billing in India (GST inclusive) or $99 per year for businesses outside India."
+        }
+      ]
+    },
+    "materials": {
+      "crumb": "Materials",
+      "eyebrow": "Categories",
+      "title": "Industrial & Recyclable Material Categories",
+      "description": "Browse Quanta Loop material categories — plastic, metal, paper, e-waste, industrial by-products, and more — for buyers and sellers across India.",
+      "faqs": [
+        {
+          "question": "Which materials can I list?",
+          "answer": "Plastic, paper, metal, e-waste, glass, rubber, textiles, chemicals, industrial by-products, hazardous streams, and other recoverable categories supported on the network."
+        },
+        {
+          "question": "Do I need exact grades before listing?",
+          "answer": "Share the best available detail — category, form, and quantity. Buyers can clarify grades and specs during the discussion."
+        },
+        {
+          "question": "Are hazardous materials allowed?",
+          "answer": "Hazardous and regulated streams can be listed when your business is qualified to handle them. Compliance and documentation remain the parties’ responsibility."
+        }
+      ]
+    },
+    "insights": {
+      "crumb": "Insights",
+      "eyebrow": "Guides",
+      "title": "Insights for Material Buyers & Sellers",
+      "description": "Practical guides on selling scrap, buying recyclables, compliance basics, and closing B2B material deals on Quanta Loop.",
+      "library": "Library",
+      "guideCount": "{count} guides · page {page} of {totalPages}",
+      "guideCountOne": "{count} guide · page {page} of {totalPages}",
+      "emptyTitle": "Insights coming soon",
+      "emptyBody": "Practical guides for buying and selling recyclable materials will appear here.",
+      "faqs": [
+        {
+          "question": "How often does Quanta Loop publish Insights?",
+          "answer": "We aim for one high-quality guide each week, focused on practical buying and selling topics for the Indian industrial materials market."
+        },
+        {
+          "question": "Who are Insights for?",
+          "answer": "Material providers, buyers, recyclers, and recovery operators who want clear, practical guidance on listing, sourcing, and closing deals in India."
+        }
+      ]
+    }
   }
 }

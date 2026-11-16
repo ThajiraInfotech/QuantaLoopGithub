@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 import { LandingFinalCta } from "@/components/landing/landing-final-cta";
 import { LandingPricing } from "@/components/landing/landing-pricing";
@@ -8,7 +9,7 @@ import { MarketingFaq } from "@/components/marketing/marketing-faq";
 import { MarketingPageHeader } from "@/components/marketing/marketing-page-header";
 import { MarketingShell } from "@/components/marketing/marketing-shell";
 import { ROUTES } from "@/constants/routes";
-import { MARKETING_META, PRICING_FAQS } from "@/lib/marketing-pages";
+import { asFaqItems } from "@/lib/marketing-i18n";
 import {
   INDEX_ROBOTS,
   SITE_NAME,
@@ -16,37 +17,45 @@ import {
   buildFaqJsonLd,
 } from "@/lib/seo";
 
-const crumbs = [
-  { name: "Home", path: ROUTES.home },
-  { name: "Pricing", path: ROUTES.pricing },
-];
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("marketingPages.pricing");
+  const title = t("title");
+  const description = t("description");
+  return {
+    title,
+    description,
+    alternates: { canonical: ROUTES.pricing },
+    robots: INDEX_ROBOTS,
+    openGraph: {
+      title: `${title} · ${SITE_NAME}`,
+      description,
+      url: ROUTES.pricing,
+      type: "website",
+    },
+  };
+}
 
-export const metadata: Metadata = {
-  title: MARKETING_META.pricing.title,
-  description: MARKETING_META.pricing.description,
-  alternates: { canonical: ROUTES.pricing },
-  robots: INDEX_ROBOTS,
-  openGraph: {
-    title: `${MARKETING_META.pricing.title} · ${SITE_NAME}`,
-    description: MARKETING_META.pricing.description,
-    url: ROUTES.pricing,
-    type: "website",
-  },
-};
+export default async function PricingPage() {
+  const t = await getTranslations("marketingPages.pricing");
+  const tCommon = await getTranslations("marketingPages.common");
+  const faqs = asFaqItems(t.raw("faqs"));
+  const crumbs = [
+    { name: tCommon("home"), path: ROUTES.home },
+    { name: t("crumb"), path: ROUTES.pricing },
+  ];
 
-export default function PricingPage() {
   return (
     <MarketingShell>
       <JsonLd data={buildBreadcrumbJsonLd(crumbs)} />
-      <JsonLd data={buildFaqJsonLd(PRICING_FAQS)} />
+      <JsonLd data={buildFaqJsonLd(faqs)} />
       <MarketingBreadcrumbs items={crumbs} />
       <MarketingPageHeader
-        eyebrow="Membership"
-        title={MARKETING_META.pricing.title}
-        description={MARKETING_META.pricing.description}
+        eyebrow={t("eyebrow")}
+        title={t("title")}
+        description={t("description")}
       />
       <LandingPricing omitHeader />
-      <MarketingFaq faqs={PRICING_FAQS} />
+      <MarketingFaq title={tCommon("faqTitle")} faqs={faqs} />
       <LandingFinalCta />
     </MarketingShell>
   );

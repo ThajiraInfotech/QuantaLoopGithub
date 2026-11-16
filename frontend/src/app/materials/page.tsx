@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 import { LandingFinalCta } from "@/components/landing/landing-final-cta";
 import {
@@ -13,11 +14,8 @@ import { MarketingPageHeader } from "@/components/marketing/marketing-page-heade
 import { MarketingShell } from "@/components/marketing/marketing-shell";
 import { Card, CardContent } from "@/components/ui/card";
 import { ROUTES } from "@/constants/routes";
-import {
-  MATERIALS_FAQS,
-  MARKETING_META,
-  getPublicMaterialCategories,
-} from "@/lib/marketing-pages";
+import { asFaqItems } from "@/lib/marketing-i18n";
+import { getPublicMaterialCategories } from "@/lib/marketing-pages";
 import {
   INDEX_ROBOTS,
   SITE_NAME,
@@ -25,36 +23,43 @@ import {
   buildFaqJsonLd,
 } from "@/lib/seo";
 
-const crumbs = [
-  { name: "Home", path: ROUTES.home },
-  { name: "Materials", path: ROUTES.publicMaterials },
-];
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("marketingPages.materials");
+  const title = t("title");
+  const description = t("description");
+  return {
+    title,
+    description,
+    alternates: { canonical: ROUTES.publicMaterials },
+    robots: INDEX_ROBOTS,
+    openGraph: {
+      title: `${title} · ${SITE_NAME}`,
+      description,
+      url: ROUTES.publicMaterials,
+      type: "website",
+    },
+  };
+}
 
-export const metadata: Metadata = {
-  title: MARKETING_META.materials.title,
-  description: MARKETING_META.materials.description,
-  alternates: { canonical: ROUTES.publicMaterials },
-  robots: INDEX_ROBOTS,
-  openGraph: {
-    title: `${MARKETING_META.materials.title} · ${SITE_NAME}`,
-    description: MARKETING_META.materials.description,
-    url: ROUTES.publicMaterials,
-    type: "website",
-  },
-};
-
-export default function MaterialsHubPage() {
+export default async function MaterialsHubPage() {
+  const t = await getTranslations("marketingPages.materials");
+  const tCommon = await getTranslations("marketingPages.common");
+  const faqs = asFaqItems(t.raw("faqs"));
   const categories = getPublicMaterialCategories();
+  const crumbs = [
+    { name: tCommon("home"), path: ROUTES.home },
+    { name: t("crumb"), path: ROUTES.publicMaterials },
+  ];
 
   return (
     <MarketingShell>
       <JsonLd data={buildBreadcrumbJsonLd(crumbs)} />
-      <JsonLd data={buildFaqJsonLd(MATERIALS_FAQS)} />
+      <JsonLd data={buildFaqJsonLd(faqs)} />
       <MarketingBreadcrumbs items={crumbs} />
       <MarketingPageHeader
-        eyebrow="Categories"
-        title={MARKETING_META.materials.title}
-        description={MARKETING_META.materials.description}
+        eyebrow={t("eyebrow")}
+        title={t("title")}
+        description={t("description")}
       />
       <section
         className={`border-b border-border bg-background ${landingSectionY}`}
@@ -83,7 +88,7 @@ export default function MaterialsHubPage() {
           </ul>
         </div>
       </section>
-      <MarketingFaq faqs={MATERIALS_FAQS} />
+      <MarketingFaq title={tCommon("faqTitle")} faqs={faqs} />
       <LandingFinalCta />
     </MarketingShell>
   );

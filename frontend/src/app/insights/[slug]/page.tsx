@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 
 import { InsightArticleView } from "@/components/marketing/insight-article-view";
 import { JsonLd } from "@/components/marketing/json-ld";
@@ -55,10 +56,12 @@ export default async function InsightArticlePage({ params }: PageProps) {
   const article = await fetchPublishedInsightBySlug(slug);
   if (!article) notFound();
 
+  const t = await getTranslations("marketingPages.insights");
+  const tCommon = await getTranslations("marketingPages.common");
   const path = ROUTES.publicInsight(article.slug);
   const crumbs = [
-    { name: "Home", path: ROUTES.home },
-    { name: "Insights", path: ROUTES.publicInsights },
+    { name: tCommon("home"), path: ROUTES.home },
+    { name: t("crumb"), path: ROUTES.publicInsights },
     { name: article.title, path },
   ];
 

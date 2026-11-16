@@ -191,9 +191,16 @@ function Pagination({
 export function InsightsIndex({
   articles,
   page = 1,
+  labels,
 }: {
   articles: ContentInsight[];
   page?: number;
+  labels?: {
+    library: string;
+    guideCount: string;
+    emptyTitle: string;
+    emptyBody: string;
+  };
 }) {
   const totalPages = Math.max(1, Math.ceil(articles.length / PAGE_SIZE));
   const safePage = Math.min(Math.max(1, page), totalPages);
@@ -203,6 +210,15 @@ export function InsightsIndex({
     safePage === 1 && pageItems.length > 0
       ? [pageItems[0], ...pageItems.slice(1)]
       : [null, ...pageItems];
+
+  const library = labels?.library ?? "Library";
+  const emptyTitle = labels?.emptyTitle ?? "Insights coming soon";
+  const emptyBody =
+    labels?.emptyBody ??
+    "Practical guides for buying and selling recyclable materials will appear here.";
+  const guideCount =
+    labels?.guideCount ??
+    `${articles.length} guide${articles.length === 1 ? "" : "s"} · page ${safePage} of ${totalPages}`;
 
   return (
     <section
@@ -216,21 +232,17 @@ export function InsightsIndex({
         {articles.length === 0 ? (
           <div className="mx-auto max-w-[640px] rounded-3xl border border-dashed border-border bg-card/70 px-6 py-14 text-center">
             <p className="font-heading text-xl font-semibold text-foreground">
-              Insights coming soon
+              {emptyTitle}
             </p>
-            <p className="mt-3 text-body text-muted-foreground">
-              Practical guides for buying and selling recyclable materials will
-              appear here.
-            </p>
+            <p className="mt-3 text-body text-muted-foreground">{emptyBody}</p>
           </div>
         ) : (
           <>
             <div className="mb-8 flex flex-col gap-2 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-eyebrow text-accent">Library</p>
+                <p className="text-eyebrow text-accent">{library}</p>
                 <p className="mt-1 text-small text-muted-foreground">
-                  {articles.length} guide{articles.length === 1 ? "" : "s"} ·
-                  page {safePage} of {totalPages}
+                  {guideCount}
                 </p>
               </div>
             </div>
